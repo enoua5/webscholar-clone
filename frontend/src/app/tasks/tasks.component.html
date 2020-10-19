@@ -1,0 +1,18 @@
+<h3>{{title}}</h3>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Description</th>
+  </tr>
+  <tr *ngFor="let task of tasks" (click)="onSelect(task)">
+    <td>{{task.id}}</td>
+    <td>{{task.title |uppercase }}</td>
+    <td>{{task.description}}</td>
+  </tr>
+</table>
+
+<div *ngIf="currentTask != null">
+  <app-task-edit [task]="currentTask"></app-task-edit>
+</div>

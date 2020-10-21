@@ -10,7 +10,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringCloudApplication
 @EnableDiscoveryClient
-public class App
+public class AccountApplication
 {
     public static void main( String[] args )
     {

@@ -1,19 +1,17 @@
 package edu.weber;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-/**
- * Hello world!
- *
- */
-
 @SpringCloudApplication
+@EnableCircuitBreaker
 @EnableDiscoveryClient
-public class App
+public class AccountApp
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        SpringApplication.run(AccountApp.class, args);
     }
 }

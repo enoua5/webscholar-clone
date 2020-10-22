@@ -2,33 +2,18 @@ package edu.weber.domain;
 
 public class Account {
 
-    private String id;
-    private String firstName;
-    private String lastName;
+    private int accountKey;
     private String email;
+    private String encryptedPassword;
+    private String saltPassword;
+    private Boolean active;
 
-    public String getId() {
-        return id;
+    public int getAccountKey() {
+        return accountKey;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setAccountKey(int accountKey) {
+        this.accountKey = accountKey;
     }
 
     public String getEmail() {
@@ -37,5 +22,29 @@ public class Account {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getEncryptedPassword() {
+        return encryptedPassword;
+    }
+
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
+    }
+
+    public String getSaltPassword() {
+        return saltPassword;
+    }
+
+    public void setSaltPassword(String saltPassword) {
+        this.saltPassword = saltPassword;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

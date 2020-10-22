@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TaskEditComponent } from './task-edit.component';
+import { RegisterFormComponent } from './register-form.component';
 
-describe('TaskEditComponent', () => {
-  let component: TaskEditComponent;
-  let fixture: ComponentFixture<TaskEditComponent>;
+describe('RegisterFormComponent', () => {
+  let component: RegisterFormComponent;
+  let fixture: ComponentFixture<RegisterFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TaskEditComponent ]
+      declarations: [ RegisterFormComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TaskEditComponent);
+    fixture = TestBed.createComponent(RegisterFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

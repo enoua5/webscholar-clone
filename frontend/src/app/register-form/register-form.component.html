@@ -1,0 +1,23 @@
+<p>register-form works!</p>
+<h1>WebScholar</h1>
+
+<h3>Create Your Account</h3>
+
+<label for="username">Username:</label>
+<input id="username" type="text"><br/>
+<label for="password">Password:</label>
+<input id="password" type="password">
+<label for="confirm-password">Confirm Password:</label>
+<input id="confirm-password" type="password">
+<label for="school-email">School Email:</label>
+<input id="school-email" type="email">
+<label for="school-id">School ID:</label>
+<input id="school-id" type="text">
+<br/>
+<label class="checkbox">
+  <input type="checkbox">
+  I have read and agree to the <a href="#">Terms and Conditions</a>
+</label>
+
+<a routerLink="/register">Already have an account? Log in</a>
+<button (click)="onRegister()">Register</button>

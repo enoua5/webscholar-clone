@@ -1,12 +1,48 @@
-<h1>WebScholar</h1>
+<section class="section">
+  <div class="column is-5 is-offset-4">
 
-<h3>Log In</h3>
-<label for="username">Username:</label>
-<input id="username" type="text"><br/>
-<label for="password">Password:</label>
-<input id="password" type="password">
-<br/>
-<button (click)="onLogin()">Login</button>
+    <h1 class="title header">WebScholar</h1>
 
-<a routerLink="/register">Create an Account</a>
-<a routerLink="/register">Forgot Password?</a>
+    <div class="box">
+      <p class="subtitle">Log In</p>
+
+      <div class="field">
+        <label class="label" for="username">Username</label>
+        <p class="control has-icons-left">
+          <input id="username" class="input" type="text" placeholder="Username">
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="label" for="password">Password:</label>
+        <p class="control has-icons-left">
+          <input id="password" class="input" type="password" placeholder="Password">
+          <span class="icon is-small is-left">
+             <i class="fas fa-lock"></i>
+          </span>
+        </p>
+      </div>
+
+      <div class="field">
+        <div class="login-btn-left">
+          <p class="control">
+            <a class="login-links-1" routerLink="/register">Create an Account</a>
+            <span class="has-dot-separator">&bull;</span>
+            <a class="login-links-2" routerLink="/#">Forgot Password?</a>
+            <button (click)="onLogin()" class="button is-success is-small">
+              Log In
+            </button>
+          </p>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+
+

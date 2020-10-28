@@ -1,23 +1,98 @@
-<p>register-form works!</p>
-<h1>WebScholar</h1>
+<section class="section">
+  <div class="column is-5 is-offset-4">
 
-<h3>Create Your Account</h3>
+    <h1 class="title header">WebScholar</h1>
 
-<label for="username">Username:</label>
-<input id="username" type="text"><br/>
-<label for="password">Password:</label>
-<input id="password" type="password">
-<label for="confirm-password">Confirm Password:</label>
-<input id="confirm-password" type="password">
-<label for="school-email">School Email:</label>
-<input id="school-email" type="email">
-<label for="school-id">School ID:</label>
-<input id="school-id" type="text">
-<br/>
-<label class="checkbox">
-  <input type="checkbox">
-  I have read and agree to the <a href="#">Terms and Conditions</a>
-</label>
+    <div class="box">
+      <p class="subtitle">Create Your Account</p>
 
-<a routerLink="/register">Already have an account? Log in</a>
-<button (click)="onRegister()">Register</button>
+      <div class="field">
+        <label class="label" for="username">Username:</label>
+        <p class="control has-icons-left">
+          <input id="username" class="input" type="text" placeholder="Username">
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+        </p>
+      </div>
+
+      <div class="field-body">
+        <div class="field">
+          <label class="label" for="password">Password:</label>
+          <p class="control has-icons-left">
+            <input id="password" class="input" type="password" placeholder="Password">
+            <span class="icon is-small is-left">
+               <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="confirm-password">Confirm Password:</label>
+          <p class="control has-icons-left">
+            <input id="confirm-password" class="input" type="password" placeholder="Confirm Password">
+            <span class="icon is-small is-left">
+               <i class="fas fa-lock"></i>
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="content">
+          <p>Password Requirements:</p>
+          <ul class="password-requirements">
+            <li>Must be at least 8 characters long</li>
+            <li>Must contain at least all of the following:
+              <ul>
+                <li>One lower-case letter</li>
+                <li>One upper-case letter</li>
+                <li>One number</li>
+                <li>One special symbol</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label" for="school-email">School Email:</label>
+        <p class="control has-icons-left">
+          <input id="school-email" class="input" type="email" placeholder="Email">
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="label" for="school-id">School ID:</label>
+        <input id="school-id" class="input" type="text" placeholder="W#">
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox">
+            I have read and agree to the <a class="term-and-conditions-link" href="#">Terms and Conditions</a>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="register-btn-left">
+          <p class="control">
+            <a class="login-links-1" routerLink="/register">Already have an account? Log in</a>
+
+            <button (click)="onRegister()" class="button is-success is-small">
+              Register
+            </button>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+

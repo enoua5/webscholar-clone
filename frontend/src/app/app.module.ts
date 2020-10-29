@@ -4,14 +4,14 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TasksComponent } from './tasks/tasks.component';
-import { TaskEditComponent } from './task-edit/task-edit.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { RegisterFormComponent } from './register-form/register-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TasksComponent,
-    TaskEditComponent
+    LoginFormComponent,
+    RegisterFormComponent
   ],
   imports: [
     BrowserModule,

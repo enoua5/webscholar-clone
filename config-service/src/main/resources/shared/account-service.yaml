@@ -11,9 +11,11 @@
 #    hibernate:
 #      ddl-auto: create-drop
 
-
-
 server:
   servlet:
     context-path: /accounts
   port: 6001
+
+feign:
+  hystrix:
+    enabled: true

@@ -2,11 +2,14 @@ spring:
   application:
     name: registry
   cloud:
+    enabled: true
     config:
       uri: http://config-service:8888
       fail-fast: true
-      password: password
-      username: user
+#      password: password
+#      username: user
+  profiles:
+    active: native
 
 eureka:
   instance:
@@ -16,3 +19,7 @@ eureka:
     fetchRegistry: false
     server:
       waitTimeInMsWhenSyncEmpty: 0
+
+
+server:
+  port: 8765

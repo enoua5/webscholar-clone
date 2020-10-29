@@ -1,18 +1,23 @@
 version: '2.1'
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 15672:15672
+
   config-service:
-    environment:
-      CONFIG_SERVICE_PASSWORD: password
+#    environment:
+#      CONFIG_SERVICE_PASSWORD: password
     build: config-service
-    image: webscholar/config-service
+#    image: webscholar/config-service
     ports:
       - 8888:8888
-    restart: always
+#    restart: always
   registry:
-    environment:
-      CONFIG_SERVICE_PASSWORD: password
+#    environment:
+#      CONFIG_SERVICE_PASSWORD: password
     build: registry
-    image: webscholar/registry
+#    image: webscholar/registry
 #    restart: always
     depends_on:
       config-service:
@@ -21,30 +26,13 @@ services:
       - 8765:8765
 
   account-service:
+#    environment:
+#      CONFIG_SERVICE_PASSWORD: password
     build: account-service
-    image: webscholar/account-service
+#    image: webscholar/account-service
 #    restart: always
     depends_on:
       config-service:
         condition: service_healthy
     ports:
       - 6001:6001
-
-
-
-#  db-service:
-#    image: mysql:5.7
-#    restart: always
-#    environment:
-#      MYSQL_DATABASE: webscholar-db
-#      MYSQL_USER: user
-#      MYSQL_PASSWORD: password
-#      MYSQL_ROOT_PASSWORD: password
-#    ports:
-#    - 3309:3307
-#    expose:
-#      - 3307
-#    volumes:
-#    - db:/var/lib/mysql
-#volumes:
-#  db:

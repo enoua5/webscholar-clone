@@ -2,11 +2,17 @@ spring:
   application:
     name: account-service
   cloud:
+    enabled: true
     config:
       uri: http://config-service:8888
       fail-fast: true
-      password: password
-      username: user
+#      password: password
+#      username: user
+
+eureka:
+  client:
+    registerWithEureka: true
+
 #  datasource:
 #    url: jdbc:mysql://db-service:3306/webscholar-db?useSSL=false
 #    username: ${USER}

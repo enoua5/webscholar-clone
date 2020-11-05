@@ -36,3 +36,23 @@ services:
         condition: service_healthy
     ports:
       - 6001:6001
+#    environment:
+#      DATABASE_HOST: account-db
+#      DATABASE_USER: root
+#      DATABASE_PASSWORD: password
+#      DATABASE_NAME: webscholar-db
+#      DATABASE_PORT: 6602
+  account-db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: webscholar-db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 6602:3306
+    expose:
+      - 6602
+    volumes:
+      - ./account-db:/var/lib/mysql
+#volumes:
+#  db:

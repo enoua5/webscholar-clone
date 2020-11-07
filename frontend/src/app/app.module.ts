@@ -8,6 +8,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { ForgotPasswordFormComponent } from './forgot-password-form/forgot-password-form.component';
 import { ForgotPasswordSubmissionComponent } from './forgot-password-submission/forgot-password-submission.component';
+import { RegisterFormFacultyComponent } from './register-form-faculty/register-form-faculty.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ForgotPasswordSubmissionComponent } from './forgot-password-submission/
     LoginFormComponent,
     RegisterFormComponent,
     ForgotPasswordFormComponent,
-    ForgotPasswordSubmissionComponent
+    ForgotPasswordSubmissionComponent,
+    RegisterFormFacultyComponent
   ],
   imports: [
     BrowserModule,

@@ -2,14 +2,14 @@
   <div class="column is-5 is-offset-4">
 
     <h1 class="title header">WebScholar</h1>
-
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
     <div class="box">
       <p class="subtitle">Student Registration</p>
 
       <div class="field">
         <label class="label" for="username">Username:</label>
         <p class="control has-icons-left">
-          <input id="username" class="input" type="text" placeholder="Username">
+          <input id="username" class="input" type="text" placeholder="Username" formControlName="username">
           <span class="icon is-small is-left">
             <i class="fas fa-user"></i>
           </span>
@@ -20,7 +20,7 @@
         <div class="field">
           <label class="label" for="password">Password:</label>
           <p class="control has-icons-left">
-            <input id="password" class="input" type="password" placeholder="Password">
+            <input id="password" class="input" type="password" placeholder="Password" formControlName="password">
             <span class="icon is-small is-left">
                <i class="fas fa-lock"></i>
             </span>
@@ -30,7 +30,7 @@
         <div class="field">
           <label class="label" for="confirm-password">Confirm Password:</label>
           <p class="control has-icons-left">
-            <input id="confirm-password" class="input" type="password" placeholder="Confirm Password">
+            <input id="confirm-password" class="input" type="password" placeholder="Confirm Password" formControlName="confirm_password">
             <span class="icon is-small is-left">
                <i class="fas fa-lock"></i>
             </span>
@@ -58,7 +58,7 @@
       <div class="field">
         <label class="label" for="school-email">School Email:</label>
         <p class="control has-icons-left">
-          <input id="school-email" class="input" type="email" placeholder="Email">
+          <input id="school-email" class="input" type="email" placeholder="Email" formControlName="school_email">
           <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>
@@ -67,7 +67,7 @@
 
       <div class="field">
         <label class="label" for="school-id">School ID:</label>
-        <input id="school-id" class="input" type="text" placeholder="W#">
+        <input id="school-id" class="input" type="text" placeholder="W#" formControlName="school_id">
       </div>
 
       <div class="field">
@@ -84,14 +84,14 @@
           <p class="control">
             <a class="login-links-1" routerLink="/">Already have an account? Log in</a>
 
-            <button (click)="onRegister()" class="button is-success is-small">
+            <button type="submit" class="button is-success is-small">
               Register
             </button>
           </p>
         </div>
       </div>
     </div>
-
+    </form>
   </div>
 </section>
 

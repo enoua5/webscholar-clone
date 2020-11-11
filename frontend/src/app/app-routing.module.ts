@@ -7,7 +7,7 @@ import {ForgotPasswordFormComponent} from "./forgot-password-form/forgot-passwor
 import {ForgotPasswordSubmissionComponent} from "./forgot-password-submission/forgot-password-submission.component";
 
 const routes: Routes = [
-  { path: '', component: LoginFormComponent },
+  { path: 'login', component: LoginFormComponent },
   { path: 'register', component: RegisterFormComponent },
   { path: 'register-faculty', component: RegisterFormFacultyComponent},
   { path: 'forgot_password', component: ForgotPasswordFormComponent},

@@ -1,11 +1,11 @@
 package edu.weber.repository;
 
-import edu.weber.domain.Account;
+import edu.weber.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, String> {
+public interface UserRepository extends JpaRepository<User, String> {
 
-    Account findByKey (int key);
+    User findByKey (int key);
 }

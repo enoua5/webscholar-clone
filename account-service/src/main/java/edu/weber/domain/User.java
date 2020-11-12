@@ -1,20 +1,39 @@
 package edu.weber.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class User {
 
+    @Id
     private int userKey;
+    @Column
     private int accountKey;
+    @Column
     private String userType;
+    @Column
     private String firstName;
+    @Column
     private String middleName;
+    @Column
     private String lastName;
+    @Column
     private String address1;
+    @Column
     private String address2;
+    @Column
     private String city;
+    @Column
     private String state;
+    @Column
     private String zipCode;
+    @Column
     private String school;
+    @Column
     private String sex;
+    @Column
     private String race;
 
     public int getUserKey() {

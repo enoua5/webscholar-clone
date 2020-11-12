@@ -1,11 +1,21 @@
 package edu.weber.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Account {
 
+    @Id
     private int accountKey;
+    @Column
     private String email;
+    @Column
     private String encryptedPassword;
+    @Column
     private String saltPassword;
+    @Column
     private Boolean active;
 
     public int getAccountKey() {

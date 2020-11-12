@@ -8,10 +8,10 @@ public interface AccountService {
     /**
      * Finds account by given name
      *
-     * @param accountName
+     * @param key
      * @return found account
      */
-    Account findByName(String accountName);
+    Account findByKey(int key);
 
     /**
      * Checks if account with the same name already exists
@@ -27,10 +27,8 @@ public interface AccountService {
      * Validates and applies incoming account updates
      * Invokes Statistics Service update
      *
-     * @param name
+     * @param key
      * @param update
      */
-    void saveChangesAccount (String name, Account update);
-
-    void saveChangesUser (String name, User update);
+    void saveChanges(int key, Account update);
 }

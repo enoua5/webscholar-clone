@@ -13,15 +13,15 @@ import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 
-public class AccountServiceImpl {
+public class AccountServiceImpl implements AccountService{
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private AccountRepository accountRepository;
 
+    @Override
     public Account findByKey(int key) {
-
         return accountRepository.findByKey(key);
     }
 
@@ -39,8 +39,8 @@ public class AccountServiceImpl {
         return account;
     }
 
+    @Override
     public void saveChanges(int key, Account update) {
-
         Account account = accountRepository.findByKey(key);
         Assert.notNull(account, "can't find account with name " + key);
 

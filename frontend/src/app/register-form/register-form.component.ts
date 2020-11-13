@@ -37,7 +37,7 @@ export class RegisterFormComponent implements OnInit {
   private processResponse (data){
     console.log(data);
     if (data.success === true) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/']);
     } else {
       //this.error = data.error;
       console.log(data);

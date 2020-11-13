@@ -11,6 +11,9 @@ import {RegisterService} from "./register.service";
 })
 export class RegisterFormComponent implements OnInit {
   form: FormGroup;
+  error: string = null;
+  errors: Map<string, string> = new Map();
+
 
   constructor(
     private fb: FormBuilder,
@@ -29,18 +32,34 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  private checkErrors(): void{
+    this.errors.clear();
+    if(this.form.get('password').value != this.form.get('confirm_password').value){
+      this.errors.set('confirm_password', 'Password does not match');
+    }
+    const regex = RegExp('^W[0-9]{8}$');
+    if(!regex.test(this.form.get('school_id').value)){
+      this.errors.set('school_id', 'Invalid format');
+    }
+   //todo check if check mark is set
+  }
+
   onSubmit(): void {
     console.log(this.form.value);
-    this.service.insert(this.form.value)
-      .subscribe(this.processResponse);
+    this.checkErrors();
+    if(this.errors.size == 0){
+      this.service.insert(this.form.value)
+        .subscribe((data) => this.processResponse(data));
+    }
   }
-  private processResponse (data){
+
+  private processResponse(data) {
     console.log(data);
     if (data.success === true) {
       this.router.navigate(['/']);
     } else {
-      //this.error = data.error;
-      console.log(data);
+      this.error = data.error;
+      this.errors = new Map(Object.entries(data.errors));
     }
 
   }

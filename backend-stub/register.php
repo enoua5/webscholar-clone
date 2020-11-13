@@ -25,7 +25,8 @@ function UserWithEmailExist($email, mysqli $conn): bool
 if (UserWithEmailExist($data['school_email'], $conn)) {
     jsonResponse([
         'success' => false,
-        'error' => 'User with this email already exist.'
+        'error' => null,
+        'errors' =>['school_email' => 'User with this email already exist.']
     ]);
 }
 
@@ -38,7 +39,8 @@ $success = $stmt->execute();
 if (!$success) {
     jsonResponse([
         'success' => false,
-        'error' => $stmt->error
+        'error' => $stmt->error,
+        'errors' => []
     ]);
 }
 
@@ -55,7 +57,8 @@ $success = $stmt->execute();
 if (!$success) {
     jsonResponse([
         'success' => false,
-        'error' => $stmt->error
+        'error' => $stmt->error,
+        'errors' => []
     ]);
 } else {
     jsonResponse([

@@ -12,11 +12,23 @@ public class Account {
     @Column
     private String email;
     @Column
-    private String encryptedPassword;
+    private String username;
     @Column
-    private String saltPassword;
+    private String password;
+    @Column
+    private String schoolId;
     @Column
     private Boolean active;
+
+    public Account(int accountKey, String email, String username, String password, String schoolId, Boolean active) {
+        this.accountKey = accountKey;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.schoolId = schoolId;
+        this.active = active;
+    }
+    public Account(){}
 
     public int getAccountKey() {
         return accountKey;
@@ -34,20 +46,28 @@ public class Account {
         this.email = email;
     }
 
-    public String getEncryptedPassword() {
-        return encryptedPassword;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getSaltPassword() {
-        return saltPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSaltPassword(String saltPassword) {
-        this.saltPassword = saltPassword;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
     }
 
     public Boolean getActive() {

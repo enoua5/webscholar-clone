@@ -45,8 +45,9 @@ public class AccountServiceImpl implements AccountService{
         Assert.notNull(account, "can't find account with name " + key);
 
         account.setEmail(update.getEmail());
-        account.setEncryptedPassword(update.getEncryptedPassword());
-        account.setSaltPassword(update.getSaltPassword());
+        account.setUsername(update.getUsername());
+        account.setPassword(update.getPassword());
+        account.setSchoolId(update.getSchoolId());
         account.setActive(update.getActive());
         accountRepository.save(account);
     }

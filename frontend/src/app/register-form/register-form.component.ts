@@ -25,7 +25,8 @@ export class RegisterFormComponent implements OnInit {
       password: [''],
       confirm_password: [''],
       school_email: [''],
-      school_id: ['']
+      school_id: [''],
+      checkbox: ['']
     });
   }
 
@@ -42,6 +43,10 @@ export class RegisterFormComponent implements OnInit {
       this.errors.set('school_id', 'Invalid format');
     }
    //todo check if check mark is set
+    let checkboxvalue = this.form.get('checkbox').value;
+    if(checkboxvalue !== true){
+      this.errors.set('checkbox', 'Please indicate that you have read and agree to the Terms and Conditions Policy');
+    }
   }
 
   onSubmit(): void {

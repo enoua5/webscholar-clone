@@ -31,3 +31,12 @@ function connectDb() {
 function getRequestData(): array {
     return json_decode(file_get_contents('php://input'), true);
 }
+
+function checkOptionRequest() {
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET,POST,PUT,PATCH');
+        header('Access-Control-Allow-Headers: content-type');
+        exit();
+    }
+}

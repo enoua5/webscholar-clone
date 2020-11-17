@@ -2,7 +2,7 @@
   <div class="column is-5 is-offset-4">
 
     <h1 class="title header">WebScholar</h1>
-    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <form class="error"  (ngSubmit)="onSubmit()" [formGroup]="form">
       <div *ngIf="error">
         {{error}}
       </div>
@@ -42,7 +42,7 @@
                <i class="fas fa-lock"></i>
             </span>
             </p>
-            <div *ngIf="errors.has('confirm_password')">
+            <div class="error" *ngIf="errors.has('confirm_password')">
               {{errors.get('confirm_password')}}
             </div>
           </div>
@@ -74,7 +74,7 @@
             <i class="fas fa-envelope"></i>
           </span>
           </p>
-          <div *ngIf="errors.has('school_email')">
+          <div class="error" *ngIf="errors.has('school_email')">
             {{errors.get('school_email')}}
           </div>
         </div>
@@ -83,7 +83,7 @@
           <label class="label" for="school-id">School ID:</label>
           <input id="school-id" class="input" type="text" placeholder="W#" formControlName="school_id"
                  required="required">
-          <div *ngIf="errors.has('school_id')">
+          <div class="error" *ngIf="errors.has('school_id')">
             {{errors.get('school_id')}}
           </div>
         </div>
@@ -91,9 +91,12 @@
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox">
+              <input type="checkbox" formControlName="checkbox" required="required">
               I have read and agree to the <a class="term-and-conditions-link" href="/#">Terms and Conditions</a>
             </label>
+            <div class="error"  *ngIf="errors.has('checkbox')">
+              {{errors.get('checkbox')}}
+            </div>
           </div>
         </div>
 

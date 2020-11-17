@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
+import {LoginService} from "./login.service";
 
 @Component({
   selector: 'app-login-form',
@@ -6,14 +9,41 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./login-form.component.less']
 })
 export class LoginFormComponent implements OnInit {
+  form: FormGroup;
+  error: string = null;
 
-  constructor() {
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private service: LoginService
+  ) {
+    this.form = this.fb.group({
+      username: [''],
+      password: [''],
+    });
+
+
   }
 
   ngOnInit(): void {
   }
 
-  onLogin(): void {
-    alert('button pressed');
+  onSubmit(): void {
+    console.log(this.form.value);
+    this.service.login(this.form.value)
+      .subscribe((data) => this.processResponse(data));
+
+  }
+
+  private processResponse(data) {
+    console.log(data);
+    if (data.success === true) {
+      // this.router.navigate(['/']);
+      alert("login in");
+    } else {
+      this.error = data.error;
+    }
+
   }
 }

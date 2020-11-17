@@ -1,12 +1,7 @@
 <?php
 require_once __DIR__ . "/functions.php";
 
-if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    header('Access-Control-Allow-Origin: *');
-    header('Access-Control-Allow-Methods: GET,POST,PUT,PATCH');
-    header('Access-Control-Allow-Headers: content-type');
-    exit();
-}
+checkOptionRequest();
 
 $conn = connectDb();
 $data = getRequestData();
@@ -26,15 +21,29 @@ if (UserWithEmailExist($data['school_email'], $conn)) {
     jsonResponse([
         'success' => false,
         'error' => null,
-        'errors' =>['school_email' => 'User with this email already exist.']
+        'errors' => ['school_email' => 'User with this email already exist.']
     ]);
 }
 
 $password = password_hash($data['password'], PASSWORD_DEFAULT);
 $active = 1;
 
-$stmt = $conn->prepare('INSERT INTO accounts (email, password, active) VALUES (?,?,?)');
-$stmt->bind_param('ssd', $data['school_email'], $password, $active);
+$stmt = $conn->prepare('INSERT INTO accounts (email, username, password, schoolid, active) VALUES (?,?,?,?,?)');
+if ($stmt === false) {
+    echo $conn->error;
+    jsonResponse([
+        'success' => false,
+        'error' => $conn->error,
+        'errors' => []
+    ]);
+}
+$stmt->bind_param('ssssd',
+    $data['school_email'],
+    $data['username'],
+    $password,
+    $data['school_id'],
+    $active);
+
 $success = $stmt->execute();
 if (!$success) {
     jsonResponse([
@@ -51,8 +60,8 @@ $stmt = $conn->prepare('INSERT INTO users (accountKey, usertype, firstname, midd
                               address1, address2, city, `state`, zipcode, school, sex, race)
                               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)');
 $stmt->bind_param('sssssssssssss', $accountKey, $userType, $emptyString, $emptyString, $emptyString,
-                                        $emptyString, $emptyString, $emptyString, $emptyString, $emptyString,
-                                        $emptyString, $emptyString, $emptyString);
+    $emptyString, $emptyString, $emptyString, $emptyString, $emptyString,
+    $emptyString, $emptyString, $emptyString);
 $success = $stmt->execute();
 if (!$success) {
     jsonResponse([

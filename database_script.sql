@@ -5,7 +5,7 @@ CREATE TABLE `accounts` (
   `email` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `schoold` varchar(50) NOT NULL,
+  `schoolid` varchar(50) NOT NULL,
   `active` boolean NOT NULL,
   PRIMARY KEY (`accountKey`)
 );

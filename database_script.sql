@@ -1,4 +1,4 @@
-ALTER TABLE `users` DROP FOREIGN KEY `users_ibfk_1`;
+SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS accounts;
 CREATE TABLE `accounts` (
   `accountKey` INT AUTO_INCREMENT NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE `accounts` (
 commit;
 
 Select * from accounts;
-
+SET FOREIGN_KEY_CHECKS=1;
 DROP TABLE IF EXISTS users;
 CREATE TABLE `users` (
   `userkey` INT AUTO_INCREMENT NOT NULL,

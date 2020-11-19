@@ -21,8 +21,8 @@ public class AccountServiceImpl implements AccountService{
     private AccountRepository accountRepository;
 
     @Override
-    public Account findByKey(int key) {
-        return accountRepository.findByKey(key);
+    public Account findByKey(int accountKey) {
+        return accountRepository.findByKey(accountKey);
     }
 
     @Override
@@ -45,9 +45,9 @@ public class AccountServiceImpl implements AccountService{
     }*/
 
     @Override
-    public void saveChanges(int key, Account update) {
-        Account account = accountRepository.findByKey(key);
-        Assert.notNull(account, "can't find account with name " + key);
+    public void saveChanges(int accountKey, Account update) {
+        Account account = accountRepository.findByKey(accountKey);
+        Assert.notNull(account, "can't find account with name " + accountKey);
 
         account.setEmail(update.getEmail());
         account.setUsername(update.getUsername());

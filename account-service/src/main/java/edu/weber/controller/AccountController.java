@@ -10,9 +10,9 @@ public class AccountController {
 
     private AccountService accountService;
 
-    @RequestMapping(path = "/{key}", method = RequestMethod.GET)
-    public Account getAccountByKey(@PathVariable int key) {
-        return accountService.findByKey(key);
+    @RequestMapping(path = "/{accountKey}", method = RequestMethod.GET)
+    public Account getAccountByKey(@PathVariable int accountKey) {
+        return accountService.findByKey(accountKey);
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
@@ -20,8 +20,8 @@ public class AccountController {
         return accountService.create(account);
     }
 
-    @RequestMapping(path = "/update/{key}", method = RequestMethod.POST)
-    public void saveChanges(@PathVariable int key, @RequestBody Account update) {
-        accountService.saveChanges(key, update);
+    @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST)
+    public void saveChanges(@PathVariable int accountKey, @RequestBody Account update) {
+        accountService.saveChanges(accountKey, update);
     }
 }

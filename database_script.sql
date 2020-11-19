@@ -1,6 +1,6 @@
 SET FOREIGN_KEY_CHECKS=0;
-DROP TABLE IF EXISTS accounts;
-CREATE TABLE `accounts` (
+DROP TABLE IF EXISTS account;
+CREATE TABLE `account` (
   `accountKey` INT AUTO_INCREMENT NOT NULL,
   `email` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
@@ -12,10 +12,10 @@ CREATE TABLE `accounts` (
 
 commit;
 
-Select * from accounts;
+Select * from account;
 SET FOREIGN_KEY_CHECKS=1;
-DROP TABLE IF EXISTS users;
-CREATE TABLE `users` (
+DROP TABLE IF EXISTS user;
+CREATE TABLE `user` (
   `userkey` INT AUTO_INCREMENT NOT NULL,
   `accountkey` INT NOT NULL,
   `usertype` varchar(100) NOT NULL,
@@ -32,9 +32,9 @@ CREATE TABLE `users` (
   `race` varchar(100) NOT NULL,
   PRIMARY KEY (`userkey`),
    FOREIGN KEY(accountkey) 
-       REFERENCES accounts(accountkey)
+       REFERENCES account(accountkey)
 );
 
 commit;
 
-Select * from users;
+Select * from user;

@@ -47,27 +47,28 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: webscholar-db
-      MYSQL_ROOT_PASSWORD: password
-    ports:
-      - 6602:3306
-    expose:
-      - 6602
-    volumes:
-      - ./account-db:/var/lib/mysql
-
-  db-service:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_DATABASE: webscholar-db
       MYSQL_USER: root
-      MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
     ports:
       - 3306:3306
     expose:
       - 3306
     volumes:
-      - db:/var/lib/mysql
-volumes:
-  db:
+      - ./account-db:/var/lib/mysql
+
+#  db-service:
+#    image: mysql:5.7
+#    restart: always
+#    environment:
+#      MYSQL_DATABASE: webscholar-db
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: password
+#      MYSQL_ROOT_PASSWORD: password
+#    ports:
+#      - 3306:3306
+#    expose:
+#      - 3306
+#    volumes:
+#      - db:/var/lib/mysql
+#volumes:
+#  db:

@@ -1,7 +1,7 @@
 package edu.weber.service;
 
 import edu.weber.domain.Account;
-import edu.weber.domain.User;
+//import edu.weber.domain.User;
 
 public interface AccountService {
 
@@ -18,10 +18,10 @@ public interface AccountService {
      * Invokes Auth Service user creation
      * Creates new account with default parameters
      *
-     * @param user
+     * @param account
      * @return created account
      */
-    Account create(User user);
+    Account create(Account account);
 
     /**
      * Validates and applies incoming account updates

@@ -1,3 +1,4 @@
+/*
 package edu.weber.domain;
 
 import javax.persistence.Column;
@@ -148,3 +149,4 @@ public class User {
         this.race = race;
     }
 }
+*/

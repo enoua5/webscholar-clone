@@ -1,3 +1,4 @@
+/*
 package edu.weber.repository;
 
 import edu.weber.domain.User;
@@ -9,3 +10,4 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User findByKey (int key);
 }
+*/

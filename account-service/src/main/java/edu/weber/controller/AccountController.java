@@ -1,7 +1,7 @@
 package edu.weber.controller;
 
 import edu.weber.domain.Account;
-import edu.weber.domain.User;
+//import edu.weber.domain.User;
 import edu.weber.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +16,8 @@ public class AccountController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    public Account createNewAccount(@RequestBody User user) {
-        return accountService.create(user);
+    public Account createNewAccount(@RequestBody Account account) {
+        return accountService.create(account);
     }
 
     @RequestMapping(path = "/update/{key}", method = RequestMethod.POST)

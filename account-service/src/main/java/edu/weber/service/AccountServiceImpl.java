@@ -22,7 +22,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Account findByKey(int accountKey) {
-        return accountRepository.findByKey(accountKey);
+        return accountRepository.findAccountByAccountKey(accountKey);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public void saveChanges(int accountKey, Account update) {
-        Account account = accountRepository.findByKey(accountKey);
+        Account account = accountRepository.findAccountByAccountKey(accountKey);
         Assert.notNull(account, "can't find account with name " + accountKey);
 
         account.setEmail(update.getEmail());

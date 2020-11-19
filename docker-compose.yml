@@ -45,14 +45,16 @@ services:
   account-db:
     image: mysql:5.7
     restart: always
+
     environment:
       MYSQL_DATABASE: webscholar-db
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: password
+      MYSQL_TCP_PORT: 6002
     ports:
-      - 3306:3306
+      - 6002:6002
     expose:
-      - 3306
+      - 6002
     volumes:
       - ./account-db:/var/lib/mysql
 

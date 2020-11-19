@@ -1,13 +1,14 @@
 package edu.weber.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Account {
 
     @Id
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
     private int accountKey;
     @Column
     private String email;

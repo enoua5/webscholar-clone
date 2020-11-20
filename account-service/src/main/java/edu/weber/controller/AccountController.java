@@ -1,7 +1,6 @@
 package edu.weber.controller;
 
 import edu.weber.domain.Account;
-//import edu.weber.domain.User;
 import edu.weber.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 

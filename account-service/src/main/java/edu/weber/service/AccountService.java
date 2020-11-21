@@ -1,7 +1,6 @@
 package edu.weber.service;
 
 import edu.weber.domain.Account;
-//import edu.weber.domain.User;
 
 public interface AccountService {
 

@@ -1,7 +1,6 @@
 package edu.weber.service;
 
 import edu.weber.domain.Account;
-//import edu.weber.domain.User;
 import edu.weber.repository.AccountRepository;
 
 import org.slf4j.Logger;
@@ -30,19 +29,6 @@ public class AccountServiceImpl implements AccountService{
         return account;
     }
 
-    /*public Account create(User user) {
-        Account existing = accountRepository.findByKey(user.getAccountKey());
-        Assert.isNull(existing, "account already exists: " + user.getAccountKey());
-
-        Account account = new Account();
-        account.setAccountKey(user.getAccountKey());
-        // TODO find out where we are getting email from
-        account.setEmail("");
-
-        accountRepository.save(account);
-
-        return account;
-    }*/
 
     @Override
     public void saveChanges(int accountKey, Account update) {

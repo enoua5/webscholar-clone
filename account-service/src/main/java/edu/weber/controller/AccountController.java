@@ -16,7 +16,7 @@ public class AccountController {
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public Account login(@RequestParam LoginDto loginDto) {
-        return true;  //For testing until we see what is comming in.
+        return new Account();  //For testing until we see what is comming in.
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)

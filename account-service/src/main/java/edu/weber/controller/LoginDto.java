@@ -3,7 +3,7 @@ package edu.weber.controller;
 public class LoginDto {
 
     private String username;
-    private String password
+    private String password;
 
     public String getUsername() {
         return username;

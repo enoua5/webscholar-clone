@@ -6,7 +6,7 @@
     <div class="box">
       <p class="subtitle">Log In</p>
 
-      <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <form class="error" (ngSubmit)="onSubmit()" [formGroup]="form">
 
         <div *ngIf="error">
           {{error}}

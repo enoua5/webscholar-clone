@@ -1,7 +1,6 @@
 package edu.weber.service;
 
 import edu.weber.domain.Account;
-import edu.weber.domain.User;
 import edu.weber.repository.AccountRepository;
 
 import org.slf4j.Logger;
@@ -21,28 +20,20 @@ public class AccountServiceImpl implements AccountService{
     private AccountRepository accountRepository;
 
     @Override
-    public Account findByKey(int key) {
-        return accountRepository.findByKey(key);
-    }
-
-    public Account create(User user) {
-        Account existing = accountRepository.findByKey(user.getAccountKey());
-        Assert.isNull(existing, "account already exists: " + user.getAccountKey());
-
-        Account account = new Account();
-        account.setAccountKey(user.getAccountKey());
-        // TODO find out where we are getting email from
-        account.setEmail("");
-
-        accountRepository.save(account);
-
-        return account;
+    public Account findByKey(int accountKey) {
+        return accountRepository.findAccountByAccountKey(accountKey);
     }
 
     @Override
-    public void saveChanges(int key, Account update) {
-        Account account = accountRepository.findByKey(key);
-        Assert.notNull(account, "can't find account with name " + key);
+    public Account create(Account account) {
+        return account;
+    }
+
+
+    @Override
+    public void saveChanges(int accountKey, Account update) {
+        Account account = accountRepository.findAccountByAccountKey(accountKey);
+        Assert.notNull(account, "can't find account with name " + accountKey);
 
         account.setEmail(update.getEmail());
         account.setUsername(update.getUsername());

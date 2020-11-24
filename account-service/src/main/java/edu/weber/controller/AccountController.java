@@ -1,7 +1,6 @@
 package edu.weber.controller;
 
 import edu.weber.domain.Account;
-import edu.weber.domain.User;
 import edu.weber.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,9 +9,9 @@ public class AccountController {
 
     private AccountService accountService;
 
-    @RequestMapping(path = "/{key}", method = RequestMethod.GET)
-    public Account getAccountByKey(@PathVariable int key) {
-        return accountService.findByKey(key);
+    @RequestMapping(path = "/{accountKey}", method = RequestMethod.GET)
+    public Account getAccountByKey(@PathVariable int accountKey) {
+        return accountService.findByKey(accountKey);
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
@@ -21,12 +20,12 @@ public class AccountController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    public Account createNewAccount(@RequestBody User user) {
-        return accountService.create(user);
+    public Account createNewAccount(@RequestBody Account account) {
+        return accountService.create(account);
     }
 
-    @RequestMapping(path = "/update/{key}", method = RequestMethod.POST)
-    public void saveChanges(@PathVariable int key, @RequestBody Account update) {
-        accountService.saveChanges(key, update);
+    @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST)
+    public void saveChanges(@PathVariable int accountKey, @RequestBody Account update) {
+        accountService.saveChanges(accountKey, update);
     }
 }

@@ -15,6 +15,11 @@ public class AccountController {
         return accountService.findByKey(key);
     }
 
+    @RequestMapping(path = "/login", method = RequestMethod.POST)
+    public Account login(@RequestParam LoginDto loginDto) {
+        return true;  //For testing until we see what is comming in.
+    }
+
     @RequestMapping(path = "/", method = RequestMethod.POST)
     public Account createNewAccount(@RequestBody User user) {
         return accountService.create(user);

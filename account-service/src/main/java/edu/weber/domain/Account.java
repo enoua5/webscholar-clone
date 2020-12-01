@@ -45,8 +45,8 @@ public class Account {
     @Column
     private String race;
 
-    public Account(int accountKey, String email, String username, String password, String schoolId, Boolean active, String userType, String firstName, String middleName, String lastName, String address1, String address2, String city, String state, String zipCode, String school, String sex, String race) {
-        this.accountKey = accountKey;
+    public Account( String email, String username, String password, String schoolId, Boolean active, String userType, String firstName, String middleName, String lastName, String address1, String address2, String city, String state, String zipCode, String school, String sex, String race) {
+
         this.email = email;
         this.username = username;
         this.password = password;
@@ -66,14 +66,19 @@ public class Account {
         this.race = race;
     }
 
-    public Account(int accountKey, String email, String username, String password, String schoolId, Boolean active) {
-        this.accountKey = accountKey;
+
+    public Account( String email, String username, String password, String schoolId, Boolean active) {
         this.email = email;
         this.username = username;
         this.password = password;
         this.schoolId = schoolId;
         this.active = active;
     }
+
+    public Account(String email){
+        this.email = email;
+    }
+
     public Account(){}
 
     public int getAccountKey() {

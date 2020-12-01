@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.ArrayList;
-
+@Service
 public class AccountServiceImpl implements AccountService{
 
     private final Logger log = LoggerFactory.getLogger(getClass());
@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Account create(Account account) {
-        return account;
+        return accountRepository.save(account);
     }
 
 

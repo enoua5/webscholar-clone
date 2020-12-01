@@ -26,7 +26,9 @@ public class AccountController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public Account createNewAccount(@ModelAttribute Account account) {
         if(accountService == null){
             accountService = new AccountServiceImpl();
@@ -35,8 +37,9 @@ public class AccountController {
         return accountService.create(account);
     }
 
-    @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST)
-    public void saveChanges(@PathVariable int accountKey, @RequestBody Account update) {
+    @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void saveChanges(@PathVariable int accountKey, @ModelAttribute Account update) {
         accountService.saveChanges(accountKey, update);
     }
 

@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletResponse;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class AccountController {
 
@@ -37,9 +37,9 @@ public class AccountController {
             accountService = new AccountServiceImpl();
 
         }
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH");
-        response.setHeader("Access-Control-Allow-Headers", "content-type");
+        //response.setHeader("Access-Control-Allow-Origin", "*");
+        //response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH");
+        //response.setHeader("Access-Control-Allow-Headers", "content-type");
         accountService.create(account);
         ResponseData responseData = new ResponseData();
         responseData.setSuccess(true);

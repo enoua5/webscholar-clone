@@ -1,6 +1,7 @@
 package edu.weber.service;
 
 import edu.weber.domain.Account;
+import org.springframework.stereotype.Service;
 
 public interface AccountService {
 

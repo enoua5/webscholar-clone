@@ -26,6 +26,10 @@ dist/
 # JetBrains IDE
 .idea/
 *.iml
+account-service/*.iml
+config-service/*.iml
+registry/*.iml
+
 
 # Unit test reports
 TEST*.xml

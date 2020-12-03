@@ -2,12 +2,13 @@ package edu.weber.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 
 @Configuration
-@EnableResourceServer
-public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+//@EnableResourceServer
+public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
 
 
     @Override
@@ -19,6 +20,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and()
                 .httpBasic()
-        ;;
+        ;
     }
 }

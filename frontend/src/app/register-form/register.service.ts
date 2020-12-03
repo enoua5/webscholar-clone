@@ -13,7 +13,12 @@ export class RegisterService{
   }
 
   public insert(data): Observable<any> {
-    return this.http.post(INSERT_URL, data);
+    let headers = new HttpHeaders({
+      'Access-Control-Allow-Origin' : '*',
+      'Access-Control-Allow-Methods' : 'GET,POST,PUT,PATCH',
+      'Access-Control-Allow-Headers' : 'content-type'
+    })
+    return this.http.post(INSERT_URL, data, {headers: headers});
   }
 
 }

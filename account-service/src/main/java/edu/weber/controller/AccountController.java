@@ -2,12 +2,15 @@ package edu.weber.controller;
 
 import com.netflix.discovery.converters.Auto;
 import edu.weber.domain.Account;
+import edu.weber.domain.ResponseData;
 import edu.weber.service.AccountService;
 import edu.weber.service.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class AccountController {
@@ -26,15 +29,21 @@ public class AccountController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Account createNewAccount(@ModelAttribute Account account) {
+    public ResponseData createNewAccount(@ModelAttribute Account account, HttpServletResponse response) {
         if(accountService == null){
             accountService = new AccountServiceImpl();
 
         }
-        return accountService.create(account);
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH");
+        response.setHeader("Access-Control-Allow-Headers", "content-type");
+        accountService.create(account);
+        ResponseData responseData = new ResponseData();
+        responseData.setSuccess(true);
+        return responseData;
     }
 
     @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST,

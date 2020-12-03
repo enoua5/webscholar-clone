@@ -2,12 +2,16 @@ package edu.weber.controller;
 
 import edu.weber.domain.Account;
 import edu.weber.service.AccountService;
+import edu.weber.service.AccountServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class AccountController {
 
+    @Autowired
     private AccountService accountService;
+
 
     @RequestMapping(path = "/{accountKey}", method = RequestMethod.GET)
     public Account getAccountByKey(@PathVariable int accountKey) {
@@ -20,7 +24,7 @@ public class AccountController {
     }
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
-    public Account createNewAccount(@RequestBody Account account) {
+    public Account createNewAccount(@ModelAttribute Account account) {
         return accountService.create(account);
     }
 

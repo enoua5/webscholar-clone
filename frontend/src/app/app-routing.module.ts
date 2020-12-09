@@ -5,6 +5,8 @@ import {RegisterFormFacultyComponent} from "./register-form-faculty/register-for
 import {LoginFormComponent} from "./login-form/login-form.component";
 import {ForgotPasswordFormComponent} from "./forgot-password-form/forgot-password-form.component";
 import {ForgotPasswordSubmissionComponent} from "./forgot-password-submission/forgot-password-submission.component";
+import {EditProfileFormComponent} from "./edit-profile-form/edit-profile-form.component";
+import {ChangePasswordFormComponent} from "./change-password-form/change-password-form.component";
 
 const routes: Routes = [
   { path: '', component: LoginFormComponent },
@@ -12,6 +14,8 @@ const routes: Routes = [
   { path: 'register-faculty', component: RegisterFormFacultyComponent},
   { path: 'forgot_password', component: ForgotPasswordFormComponent},
   { path: 'forgot_password_submission', component: ForgotPasswordSubmissionComponent},
+  { path: 'edit_profile', component: EditProfileFormComponent },
+  { path: 'change_password', component: ChangePasswordFormComponent},
 ];
 
 @NgModule({

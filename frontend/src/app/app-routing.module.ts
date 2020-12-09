@@ -5,6 +5,8 @@ import {RegisterFormFacultyComponent} from "./register-form-faculty/register-for
 import {LoginFormComponent} from "./login-form/login-form.component";
 import {ForgotPasswordFormComponent} from "./forgot-password-form/forgot-password-form.component";
 import {ForgotPasswordSubmissionComponent} from "./forgot-password-submission/forgot-password-submission.component";
+import {ChangePasswordFormComponent} from "./change-password-form/change-password-form.component";
+import {EditProfileFormComponent} from "./edit-profile-form/edit-profile-form.component";
 
 const routes: Routes = [
   { path: '', component: LoginFormComponent },

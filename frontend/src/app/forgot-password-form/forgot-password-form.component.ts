@@ -13,6 +13,7 @@ export class ForgotPasswordFormComponent implements OnInit {
   }
 
   onFPassword(): void {
+
     alert('button pressed');
   }
 

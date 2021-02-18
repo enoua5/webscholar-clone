@@ -12,7 +12,9 @@ import { RegisterFormFacultyComponent } from './register-form-faculty/register-f
 import { HttpClientModule} from "@angular/common/http";
 import { EditProfileFormComponent } from './edit-profile-form/edit-profile-form.component';
 import { ChangePasswordFormComponent } from './change-password-form/change-password-form.component';
+
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import {NewPasswordComponent} from "./new-password-form/new-password.component";
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
     EditProfileFormComponent,
     ChangePasswordFormComponent,
     DashboardComponent,
+    NewPasswordComponent
   ],
   imports: [
     BrowserModule,

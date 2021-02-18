@@ -12,6 +12,7 @@ import { RegisterFormFacultyComponent } from './register-form-faculty/register-f
 import { HttpClientModule} from "@angular/common/http";
 import { EditProfileFormComponent } from './edit-profile-form/edit-profile-form.component';
 import { ChangePasswordFormComponent } from './change-password-form/change-password-form.component';
+import { DashboardComponent } from "./dashboard/dashboard.component";
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ChangePasswordFormComponent } from './change-password-form/change-passw
     ForgotPasswordSubmissionComponent,
     RegisterFormFacultyComponent,
     EditProfileFormComponent,
-    ChangePasswordFormComponent
+    ChangePasswordFormComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,

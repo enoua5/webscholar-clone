@@ -45,8 +45,14 @@ public class AccountController {
     }
 
 
+    /**
+     * This method takes login credentials sent from the frontend and returns the associated account.
+     * @param loginDto The login credentials model.
+     * @return The account object (automatically serialized into a json object by jackson serializer)
+     */
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public Account login(@RequestParam LoginDto loginDto) {
+        //TODO: Find the account in the database. Return it if it is found. Throw an error if it is not found.
         return new Account();  //For testing until we see what is coming in.
     }
 

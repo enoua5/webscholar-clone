@@ -2,8 +2,15 @@ package edu.weber.domain;
 
 import javax.persistence.*;
 
+/**
+ * This is a data model. It helps us put data into the backend and send data
+ * to the frontend in a standardized format.
+ */
 @Entity
 public class Account {
+
+    //TODO: Use lombok to reduce getter and setter code
+    //TODO: Use 'javax.validation' to prevent null values
 
     @Id
     @GeneratedValue(
@@ -45,7 +52,8 @@ public class Account {
     @Column
     private String race;
 
-    public Account( String email, String username, String password, String schoolId, Boolean active, String userType, String firstName, String middleName, String lastName, String address1, String address2, String city, String state, String zipCode, String school, String sex, String race) {
+    //TODO: Find if this is necessary
+    public Account(String email, String username, String password, String schoolId, Boolean active, String userType, String firstName, String middleName, String lastName, String address1, String address2, String city, String state, String zipCode, String school, String sex, String race) {
 
         this.email = email;
         this.username = username;
@@ -66,8 +74,8 @@ public class Account {
         this.race = race;
     }
 
-
-    public Account( String email, String username, String password, String schoolId, Boolean active) {
+    //TODO: Find if this is necessary
+    public Account(String email, String username, String password, String schoolId, Boolean active) {
         this.email = email;
         this.username = username;
         this.password = password;
@@ -75,16 +83,20 @@ public class Account {
         this.active = active;
     }
 
-    public Account(String email){
+    //TODO: Find if this is necessary
+    public Account(String email) {
         this.email = email;
     }
 
-    public Account(){}
+    //TODO: Find if this is necessary
+    public Account() {
+    }
 
     public int getAccountKey() {
         return accountKey;
     }
 
+    //TODO: Remove this. Generated ID's should be protected and should only be changed by the database.
     public void setAccountKey(int accountKey) {
         this.accountKey = accountKey;
     }
@@ -223,5 +235,35 @@ public class Account {
 
     public void setRace(String race) {
         this.race = race;
+    }
+
+    /**
+     * This method allows us to see the account information in the console.
+     * This is helpful for debugging account problems when there is an error.
+     *
+     * @return Returns the 'Account' data formatted as a string.
+     */
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountKey=" + accountKey +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", schoolId='" + schoolId + '\'' +
+                ", active=" + active +
+                ", userType='" + userType + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address1='" + address1 + '\'' +
+                ", address2='" + address2 + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                ", school='" + school + '\'' +
+                ", sex='" + sex + '\'' +
+                ", race='" + race + '\'' +
+                '}';
     }
 }

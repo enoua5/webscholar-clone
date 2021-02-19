@@ -2,38 +2,68 @@ package edu.weber.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+/**
+ * This class handles who can handle which API and how they can access it.
+ * Thas handles the access control for all micro-services.
+ */
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-   /* @Bean
+    /**
+     * This method takes an incoming http request and applies restrictions to it.
+     * These restrictions limit whether or not a request is accepted by the backend controllers.
+     * - The API URL can be specified to narrow the restrictions to certain parts of code.
+     * - The API mapping type can be restricted (get, post, delete etc).
+     * - The user role can be restricted (student, admin, etc).
+     * - Other settings can be restricted as well. Look at the spring documentation.
+     * @param http This is the incoming http object that holds the incoming request information.
+     * @throws Exception Throws an error if the http request could not be handled.
+     */
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+
+        //Set authentication and access level for each API endpoint
+        http
+                .httpBasic()
+                .and()
+                .authorizeRequests()
+
+                //Todo: Add 'role' access levels
+                //Anyone can access this endpoint
+                .antMatchers(HttpMethod.POST, "/accounts/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/accounts/**").permitAll()
+
+                .and()
+                .csrf().disable()
+                .formLogin().disable()
+                .sessionManagement().disable();
+    }
+
+    //TODO: Add user authentication in here
+
+
+
+
+
+
+    /*
+   //Ignore this method. This is the old way for specifying API restrictions.
+   @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-//                        .allowedHeaders()
+                        .allowedHeaders()
                         .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
             }
         };
     }*/
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.cors().disable();
-        http
-            .authorizeRequests()
-                .antMatchers("/**").permitAll()
-                .antMatchers("/actuator/**").permitAll()
-                .anyRequest().permitAll()
-            .and()
-                .httpBasic()
-                ;
-    }
 }

@@ -2,17 +2,18 @@ package edu.weber.service;
 
 import edu.weber.domain.Account;
 import edu.weber.repository.AccountRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
+/**
+ * This class extends the functionality of 'AccountRepository'. Instead of using the default
+ * search functions, we can define our own here.
+ */
 @Service
-public class AccountServiceImpl implements AccountService{
+public class AccountServiceImpl implements AccountService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 

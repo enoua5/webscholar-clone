@@ -1,8 +1,8 @@
 package edu.weber.service;
 
 import edu.weber.domain.Account;
-import org.springframework.stereotype.Service;
 
+//TODO: Find out why these very specific interface was made. Why not just put this code in 'AccountServiceImpl'?
 public interface AccountService {
 
     /**

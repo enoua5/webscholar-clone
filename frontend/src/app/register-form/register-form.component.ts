@@ -33,21 +33,44 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  private checkErrors(): void{
+  private checkErrors(): void {
     this.errors.clear();
+
+    //if (this.form.get('username')) {
+      //this.errors.set('username', 'Username taken');
+   // }
+    if (this.form.get('username').value.length == 0) {
+      this.errors.set('username', 'Invalid username');
+    }
+    //todo check if username already taken in database
+
+    //Password verification (meets requirements and passwords match)
     if(this.form.get('password').value != this.form.get('confirm_password').value){
-      this.errors.set('confirm_password', 'Password does not match');
+      this.errors.set('confirm_password', 'Passwords do not match');
     }
+    const validPassword = RegExp('^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,30}$');
+    if (!validPassword.test(this.form.get('password').value) || this.form.get('password').value.length == 0) {
+      this.errors.set('confirm_password', 'Password must meet requirements');
+    }
+
+    //School Id verification
     const regex = RegExp('^W[0-9]{8}$');
-    if(!regex.test(this.form.get('school_id').value)){
-      this.errors.set('school_id', 'Invalid format');
+    if (!regex.test(this.form.get('school_id').value) || this.form.get('school_id').value.length == 0) {
+      this.errors.set('school_id', 'Invalid school id');
     }
-   //todo check if check mark is set
-    let checkboxvalue = this.form.get('checkbox').value;
-    if(checkboxvalue !== true){
+
+    //Email verification
+    const validEmail = RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$');
+    if (!validEmail.test(this.form.get('school_email').value) || this.form.get('school_email').value.length == 0) {
+      this.errors.set('school_email', 'Invalid email format');
+    }
+
+    //Terms and Conditions checkbox verification
+    if(this.form.get('checkbox').value !== true){
       this.errors.set('checkbox', 'Please indicate that you have read and agree to the Terms and Conditions Policy');
     }
   }
+
 
   onSubmit(): void {
     console.log(this.form.value);
@@ -66,7 +89,5 @@ export class RegisterFormComponent implements OnInit {
       this.error = data.error;
       this.errors = new Map(Object.entries(data.errors));
     }
-
   }
-
 }

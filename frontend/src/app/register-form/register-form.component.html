@@ -19,6 +19,9 @@
             <i class="fas fa-user"></i>
           </span>
           </p>
+          <div class="error" *ngIf="errors.has('username')">
+            {{errors.get('username')}}
+          </div>
         </div>
 
         <div class="field-body">

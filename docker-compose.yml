@@ -1,10 +1,15 @@
 version: '2.1'
 services:
+
+  #Message broker
   rabbitmq:
     image: rabbitmq:3-management
     ports:
       - 15672:15672
 
+
+
+  #Spring config-service micro-service container settings
   config-service:
 #    environment:
 #      CONFIG_SERVICE_PASSWORD: password
@@ -25,6 +30,9 @@ services:
     ports:
       - 8765:8765
 
+
+
+  #Spring account-service micro-service container settings
   account-service:
 #    environment:
 #      CONFIG_SERVICE_PASSWORD: password
@@ -44,10 +52,13 @@ services:
 #      DATABASE_PASSWORD: password
 #      DATABASE_NAME: webscholar-db
 #      DATABASE_PORT: 6602
+
+
+
+  #MySql container settings
   account-db:
     image: mysql:5.7
     restart: always
-
     environment:
       MYSQL_DATABASE: webscholar-db
       MYSQL_USER: root
@@ -60,6 +71,9 @@ services:
     volumes:
       - ./account-db:/var/lib/mysql
 
+
+
+   #Old MySql container settings
 #  db-service:
 #    image: mysql:5.7
 #    restart: always

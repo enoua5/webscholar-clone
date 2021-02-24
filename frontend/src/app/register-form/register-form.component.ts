@@ -53,16 +53,16 @@ export class RegisterFormComponent implements OnInit {
       this.errors.set('confirm_password', 'Password must meet requirements');
     }
 
-    //School Id verification
-    const regex = RegExp('^W[0-9]{8}$');
-    if (!regex.test(this.form.get('school_id').value) || this.form.get('school_id').value.length == 0) {
-      this.errors.set('school_id', 'Invalid school id');
+    //User Id verification
+    const regex = RegExp('^[0-9]{8}$');
+    if (!regex.test(this.form.get('user-id').value) || this.form.get('user-id').value.length == 0) {
+      this.errors.set('user-id', 'Invalid user id');
     }
 
     //Email verification
     const validEmail = RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$');
-    if (!validEmail.test(this.form.get('school_email').value) || this.form.get('school_email').value.length == 0) {
-      this.errors.set('school_email', 'Invalid email format');
+    if (!validEmail.test(this.form.get('email').value) || this.form.get('email').value.length == 0) {
+      this.errors.set('email', 'Invalid email format');
     }
 
     //Terms and Conditions checkbox verification

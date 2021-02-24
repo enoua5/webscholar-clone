@@ -1,14 +1,14 @@
 <section class="section">
-  <div class="column is-5 is-offset-4">
 
-    <h1 class="title header">WebScholar</h1>
-    <form class="error"  (ngSubmit)="onSubmit()" [formGroup]="form">
-      <div *ngIf="error">
+  <div class="column is-5 is-offset-4">
+    <form action="/dashboard"  [formGroup]="form">
+<!--    <form action="/" class="error"  (ngSubmit)="onSubmit()" [formGroup]="form">-->
+      <!--<div *ngIf="error">
         {{error}}
-      </div>
+      </div>-->
 
       <div class="box">
-        <p class="subtitle">Student Registration</p>
+        <p class="subtitle">Account Registration</p>
 
         <div class="field">
           <label class="label" for="username">Username:</label>
@@ -24,23 +24,21 @@
           </div>
         </div>
 
-        <div class="field-body">
-          <div class="field">
+        <div class="field">
+          <div class="password" id="password1">
             <label class="label" for="password">Password:</label>
             <p class="control has-icons-left">
-              <input id="password" class="input" type="password" placeholder="Password" formControlName="password"
-                     required="required">
+              <input id="password" class="input" type="password" placeholder="Password" formControlName="password" required="required">
               <span class="icon is-small is-left">
                <i class="fas fa-lock"></i>
             </span>
             </p>
           </div>
 
-          <div class="field">
+          <div class="password" id="password2">
             <label class="label" for="confirm-password">Confirm Password:</label>
             <p class="control has-icons-left">
-              <input id="confirm-password" class="input" type="password" placeholder="Confirm Password"
-                     formControlName="confirm_password" required="required">
+              <input id="confirm-password" class="input" type="password" placeholder="Confirm Password" formControlName="confirm_password" required="required">
               <span class="icon is-small is-left">
                <i class="fas fa-lock"></i>
             </span>
@@ -49,45 +47,69 @@
               {{errors.get('confirm_password')}}
             </div>
           </div>
-        </div>
 
-        <div class="field">
-          <div class="content">
-            <p>Password Requirements:</p>
-            <ul class="password-requirements">
-              <li>Must be at least 8 characters long</li>
-              <li>Must contain at least all of the following:
-                <ul>
-                  <li>One lower-case letter</li>
-                  <li>One upper-case letter</li>
-                  <li>One number</li>
-                  <li>One special symbol</li>
-                </ul>
-              </li>
-            </ul>
+          <div class="password">
+            <div class="content">
+              <p>Password Requirements:</p>
+              <ul class="password-requirements">
+                <li>Must be at least 8 characters long</li>
+                <li>Must contain at each of the following:
+                  <ul>
+                    <li>One lower-case letter</li>
+                    <li>One upper-case letter</li>
+                    <li>One number</li>
+                    <li>One special symbol</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
         <div class="field">
-          <label class="label" for="school-email">School Email:</label>
+          <label class="label">User Type:</label>
+
+          <input type="radio" class="account-type" id="radio-student" name="account-type" value="Student"  onclick='document.getElementById("user-id-label").innerHTML = "Student ID:"'  checked="checked" required>
+          <label class="radio-label" for="radio-student">Student</label>
+
+          <input type="radio" class="account-type" id="radio-employee" name="account-type" value="Employee" onclick='document.getElementById("user-id-label").innerHTML = "Employee ID:"' required>
+          <label class="radio-label" for="radio-employee">Employee</label>
+
+        </div>
+
+        <div class="field">
+          <label class="label" for="institutions">Institution:</label>
+          <select id="institutions" name="institutions" class="select">
+            <option value="byu">Brigham Young University</option>
+            <option value="dixie">Dixie State University</option>
+            <option value="southern utah">Southern Utah University</option>
+            <option value="university of utah">University of Utah</option>
+            <option value="utah state">Utah State University</option>
+            <option value="utah valley">Utah Valley University</option>
+            <option value="weber">Weber State University</option>
+          </select>
+        </div>
+
+
+
+        <div class="field">
+          <label class="label" for="email" id="email-label">Email:</label>
           <p class="control has-icons-left">
-            <input id="school-email" class="input" type="email" placeholder="Email" formControlName="school_email"
-                   required="required">
+            <input id="email" class="input" type="email" placeholder="Email" formControlName="email" required="required">
             <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>
           </p>
-          <div class="error" *ngIf="errors.has('school_email')">
-            {{errors.get('school_email')}}
+          <div class="error" *ngIf="errors.has('email')">
+            {{errors.get('email')}}
           </div>
         </div>
 
         <div class="field">
-          <label class="label" for="school-id">School ID:</label>
-          <input id="school-id" class="input" type="text" placeholder="W#" formControlName="school_id"
-                 required="required">
-          <div class="error" *ngIf="errors.has('school_id')">
-            {{errors.get('school_id')}}
+          <label class="label" id="user-id-label" for="user-id">Student ID:</label>
+          <input id="user-id" class="input" type="text" placeholder="W#" formControlName="user-id"  required="required">
+          <div class="error" *ngIf="errors.has('user-id')">
+            {{errors.get('user-id')}}
           </div>
         </div>
 
@@ -108,9 +130,8 @@
             <p class="control">
               <a class="login-links-1" routerLink="/">Already have an account? Log in</a>
 
-              <button type="submit" class="button is-success is-small">
-                Register
-              </button>
+              <input type="submit" value="Register" class="button is-success is-small"/>
+
             </p>
           </div>
         </div>

@@ -46,12 +46,6 @@ services:
       - 6001:6001
     expose:
       - 6001
-#    environment:
-#      DATABASE_HOST: account-db
-#      DATABASE_USER: root
-#      DATABASE_PASSWORD: password
-#      DATABASE_NAME: webscholar-db
-#      DATABASE_PORT: 6602
 
 
 
@@ -64,10 +58,17 @@ services:
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: password
       MYSQL_TCP_PORT: 6002
+#    environment:
+#      DATABASE_HOST: account-db
+#      DATABASE_USER: root
+#      DATABASE_PASSWORD: password
+#      DATABASE_NAME: webscholar-db
+#      DATABASE_PORT: 6602
     ports:
       - 6002:6002
     expose:
       - 6002
+    #Data persistence for mysql database files
     volumes:
       - ./account-db:/var/lib/mysql
 

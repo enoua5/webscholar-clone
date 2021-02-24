@@ -4,6 +4,8 @@ spring:
   cloud:
     enabled: true
     config:
+      #This tells the 'account-service' to connect to the docker image
+      #named 'config-service' when running in the docker host
       uri: http://config-service:8888
       fail-fast: true
   datasource:

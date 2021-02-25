@@ -10,7 +10,7 @@ export class NewPasswordComponent{
   pageTitle: string = 'New Password Form';
 
   onFPassword(): void {
-    alert('button pressed');
+    alert('Password has been updated');
   }
 
 }

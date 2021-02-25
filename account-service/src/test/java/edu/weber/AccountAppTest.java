@@ -42,7 +42,7 @@ public class AccountAppTest
         account.setFirstName("TestFirstName");
         account.setMiddleName("TestMiddleName");
         account.setLastName("TestLastName");
-        account.setAddress1("1234 Test St");
+        account.setAddress1("1234 Test ST");
         account.setAddress2("Test Apartment");
         account.setCity("TestCity");
         account.setState("TestState");
@@ -61,7 +61,7 @@ public class AccountAppTest
         Assert.assertEquals("First name not equal","TestFirstName", account.getFirstName());
         Assert.assertEquals("Middle name not equal","TestMiddleName", account.getMiddleName());
         Assert.assertEquals("Last name not equal","TestLastName", account.getLastName());
-        Assert.assertEquals("Address1 not equal","1234 Test St", account.getAddress1());
+        Assert.assertEquals("Address1 not equal","1234 Test ST", account.getAddress1());
         Assert.assertEquals("Address2 not equal","Test Apartment", account.getAddress2());
         Assert.assertEquals("City not equal","TestCity", account.getCity());
         Assert.assertEquals("State not equal","TestState", account.getState());

@@ -15,8 +15,7 @@ import javax.persistence.*;
 @Entity
 public class Account {
 
-    //TODO: Use lombok to reduce getter and setter code
-    //TODO: Use 'javax.validation' to prevent null values
+    //TODO: Use 'javax.validation' to prevent null and blank values
 
     @Id
     @GeneratedValue(
@@ -95,17 +94,7 @@ public class Account {
         this.email = email;
     }
 
-    //TODO: Find if this is necessary
     public Account() {
-    }
-
-    public int getAccountKey() {
-        return accountKey;
-    }
-
-    //TODO: Remove this. Generated ID's should be protected and should only be changed by the database.
-    public void setAccountKey(int accountKey) {
-        this.accountKey = accountKey;
     }
 
     /**

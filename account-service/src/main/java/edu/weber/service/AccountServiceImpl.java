@@ -5,43 +5,47 @@ import edu.weber.repository.AccountRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * This class extends the functionality of 'AccountRepository'. Instead of using the default
- * search functions, we can define our own here.
+ * search queries, we can define our own here.
  */
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private AccountRepository accountRepository;
+    public AccountRepository accountRepository;
 
-    @Override
-    public Account findByKey(int accountKey) {
-        return accountRepository.findAccountByAccountKey(accountKey);
-    }
+    public boolean saveChanges(int accountKey, Account update) {
 
-    @Override
-    public Account create(Account account) {
-        return accountRepository.save(account);
-    }
-
-
-    @Override
-    public void saveChanges(int accountKey, Account update) {
+        //Get the current account
         Account account = accountRepository.findAccountByAccountKey(accountKey);
+
+        //Verify the account exists
+        if(account == null){
+
+            return false;
+        }
+
         Assert.notNull(account, "can't find account with name " + accountKey);
 
+        //Update the account's data
         account.setEmail(update.getEmail());
         account.setUsername(update.getUsername());
         account.setPassword(update.getPassword());
         account.setSchoolId(update.getSchoolId());
         account.setActive(update.getActive());
+
+        //Save the updated account
         accountRepository.save(account);
+
+        return true;
     }
 
 }

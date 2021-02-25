@@ -1,23 +1,26 @@
 package edu.weber.controller;
 
 import edu.weber.domain.Account;
+import edu.weber.domain.LoginDto;
 import edu.weber.domain.ResponseData;
-import edu.weber.service.AccountService;
 import edu.weber.service.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 /**
  * This class handles user logins as well as user registrations.
- * Note: This class does not have '@RestController("accounts")' API path specified here.
- * The path is specified in the 'account-service.yaml' file.
+ * Note: This class does not have '@RestController("account")' API path specified here.
+ * The path is specified in the 'config-services/src/resources/shared/account-service.yaml' file.
  */
 @CrossOrigin(origins = "http://localhost:4200")
-@RestController
+@RestController //Path = '/account'
 public class AccountController {
 
     /**
@@ -26,34 +29,43 @@ public class AccountController {
      * spring to inject the instance at run time.
      */
     @Autowired
-    private AccountService accountService;// = new AccountServiceImpl();
-
-
-    /**
-     * This method returns an account using the specified key given.
-     *
-     * @param accountKey The key used to find the account in the database
-     * @return The found account is returned as an account model object converted to a json object.
-     */
-    @RequestMapping(path = "/{accountKey}", method = RequestMethod.GET)
-    public Account getAccountByKey(@PathVariable int accountKey) {
-
-        //Todo: throw error if the account is not found
-
-        //Return the found account in the database
-        return accountService.findByKey(accountKey);
-    }
+    private AccountServiceImpl accountService;// = new AccountServiceImpl();
 
 
     /**
      * This method takes login credentials sent from the frontend and returns the associated account.
+     *
      * @param loginDto The login credentials model.
      * @return The account object (automatically serialized into a json object by jackson serializer)
      */
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public Account login(@RequestParam LoginDto loginDto) {
-        //TODO: Find the account in the database. Return it if it is found. Throw an error if it is not found.
-        return new Account();  //For testing until we see what is coming in.
+    public Account login(@Valid @ModelAttribute LoginDto loginDto, BindingResult result) {
+
+        //Validate input
+        if (result.hasErrors()) {
+
+            //Throw http error
+            invalidData();
+        }
+
+        //Find the account
+        Account found = accountService.accountRepository.findAccountByEmail(loginDto.getEmail());
+
+        //If null, the account does not exist
+        if (found == null) {
+
+            //Throw http error
+            accountNotFound();
+        }
+
+        /*
+        TODO: Verify password hash
+        Check password encryption
+        Throw error if the password is incorrect
+         */
+
+        //Return the found account data to the frontend
+        return found;
     }
 
 
@@ -61,54 +73,72 @@ public class AccountController {
      * This method creates a new account. First, json data from the frontend is converted to an 'Account' model
      * if possible. Then, the account is saved to the database.
      *
-     * @param account  The 'Account' object created with data sent from the frontend.
-     * @param response This object allows us to create and send a response to the frontend.
-     * @return Tells the frontend if we succeeded in creating the account.
+     * @param account The 'Account' object created with data sent from the frontend.
      */
-    //TODO: Change this mapping. It makes debugging API paths confusing as hell. ("/create")
-    @RequestMapping(path = "/", method = RequestMethod.POST,
+    @RequestMapping(path = "/create", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseData createNewAccount(@ModelAttribute Account account, HttpServletResponse response) {
+    public void createNewAccount(@Valid @ModelAttribute Account account, BindingResult result) {
 
-        //TODO: Find out if this code is necessary. The variable should already be auto injected by spring at run time.
-        if (accountService == null) {
-            accountService = new AccountServiceImpl();
-        }
-
-        //Ignore this code. It is setting access levels which should only be done in 'SecurityConfig'.
-        //response.setHeader("Access-Control-Allow-Origin", "*");
-        //response.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH");
-        //response.setHeader("Access-Control-Allow-Headers", "content-type");
-
-        //TODO: Verify account information (input validation)
-
-        //Create an account in the database
-        accountService.create(account);
-
-        //TODO: Return an error if the account information is invalid
+        //Data returned to frontend
         ResponseData responseData = new ResponseData();
-        responseData.setSuccess(true);
 
-        return responseData;
+        //Validate account information (input validation)
+        if (result.hasErrors()) {
+
+            responseData.setSuccess(false);
+
+            //Throw error
+            invalidData();
+        } else {
+
+            //Create an account in the database
+            accountService.accountRepository.save(account);
+            responseData.setSuccess(true);
+        }
     }
 
 
     /**
      * This method updates the account details of the user by using the specified account key.
      *
-     * @param accountKey The key used to find the users account from the database.
-     * @param update     The form object sent from the frontend that is converted into an account model object.
+     * @param accountKey    The key used to find the users account from the database.
+     * @param updateAccount The form object sent from the frontend that is converted into an account model object.
      */
     @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void saveChanges(@PathVariable int accountKey, @ModelAttribute Account update) {
+    public void saveChanges(@PathVariable int accountKey, @ModelAttribute Account updateAccount, BindingResult result) {
 
-        //TODO: Throw error if the account is not found
+        //Validate input
+        if (result.hasErrors()) {
+
+            //Throw http error
+            invalidData();
+        }
 
         //Overwrite the existing account data with the new account data
-        accountService.saveChanges(accountKey, update);
+        if (!accountService.saveChanges(accountKey, updateAccount)) {
+
+            //Throw http error if account could not be saved
+            accountNotFound();
+        }
+    }
+
+    /**
+     * Send an http response error if data sent did not follow model restrictions.
+     */
+    public void invalidData() {
+
+        throw new ResponseStatusException(HttpStatus.PARTIAL_CONTENT, "The data sent was incomplete or invalid!");
+    }
+
+    /**
+     * Send an http response error if the specified account could not be found.
+     */
+    public void accountNotFound() {
+
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account could not be found!");
     }
 
 
@@ -151,7 +181,7 @@ public class AccountController {
         account.setActive(true);
 
         //Save the account to the database
-        accountService.create(account);
+        accountService.accountRepository.save(account);
 
         //Return success message and account details
         return "Success! Account Created!\nDetlais:\n" + account.toString();

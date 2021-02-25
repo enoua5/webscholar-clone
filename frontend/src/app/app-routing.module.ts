@@ -8,6 +8,7 @@ import {ForgotPasswordSubmissionComponent} from "./forgot-password-submission/fo
 import {ChangePasswordFormComponent} from "./change-password-form/change-password-form.component";
 import {EditProfileFormComponent} from "./edit-profile-form/edit-profile-form.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {CreateScholarshipFormComponent} from "./create-scholarship-form/create-scholarship-form.component";
 
 const routes: Routes = [
   { path: '', component: LoginFormComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'edit_profile', component: EditProfileFormComponent },
   { path: 'change_password', component: ChangePasswordFormComponent},
   { path: 'dashboard', component: DashboardComponent},
+  { path: 'create_scholarship', component: CreateScholarshipFormComponent}
 ];
 
 @NgModule({

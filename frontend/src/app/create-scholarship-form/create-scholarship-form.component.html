@@ -1,0 +1,100 @@
+<section class="section">
+  <div class = "box">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">
+            Home
+          </a>
+
+          <a class="navbar-item">
+            Discover
+          </a>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              More
+            </a>
+
+            <div class="navbar-dropdown">
+              <a class="navbar-item">
+                About
+              </a>
+              <a class="navbar-item">
+                Contact
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item">
+                Report an issue
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="navbar-end">
+          <a class="navbar-item" routerLink="/edit-profile">
+            <strong>Profile</strong>
+          </a>
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary" routerLink ="/">
+                <strong>Log Out</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class = "container"></div>
+
+    <router-outlet></router-outlet>
+    <div class="Edit_header">Your Dashboard</div>
+    <form>
+      <div class="box">
+        <p class="subtitle">Create Scholarship</p>
+
+        <div class="field">
+          <label class="label" for="FullName">Your Full Name:</label>
+          <p class="control has-icons-left">
+            <input id="FullName" class="input" type="text" placeholder="FullName" formControlName="FullName"
+                   required="required">
+            <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+          </p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="your-email">School Email:</label>
+          <p class="control has-icons-left">
+            <input id="your-email" class="input" type="email" placeholder="Email" formControlName="your_email"
+                   required="required">
+            <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+          </p>
+        </div>
+
+
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" formControlName="checkbox" required="required">
+              I have read and agree to the <a class="term-and-conditions-link" href="/#">Terms and Conditions</a>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="register-btn-left">
+              <button type="submit" class="button is-success is-small">
+                Register
+              </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

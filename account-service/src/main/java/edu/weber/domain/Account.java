@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 /**
  * This is a data model. It helps us put data into the backend and send data
@@ -25,22 +26,30 @@ public class Account {
     @Setter(AccessLevel.PRIVATE)
     private int accountKey;
     @Column
+    @NotBlank
     private String email;
     @Column
+    @NotBlank
     private String username;
     @Column
+    @NotBlank
     private String password;
     @Column
+    @NotBlank
     private String schoolId;
     @Column
+    @NotBlank
     private Boolean active;
     @Column
+    @NotBlank
     private String userType;
     @Column
+    @NotBlank
     private String firstName;
     @Column
     private String middleName;
     @Column
+    @NotBlank
     private String lastName;
     @Column
     private String address1;
@@ -97,15 +106,6 @@ public class Account {
 
     //TODO: Find if this is necessary
     public Account() {
-    }
-
-    public int getAccountKey() {
-        return accountKey;
-    }
-
-    //TODO: Remove this. Generated ID's should be protected and should only be changed by the database.
-    public void setAccountKey(int accountKey) {
-        this.accountKey = accountKey;
     }
 
     /**

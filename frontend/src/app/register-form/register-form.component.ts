@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RegisterService} from './register.service';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @Component({
@@ -24,8 +26,8 @@ export class RegisterFormComponent implements OnInit {
       username: [''],
       password: [''],
       confirm_password: [''],
-      school_email: [''],
-      school_id: [''],
+      email: [''],
+      user_id: [''],
       checkbox: ['']
     });
   }
@@ -55,8 +57,8 @@ export class RegisterFormComponent implements OnInit {
 
     //User Id verification
     const regex = RegExp('^[0-9]{8}$');
-    if (!regex.test(this.form.get('user-id').value) || this.form.get('user-id').value.length == 0) {
-      this.errors.set('user-id', 'Invalid user id');
+    if (!regex.test(this.form.get('user_id').value) || this.form.get('user_id').value.length == 0) {
+      this.errors.set('user_id', 'Invalid user id');
     }
 
     //Email verification
@@ -71,7 +73,6 @@ export class RegisterFormComponent implements OnInit {
     }
   }
 
-
   onSubmit(): void {
     console.log(this.form.value);
     this.checkErrors();
@@ -83,9 +84,11 @@ export class RegisterFormComponent implements OnInit {
 
   private processResponse(data) {
     console.log(data);
-    if (data.success === true) {
-      this.router.navigate(['/']);
-    } else {
+    if (data.success == true) {
+      this.router.navigate(['../dashboard']);
+    }
+    else {
+      console.warn('Else Statement executed');
       this.error = data.error;
       this.errors = new Map(Object.entries(data.errors));
     }

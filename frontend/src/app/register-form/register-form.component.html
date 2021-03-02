@@ -1,11 +1,11 @@
 <section class="section">
 
   <div class="column is-5 is-offset-4">
-  <form action="/dashboard"  [formGroup]="form">
-    <!-- <form action="/dashboard" class="error"  (ngSubmit)="onSubmit()" [formGroup]="form">
+<!--  <form action="/dashboard"  [formGroup]="form" (ngSubmit)="onSubmit()">-->
+    <form  [formGroup]="form" (ngSubmit)="onSubmit()" class="error" >
       <div *ngIf="error">
         {{error}}
-      </div>-->
+      </div>
 
       <div class="box">
         <p class="subtitle">Account Registration</p>
@@ -13,8 +13,7 @@
         <div class="field">
           <label class="label" for="username">Username:</label>
           <p class="control has-icons-left">
-            <input id="username" class="input" type="text" placeholder="Username" formControlName="username"
-                   required="required">
+            <input id="username" class="input" type="text" placeholder="Username" formControlName="username">
             <span class="icon is-small is-left">
             <i class="fas fa-user"></i>
           </span>
@@ -28,7 +27,7 @@
           <div class="password" id="password1">
             <label class="label" for="password">Password:</label>
             <p class="control has-icons-left">
-              <input id="password" class="input" type="password" placeholder="Password" formControlName="password" required="required">
+              <input id="password" class="input" type="password" placeholder="Password" formControlName="password">
               <span class="icon is-small is-left">
                <i class="fas fa-lock"></i>
             </span>
@@ -38,7 +37,7 @@
           <div class="password" id="password2">
             <label class="label" for="confirm-password">Confirm Password:</label>
             <p class="control has-icons-left">
-              <input id="confirm-password" class="input" type="password" placeholder="Confirm Password" formControlName="confirm_password" required="required">
+              <input id="confirm-password" class="input" type="password" placeholder="Confirm Password" formControlName="confirm_password">
               <span class="icon is-small is-left">
                <i class="fas fa-lock"></i>
             </span>
@@ -69,10 +68,10 @@
         <div class="field">
           <label class="label">User Type:</label>
 
-          <input type="radio" class="account-type" id="radio-student" name="account-type" value="Student"  onclick='document.getElementById("user-id-label").innerHTML = "Student ID:"'  checked="checked" required>
+          <input type="radio" class="account-type" id="radio-student" name="account-type" value="Student"  onclick='document.getElementById("user-id-label").innerHTML = "Student ID:"'  checked="checked" >
           <label class="radio-label" for="radio-student">Student</label>
 
-          <input type="radio" class="account-type" id="radio-employee" name="account-type" value="Employee" onclick='document.getElementById("user-id-label").innerHTML = "Employee ID:"' required>
+          <input type="radio" class="account-type" id="radio-employee" name="account-type" value="Employee" onclick='document.getElementById("user-id-label").innerHTML = "Employee ID:"'>
           <label class="radio-label" for="radio-employee">Employee</label>
 
         </div>
@@ -90,12 +89,10 @@
           </select>
         </div>
 
-
-
         <div class="field">
           <label class="label" for="email" id="email-label">Email:</label>
           <p class="control has-icons-left">
-            <input id="email" class="input" type="email" placeholder="Email" formControlName="email" required="required">
+            <input id="email" class="input" type="email" placeholder="Email" formControlName="email">
             <span class="icon is-small is-left">
             <i class="fas fa-envelope"></i>
           </span>
@@ -106,17 +103,17 @@
         </div>
 
         <div class="field">
-          <label class="label" id="user-id-label" for="user-id">Student ID:</label>
-          <input id="user-id" class="input" type="text" placeholder="W#" formControlName="user-id"  required="required">
-          <div class="error" *ngIf="errors.has('user-id')">
-            {{errors.get('user-id')}}
+          <label class="label" id="user-id-label" for="user_id">Student ID:</label>
+          <input id="user_id" class="input" type="text" placeholder="W#" formControlName="user_id">
+          <div class="error" *ngIf="errors.has('user_id')">
+            {{errors.get('user_id')}}
           </div>
         </div>
 
         <div class="field">
           <div class="control">
             <label class="checkbox">
-              <input type="checkbox" formControlName="checkbox" required="required">
+              <input type="checkbox" formControlName="checkbox">
               I have read and agree to the <a class="term-and-conditions-link" href="/#">Terms and Conditions</a>
             </label>
             <div class="error"  *ngIf="errors.has('checkbox')">

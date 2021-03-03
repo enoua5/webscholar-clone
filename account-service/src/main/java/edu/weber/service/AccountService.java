@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
  * search queries, we can define our own here.
  */
 @Service
-public class AccountServiceImpl {
+public class AccountService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 

@@ -3,7 +3,7 @@ package edu.weber.controller;
 import edu.weber.domain.Account;
 import edu.weber.domain.LoginDto;
 import edu.weber.domain.ResponseData;
-import edu.weber.service.AccountServiceImpl;
+import edu.weber.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,7 +29,7 @@ public class AccountController {
      * spring to inject the instance at run time.
      */
     @Autowired
-    private AccountServiceImpl accountService;// = new AccountServiceImpl();
+    private AccountService accountService;// = new AccountService();
 
 
     /**

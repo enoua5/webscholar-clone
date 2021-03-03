@@ -4,6 +4,8 @@ import edu.weber.domain.Account;
 import edu.weber.domain.LoginDto;
 import edu.weber.domain.ResponseData;
 import edu.weber.service.AccountService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +24,15 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController //Path = '/account'
 public class AccountController {
+
+    /**
+     * This is the logger which uses the slf4j logging facade API.
+     * The logging framework that slf4j interfaces with is LogBack.
+     * Both slf4j and LogBack are available with Spring Boot.
+     * If you would like slf4j to interface with a different logging
+     * framework (like log4j), consult the slf4j documentation.
+     */
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     /**
      * This is the declared repository. Note that it does not have to be
@@ -44,6 +55,9 @@ public class AccountController {
         //Validate input
         if (result.hasErrors()) {
 
+            // Log error
+            log.error("ERROR: Invalid Data -- SOURCE: login()");
+
             //Throw http error
             invalidData();
         }
@@ -53,6 +67,9 @@ public class AccountController {
 
         //If null, the account does not exist
         if (found == null) {
+
+            // Log error
+            log.error("ERROR: Account does not exist -- SOURCE: login()");
 
             //Throw http error
             accountNotFound();
@@ -89,6 +106,9 @@ public class AccountController {
 
             responseData.setSuccess(false);
 
+            //Log Error
+            log.error("ERROR: Invalid Data -- SOURCE: createNewAccount()");
+
             //Throw error
             invalidData();
         } else {
@@ -113,12 +133,18 @@ public class AccountController {
         //Validate input
         if (result.hasErrors()) {
 
+            // Log error
+            log.error("ERROR: Invalid Data -- SOURCE: saveChanges()");
+
             //Throw http error
             invalidData();
         }
 
         //Overwrite the existing account data with the new account data
         if (!accountService.saveChanges(accountKey, updateAccount)) {
+
+            // Log error
+            log.error("ERROR: Account could not be saved -- SOURCE: saveChanges()");
 
             //Throw http error if account could not be saved
             accountNotFound();
@@ -151,7 +177,7 @@ public class AccountController {
      * This method simply tests to see if the API is accessible.
      * Please use advanced REST client to test.
      * Set advanced REST client to use 'GET' for the request.
-     * Point the url to 'http://localhost:6001/accounts/testme'
+     * Point the url to 'http://localhost:6001/account/testme'
      * Note: Run docker for all services. Then you can access the live API method.
      * Note: Advanced REST client ignores crossOrigin. This value can only be set on the frontend.
      *
@@ -160,7 +186,13 @@ public class AccountController {
     @GetMapping("testme")
     public String testy() {
 
-        return "hello world";
+        // Log access to test page
+        log.info("Test page as been accessed -- SOURCE: testme()");
+
+        // This just verifies that the ERROR log level is active
+        log.error("No actual error!  Just testing error log level -- SOURCE: testme()");
+
+        return "hello world\n";
     }
 
 

@@ -30,6 +30,9 @@ public class AccountService {
         //Verify the account exists
         if(account == null){
 
+            // Log Error
+            log.error("ERROR: Account does not exist -- SOURCE: saveChanges()");
+
             return false;
         }
 

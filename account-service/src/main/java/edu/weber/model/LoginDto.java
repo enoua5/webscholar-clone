@@ -1,4 +1,4 @@
-package edu.weber.domain;
+package edu.weber.model;
 
 import lombok.Getter;
 

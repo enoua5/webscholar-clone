@@ -1,8 +1,8 @@
 package edu.weber.controller;
 
-import edu.weber.domain.Account;
-import edu.weber.domain.LoginDto;
-import edu.weber.domain.ResponseData;
+import edu.weber.model.Account;
+import edu.weber.model.LoginDto;
+import edu.weber.model.ResponseData;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

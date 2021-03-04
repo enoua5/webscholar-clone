@@ -1,4 +1,4 @@
-package edu.weber.domain;
+package edu.weber.model;
 
 import lombok.AccessLevel;
 import lombok.Getter;

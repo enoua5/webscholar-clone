@@ -1,6 +1,6 @@
 package edu.weber.repository;
 
-import edu.weber.domain.Account;
+import edu.weber.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

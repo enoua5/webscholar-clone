@@ -1,14 +1,12 @@
 package edu.weber.service;
 
-import edu.weber.domain.Account;
+import edu.weber.model.Account;
 import edu.weber.repository.AccountRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.web.server.ResponseStatusException;
 
 /**
  * This class extends the functionality of 'AccountRepository'. Instead of using the default

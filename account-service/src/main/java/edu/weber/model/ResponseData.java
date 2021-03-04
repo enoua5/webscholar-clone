@@ -1,4 +1,4 @@
-package edu.weber.domain;
+package edu.weber.model;
 
 /**
  * This models holds fields that are returned to the frontend.

@@ -1,6 +1,6 @@
 package edu.weber;
 
-import edu.weber.domain.Account;
+import edu.weber.model.Account;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

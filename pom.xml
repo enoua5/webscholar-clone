@@ -57,7 +57,8 @@
         <module>account-service</module>
         <module>config-service</module>
         <module>registry</module>
-<!--        <module>frontend</module>-->
+        <module>scholarship-service</module>
+        <!--        <module>frontend</module>-->
     </modules>
 
     <name>WebScholar</name>

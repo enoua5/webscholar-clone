@@ -2,8 +2,8 @@ spring:
 
 server:
   servlet:
-    context-path: /account
-  port: 6001
+    context-path: /scholarship
+  port: 6003
 
 feign:
   hystrix:

@@ -3,20 +3,31 @@
     <div class="Edit_header">Edit Profile</div>
     <p class="Edit_sub">This Information is shared with and only visible to scholarships you
       apply to.</p>
-    <div class="form">
-      <form class="form-horizontal" role="form">
-        <div class="form-group">
+
+      <form  [formGroup]="form" (ngSubmit)="onSubmit()">
+
+        <div *ngIf="error">
+          {{error}}
+        </div>
+        <div formGroupName="form">
+        <div class="form-group" >
           <div class="row">
             <div class="col-sm-6">
               <label for="First Name" class="col-sm-12 control-label">First Name:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="First Name" placeholder="First Name">
+                <input type="text" class="form-control" id="First Name" placeholder="First Name" formControlName="first_name">
+                <div class="error" *ngIf="errors.has('first_name')">
+                  {{errors.get('first_name')}}
+                </div>
               </div>
             </div>
             <div class="col-sm-6">
               <label for="Last Name" class="col-sm-12 control-label">Last Name</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="Last Name" placeholder="Last Name">
+                <input type="text" class="form-control" id="Last Name" placeholder="Last Name" formControlName="last_name">
+                <div class="error" *ngIf="errors.has('last_name')">
+                  {{errors.get('last_name')}}
+                </div>
               </div>
             </div>
 
@@ -27,7 +38,10 @@
             <div class="col-sm-12">
               <label for="userEmail" class="col-sm-12 control-label">Contact Email:</label>
               <div class="col-sm-12">
-                <input type="email" class="form-control" id="userEmail" placeholder="Email">
+                <input type="email" class="form-control" id="userEmail" placeholder="Email" formControlName="email">
+                <div class="error" *ngIf="errors.has('email')">
+                  {{errors.get('email')}}
+                </div>
               </div>
             </div>
           </div>
@@ -38,7 +52,10 @@
             <div class="col-sm-12">
               <label for="userPhone" class="col-sm-12 control-label">Contact Phone Number:</label>
               <div class="col-sm-12">
-                <input type="number" class="form-control" id="userPhone" placeholder="phone number">
+                <input type="number" class="form-control" id="userPhone" placeholder="phone number" formControlName="phone_number">
+                <div class="error" *ngIf="errors.has('phone_number')">
+                  {{errors.get('phone_number')}}
+                </div>
               </div>
             </div>
           </div>
@@ -50,23 +67,31 @@
             <div class="col-sm-6">
               <label for="userCity" class="col-sm-12 control-label">City:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="userCity" placeholder="City">
+                <input type="text" class="form-control" id="userCity" placeholder="City" formControlName="city">
+                <div class="error" *ngIf="errors.has('city')">
+                  {{errors.get('city')}}
+                </div>
               </div>
             </div>
             <div class="col-sm-3">
               <label for="userState" class="col-sm-12 control-label">State:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="userState" placeholder="State">
+                <input type="text" class="form-control" id="userState" placeholder="State" formControlName="state">
+                <div class="error" *ngIf="errors.has('state')">
+                  {{errors.get('state')}}
+                </div>
               </div>
             </div>
 
             <div class="col-sm-3">
               <label for="userZipCode" class="col-sm-12 control-label">Zip Code:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="userZipCode" placeholder="Code">
+                <input type="text" class="form-control" id="userZipCode" placeholder="Code" formControlName="zip">
+                <div class="error" *ngIf="errors.has('zip')">
+                  {{errors.get('zip')}}
+                </div>
               </div>
             </div>
-
           </div>
         </div>
 
@@ -76,10 +101,14 @@
             <div class="col-sm-12">
               <label for="Student" class="col-sm-12 control-label">Student ID #:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="Student" placeholder="Student ID #">
+                <input type="text" class="form-control" id="Student" placeholder="Student ID #" formControlName="student_number">
+                <div class="error" *ngIf="errors.has('student_number')">
+                  {{errors.get('student_number')}}
+                </div>
               </div>
             </div>
           </div>
+
         </div>
 
         <div class="form-group">
@@ -87,15 +116,19 @@
             <div class="col-sm-12">
               <label for="Major" class="col-sm-12 control-label">Major:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="Major" placeholder="Your Major">
+                <input type="text" class="form-control" id="Major" placeholder="Your Major" formControlName="major">
+                <div class="error" *ngIf="errors.has('major')">
+                  {{errors.get('major')}}
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="form-group">
-          <div class="update">Update</div>
+          <a class="login-links-1" routerLink="/dashboard">Go Back</a>
+          <input type="submit" class="update" value="Update"/>
+        </div>
         </div>
       </form>
     </div>
-  </div>
 </section>

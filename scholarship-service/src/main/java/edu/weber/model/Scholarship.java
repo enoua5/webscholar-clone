@@ -15,40 +15,59 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Setter
 @Entity
-
 public class Scholarship {
 
-    //Here is me making a rough guess of what fields are needed
-
+    //Gives each scholarship a unique id
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
     )
+    @Setter(AccessLevel.PRIVATE)
+    private int scholarshipId;
 
     //Name of the scholarship
     @Column
     @NotBlank
-    private String name;
+    private String title;
+
     //Organization that offers the scholarship
     @Column
     @NotBlank
     private String organization;
+
     //Short description of the scholarship
     @Column
     @NotBlank
     private String description;
+
     //a list of requirements to have the scholarship
     @Column
     @NotBlank
     private String requirements;
+
     //amount of money the scholarship offers?
     @Column
     @NotBlank
     private double amount;
 
-    public Scholarship (String name, String organization, String description, String requirements, double amount){
+    /**
+     * The default constructor
+     */
+    public Scholarship() {
 
-        this.name = name;
+    }
+
+    /**
+     * Custom constructor that sets all parameters
+     * @param title Set the title of scholarship
+     * @param organization Set the name of the organization offering the scholarship
+     * @param description Set details about what the scholarship offers
+     * @param requirements Set the requirements needed to apply/receive scholarship
+     * @param amount Set the amount awarded if the scholarship is completed
+     */
+    public Scholarship(String title, String organization, String description, String requirements, double amount) {
+
+        this.title = title;
         this.organization = organization;
         this.description = description;
         this.requirements = requirements;
@@ -56,4 +75,22 @@ public class Scholarship {
 
     }
 
+
+    /**
+     * This method allows us to see the scholarship information in the console.
+     * This is helpful for debugging problems or for logging.
+     *
+     * @return Returns the 'Scholarship' data formatted as a string.
+     */
+    @Override
+    public String toString() {
+        return "Scholarship{" +
+                "scholarshipId=" + scholarshipId +
+                ", title='" + title + '\'' +
+                ", organization='" + organization + '\'' +
+                ", description='" + description + '\'' +
+                ", requirements='" + requirements + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }

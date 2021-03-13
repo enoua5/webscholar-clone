@@ -108,7 +108,7 @@ public class Account {
 
     /**
      * This method allows us to see the account information in the console.
-     * This is helpful for debugging account problems when there is an error.
+     * This is helpful for debugging problems or for logging.
      *
      * @return Returns the 'Account' data formatted as a string.
      */

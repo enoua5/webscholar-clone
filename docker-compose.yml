@@ -1,14 +1,13 @@
 version: '2.1'
 services:
-
   #Message broker
   rabbitmq:
     image: rabbitmq:3-management
     ports:
       - 15672:15672
-
-
-
+    networks:
+      - front-end
+      - back-end
   #Spring config-service micro-service container settings
   config-service:
 #    environment:
@@ -17,6 +16,9 @@ services:
 #    image: webscholar/config-service
     ports:
       - 8888:8888
+    networks:
+      - front-end
+      - back-end
 #    restart: always
   registry:
 #    environment:
@@ -29,8 +31,9 @@ services:
         condition: service_healthy
     ports:
       - 8765:8765
-
-
+    networks:
+      - front-end
+      - back-end
 
   #Spring account-service micro-service container settings
   account-service:
@@ -46,9 +49,9 @@ services:
       - 6001:6001
     expose:
       - 6001
-
-
-
+    networks:
+      - front-end
+      - back-end
   #MySql container settings
   account-db:
     image: mysql:5.7
@@ -72,8 +75,23 @@ services:
     volumes:
       - ./account-db:/var/lib/mysql
 
+    networks:
+      - front-end
+      - back-end
+
+#  frontend:
+#    build: frontend
+#    ports:
+#      - 4200:4200
+#    expose:
+#     - 4200
+#   networks:
+#     - front-end
 
 
+networks:
+  front-end:
+  back-end:
    #Old MySql container settings
 #  db-service:
 #    image: mysql:5.7

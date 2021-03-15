@@ -216,7 +216,7 @@ public class AccountController {
         accountService.accountRepository.save(account);
 
         //Return success message and account details
-        return "Success! Account Created!\nDetlais:\n" + account.toString();
+        return "Success! Account Created!\nDetails:\n" + account.toString();
     }
 
 

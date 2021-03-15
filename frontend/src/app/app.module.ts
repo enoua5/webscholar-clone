@@ -12,7 +12,6 @@ import { RegisterFormFacultyComponent } from './register-form-faculty/register-f
 import { HttpClientModule} from "@angular/common/http";
 import { EditProfileFormComponent } from './edit-profile-form/edit-profile-form.component';
 import { ChangePasswordFormComponent } from './change-password-form/change-password-form.component';
-
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import {NewPasswordComponent} from "./new-password-form/new-password.component";
 import { CreateScholarshipFormComponent } from './create-scholarship-form/create-scholarship-form.component';

@@ -47,14 +47,10 @@
       </div>
     </nav>
 
-    <div class = "container"></div>
 
     <router-outlet></router-outlet>
-    <div class="Edit_header">Your Dashboard</div>
-    <form>
-      <div class="box">
         <p class="subtitle">Create Scholarship</p>
-
+    <form [formGroup]="form">
         <div class="field">
           <label class="label" for="FullName">Your Full Name:</label>
           <p class="control has-icons-left">
@@ -77,6 +73,72 @@
           </p>
         </div>
 
+        <div class="field">
+          <label class="label" for="scholarship-name">Scholarship Name:</label>
+          <p class="control has-icons-left">
+            <input id="scholarship-name" class="input" type="scholarship-name" placeholder="Enter the name of your scholarship" formControlName="scholarship-name"
+                   required="required">
+            <span class="icon is-small is-left">
+              <i class="fas fa-trophy"></i>
+            </span>
+          </p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="scholarship-provider">Scholarship Provider:</label>
+          <p class="control has-icons-left">
+            <input id="scholarship-provider" class="input" type="scholarship-provider" placeholder="Who is providing for your scholarship" formControlName="scholarship-provider"
+                   required="required">
+            <span class="icon is-small is-left">
+                <i class="fas fa-award"></i>
+              </span>
+          </p>
+        </div>
+
+      <div class="field">
+        <label class="label" for="scholarship-amount">Scholarship Amount:</label>
+        <p class="control has-icons-left">
+          <input id="scholarship-amount" class="input" type="scholarship-amount" placeholder="Scholarship Amount" formControlName="scholarship-amount"
+                 required="required">
+          <span class="icon is-small is-left">
+                <i class="fas fa-medal"></i>
+              </span>
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="label" for="scholarship-info">Scholarship Information:</label>
+        <p class="control has-icons-left">
+          <textarea id="scholarship-info" class="input" type="scholarship-info" placeholder="Extra Scholarship Information" formControlName="scholarship-info"
+                    required="required" rows = "4" cols = "50">
+
+          </textarea>
+          <span class="icon is-small is-left">
+                <i class="fas fa-medal"></i>
+              </span>
+        </p>
+      </div>
+
+      <div class="field">
+        <label class="label" for="eligible-students">Students Eligible For Scholarship:</label>
+        <p class="control has-icons-left">
+          <input id="eligible-students" class="input" type="eligible-students" placeholder="Students eligible to apply for this scholarship" formControlName="eligible-students"
+                 required="required">
+          <span class="icon is-small is-left">
+                <i class="fas fa-user-graduate"></i>
+              </span>
+        </p>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="checkbox" required="required">
+            Check the box if you would you like to receive donations for your scholarship.
+          </label>
+        </div>
+      </div>
+
 
         <div class="field">
           <div class="control">
@@ -90,11 +152,12 @@
         <div class="field">
           <div class="register-btn-left">
               <button type="submit" class="button is-success is-small">
-                Register
+                Create
               </button>
           </div>
         </div>
-      </div>
     </form>
-  </div>
+      </div>
+
+
 </section>

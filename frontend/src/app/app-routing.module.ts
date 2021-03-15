@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'change_password', component: ChangePasswordFormComponent},
   { path: 'dashboard', component: DashboardComponent},
   { path: 'create_scholarship', component: CreateScholarshipFormComponent},
-  { path : 'new_password', component: NewPasswordComponent},
+  { path: 'new_password', component: NewPasswordComponent},
 
 ];
 

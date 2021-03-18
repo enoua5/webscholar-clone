@@ -85,7 +85,7 @@ export class RegisterFormComponent implements OnInit {
   private processResponse(data) {
     console.log(data);
     if (data.success == true) {
-      this.router.navigate(['../dashboard']);
+      this.router.navigate(['/dashboard']);
     }
     else {
       console.warn('Else Statement executed');

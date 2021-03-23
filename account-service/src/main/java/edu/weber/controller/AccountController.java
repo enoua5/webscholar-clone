@@ -2,7 +2,6 @@ package edu.weber.controller;
 
 import edu.weber.model.Account;
 import edu.weber.model.LoginDto;
-import edu.weber.model.ResponseData;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,13 +97,8 @@ public class AccountController {
     )
     public void createNewAccount(@Valid @ModelAttribute Account account, BindingResult result) {
 
-        //Data returned to frontend
-        ResponseData responseData = new ResponseData();
-
         //Validate account information (input validation)
         if (result.hasErrors()) {
-
-            responseData.setSuccess(false);
 
             //Log Error
             log.error("ERROR: Invalid Data -- SOURCE: createNewAccount()");
@@ -115,7 +109,6 @@ public class AccountController {
 
             //Create an account in the database
             accountService.accountRepository.save(account);
-            responseData.setSuccess(true);
         }
     }
 
@@ -150,6 +143,26 @@ public class AccountController {
             accountNotFound();
         }
     }
+
+
+    /**
+     * This method allows a user to send a registration invitation email.
+     * <p>
+     * The email is sent by the 'company' email. This is the email used
+     * for the final product in deployment.
+     *
+     * @param accountId The account id of the person wanting to send the invite.
+     * @param email     Tthe email the person is sending the invite to.
+     */
+    @PostMapping("/send_invite/{accountId}/{email}")
+    public void sendInvite(@PathVariable int accountId, @PathVariable String email) {
+
+        //Send an email here.
+        //The sender email would be the email for the company (use a test email for now)
+        //The 'to' email should be the email the user passed in
+        //Send a message that includes the senders name
+    }
+
 
     /**
      * Send an http response error if data sent did not follow model restrictions.

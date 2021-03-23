@@ -16,8 +16,6 @@ import javax.validation.constraints.NotBlank;
 @Entity
 public class Account {
 
-    //TODO: Use 'javax.validation' to prevent null and blank values
-
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY

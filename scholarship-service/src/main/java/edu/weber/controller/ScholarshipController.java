@@ -1,7 +1,6 @@
 package edu.weber.controller;
 
 import edu.weber.model.Scholarship;
-import edu.weber.model.ResponseData;
 import edu.weber.service.ScholarshipService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,7 @@ import javax.validation.Valid;
  * The path is specified in the 'config-services/src/resources/shared/scholarship-service.yaml' file.
  */
 @CrossOrigin(origins = "http://localhost:4200")
-@RestController 
+@RestController
 public class ScholarshipController {
 
     /**
@@ -31,7 +30,6 @@ public class ScholarshipController {
      */
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    
 
     /**
      * This is the declared repository. Note that it does not have to be
@@ -40,7 +38,6 @@ public class ScholarshipController {
      */
     @Autowired
     private ScholarshipService scholarshipService;
-
 
 
     /**
@@ -55,13 +52,8 @@ public class ScholarshipController {
     )
     public void createNewScholarship(@Valid @ModelAttribute Scholarship scholarship, BindingResult result) {
 
-        //Data returned to frontend
-        ResponseData responseData = new ResponseData();
-
         //Validate scholarship information (input validation)
         if (result.hasErrors()) {
-
-            responseData.setSuccess(false);
 
             //Log Error
             log.error("ERROR: Invalid Data -- SOURCE: createNewScholarship()");
@@ -72,16 +64,14 @@ public class ScholarshipController {
 
             //TODO: Add code to create a scholarship in the database
 
-            responseData.setSuccess(true);
         }
     }
-
 
 
     /**
      * This method updates the scholarship details by using the specified scholarship id.
      *
-     * @param schoarshipId The key used to find the scholarship from the database.
+     * @param scholarshipId     The key used to find the scholarship from the database.
      * @param updateScholarship The form object sent from the frontend that is converted into a scholarship model object.
      */
     @RequestMapping(path = "/update/{scholarshipId}", method = RequestMethod.POST,
@@ -112,17 +102,14 @@ public class ScholarshipController {
     }
 
 
-
     /**
      * This method deletes the scholarship by using the specified scholarship id.
      *
-     * @param schoarshipId -- The ID used to find the scholarship from the database.
-     * @param deleteScholarship The form object sent from the frontend that is converted into a scholarship model object.
+     * @param scholarshipId -- The ID used to find the scholarship from the database.
      */
     @RequestMapping(path = "/delete/{scholarshipId}", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void deleteScholarship(@PathVariable int scholarshipId, @ModelAttribute Scholarship deleteScholarship, BindingResult result) {
-
+    public void deleteScholarship(@PathVariable int scholarshipId) {
 
         //Overwrite the existing scholarship data with the new scholarship data
         // TODO: if necessary, replace the method call in the "if" condition with the actual method call to delete the scholarship.
@@ -137,8 +124,6 @@ public class ScholarshipController {
         }
 
     }
-
-
 
 
     /**

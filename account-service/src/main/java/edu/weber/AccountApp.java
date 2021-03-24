@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //@EnableJpaRepositories(basePackages = {"edu.weber.service"})
 @ComponentScan(basePackages = {"edu.weber.service","edu.weber"})
 @EnableJpaRepositories("edu.weber.repository")
-@EntityScan(basePackages = "edu.weber.domain")
+@EntityScan(basePackages = "edu.weber.model")
 
 public class AccountApp
 {

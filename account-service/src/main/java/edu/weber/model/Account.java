@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * This is a data model. It helps us put data into the backend and send data
@@ -35,7 +36,7 @@ public class Account {
     @NotBlank
     private String schoolId;
     @Column
-    @NotBlank
+    @NotNull
     private Boolean active;
     @Column
     @NotBlank
@@ -65,8 +66,39 @@ public class Account {
     @Column
     private String race;
 
-    //TODO: Find if this is necessary
-    public Account(String email, String username, String password, String schoolId, Boolean active, String userType, String firstName, String middleName, String lastName, String address1, String address2, String city, String state, String zipCode, String school, String sex, String race) {
+    //TODO: Add array variable that holds keywords
+    //The tags are used to help recommend scholarship to the user.
+    //These tags are categories the user is interested in and should correspond to scholarship tags.
+
+    //TODO: Make this constructor protected
+    /**
+     * The default constructor
+     */
+    public Account(){
+
+        this.email = "";
+        this.username = "";
+        this.password = "";
+        this.schoolId = "";
+        this.active = false;
+        this.userType = "";
+        this.firstName = "";
+        this.lastName = "";
+    }
+
+    /**
+     * Custom constructor. Creates an account object.
+     * Parameters are values that must not be blank when this object is created.
+     * @param email The email associated with the user. Used for logging in and sending emails.
+     * @param username The username set by the user.
+     * @param password The login value set by the user.
+     * @param schoolId The students W number given by weber state
+     * @param active
+     * @param userType
+     * @param firstName The users first name.
+     * @param lastName The users last name.
+     */
+    public Account(String email, String username, String password, String schoolId, Boolean active, String userType, String firstName, String lastName){
 
         this.email = email;
         this.username = username;
@@ -75,33 +107,7 @@ public class Account {
         this.active = active;
         this.userType = userType;
         this.firstName = firstName;
-        this.middleName = middleName;
         this.lastName = lastName;
-        this.address1 = address1;
-        this.address2 = address2;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
-        this.school = school;
-        this.sex = sex;
-        this.race = race;
-    }
-
-    //TODO: Find if this is necessary
-    public Account(String email, String username, String password, String schoolId, Boolean active) {
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.schoolId = schoolId;
-        this.active = active;
-    }
-
-    //TODO: Find if this is necessary
-    public Account(String email) {
-        this.email = email;
-    }
-
-    public Account() {
     }
 
     /**

@@ -8,12 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * This class handles user logins as well as user registrations.
@@ -196,7 +196,7 @@ public class AccountController {
      *
      * @return Returns hello word as a string
      */
-    @GetMapping("testme")
+    @GetMapping("/test_me")
     public String testy() {
 
         // Log access to test page
@@ -213,17 +213,22 @@ public class AccountController {
      * This method creates a dummy account for testing purposes.
      * Use advanced REST client to access this API.
      * After running this API, attempt to login through the frontend with the below credentials.
+     * @return The account in string form.
      */
     @PostMapping("/make_test_account")
     public String makeDummyAccount() {
 
+        String email = "test@test.com";
+        String username = "bobbyJoeJuniorTheThird";
+        String password = "myPassword";
+        String schoolId = "W012345678";
+        Boolean isActive = true;
+        String userType = "student";
+        String firstName = "Bobby";
+        String lastName = "Joe";
+
         //Create the account
-        Account account = new Account();
-        account.setEmail("test@test.com");
-        account.setUsername("test");
-        account.setPassword("test");
-        account.setSchoolId("W12345678");
-        account.setActive(true);
+        Account account = new Account(email, username, password, schoolId, isActive, userType, firstName, lastName);
 
         //Save the account to the database
         accountService.accountRepository.save(account);
@@ -234,45 +239,13 @@ public class AccountController {
 
 
     /**
-     * IGNORE THIS METHOD
-     * This method is the same as the 'createNewAccount' method above. However, it manually creates
-     * the 'Account' object from the json data.
-     *
-     * @param formData The json data from the frontend that should contain fields correlating to the 'Account' object.
-     * @return Returns the account email field that was sent from the frontend.
+     * Returns all accounts in the database.
+     * @return All the accounts.
      */
-    @RequestMapping(path = "/test", method = RequestMethod.POST,
-            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String createNewAccount(@RequestBody MultiValueMap<String, String> formData) {
+    @GetMapping("/get_all_accounts")
+    public List<Account> getAllAccounts(){
 
-        //Note: this code has been moved to 'AccountService' as it is business logic
-        //json parsing....
-        Account account = new Account();
-        account.setEmail(formData.getFirst("email"));
-        account.setUsername(formData.getFirst("username"));
-        account.setPassword(formData.getFirst("password"));
-        account.setSchoolId(formData.getFirst("schoolId"));
-        account.setActive(Boolean.parseBoolean(formData.getFirst("active")));
-
-        return account.getEmail();
-    }
-
-
-    /**
-     * IGNORE THIS METHOD
-     * This method is the same as the 'createNewAccount' method above. However, it does not send an http
-     * response packet to tell the frontend if it succeeded or note. In addition, it only sends a field from
-     * the data sent to it.
-     *
-     * @param account Converts json data sent from the frontend into an 'Account' model object.
-     * @return Returns the account email field sent from the frontend.
-     */
-    @RequestMapping(path = "/test2", method = RequestMethod.POST,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String createTest2Account(@ModelAttribute Account account) {
-        //json parsing....
-
-        return account.getEmail();
+        return accountService.accountRepository.findAllByAccountKeyAfter(0);
     }
 
 }

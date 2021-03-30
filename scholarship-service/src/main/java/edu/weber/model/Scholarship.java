@@ -50,10 +50,14 @@ public class Scholarship {
     @NotBlank
     private double amount;
 
+    //TODO: Add variable array that holds keywords
+    //These tags are used to help search for the scholarship.
+    //These tags can be used to recommend scholarships to the user using their account tags.
+
     /**
      * The default constructor
      */
-    public Scholarship() {
+    protected Scholarship() {
 
     }
 

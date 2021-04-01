@@ -63,7 +63,7 @@ public class ScholarshipController {
             invalidData();
         } else {
 
-            ScholarshipService.scholarshipRepository.save(scholarship);
+            scholarshipService.scholarshipRepository.save(scholarship);
 
         }
     }
@@ -91,7 +91,7 @@ public class ScholarshipController {
 
         //Overwrite the existing scholarship data with the new scholarship data
         // "false" is just a placeholder
-        if (!ScholarshipService.saveChanges(scholarshipId, updateScholarship)) {
+        if (!scholarshipService.saveChanges(scholarshipId, updateScholarship)) {
 
             // Log error
             log.error("ERROR: Scholarship could not be saved -- SOURCE: saveChanges()");

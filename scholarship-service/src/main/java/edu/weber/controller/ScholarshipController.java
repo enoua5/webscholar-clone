@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Note: This class does not have '@RestController("scholarship")' API path specified here.
@@ -62,7 +63,7 @@ public class ScholarshipController {
             invalidData();
         } else {
 
-            //TODO: Add code to create a scholarship in the database
+            scholarshipService.scholarshipRepository.save(scholarship);
 
         }
     }
@@ -89,9 +90,8 @@ public class ScholarshipController {
         }
 
         //Overwrite the existing scholarship data with the new scholarship data
-        // TODO: if necessary, replace the method call in the "if" condition with the actual method call to update the scholarship.
         // "false" is just a placeholder
-        if (false /*!scholarshipService.saveChanges(scholarshipId, updateScholarship)*/) {
+        if (!scholarshipService.saveChanges(scholarshipId, updateScholarship)) {
 
             // Log error
             log.error("ERROR: Scholarship could not be saved -- SOURCE: saveChanges()");

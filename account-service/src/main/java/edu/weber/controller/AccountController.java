@@ -20,6 +20,7 @@ import java.util.List;
  * Note: This class does not have '@RestController("account")' API path specified here.
  * The path is specified in the 'config-services/src/resources/shared/account-service.yaml' file.
  */
+//This is the CORS setting that allows the angular app on port 4200 to access these APIs which are on port 6001
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController //Path = '/account'
 public class AccountController {

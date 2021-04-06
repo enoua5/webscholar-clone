@@ -11,4 +11,4 @@ CMD ["java", "-Xmx200m", "-jar", "/app/scholarship-service.jar"]
 
 #This tells the container to open port 8888 to the docker host
 #The docker-compose.yml maps this port from the internal docker network to the localhost
-EXPOSE 8555
+EXPOSE 6003

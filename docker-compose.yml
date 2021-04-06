@@ -96,9 +96,13 @@ services:
         condition: service_healthy
 
     ports:
-      - 8555:8555
+      - 6003:6003
     expose:
-      - 8555
+      - 6003
+
+    networks:
+      - front-end
+      - back-end
 
 
 

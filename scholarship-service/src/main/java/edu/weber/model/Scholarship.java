@@ -26,27 +26,27 @@ public class Scholarship {
     private int scholarshipId;
 
     //Name of the scholarship
-    @Column
+    @Column(nullable = false)
     @NotBlank
     private String title;
 
     //Organization that offers the scholarship
-    @Column
+    @Column(nullable = false)
     @NotBlank
     private String organization;
 
     //Short description of the scholarship
-    @Column
+    @Column(nullable = false)
     @NotBlank
     private String description;
 
     //a list of requirements to have the scholarship
-    @Column
+    @Column(nullable = false)
     @NotBlank
     private String requirements;
 
     //amount of money the scholarship offers?
-    @Column
+    @Column(nullable = false)
     @NotBlank
     private double amount;
 

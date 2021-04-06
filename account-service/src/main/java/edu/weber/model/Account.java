@@ -23,46 +23,63 @@ public class Account {
     )
     @Setter(AccessLevel.PRIVATE)
     private int accountKey;
-    @Column
+
+    @Column(nullable = false)
     @NotBlank
     private String email;
-    @Column
+
+    @Column(nullable = false)
     @NotBlank
     private String username;
-    @Column
+
+    @Column(nullable = false)
     @NotBlank
     private String password;
-    @Column
+
+    @Column(nullable = false)
     @NotBlank
     private String schoolId;
+
     @Column
     @NotNull
     private Boolean active;
-    @Column
+
+    @Column(nullable = false)
     @NotBlank
     private String userType;
-    @Column
+
+    @Column(nullable = false)
     @NotBlank
     private String firstName;
+
     @Column
     private String middleName;
-    @Column
+
+    @Column(nullable = false)
     @NotBlank
     private String lastName;
+
     @Column
     private String address1;
+
     @Column
     private String address2;
+
     @Column
     private String city;
+
     @Column
     private String state;
+
     @Column
     private String zipCode;
+
     @Column
     private String school;
+
     @Column
     private String sex;
+
     @Column
     private String race;
 

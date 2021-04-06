@@ -103,6 +103,26 @@
         </div>
 
         <div class="field">
+          <label class="label" for="first_name" id="first-name-label">First Name:</label>
+          <p class="control has-icons-left">
+            <input id="first_name" class="input" type="text" placeholder="First Name" formControlName="first_name">
+            <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+          </p>
+        </div>
+
+        <div class="field">
+          <label class="label" for="last_name" id="last-name-label">Last Name:</label>
+          <p class="control has-icons-left">
+            <input id="last_name" class="input" type="text" placeholder="Last Name" formControlName="last_name">
+            <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+          </p>
+        </div>
+
+        <div class="field">
           <label class="label" id="user-id-label" for="user_id">Student ID:</label>
           <input id="user_id" class="input" type="text" placeholder="W#" formControlName="user_id">
           <div class="error" *ngIf="errors.has('user_id')">
@@ -132,6 +152,8 @@
             </p>
           </div>
         </div>
+
+
       </div>
     </form>
   </div>

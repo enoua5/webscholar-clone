@@ -28,7 +28,9 @@ export class RegisterFormComponent implements OnInit {
       confirm_password: [''],
       email: [''],
       user_id: [''],
-      checkbox: ['']
+      checkbox: [''],
+      first_name: [''],
+      last_name:['']
     });
   }
 
@@ -74,12 +76,40 @@ export class RegisterFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+
     console.log(this.form.value);
     this.checkErrors();
+
+    const email = this.form.get('email').value;
+    const username = this.form.get('username').value;
+    const password = this.form.get('password').value;
+    const schoolId = this.form.get('user_id').value;
+    const userType = "Student";
+    const isActive = "true";
+    const firstName = this.form.get('first_name').value;
+    const lastName = this.form.get('last_name').value;
+
+
     if(this.errors.size == 0){
-      this.service.insert(this.form.value)
-        .subscribe((data) => this.processResponse(data));
+      // this.service.insert(this.form.value)
+      //   .subscribe((data) => this.processResponse(data));
+      const jsonObj = JSON.stringify({
+        email: email,
+        username: username,
+        password: password,
+        schoolId: schoolId,
+        isActive: isActive,
+        userType: userType,
+        firstName: firstName,
+        lastName: lastName
+
+      });
+
+      console.log(jsonObj);
+      this.service.testAccountCreation().subscribe((data) => this.processResponse(data));
+
     }
+
   }
 
   private processResponse(data) {

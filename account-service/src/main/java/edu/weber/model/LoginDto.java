@@ -17,4 +17,12 @@ public class LoginDto {
 
     @NotBlank
     private String password;
+
+    @Override
+    public String toString() {
+        return "LoginDto{" +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

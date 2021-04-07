@@ -12,8 +12,8 @@ import javax.validation.constraints.NotNull;
  * This is a data model. It helps us put data into the backend and send data
  * to the frontend in a standardized format.
  */
-@Getter
-@Setter
+@Getter //This uses javax validation to generate the getters and setters for all variables
+@Setter //This uses javax validation to generate the getters and setters for all variables
 @Entity
 public class Account {
 
@@ -21,6 +21,7 @@ public class Account {
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
     )
+    //This prevents the javax setter from being generated for this value
     @Setter(AccessLevel.PRIVATE)
     private int accountKey;
 
@@ -40,13 +41,14 @@ public class Account {
     @NotBlank
     private String schoolId;
 
+    //TODO: This needs to be changed to 'isLoggedIn' for authentication purposes
     @Column
     @NotNull
     private Boolean active;
 
     @Column(nullable = false)
     @NotBlank
-    private String userType;
+    private AccountRoles userType;
 
     @Column(nullable = false)
     @NotBlank
@@ -87,7 +89,9 @@ public class Account {
     //The tags are used to help recommend scholarship to the user.
     //These tags are categories the user is interested in and should correspond to scholarship tags.
 
-    //TODO: Make this constructor protected
+    //TODO: Make this constructor protected.
+    //This object should only be created with the constructor that requires non-blank values.
+    //Making this constructor protected only allows child classes to call it.
     /**
      * The default constructor
      */
@@ -98,7 +102,7 @@ public class Account {
         this.password = "";
         this.schoolId = "";
         this.active = false;
-        this.userType = "";
+        this.userType = AccountRoles.student;
         this.firstName = "";
         this.lastName = "";
     }
@@ -109,13 +113,13 @@ public class Account {
      * @param email The email associated with the user. Used for logging in and sending emails.
      * @param username The username set by the user.
      * @param password The login value set by the user.
-     * @param schoolId The students W number given by weber state
+     * @param schoolId The students W number given by weber state.
      * @param active
-     * @param userType
+     * @param userType The role access level for this account.
      * @param firstName The users first name.
      * @param lastName The users last name.
      */
-    public Account(String email, String username, String password, String schoolId, Boolean active, String userType, String firstName, String lastName){
+    public Account(String email, String username, String password, String schoolId, Boolean active, AccountRoles userType, String firstName, String lastName){
 
         this.email = email;
         this.username = username;

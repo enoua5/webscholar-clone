@@ -5,9 +5,9 @@ import lombok.Getter;
 import javax.validation.constraints.NotBlank;
 
 /**
- * Used to send login info to the backend.
- * This is more efficient than sending the entire account object
- * everytime login info needs to be verified.
+ * Use this to send login info to the backend.
+ * This is more efficient than sending the entire account
+ * object everytime login info needs to be verified.
  */
 @Getter
 public class LoginDto {

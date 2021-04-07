@@ -12,8 +12,8 @@ import javax.validation.constraints.NotBlank;
  * to the frontend in a standardized format. (Yes, I did just copy-pasta a comment XD)
  */
 
-@Getter
-@Setter
+@Getter //This uses javax validation to generate the getters and setters for all variables
+@Setter //This uses javax validation to generate the getters and setters for all variables
 @Entity
 public class Scholarship {
 
@@ -22,6 +22,7 @@ public class Scholarship {
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
     )
+    //This prevents the javax setter from being generated for this value
     @Setter(AccessLevel.PRIVATE)
     private int scholarshipId;
 
@@ -55,11 +56,11 @@ public class Scholarship {
     //These tags can be used to recommend scholarships to the user using their account tags.
 
     /**
-     * The default constructor
+     * The default constructor.
+     * Protected as no one should create this object without specifying the non-blank values.
      */
-    protected Scholarship() {
+    protected Scholarship() {}
 
-    }
 
     /**
      * Custom constructor that sets all parameters

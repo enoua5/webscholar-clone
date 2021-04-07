@@ -12,11 +12,13 @@ import java.util.List;
  * method signature.
  * eg. 'findAccountBy' followed by a variable name 'AccountKey', 'firstName', etc.
  * Note: intelliJ helps you build these methods when you start writing the method signature.
+ * Note: You can also create complex queries using the @Query annotation and specifying the sql statement.
  */
 @Repository
 public interface AccountRepository extends JpaRepository<Account, String> {
 
     //These are default database search functions
+
     Account findAccountByAccountKey(int accountKey);
 
     Account findAccountByEmail(String email);

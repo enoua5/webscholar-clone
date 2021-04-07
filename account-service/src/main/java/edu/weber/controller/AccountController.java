@@ -1,6 +1,7 @@
 package edu.weber.controller;
 
 import edu.weber.model.Account;
+import edu.weber.model.AccountRoles;
 import edu.weber.model.LoginDto;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
@@ -45,9 +46,11 @@ public class AccountController {
 
     /**
      * This method takes login credentials sent from the frontend and returns the associated account.
+     * An http error is thrown if the given login details are incomplete.
+     * An http error is thrown if the account could not be found with the given login credentials.
      *
-     * @param loginDto The login credentials model.
-     * @return The account object (automatically serialized into a json object by jackson serializer)
+     * @param loginDto The login credentials model. Spring automatically converts the sent json object into a model.
+     * @return The found account object (automatically serialized into a json object by jackson serializer)
      */
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public Account login(@Valid @ModelAttribute LoginDto loginDto, BindingResult result) {
@@ -76,7 +79,9 @@ public class AccountController {
         }
 
         /*
-        TODO: Verify password hash
+        TODO: This code will be changed once weber state oauth2 login is implemented
+
+        TODO: Verify password hash (for non-oauth login)
         Check password encryption
         Throw error if the password is incorrect
          */
@@ -107,6 +112,8 @@ public class AccountController {
             //Throw error
             invalidData();
         } else {
+
+            //TODO: Send a confirmation email (not necessary for weber state oauth2 login)
 
             //Create an account in the database
             accountService.accountRepository.save(account);
@@ -183,17 +190,19 @@ public class AccountController {
 
 
     /*
-    Test code lives down here
+    ----------------------------------------------------------------
+    ------------- ARC API testing code lives down here -------------
+    ----------------------------------------------------------------
      */
 
 
     /**
      * This method simply tests to see if the API is accessible.
-     * Please use advanced REST client to test.
+     * Please use ARC (advanced REST client) or postman to test.
      * Set advanced REST client to use 'GET' for the request.
-     * Point the url to 'http://localhost:6001/account/testme'
+     * Point the url to 'http://localhost:6001/account/test_me'
      * Note: Run docker for all services. Then you can access the live API method.
-     * Note: Advanced REST client ignores crossOrigin. This value can only be set on the frontend.
+     * Note: Advanced REST client ignores crossOrigin. This value can only be tested on the frontend.
      *
      * @return Returns hello word as a string
      */
@@ -219,12 +228,13 @@ public class AccountController {
     @PostMapping("/make_test_account")
     public String makeDummyAccount() {
 
+        //Set non-blank values
         String email = "test@test.com";
         String username = "bobbyJoeJuniorTheThird";
         String password = "myPassword";
         String schoolId = "W012345678";
         Boolean isActive = true;
-        String userType = "student";
+        AccountRoles userType = AccountRoles.student;
         String firstName = "Bobby";
         String lastName = "Joe";
 
@@ -241,11 +251,12 @@ public class AccountController {
 
     /**
      * Returns all accounts in the database.
-     * @return All the accounts.
+     * @return All the accounts as a json object.
      */
     @GetMapping("/get_all_accounts")
     public List<Account> getAllAccounts(){
 
+        //Find all accounts starting after id = 0
         return accountService.accountRepository.findAllByAccountKeyAfter(0);
     }
 

@@ -15,13 +15,28 @@ import org.springframework.util.Assert;
 @Service
 public class ScholarshipService {
 
+    /**
+     * This is the logger which uses the slf4j logging facade API.
+     * The logging framework that slf4j interfaces with is LogBack.
+     * Both slf4j and LogBack are available with Spring Boot.
+     * If you would like slf4j to interface with a different logging
+     * framework (like log4j), consult the slf4j documentation.
+     */
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    //TODO: uncomment the following two lines once the ScholarshipRepsitory is complete
+    /**
+     * This object handles queries to the database.
+     */
     @Autowired
     public ScholarshipRepository scholarshipRepository;
 
-    //TODO: create methods to implement business logic 
+    /**
+     * This method updates the data associated for an existing scholarship.
+     *
+     * @param scholarshipId The id associated with the scholarship being updated.
+     * @param update The new scholarship data being used for updating.
+     * @return Returns a success or fail flag depending on if the scholarship can be found.
+     */
     public boolean saveChanges(int scholarshipId, Scholarship update){
 
         //Get the current scholarship
@@ -42,9 +57,34 @@ public class ScholarshipService {
         scholarship.setRequirements(update.getRequirements());
         scholarship.setAmount(update.getAmount());
 
-        //Save the updated schloarship
+        //Save the updated scholarship
         scholarshipRepository.save(scholarship);
 
+        return true;
+    }
+
+    /**
+     * This method deletes a scholarship using it's given id.
+     *
+     * @param scholarshipId The id of the scholarship to be deleted.
+     * @return Returns a success or fail flag depending on if the scholarship can be found.
+     */
+    public boolean deleteScholarship(int scholarshipId){
+
+        //Make sure the record exists
+        Scholarship scholarship = scholarshipRepository.findScholarshipByScholarshipId(scholarshipId);
+
+        if(scholarship == null){
+            log.error("ERROR: Scholarship does not exist -- SOURCE: saveChanges()");
+
+            //Return failure
+            return false;
+        }
+
+        //Delete scholarship
+        scholarshipRepository.deleteScholarshipByScholarshipId(scholarshipId);
+
+        //Return success
         return true;
     }
 }

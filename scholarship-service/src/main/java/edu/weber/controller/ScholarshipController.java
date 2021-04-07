@@ -51,6 +51,7 @@ public class ScholarshipController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
+    @PostMapping("/create")
     public void createNewScholarship(@Valid @ModelAttribute Scholarship scholarship, BindingResult result) {
 
         //Validate scholarship information (input validation)
@@ -59,12 +60,13 @@ public class ScholarshipController {
             //Log Error
             log.error("ERROR: Invalid Data -- SOURCE: createNewScholarship()");
 
-            //Throw error
+            //Throw http error
             invalidData();
+
         } else {
 
+            //Save the new scholarship to the database
             scholarshipService.scholarshipRepository.save(scholarship);
-
         }
     }
 
@@ -90,7 +92,6 @@ public class ScholarshipController {
         }
 
         //Overwrite the existing scholarship data with the new scholarship data
-        // "false" is just a placeholder
         if (!scholarshipService.saveChanges(scholarshipId, updateScholarship)) {
 
             // Log error
@@ -111,10 +112,8 @@ public class ScholarshipController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void deleteScholarship(@PathVariable int scholarshipId) {
 
-        //Overwrite the existing scholarship data with the new scholarship data
-        // TODO: if necessary, replace the method call in the "if" condition with the actual method call to delete the scholarship.
-        // "false" is just a placeholder
-        if (false /*!scholarshipService.deleteScholarship(scholarshipId, deleteScholarship)*/) {
+        //Attempts to delete the scholarship
+        if (!scholarshipService.deleteScholarship(scholarshipId)) {
 
             // Log error
             log.error("ERROR: Scholarship could not be deleted -- SOURCE: deleteScholarship()");

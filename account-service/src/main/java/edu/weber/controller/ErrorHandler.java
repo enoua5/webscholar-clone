@@ -1,5 +1,5 @@
 package edu.weber.controller;
 
-//TODO: Figure out why this class was created. (maybe for custom http error responses?)
+//TODO: This is a class for custom http error handling
 public class ErrorHandler {
 }

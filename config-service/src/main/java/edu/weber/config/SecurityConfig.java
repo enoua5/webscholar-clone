@@ -46,24 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().disable();
     }
 
-    //TODO: Add user authentication in here
+    //TODO: Add user authentication in here (for oauth2 and regular email/password authentication)
 
 
 
-
-
-
-    /*
-   //Ignore this method. This is the old way for specifying API restrictions.
-   @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedHeaders()
-                        .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
-            }
-        };
-    }*/
 }

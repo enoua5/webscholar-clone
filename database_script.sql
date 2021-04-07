@@ -12,6 +12,19 @@ CREATE TABLE `account` (
 
 commit;
 
+DROP TABLE IF EXISTS scholarship;
+CREATE TABLE `scholarship` (
+  `scholarshipId` INT AUTO_INCREMENT NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `organization` varchar(255) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  `requirements` varchar(50) NOT NULL,
+  `amount` DOUBLE NOT NULL,
+   PRIMARY KEY (`scholarshipId`)
+);
+
+commit;
+
 Select * from account;
 SET FOREIGN_KEY_CHECKS=1;
 DROP TABLE IF EXISTS user;
@@ -38,3 +51,5 @@ CREATE TABLE `user` (
 commit;
 
 Select * from user;
+Select * from account;
+Select * from scholarship;

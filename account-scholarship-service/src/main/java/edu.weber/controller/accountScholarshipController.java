@@ -1,7 +1,7 @@
 package edu.weber.controller;
 
 import edu.weber.model.accountScholarship;
-import edu.weber.model.accountScholarshipService;
+import edu.weber.service.accountScholarshipService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

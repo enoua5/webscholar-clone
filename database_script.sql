@@ -25,6 +25,18 @@ CREATE TABLE `scholarship` (
 
 commit;
 
+DROP TABLE IF EXISTS account_scholarship;
+CREATE TABLE 'account_scholarship'(
+  'comboId' INT AUTO_INCREMENT NOT NULL,
+  'accountKey' INT NOT NULL,
+  'scholarshipId' INT NOT NULL,
+  PRIMARY KEY ('comboId'),
+  FOREIGN KEY ('accountKey') references account('accountKey'),
+  FOREIGN KEY ('scholarshipId') references scholarship('scholarshipId')
+);
+
+commit;
+
 Select * from account;
 SET FOREIGN_KEY_CHECKS=1;
 DROP TABLE IF EXISTS user;
@@ -53,3 +65,4 @@ commit;
 Select * from user;
 Select * from account;
 Select * from scholarship;
+Select * from account_scholarship

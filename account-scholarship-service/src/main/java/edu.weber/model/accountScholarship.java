@@ -62,7 +62,7 @@ public class accountScholarship {
     public String toString(){
         return "accountScholarship{" +
                 "comboId=" + comboId +
-                ", accountKey=" + accountKey + '\' +
+                ", accountKey=" + accountKey + '\'' +
                 ", scholarshipId=" + scholarshipId + '}';
     }
 

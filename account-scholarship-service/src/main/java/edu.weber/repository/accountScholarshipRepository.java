@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface ScholarshipRepository extends JpaRepository<Scholarship, String>{
+public interface accountScholarshipRepository extends JpaRepository<Scholarship, String>{
 
     //These are default database search functions
 

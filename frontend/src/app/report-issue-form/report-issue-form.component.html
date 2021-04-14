@@ -1,0 +1,88 @@
+<section class="section">
+
+  <div class="column is-4 is-offset-4">
+    <!--  <form action="/dashboard"  [formGroup]="form" (ngSubmit)="onSubmit()">-->
+    <form  [formGroup]="form" (ngSubmit)="onSubmit()" class="error" >
+      <div *ngIf="error">
+        {{error}}
+      </div>
+
+      <div class="box">
+        <p class="subtitle">Report an Issue</p>
+
+        <div class="field">
+          <label class="label" for="issueName">Issue Name:</label>
+          <p class="control has-icons-left">
+            <input id="issueName" class="input" type="text" placeholder="Issue Name" formControlName="issueName">
+            <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+          </p>
+          <div class="error" *ngIf="errors.has('issueName')">
+            {{errors.get('issueName')}}
+          </div>
+        </div>
+
+        <div class="feild">
+          <label class="label" for="issueType" id="issueType-label">Issue Type:</label>
+          <select name="issueType" id="issueType" formControlName="issueType">
+            <option>Can't Login</option>
+            <option>Unable to Update Personal Information</option>
+            <option>Can't Apply for Scholarship</option>
+            <option>Unable to Create Scholarship</option>
+            <option>Not Getting Email for Password Reset</option>
+            <option>Unable to see Scholarships</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="error" *ngIf="errors.has('issueType')">
+          {{errors.get('issueType')}}
+        </div>
+
+
+        <div class="field">
+          <label class="label" for="email" id="email-label">User's Email:</label>
+          <p class="control has-icons-left">
+            <input id="email" class="input" type="email" placeholder="Email" formControlName="email">
+            <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+          </p>
+          <div class="error" *ngIf="errors.has('email')">
+            {{errors.get('email')}}
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="issueDescription" id="issue-Description-label">Issue Description:</label>
+          <p class="control has-icons-left">
+            <textarea rows="10" cols="30" id="issueDescription" class="input" type="text" placeholder="Issue Description" formControlName="issueDescription">
+            </textarea>
+            <span class="icon is-small is-left">
+            <i class="fas fa-bars"></i>
+          </span>
+          </p>
+          <div class="error" *ngIf="errors.has('issueDescription')">
+            {{errors.get('issueDescription')}}
+          </div>
+        </div>
+
+
+        <div class="field">
+          <div class="register-btn-left">
+            <p class="control">
+              <a class="login-links-1" routerLink="/dashboard">Go Back</a>
+              <span class="has-dot-separator">&bull;</span>
+              <input type="submit" value="Submit" class="button is-success is-small"/>
+
+            </p>
+          </div>
+        </div>
+
+
+      </div>
+    </form>
+  </div>
+</section>
+
+

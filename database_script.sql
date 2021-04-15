@@ -37,7 +37,5 @@ CREATE TABLE `scholarship` (
 
 commit;
 
-commit;
-
 Select * from account;
 Select * from scholarship;

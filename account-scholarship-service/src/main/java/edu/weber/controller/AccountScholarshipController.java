@@ -1,7 +1,7 @@
 package edu.weber.controller;
 
-import edu.weber.model.accountScholarship;
-import edu.weber.service.accountScholarshipService;
+import edu.weber.model.AccountScholarship;
+import edu.weber.service.AccountScholarshipService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +16,11 @@ import java.util.List;
 
 /**
  * Note: This class does not have '@RestController("accountScholarship")' API path specified here.
- * The path is specified in the 'config-services/src/resources/shared/account-scholarship-service.yaml' file.
+ * The path is specified in the 'config-services/src/resources/shared/scholarship-service.yaml' file.
  */
-
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-public class accountScholarshipController {
+public class AccountScholarshipController {
 
     /**
      * This is the logger which uses the slf4j logging facade API.
@@ -32,27 +31,27 @@ public class accountScholarshipController {
      */
     private final Logger log = LoggerFactory.getLogger(getClass());
 
+
     /**
      * This is the declared repository. Note that it does not have to be
      * instantiated. This is because the '@Autowired' annotation tells
      * spring to inject the instance at run time.
      */
-
     @Autowired
-    private accountScholarshipService AccountScholarshipService;
+    private AccountScholarshipService accountScholarshipService;
 
     /**
-     * This method creates a new accountScholarship. First, json data from the frontend is converted to a 'Scholarship' model
+     * This method creates a new accountScholarship. First, json data from the frontend is converted to a 'AccountScholarship' model
      * if possible. Then, the accountScholarship is saved to the database.
      *
-     * @param accountScholarship The 'accountScholarship' object created with data sent from the frontend.
+     * @param accountScholarship The 'AccountScholarship' object created with data sent from the frontend.
      */
     @RequestMapping(path = "/create", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @PostMapping("/create")
-    public void createNewAccountScholarship(@Valid @ModelAttribute accountScholarship AccountScholarship, BindingResult result) {
+    public void createNewAccountScholarship(@Valid @ModelAttribute AccountScholarship accountScholarship, BindingResult result) {
 
         //Validate accountScholarship information (input validation)
         if (result.hasErrors()) {
@@ -66,57 +65,27 @@ public class accountScholarshipController {
         } else {
 
             //Save the new accountScholarship to the database
-            accountScholarshipService.accountScholarshipRepository.save(AccountScholarship);
+            accountScholarshipService.accountScholarshipRepository.save(accountScholarship);
+
         }
     }
 
     /**
-     * This method updates the scholarship details by using the specified scholarship id.
+     * This method deletes the accountScholarship by using the specified combo id.
      *
-     * @param accountScholarshipId     The key used to find the scholarship from the database.
-     * @param updateAccountScholarship The form object sent from the frontend that is converted into a scholarship model object.
-     */
-    @RequestMapping(path = "/update/{comboId}", method = RequestMethod.POST,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void saveChanges(@PathVariable int comboId, @ModelAttribute accountScholarship updateAccountScholarship, BindingResult result) {
-
-        //Validate input
-        if (result.hasErrors()) {
-
-            // Log error
-            log.error("ERROR: Invalid Data -- SOURCE: saveChanges()");
-
-            //Throw http error
-            invalidData();
-        }
-
-        //Overwrite the existing scholarship data with the new scholarship data
-        if (!scholarshipService.saveChanges(scholarshipId, updateAccountScholarship)) {
-
-            // Log error
-            log.error("ERROR: accountScholarship could not be saved -- SOURCE: saveChanges()");
-
-            //Throw http error if scholarship could not be saved
-            scholarshipNotFound();
-        }
-    }
-
-    /**
-     * This method deletes the scholarship by using the specified scholarship id.
-     *
-     * @param scholarshipId -- The ID used to find the scholarship from the database.
+     * @param comboId -- The ID used to find the accountScholarship from the database.
      */
     @RequestMapping(path = "/delete/{comboId}", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void deleteAccountScholarship(@PathVariable int comboId) {
+    public void deleteAccountScholarship(@PathVariable int comboId){
 
-        //Attempts to delete the scholarship
-        if (!accountScholarshipService.deleteAccountScholarship(comboId)) {
+        //Attempts to delete the accountScholarship
+        if (!accountScholarshipService.deleteAccountScholarship(comboId)){
 
-            // Log error
-            log.error("ERROR: accountScholarship could not be deleted -- SOURCE: deleteScholarship()");
+            //Log error
+            log.error("ERROR: AccountScholarship could not be deleted -- SOURCE: deleteAccountScholarship()");
 
-            //Throw http error if scholarship could not be deleted
+            //Throw http error if accountScholarship could not be deleted
             accountScholarshipNotFound();
         }
 
@@ -138,4 +107,6 @@ public class accountScholarshipController {
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The accountScholarship could not be found!");
     }
 
+
 }
+

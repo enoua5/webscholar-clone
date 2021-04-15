@@ -1,6 +1,6 @@
 package edu.weber.repository;
 
-import edu.weber.model.accountScholarship;
+import edu.weber.model.AccountScholarship;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,18 +12,15 @@ import org.springframework.stereotype.Repository;
  * Note: intelliJ helps you build these methods when you start writing the method signature.
  * Note: You can also create complex queries using the @Query annotation and specifying the sql statement.
  */
-
-@Repository
-public interface accountScholarshipRepository extends JpaRepository<Scholarship, String>{
+public interface AccountScholarshipRepository extends JpaRepository<AccountScholarship, String>{
 
     //These are default database search functions
+    AccountScholarship findAccountScholarshipByComboId (int comboId);
 
-    accountScholarship findAccountScholarshipbyComboId (int comboId);
+    AccountScholarship findAccountScholarshipByAccountKey (int accountKey);
 
-    accountScholarship findAccountScholarshipbyAccountKey (int accountKey);
+    AccountScholarship findAccountScholarshipByScholarshipId (int scholarshipId);
 
-    accountScholarship findAccountScholarshipbyScholarshipID (int scholarshipId);
-
-    void deleteAccountScholarshipByComboId(int comboId);
+    void deleteAccountScholarshipByComboId(int id);
 
 }

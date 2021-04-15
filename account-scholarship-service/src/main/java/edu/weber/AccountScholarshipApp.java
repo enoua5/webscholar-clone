@@ -18,10 +18,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("edu.weber.repository")
 @EntityScan(basePackages = "edu.weber.model")
 
-public class accountScholarshipApp
+public class AccountScholarshipApp
 {
     public static void main( String[] args )
     {
-        SpringApplication.run(accountScholarshipApp.class, args);
+        SpringApplication.run(AccountScholarshipApp.class, args);
     }
 }

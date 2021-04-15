@@ -59,6 +59,7 @@
         <module>registry</module>
         <module>scholarship-service</module>
         <module>account-scholarship-service</module>
+        <module>account-scholarship-service</module>
         <!--        <module>frontend</module>-->
     </modules>
 

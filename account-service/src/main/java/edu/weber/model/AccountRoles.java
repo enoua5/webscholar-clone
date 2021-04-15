@@ -9,3 +9,4 @@ public enum AccountRoles {
     committeeMember,
     chair
 }
+

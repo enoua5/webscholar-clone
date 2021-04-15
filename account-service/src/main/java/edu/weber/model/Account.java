@@ -25,19 +25,19 @@ public class Account {
     @Setter(AccessLevel.PRIVATE)
     private int accountKey;
 
-    @Column(nullable = false)
+    @Column
     @NotBlank
     private String email;
 
-    @Column(nullable = false)
+    @Column
     @NotBlank
     private String username;
 
-    @Column(nullable = false)
+    @Column
     @NotBlank
     private String password;
 
-    @Column(nullable = false)
+    @Column
     @NotBlank
     private String schoolId;
 
@@ -49,14 +49,14 @@ public class Account {
     @Column
     private AccountRoles userType;
 
-    @Column(nullable = false)
+    @Column
     @NotBlank
     private String firstName;
 
     @Column
     private String middleName;
 
-    @Column(nullable = false)
+    @Column
     @NotBlank
     private String lastName;
 
@@ -95,7 +95,6 @@ public class Account {
      * The default constructor
      */
     public Account(){
-
         this.email = "";
         this.username = "";
         this.password = "";

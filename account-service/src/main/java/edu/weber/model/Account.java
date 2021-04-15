@@ -46,8 +46,7 @@ public class Account {
     @NotNull
     private Boolean active;
 
-    @Column(nullable = false)
-    @NotBlank
+    @Column
     private AccountRoles userType;
 
     @Column(nullable = false)

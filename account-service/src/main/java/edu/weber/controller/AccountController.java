@@ -103,6 +103,8 @@ public class AccountController {
     )
     public void createNewAccount(@Valid @ModelAttribute Account account, BindingResult result) {
 
+        System.out.println(account.toString());
+
         //Validate account information (input validation)
         if (result.hasErrors()) {
 

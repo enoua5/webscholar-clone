@@ -98,7 +98,7 @@ export class RegisterFormComponent implements OnInit {
         username: username,
         password: password,
         schoolId: schoolId,
-        isActive: active,
+        active: active,
         userType: userType,
         firstName: firstName,
         lastName: lastName
@@ -108,7 +108,6 @@ export class RegisterFormComponent implements OnInit {
       console.log(jsonObj);
       this.service.createAccount(jsonObj);
       //this.service.testAccountCreation().subscribe((data) => this.processResponse(data));
-      console.log("Account Created")
       this.router.navigate(['/dashboard']).then(r => true );
     }
 

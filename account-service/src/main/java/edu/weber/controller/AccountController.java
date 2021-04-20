@@ -53,7 +53,7 @@ public class AccountController {
      * @return The found account object (automatically serialized into a json object by jackson serializer)
      */
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public Account login(@Valid @RequestBody LoginDto loginDto, BindingResult result) {
+    public Account login(@Valid @ModelAttribute LoginDto loginDto, BindingResult result) {
 
         //Validate input
         if (result.hasErrors()) {
@@ -101,9 +101,7 @@ public class AccountController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public void createNewAccount(@Valid @RequestBody Account account, BindingResult result) {
-
-        System.out.println(account.toString());
+    public void createNewAccount(@Valid @ModelAttribute Account account, BindingResult result) {
 
         //Validate account information (input validation)
         if (result.hasErrors()) {
@@ -131,7 +129,7 @@ public class AccountController {
      */
     @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void saveChanges(@PathVariable int accountKey, @RequestBody Account updateAccount, BindingResult result) {
+    public void saveChanges(@PathVariable int accountKey, @ModelAttribute Account updateAccount, BindingResult result) {
 
         //Validate input
         if (result.hasErrors()) {

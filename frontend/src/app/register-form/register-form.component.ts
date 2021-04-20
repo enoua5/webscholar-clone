@@ -84,8 +84,8 @@ export class RegisterFormComponent implements OnInit {
     const username = this.form.get('username').value;
     const password = this.form.get('password').value;
     const schoolId = this.form.get('user_id').value;
-    const userType = "Student";
-    const isActive = "true";
+    const userType = "student";
+    const active = "true";
     const firstName = this.form.get('first_name').value;
     const lastName = this.form.get('last_name').value;
 
@@ -98,7 +98,7 @@ export class RegisterFormComponent implements OnInit {
         username: username,
         password: password,
         schoolId: schoolId,
-        isActive: isActive,
+        isActive: active,
         userType: userType,
         firstName: firstName,
         lastName: lastName
@@ -106,8 +106,10 @@ export class RegisterFormComponent implements OnInit {
       });
 
       console.log(jsonObj);
-      this.service.testAccountCreation().subscribe((data) => this.processResponse(data));
-
+      this.service.createAccount(jsonObj);
+      //this.service.testAccountCreation().subscribe((data) => this.processResponse(data));
+      console.log("Account Created")
+      this.router.navigate(['/dashboard']).then(r => true );
     }
 
   }

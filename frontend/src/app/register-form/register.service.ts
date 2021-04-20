@@ -3,13 +3,6 @@ import {HttpClient, HttpHeaders, HttpRequest, HttpHeaderResponse} from "@angular
 import {Observable} from "rxjs";
 
 // const INSERT_URL = 'http://localhost:6001/accounts';
-const headerDict = {
-  'Content-Type': 'application/json',
-  'Accept': 'application/json',
-  'Access-Control-Allow-Headers': 'Content-Type',
-
-}
-
 
 
 @Injectable({
@@ -17,33 +10,37 @@ const headerDict = {
 })
 export class RegisterService{
 
-  private testAccountURL: string;
-  //private createAccountURL: string;
+  //private testAccountURL: string;
+  private createAccountURL: string;
 
   constructor(private http: HttpClient){
-    this.testAccountURL = 'http://localhost:6001/account/make_test_account';
-    //this.createAccountURL: string; = 'http://localhost:6001/account/create';
+    //this.testAccountURL = 'http://localhost:6001/account/make_test_account';
+    this.createAccountURL = 'http://localhost:6001/account/create';
   }
 
 
-  public testAccountCreation(){
-    //const dataJ = JSON.stringify(data);
-    let header = new HttpHeaders({  'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    })
-    //Testing using make_test_account post method
-    return this.http.post(this.testAccountURL,{headers: header});
-  }
-
-  //This method is for account creation
-  // public createAccount(data){
+  // public testAccountCreation(){
+  //   //const dataJ = JSON.stringify(data);
   //   let header = new HttpHeaders({  'Content-Type': 'application/json',
   //     'Accept': 'application/json',
   //     'Access-Control-Allow-Headers': 'Content-Type',
   //   })
-  //   return this.http.post(this.createAccountURL, data,{headers: header});
+  //   //Testing using make_test_account post method
+  //   return this.http.post(this.testAccountURL,{headers: header});
   // }
+
+  // This method is for account creation
+  public createAccount(data){
+    let header = new HttpHeaders({  'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    })
+
+    //checking if data is not null
+    console.log(data);
+
+    return this.http.post<any>(this.createAccountURL, data,{headers: header});
+  }
 
 
 

@@ -78,7 +78,7 @@ export class ReportIssueFormComponent implements OnInit {
       });
 
       console.log(jsonObj);
-      this.service.testAccountCreation().subscribe((data) => this.processResponse(data));
+      //this.service.testAccountCreation().subscribe((data) => this.processResponse(data));
 
     }
 

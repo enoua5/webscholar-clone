@@ -1,3 +1,4 @@
+//This Model exists to connect Account and Scholarship so individual accounts can be linked to scholarships.
 package edu.weber.model;
 
 import lombok.AccessLevel;

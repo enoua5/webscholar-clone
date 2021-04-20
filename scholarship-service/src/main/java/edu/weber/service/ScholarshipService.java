@@ -64,6 +64,7 @@ public class ScholarshipService {
     }
 
     /**
+     * TODO figure out how to make this delete account-scholarships with the same id
      * This method deletes a scholarship using it's given id.
      *
      * @param scholarshipId The id of the scholarship to be deleted.

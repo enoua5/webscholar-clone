@@ -21,5 +21,8 @@ public interface ScholarshipRepository extends JpaRepository<Scholarship, String
 
     Scholarship findScholarshipByTitle (String Title);
 
+    /*
+    TODO figure out how to delete any account-scholarship objects with the same ID as well.
+     */
     void deleteScholarshipByScholarshipId(int id);
 }

@@ -106,9 +106,9 @@ export class RegisterFormComponent implements OnInit {
       });
 
       console.log(jsonObj);
-      this.service.createAccount(jsonObj);
-      //this.service.testAccountCreation().subscribe((data) => this.processResponse(data));
-      this.router.navigate(['/dashboard']).then(r => true );
+      //this.service.createAccount(jsonObj);
+      this.service.testAccountCreation();
+      //this.router.navigate(['/dashboard']).then(r => true );
     }
 
   }

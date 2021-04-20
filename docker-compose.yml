@@ -104,7 +104,21 @@ services:
       - front-end
       - back-end
 
+  account-scholarship-service:
 
+    build: account-scholarship-service
+    depends_on:
+      config-service:
+        condition: service_healthy
+
+    ports:
+      - 6004:6004
+    expose:
+      - 6004
+
+    networks:
+      - front-end
+      - back-end
 
 
 networks:

@@ -25,7 +25,7 @@
                 Contact
               </a>
               <hr class="navbar-divider">
-              <a class="navbar-item" routerLink="/report_issue">
+              <a class="navbar-item">
                 Report an issue
               </a>
             </div>
@@ -47,58 +47,10 @@
       </div>
     </nav>
 
-    <div class="header">
-      <strong>Welcome Jane Doe!<hr></strong>
-    </div>
-    <div class="main">
-    <div class="updates">
-      <strong>Latest Updates</strong>
-      <hr>
-      <ul class="update-list">
-        <li>Scholarship for Computer Science just posted</li>
-        <li>Health Administration scholarship advising now available</li>
-      </ul>
-    </div>
+    <div class = "container"></div>
 
-
-    <div class="scholarship-table">
-      <div class="table-header">
-        <strong>Applied Scholarships</strong>
-      </div>
-      <table>
-        <tr>
-          <th>Scholarship</th>
-          <th>Status</th>
-          <th>Date</th>
-        </tr>
-        <tr>
-          <td>Regent's Scholarship</td>
-          <td>Being Reviewed</td>
-          <td>4/5/2021</td>
-        </tr>
-        <tr>
-          <td>Presidential Scholarship</td>
-          <td>Applied</td>
-          <td>4/1/2021</td>
-        </tr>
-        <tr>
-          <td>Departmental Scholarship</td>
-          <td>Denied</td>
-          <td>4/7/2021</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-    <hr>
-
-    <div class="events-header">
-      <strong>Upcoming Events</strong>
-    </div>
-    <div class="upcoming-events">
-      <ul>
-        <li>Scholarship deadline - 4/25/2021</li>
-        <li>Registration for Fall 2021 deadline - 4/30/2021</li>
-      </ul>
-    </div>
+    <router-outlet></router-outlet>
+    <div class="Edit_header">Your Dashboard</div>
+    <p class="Edit_sub">This Information is shared with and only visible to you.</p>
   </div>
 </section>

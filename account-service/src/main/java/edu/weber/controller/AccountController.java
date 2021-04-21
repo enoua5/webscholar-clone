@@ -155,20 +155,32 @@ public class AccountController {
 
     /**
      * This method allows a user to send a registration invitation email.
-     * <p>
+     * 
      * The email is sent by the 'company' email. This is the email used
      * for the final product in deployment.
      *
-     * @param accountId The account id of the person wanting to send the invite.
-     * @param email     Tthe email the person is sending the invite to.
+     * @param accountKey        The account id of the person wanting to send the invite.
+     * @param recipientEmail    The email the person is sending the invite to.
+     * 
+     * Incorrectly formatted email addresses entered for recipientEmail 
+     * will be met with SMTPAddressFailedException 553 (no email sent).
+     *
+     * Correctly formatted email addresses which don't exist will receive 
+     * an "address not found" email reply back to the smtp server that is 
+     * specified in the bootstrap.yml file (email sent, but does not reach 
+     * a destination).
      */
-    @PostMapping("/send_invite/{accountId}/{email}")
-    public void sendInvite(@PathVariable int accountId, @PathVariable String email) {
+    @GetMapping("/send_invite/{accountKey}/{recipientEmail}")
+    public String sendInvite(@PathVariable int accountKey, @PathVariable String recipientEmail) {
 
-        //Send an email here.
-        //The sender email would be the email for the company (use a test email for now)
-        //The 'to' email should be the email the user passed in
-        //Send a message that includes the senders name
+        if(!accountService.sendInvite(accountKey, recipientEmail)) {
+
+            //Throw http error if account could not be found 
+            accountNotFound();
+        }
+
+        return "Mail Sent!\n";
+
     }
 
 

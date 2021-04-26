@@ -1,3 +1,7 @@
+-- This file initializes the database.
+-- Make sure intelliJ is connected to the database in docker before running this script.
+-- Note: use a backtick (`) not single quotes (') for fields.
+
 SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS account;
 CREATE TABLE `account` (

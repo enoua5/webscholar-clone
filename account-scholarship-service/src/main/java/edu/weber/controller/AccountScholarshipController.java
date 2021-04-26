@@ -51,7 +51,7 @@ public class AccountScholarshipController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @PostMapping("/create")
-    public void createNewAccountScholarship(@Valid @ModelAttribute AccountScholarship accountScholarship, BindingResult result) {
+    public void createNewAccountScholarship(@Valid @RequestBody AccountScholarship accountScholarship, BindingResult result) {
 
         //Validate accountScholarship information (input validation)
         if (result.hasErrors()) {

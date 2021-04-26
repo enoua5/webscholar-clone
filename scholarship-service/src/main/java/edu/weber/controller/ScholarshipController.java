@@ -52,7 +52,7 @@ public class ScholarshipController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @PostMapping("/create")
-    public void createNewScholarship(@Valid @ModelAttribute Scholarship scholarship, BindingResult result) {
+    public void createNewScholarship(@Valid @RequestBody Scholarship scholarship, BindingResult result) {
 
         //Validate scholarship information (input validation)
         if (result.hasErrors()) {
@@ -79,7 +79,7 @@ public class ScholarshipController {
      */
     @RequestMapping(path = "/update/{scholarshipId}", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void saveChanges(@PathVariable int scholarshipId, @ModelAttribute Scholarship updateScholarship, BindingResult result) {
+    public void saveChanges(@PathVariable int scholarshipId, @RequestBody Scholarship updateScholarship, BindingResult result) {
 
         //Validate input
         if (result.hasErrors()) {

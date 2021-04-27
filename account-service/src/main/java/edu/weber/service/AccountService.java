@@ -11,6 +11,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.util.Date;
+
 /**
  * This class extends the functionality of 'AccountRepository'. Instead of using the default
  * search queries, we can define our own here.
@@ -112,23 +114,181 @@ public class AccountService {
         // Get email sender's name to use in message body
         String senderName = account.getFirstName() + " " + account.getLastName();
 
-        String messageBody = senderName + " has sent you an invite!\n";
-        String messageSubject = "Webscholar Mail Test";
-        
-        // Create mail message object
-        SimpleMailMessage message = new SimpleMailMessage();
+        String messageSubject = "Webscholar Invitation";
+        String messageBody = senderName + " has sent you an invite to join!\n";
 
+        //Send out the email
+        sendEmail(recipientEmail, messageSubject, messageBody);
 
-        // Set message attributes
-        message.setFrom(senderEmail);
-        message.setTo(recipientEmail);
-        message.setSubject(messageSubject);
-        message.setText(messageBody);
-        
-        //Send the message
-        emailSender.send(message);
-
+        //Return success
         return true;
     }
 
+
+    /**
+     * Creates a link to delete a users account.
+     * @param accountKey The unique id for the users account.
+     * @return The generated link for deleting a users account.
+     */
+    public String generateLink(int accountKey){
+
+        //Get the sender's account
+        Account account = accountRepository.findAccountByAccountKey(accountKey);
+
+        //Verify the sender's account exists
+        if(account == null){
+
+            // Log Error
+            log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: generateLink()");
+
+            return "error";
+        }
+
+
+        //Hold the link to the delete page
+        String webUrl = "http://localhost:4200/delete_page/";
+
+        /*TODO: Finish me!
+
+        //Create the unique hash
+        String hashedLink = hasher(found.email, found.password);
+
+        //Get the time the link was created
+        DateTime timeCreated = DateTime.now()
+
+        //Save the hash to the users account
+        account.setDeleteLink(hashedLink);
+
+        //Save the date created to the users account
+        account.setLinkDate(timeCreated);
+
+        //Save the account
+        accountRepository.save(account);
+
+        //Build the final url
+        webUrl += hashedLink
+
+        */
+
+        //Return the deletion link to the caller
+        return webUrl;
+    }
+
+
+    /**
+     * Used to send the generated link to the users email.
+     * @param accountKey The id associated with the users account.
+     * @param link The link used to help the user delete their account.
+     * @return True if nothing goes wrong.
+     */
+    public boolean sendDeleteEmail(int accountKey, String link){
+
+        //Get the sender's account
+        Account account = accountRepository.findAccountByAccountKey(accountKey);
+
+        //Verify the sender's account exists
+        if(account == null){
+
+            // Log Error
+            log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: sendInvite()");
+
+            return false;
+        }
+
+        // Get email sender's name to use in message body
+        String senderName = account.getFirstName() + " " + account.getLastName();
+
+        String messageSubject = "Account Removal Requested";
+        String messageBody = "The account for: '" + senderName + "' has been requested to be deleted.\n" +
+                             "To delete your account, please go to:\n" +
+                             link +
+                             "This link will expire in 24 hours.";
+
+        //Send out email
+        sendEmail(account.getEmail(), messageSubject, messageBody);
+
+        //Return success
+        return true;
+    }
+
+
+    /**
+     * Sends an email to the specified recipient.
+     * @param recipient The person receiving the email.
+     * @param subject Subject of the email.
+     * @param body Body of the email.
+     */
+    public void sendEmail(String recipient, String subject, String body){
+
+        // Create mail message object
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        // Set message attributes
+        message.setFrom(senderEmail);
+        message.setTo(recipient);
+        message.setSubject(subject);
+        message.setText(body);
+
+        //Send the message
+        emailSender.send(message);
+    }
+
+
+    /**
+     *
+     * @param generatedHash
+     * @return
+     */
+    public boolean deleteAccount(String generatedHash){
+
+        /*
+
+        //Find the account associated with the hash
+        Account account = accountRepository.findAccountByHash(generatedHash);
+
+        //Verify the sender's account exists
+        if(account == null){
+
+            // Log Error
+            log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: sendInvite()");
+
+            return false;
+        }
+
+
+        //Verify the hash has not expired
+        if(account.getLinkDate > 24hours){
+
+            //Remove the existing hash data
+
+            //Save the hash to the users account
+            account.setDeleteLink(null);
+
+            //Save the date created to the users account
+            account.setLinkDate(null);
+
+            //Save the account
+            accountRepository.save(account);
+
+            //Return error
+            return false;
+
+        }else{
+
+            //Delete the found account
+            accountRepository.delete(account);
+
+            //Send out an email guilt tripping the user for deleting their account
+            String messageSubject = "Your account was deleted!";
+            String messageBody = "We hate to see you go! Please consider signing up for more scholarship opportunities";
+
+            //Send out email
+            sendEmail(account.getEmail(), messageSubject, messageBody);
+        }
+
+         */
+
+        //Return success
+        return true;
+    }
 }

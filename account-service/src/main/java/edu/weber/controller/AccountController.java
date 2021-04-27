@@ -53,7 +53,7 @@ public class AccountController {
      * @return The found account object (automatically serialized into a json object by jackson serializer)
      */
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public Account login(@Valid @RequestBody  LoginDto loginDto, BindingResult result) {
+    public Account login(@Valid @RequestBody LoginDto loginDto, BindingResult result) {
 
         //Validate input
         if (result.hasErrors()) {
@@ -101,7 +101,7 @@ public class AccountController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public void createNewAccount(@Valid @RequestBody  Account account, BindingResult result) {
+    public void createNewAccount(@Valid @RequestBody Account account, BindingResult result) {
 
 
             log.info(account.toString());
@@ -173,16 +173,84 @@ public class AccountController {
      * a destination).
      */
     @GetMapping("/send_invite/{accountKey}/{recipientEmail}")
-    public String sendInvite(@PathVariable int accountKey, @PathVariable String recipientEmail) {
+    public void sendInvite(@PathVariable int accountKey, @PathVariable String recipientEmail) {
 
+        //Attempt sending the mail
         if(!accountService.sendInvite(accountKey, recipientEmail)) {
 
             //Throw http error if account could not be found 
             accountNotFound();
         }
 
-        return "Mail Sent!\n";
+        //If no errors occur, an http ok response will be sent
+    }
 
+    /**
+     * This method sends out an email to the user with a custom link
+     * that must be clicked in order to delete their account. The link
+     * should direct them to the 'delete' page for web scholar. When they
+     * click 'yes, delete account' the 'deleteAccount' API will be called.
+     * @param accountKey
+     */
+    //TODO: Create an method that sends an email for deleting an account
+    @GetMapping("/request_account_deletion/{accountKey}")
+    public void requestAccountRemoval(@PathVariable int accountKey){
+
+        //Generate the link and save it to the users account
+        String emailLink = accountService.generateLink(accountKey);
+
+        //If 'error', the account does not exist
+        if (emailLink.equals("error")) {
+
+            // Log error
+            log.error("ERROR: Account does not exist -- SOURCE: login()");
+
+            //Throw http error
+            accountNotFound();
+        }
+
+        //Send out the email using the link
+        if(!accountService.sendDeleteEmail(accountKey, emailLink)) {
+
+            // Log error
+            log.error("ERROR: Account does not exist -- SOURCE: login()");
+
+            //Throw http error
+            accountNotFound();
+        }
+
+    }
+
+    /**
+     * This method actually deletes the users account using the generated
+     * link we sent them in the email which will send them to the 'delete'
+     * page for web scholar. Web scholar will then send the generated
+     * link to this method to delete the account when the users clicks
+     * a 'yes, delete account' button.
+     * @param linkHash The hash sent out as part of the link emailed to the user.
+     */
+    @GetMapping("/delete_account/{generatedLink}")
+    public void deleteAccount(@PathVariable String linkHash){
+
+        /*
+        Note: We want just the query string, not the whole link!
+        The frontend should pull the query string from the url
+        and send it to this API when the 'yes, delete account' button
+        is clicked by the user.
+
+        e.g. Not this >> http://localhost:4200/delete_page/?hashedlinkhere
+        e.g. Just this >> hashedlinkhere
+         */
+
+        //Take the hash and find and delete the associated account
+        if(!accountService.deleteAccount(linkHash)){
+
+            // Log error
+            log.error("ERROR: Account does not exist -- SOURCE: login()");
+
+            //Throw http error
+            accountNotFound();
+        }
     }
 
 

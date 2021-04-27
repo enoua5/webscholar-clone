@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -26,7 +27,7 @@ public class Account {
     private int accountKey;
 
     @Column(nullable = false)
-    @NotBlank
+    @Email
     private String email;
 
     @Column(nullable = false)

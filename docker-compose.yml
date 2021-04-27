@@ -136,7 +136,6 @@ services:
       - 6004:6004
     expose:
       - 6004
-      -
     networks:
       - front-end
       - back-end

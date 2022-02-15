@@ -16,4 +16,8 @@ export class RegisterService{
     return this.http.post(INSERT_URL, data);
   }
 
+  register(value: any) {
+
+    return this.http.post(INSERT_URL, value);
+  }
 }

@@ -33,6 +33,13 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //hash the password in md5
+  private hashPassword(password: string): string {
+    return btoa(password);
+  }
+
+  //check if the user already exists in the mysql database and return boolean
+
   private checkErrors(): void{
     this.errors.clear();
     if(this.form.get('password').value != this.form.get('confirm_password').value){
@@ -42,7 +49,7 @@ export class RegisterFormComponent implements OnInit {
     if(!regex.test(this.form.get('school_id').value)){
       this.errors.set('school_id', 'Invalid format');
     }
-   //todo check if check mark is set
+    //todo check if check mark is set
     let checkboxvalue = this.form.get('checkbox').value;
     if(checkboxvalue !== true){
       this.errors.set('checkbox', 'Please indicate that you have read and agree to the Terms and Conditions Policy');
@@ -50,19 +57,33 @@ export class RegisterFormComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.form.value.password = this.hashPassword(this.form.value.password);
+    this.form.value.confirm_password = this.hashPassword(this.form.value.confirm_password);
     console.log(this.form.value);
     this.checkErrors();
     if(this.errors.size == 0){
-      this.service.insert(this.form.value)
-        .subscribe((data) => this.processResponse(data));
+      this.service.register(this.form.value).subscribe(
+        (data) => {
+          this.router.navigate(['/']).then(r => {
+            console.log(r);
+          });
+        },
+        (error) => {
+          this.error = error.error.message;
+        }
+      );
+      //this.service.insert(this.form.value)
+      //  .subscribe((data) => this.processResponse(data));
     }
   }
 
   private processResponse(data) {
     console.log(data);
     if (data.success === true) {
+      console.log('success');
       this.router.navigate(['/']);
     } else {
+      console.log('error');
       this.error = data.error;
       this.errors = new Map(Object.entries(data.errors));
     }

@@ -26,10 +26,16 @@ export class LoginFormComponent implements OnInit {
 
   }
 
+  //hash the password in md5
+  private hashPassword(password: string): string {
+    return btoa(password);
+  }
+
   ngOnInit(): void {
   }
 
   onSubmit(): void {
+    this.form.value.password = this.hashPassword(this.form.value.password);
     console.log(this.form.value);
     this.service.login(this.form.value)
       .subscribe((data) => this.processResponse(data));

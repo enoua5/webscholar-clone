@@ -5,6 +5,8 @@ import edu.weber.domain.Account;
 import edu.weber.domain.ResponseData;
 import edu.weber.service.AccountService;
 import edu.weber.service.AccountServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.MultiValueMap;
@@ -14,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class AccountController {
+
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private AccountService accountService;// = new AccountServiceImpl();
@@ -74,6 +78,23 @@ public class AccountController {
         return account.getEmail();
     }
 
+    @CrossOrigin(origins = "http://localhost:4200/register")
+    @RequestMapping(path = "/register", method = RequestMethod.POST,
+            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String registerAccount(@RequestBody MultiValueMap<String, String> formData) {
+        //logging data
+        log.debug("email: " + formData.getFirst("email"));
+
+        //json parsing....
+        Account account = new Account();
+        account.setEmail(formData.getFirst("email"));
+        account.setUsername(formData.getFirst("username"));
+        account.setPassword(formData.getFirst("password"));
+        account.setSchoolId(formData.getFirst("schoolId"));
+        account.setActive(Boolean.parseBoolean(formData.getFirst("active")));
+
+        return account.getEmail();
+    }
     private class FormRaw{
         String oops;
 

@@ -15,6 +15,7 @@ export class ReportIssueFormService {
   createIssue(issue) {
     let body = JSON.stringify(issue);
     // ToDo: Replace with API Call once backend team sets up API call to create an issue
+    console.log(body);
     return this.http.post('{{placeholder}}', body, httpOptions);
   }
 }

@@ -1,3 +1,5 @@
+// ToDO: Limit page to only be viewable if the user is logged in.
+// ToDO: Redirect back to list of issues once that page is set up.
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ReportIssueFormService} from "./report-issue-form.service";
@@ -31,7 +33,9 @@ export class ReportIssueFormComponent implements OnInit {
     this.reportIssueForm = new FormGroup({
       reporter: new FormControl('', Validators.required),
       summary: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required)
+      description: new FormControl('', Validators.required),
+      severity: new FormControl('', Validators.required),
+      priority: new FormControl('', Validators.required)
     })
   }
 

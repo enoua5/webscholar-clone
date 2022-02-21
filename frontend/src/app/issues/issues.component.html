@@ -1,1 +1,77 @@
-<p>issues works!</p>
+<div class="box">
+
+  <h1 class="title">Issues List</h1>
+
+<!-- Search Bar -->
+    <div class="field has-addons">
+      <p class="control">
+        <button class="button is-static">
+          Search
+        </button>
+      </p>
+      <p class="control is-expanded">
+        <input class="input" type="text" placeholder="Find issue" [(ngModel)]='listFilter'>
+      </p>
+      <p class="control">
+        <a class="button is-link" routerLink="/issues/reportIssue">
+          Create New Issue
+        </a>
+      </p>
+    </div>
+
+<!-- Table -->
+  <table class="table">
+    <thead>
+      <tr>
+        <th><abbr title="Issue ID">ID</abbr></th>
+        <th><abbr title="Status">Status</abbr></th>
+        <th><abbr title="Summary">Summary</abbr></th>
+        <th><abbr title="Severity">Severity</abbr></th>
+        <th><abbr title="Priority">Priority</abbr></th>
+        <th><abbr title="Reporter">Reporter</abbr></th>
+        <th><abbr title="Worker">Worker</abbr></th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th><abbr title="Issue ID">ID</abbr></th>
+        <th><abbr title="Status">Status</abbr></th>
+        <th><abbr title="Summary">Summary</abbr></th>
+        <th><abbr title="Severity">Severity</abbr></th>
+        <th><abbr title="Priority">Priority</abbr></th>
+        <th><abbr title="Reporter">Reporter</abbr></th>
+        <th><abbr title="Worker">Worker</abbr></th>
+      </tr>
+    </tfoot>
+    <tbody>
+    <tr *ngFor="let issue of filteredIssues">
+      <td>
+        <a [routerLink]="['/issues', issue.issueID]">
+          {{ issue.issueID }}
+        </a>
+      </td>
+      <td>
+        {{ issue.issueStatus }}
+      </td>
+      <td>
+        {{ issue.issueSummary }}
+      </td>
+      <td>
+        {{ issue.issueSeverity }}
+      </td>
+      <td>
+        {{ issue.issuePriority }}
+      </td>
+      <td>
+        {{ issue.issueReporter }}
+      </td>
+      <td>
+        <div *ngIf="issue.issueWorker; else loggedOut">
+          {{ issue.issueWorker }}
+        </div>
+        <ng-template #loggedOut>-</ng-template>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

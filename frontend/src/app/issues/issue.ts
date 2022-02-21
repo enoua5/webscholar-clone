@@ -5,6 +5,6 @@ export interface Iissue {
   issueDescription: string;
   issueSeverity: string;
   issuePriority: string;
-  issueReporter: number;
-  issueWorker: number;
+  issueReporter: string;
+  issueWorker: string;
 }

@@ -20,7 +20,7 @@
     </div>
 
 <!-- Table -->
-  <table class="table">
+  <table class="table is-hoverable">
     <thead>
       <tr>
         <th><abbr title="Issue ID">ID</abbr></th>
@@ -44,27 +44,15 @@
       </tr>
     </tfoot>
     <tbody>
-    <tr *ngFor="let issue of filteredIssues">
-      <td>
-        <a [routerLink]="['/issues', issue.issueID]">
-          {{ issue.issueID }}
-        </a>
-      </td>
-      <td>
-        {{ issue.issueStatus }}
-      </td>
-      <td>
-        {{ issue.issueSummary }}
-      </td>
-      <td>
-        {{ issue.issueSeverity }}
-      </td>
-      <td>
-        {{ issue.issuePriority }}
-      </td>
-      <td>
-        {{ issue.issueReporter }}
-      </td>
+    <tr class="is-clickable"
+        *ngFor="let issue of filteredIssues"
+        [routerLink]="['/issues', issue.issueID]">
+      <td>{{ issue.issueID }}</td>
+      <td>{{ issue.issueStatus }}</td>
+      <td>{{ issue.issueSummary }}</td>
+      <td>{{ issue.issueSeverity }}</td>
+      <td>{{ issue.issuePriority }}</td>
+      <td>{{ issue.issueReporter }}</td>
       <td>
         <div *ngIf="issue.issueWorker; else loggedOut">
           {{ issue.issueWorker }}

@@ -1,0 +1,94 @@
+<div class="box">
+  <h1 class="title">Issue {{issueInfo.issueID}}</h1>
+  <form [formGroup]="reportIssueForm" (ngSubmit)="UpdateIssue()" novalidate>
+
+    <!-- Success Notification -->
+    <div *ngIf="validMessage != ''">
+      <p class="notification is-success is-light">{{validMessage}}</p>
+    </div>
+
+    <!-- Error Notification -->
+    <div *ngIf="errorMessage != ''">
+      <p class="notification is-danger is-light">{{errorMessage}}</p>
+    </div>
+
+    <!-- Reported By -->
+    <div class="field">
+      <label class="label">Reported by</label>
+      <div class="control has-icons-left">
+        <input class="input is-static" type="text" formControlName="reporter" [value]="issueInfo.issueReporter" required/>
+        <span class="icon is-left">
+          <i class="fas fa-user"></i>
+        </span>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="field">
+      <label class="label">Summary</label>
+      <div class="control has-icons-left">
+        <input class="input" type="text" formControlName="summary" [value]="issueInfo.issueSummary" required autofocus/>
+        <span class="icon is-left">
+          <i class="fas fa-thumbtack"></i>
+        </span>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="field">
+      <label class="label">Description</label>
+      <div class="control">
+        <textarea class="textarea" formControlName="description" [value]="issueInfo.issueDescription" required></textarea>
+      </div>
+    </div>
+
+    <!-- Severity -->
+    <div class="field">
+      <label class="label">Severity</label>
+      <div class="control has-icons-left">
+        <div class="select">
+          <select formControlName="severity" required>
+            <option [ngValue]="0"  disabled selected>Select Severity</option>
+            <option *ngFor="let severity of severityList" [value]="severity"> {{severity}}</option>
+          </select>
+        </div>
+        <span class="icon is-left">
+            <i class="fas fa-bug"></i>
+          </span>
+      </div>
+    </div>
+
+
+
+    <!-- Priority -->
+    <div class="field">
+      <label class="label">Priority</label>
+      <div class="control has-icons-left">
+        <div class="select">
+          <select formControlName="priority" required>
+            <option [ngValue]="0" disabled selected>Select Priority</option>
+            <option *ngFor="let priority of priorityList" [value]="priority"> {{priority}}</option>
+          </select>
+        </div>
+        <span class="icon is-left">
+        <i class="fas fa-chevron-circle-up"></i>
+          </span>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="field is-grouped">
+
+      <!-- Update -->
+      <div class="control">
+        <button class="button is-link">Update</button>
+      </div>
+
+      <!-- Back to List -->
+      <div class="control">
+        <button class="button is-link is-light" routerLink="/issues">Back to List</button>
+      </div>
+    </div>
+
+  </form>
+</div>

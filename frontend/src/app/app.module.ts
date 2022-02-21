@@ -16,6 +16,7 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import {NewPasswordComponent} from "./new-password-form/new-password.component";
 import { CreateScholarshipFormComponent } from './create-scholarship-form/create-scholarship-form.component';
 import { ReportIssueFormComponent } from './report-issue-form/report-issue-form.component';
+import {IssuesComponent} from "./issues/issues.component";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ReportIssueFormComponent } from './report-issue-form/report-issue-form.
     NewPasswordComponent,
     CreateScholarshipFormComponent,
     ReportIssueFormComponent,
+    IssuesComponent
   ],
   imports: [
     BrowserModule,

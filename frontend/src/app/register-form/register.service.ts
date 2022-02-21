@@ -19,34 +19,32 @@ export class RegisterService{
 
   }
 
-
-  public testAccountCreation(){
-    let header = new HttpHeaders({  'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    })
+  // This creates a test account
+  //public testAccountCreation(){
+    //let header = new HttpHeaders({  'Content-Type': 'application/json',
+      //'Accept': 'application/json',
+      //'Access-Control-Allow-Headers': 'Content-Type',
+    //})
     //Testing using make_test_account post method
-    return this.http.post('http://localhost:6001/account/make_test_account',{headers: header}, { observe: 'response', responseType: 'text'}).subscribe();
-  }
+    //return this.http.post('http://localhost:6001/account/make_test_account',{headers: header}, { observe: 'response', responseType: 'text'}).subscribe();
+  //}
 
   // This method is for account creation
-  // public createAccount(data){
-  //   let header = new HttpHeaders({  'Content-Type': 'application/json',
-  //     'Accept': 'application/json',
-  //     'Access-Control-Allow-Headers': 'Content-Type',
-  //   })
-  //
-  //   //checking if data is not null
-  //   console.log(data);
-  //
-  //   return this.http.post<any>('http://localhost:6001/account/create', data, { headers: header, observe: 'response', responseType: 'json'}).subscribe();
-  // }
+  public createAccount(data){
+     let header = new HttpHeaders({  'Content-Type': 'application/json',
+       'Accept': 'application/json',
+       'Access-Control-Allow-Headers': 'Content-Type',
+     })
 
+     //checking if data is not null
+     console.log(data);
 
+     return this.http.post<any>('http://localhost:6001/account/create', data, { headers: header, observe: 'response', responseType: 'json'}).subscribe();
+  }
 
   //Not sure what this method was doing with the old INSERT_URL
   // public insert(data): Observable<any> {
   //   return this.http.post(INSERT_URL, data);
-  // }
+ //}
 
 }

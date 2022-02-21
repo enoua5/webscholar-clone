@@ -18,11 +18,13 @@ export class RegisterFormComponent implements OnInit {
 
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+
+    // Research
     private service: RegisterService) {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       username: [''],
       password: [''],
       confirm_password: [''],
@@ -80,10 +82,11 @@ export class RegisterFormComponent implements OnInit {
     console.log(this.form.value);
     this.checkErrors();
 
-    const email = this.form.get('email').value;
+    const email = this.form.get('email').value
     const username = this.form.get('username').value;
     const password = this.form.get('password').value;
     const schoolId = this.form.get('user_id').value;
+    // Instructor can only register by invitation
     const userType = "student";
     const active = "true";
     const firstName = this.form.get('first_name').value;
@@ -91,8 +94,7 @@ export class RegisterFormComponent implements OnInit {
 
 
     if(this.errors.size == 0){
-      // this.service.insert(this.form.value)
-      //   .subscribe((data) => this.processResponse(data));
+
       const jsonObj = JSON.stringify({
         email: email,
         username: username,
@@ -106,8 +108,11 @@ export class RegisterFormComponent implements OnInit {
       });
 
       console.log(jsonObj);
-      //this.service.createAccount(jsonObj);
-      this.service.testAccountCreation();
+      this.service.createAccount(jsonObj);
+
+      // Test create account
+      //this.service.testAccountCreation();
+
       //this.router.navigate(['/dashboard']).then(r => true );
     }
 
@@ -116,7 +121,7 @@ export class RegisterFormComponent implements OnInit {
   private processResponse(data) {
     console.log(data);
     if (data.success == true) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['login-form']);
     }
     else {
       console.warn('Else Statement executed');

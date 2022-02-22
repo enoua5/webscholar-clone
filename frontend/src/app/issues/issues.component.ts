@@ -1,10 +1,9 @@
 // ToDo: Verify that the user is logged in. If not, redirect to Login Page
 
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Iissue} from "./issue";
 import {IssueService} from "./issue.service";
 import {Subscription} from "rxjs";
-import {error} from "protractor";
 
 @Component({
   selector: 'app-issues',
@@ -16,18 +15,21 @@ export class IssuesComponent implements OnInit {
   sub!: Subscription;
   issues: Iissue[] = [];
   filteredIssues: Iissue[] = [];
+  private errorMessage: any;
+
+  constructor(private issueService: IssueService) {
+  }
 
   private _listFilter = '';
-  private errorMessage: any;
+
   get listFilter(): string {
     return this._listFilter;
   }
+
   set listFilter(value: string) {
     this._listFilter = value;
     this.filteredIssues = this.performFilter(value);
   }
-
-  constructor(private issueService: IssueService) { }
 
   /**
    * Filters the list of issues based on their summary field.
@@ -50,16 +52,16 @@ export class IssuesComponent implements OnInit {
       issueReporter: "AnthonyBahl",
       issueWorker: "AnthonyBahl"
     },
-    {
-      issueID: 321,
-      issueStatus: "Open",
-      issueSummary: "Fake Issue",
-      issueDescription: "This is just a fake issue.",
-      issueSeverity: "Low",
-      issuePriority: "Low",
-      issueReporter: "AnthonyBahl",
-      issueWorker: ""
-    },
+      {
+        issueID: 321,
+        issueStatus: "Open",
+        issueSummary: "Fake Issue",
+        issueDescription: "This is just a fake issue.",
+        issueSeverity: "Low",
+        issuePriority: "Low",
+        issueReporter: "AnthonyBahl",
+        issueWorker: ""
+      },
       {
         issueID: 123456,
         issueStatus: "Open",

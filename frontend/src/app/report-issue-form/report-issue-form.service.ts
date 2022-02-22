@@ -1,11 +1,9 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Iissue} from "../issues/issue";
-import {never, Observable, throwError} from "rxjs";
-import {catchError, map, tap} from "rxjs/operators";
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
 
 @Injectable({
@@ -13,7 +11,8 @@ const httpOptions = {
 })
 export class ReportIssueFormService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   createIssue(issue: Iissue) {
     let body = JSON.stringify(issue);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {FormGroup} from "@angular/forms";
 import {Iissue} from "../issues/issue";
@@ -27,13 +27,14 @@ export class ViewIssueComponent implements OnInit {
   validMessage: string = "";
   issueInfo: Iissue;
 
-  constructor(private issueService: IssueService, private route: ActivatedRoute) { }
+  constructor(private issueService: IssueService, private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.getIssueInfo(this.route.snapshot.params['id']);
   }
 
-  getIssueInfo(id:number) {
+  getIssueInfo(id: number) {
     this.issueService.getIssue(id).subscribe(
       data => this.issueInfo = data,
       err => console.error(err),
@@ -46,6 +47,6 @@ export class ViewIssueComponent implements OnInit {
    * @constructor
    */
   UpdateIssue() {
-  //  Todo: Use the issue service to update the issue.
+    //  Todo: Use the issue service to update the issue.
   }
 }

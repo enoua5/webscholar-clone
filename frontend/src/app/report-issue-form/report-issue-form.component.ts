@@ -1,6 +1,6 @@
 // ToDO: Limit page to only be viewable if the user is logged in.
 // ToDO: Redirect back to list of issues once that page is set up.
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ReportIssueFormService} from "./report-issue-form.service";
 
@@ -27,7 +27,8 @@ export class ReportIssueFormComponent implements OnInit {
   validMessage: string = "";
 
 
-  constructor(private reportIssueFormService: ReportIssueFormService) { }
+  constructor(private reportIssueFormService: ReportIssueFormService) {
+  }
 
   ngOnInit(): void {
     this.reportIssueForm = new FormGroup({
@@ -55,7 +56,7 @@ export class ReportIssueFormComponent implements OnInit {
       )
     } else {
       this.validMessage = "";
-        this.errorMessage = "Please fill out the form before submitting!";
+      this.errorMessage = "Please fill out the form before submitting!";
     }
   }
 }

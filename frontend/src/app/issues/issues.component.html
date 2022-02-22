@@ -2,51 +2,51 @@
 
   <h1 class="title">Issues List</h1>
 
-<!-- Search Bar -->
-    <div class="field has-addons">
-      <p class="control">
-        <button class="button is-static">
-          Search
-        </button>
-      </p>
-      <p class="control is-expanded">
-        <input class="input" type="text" placeholder="Find issue" [(ngModel)]='listFilter'>
-      </p>
-      <p class="control">
-        <a class="button is-link" routerLink="/issues/reportIssue">
-          Create New Issue
-        </a>
-      </p>
-    </div>
+  <!-- Search Bar -->
+  <div class="field has-addons">
+    <p class="control">
+      <button class="button is-static">
+        Search
+      </button>
+    </p>
+    <p class="control is-expanded">
+      <input [(ngModel)]='listFilter' class="input" placeholder="Find issue" type="text">
+    </p>
+    <p class="control">
+      <a class="button is-link" routerLink="/issues/reportIssue">
+        Create New Issue
+      </a>
+    </p>
+  </div>
 
-<!-- Table -->
+  <!-- Table -->
   <table class="table is-hoverable">
     <thead>
-      <tr>
-        <th><abbr title="Issue ID">ID</abbr></th>
-        <th><abbr title="Status">Status</abbr></th>
-        <th><abbr title="Summary">Summary</abbr></th>
-        <th><abbr title="Severity">Severity</abbr></th>
-        <th><abbr title="Priority">Priority</abbr></th>
-        <th><abbr title="Reporter">Reporter</abbr></th>
-        <th><abbr title="Worker">Worker</abbr></th>
-      </tr>
+    <tr>
+      <th><abbr title="Issue ID">ID</abbr></th>
+      <th><abbr title="Status">Status</abbr></th>
+      <th><abbr title="Summary">Summary</abbr></th>
+      <th><abbr title="Severity">Severity</abbr></th>
+      <th><abbr title="Priority">Priority</abbr></th>
+      <th><abbr title="Reporter">Reporter</abbr></th>
+      <th><abbr title="Worker">Worker</abbr></th>
+    </tr>
     </thead>
     <tfoot>
-      <tr>
-        <th><abbr title="Issue ID">ID</abbr></th>
-        <th><abbr title="Status">Status</abbr></th>
-        <th><abbr title="Summary">Summary</abbr></th>
-        <th><abbr title="Severity">Severity</abbr></th>
-        <th><abbr title="Priority">Priority</abbr></th>
-        <th><abbr title="Reporter">Reporter</abbr></th>
-        <th><abbr title="Worker">Worker</abbr></th>
-      </tr>
+    <tr>
+      <th><abbr title="Issue ID">ID</abbr></th>
+      <th><abbr title="Status">Status</abbr></th>
+      <th><abbr title="Summary">Summary</abbr></th>
+      <th><abbr title="Severity">Severity</abbr></th>
+      <th><abbr title="Priority">Priority</abbr></th>
+      <th><abbr title="Reporter">Reporter</abbr></th>
+      <th><abbr title="Worker">Worker</abbr></th>
+    </tr>
     </tfoot>
     <tbody>
-    <tr class="is-clickable"
-        *ngFor="let issue of filteredIssues"
-        [routerLink]="['/issues', issue.issueID]">
+    <tr *ngFor="let issue of filteredIssues"
+        [routerLink]="['/issues', issue.issueID]"
+        class="is-clickable">
       <td>{{ issue.issueID }}</td>
       <td>{{ issue.issueStatus }}</td>
       <td>{{ issue.issueSummary }}</td>

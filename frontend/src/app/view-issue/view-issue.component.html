@@ -1,6 +1,6 @@
 <div class="box">
   <h1 class="title">Issue {{issueInfo.issueID}}</h1>
-  <form [formGroup]="reportIssueForm" (ngSubmit)="UpdateIssue()" novalidate>
+  <form (ngSubmit)="UpdateIssue()" [formGroup]="reportIssueForm" novalidate>
 
     <!-- Success Notification -->
     <div *ngIf="validMessage != ''">
@@ -16,7 +16,8 @@
     <div class="field">
       <label class="label">Reported by</label>
       <div class="control has-icons-left">
-        <input class="input is-static" type="text" formControlName="reporter" [value]="issueInfo.issueReporter" required/>
+        <input [value]="issueInfo.issueReporter" class="input is-static" formControlName="reporter" required
+               type="text"/>
         <span class="icon is-left">
           <i class="fas fa-user"></i>
         </span>
@@ -27,7 +28,7 @@
     <div class="field">
       <label class="label">Summary</label>
       <div class="control has-icons-left">
-        <input class="input" type="text" formControlName="summary" [value]="issueInfo.issueSummary" required autofocus/>
+        <input [value]="issueInfo.issueSummary" autofocus class="input" formControlName="summary" required type="text"/>
         <span class="icon is-left">
           <i class="fas fa-thumbtack"></i>
         </span>
@@ -38,7 +39,8 @@
     <div class="field">
       <label class="label">Description</label>
       <div class="control">
-        <textarea class="textarea" formControlName="description" [value]="issueInfo.issueDescription" required></textarea>
+        <textarea [value]="issueInfo.issueDescription" class="textarea" formControlName="description"
+                  required></textarea>
       </div>
     </div>
 
@@ -48,7 +50,7 @@
       <div class="control has-icons-left">
         <div class="select">
           <select formControlName="severity" required>
-            <option [ngValue]="0"  disabled selected>Select Severity</option>
+            <option [ngValue]="0" disabled selected>Select Severity</option>
             <option *ngFor="let severity of severityList" [value]="severity"> {{severity}}</option>
           </select>
         </div>
@@ -57,7 +59,6 @@
           </span>
       </div>
     </div>
-
 
 
     <!-- Priority -->

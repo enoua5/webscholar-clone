@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, throwError} from "rxjs";
 import {Iissue} from "./issue";
 import {catchError, map, tap} from "rxjs/operators";
@@ -9,7 +9,8 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 })
 export class IssueService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   // ToDo: Replace placeholder with api to get Issues
   /**

@@ -35,7 +35,6 @@ public class AccountAppTest
         Assert.assertNotNull(account);
 
         account.setEmail("test@test.com");
-        account.setUsername("TestUsername");
         account.setPassword("TestPassword");
         account.setSchoolId("W12345670");
         account.setActive(true);
@@ -54,7 +53,6 @@ public class AccountAppTest
 
         //Tests accounts info
         Assert.assertEquals("Email not equal","test@test.com", account.getEmail());
-        Assert.assertEquals("Username not equal","TestUsername", account.getUsername());
         Assert.assertEquals("Password not equal","TestPassword", account.getPassword());
         Assert.assertEquals("School Id not equal","W12345670", account.getSchoolId());
         Assert.assertTrue("Account not active", account.getActive());
@@ -106,7 +104,6 @@ public class AccountAppTest
         Assert.assertNotNull(account);
 
         account.setEmail("test@testUpdate.com");
-        account.setUsername("Username");
         account.setPassword("Password");
         account.setSchoolId("W12345678");
         account.setFirstName("FirstName");
@@ -123,7 +120,6 @@ public class AccountAppTest
 
         //Tests accounts info
         Assert.assertEquals("Email not equal","test@testUpdate.com", account.getEmail());
-        Assert.assertEquals("Username not equal","Username", account.getUsername());
         Assert.assertEquals("Password not equal","Password", account.getPassword());
         Assert.assertEquals("School Id not equal","W12345678", account.getSchoolId());
         Assert.assertTrue("Account not active", account.getActive());

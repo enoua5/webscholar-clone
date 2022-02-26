@@ -25,7 +25,6 @@ export class RegisterFormComponent implements OnInit {
     // Research
     private service: RegisterService) {
     this.form = this.formBuilder.group({
-      username: [''],
       password: [''],
       confirm_password: [''],
       email: [''],
@@ -42,12 +41,6 @@ export class RegisterFormComponent implements OnInit {
   private checkErrors(): void {
     this.errors.clear();
 
-    //if (this.form.get('username')) {
-      //this.errors.set('username', 'Username taken');
-   // }
-    if (this.form.get('username').value.length == 0) {
-      this.errors.set('username', 'Invalid username');
-    }
     //todo check if username already taken in database
 
     //Password verification (meets requirements and passwords match)
@@ -83,7 +76,6 @@ export class RegisterFormComponent implements OnInit {
     this.checkErrors();
 
     const email = this.form.get('email').value
-    const username = this.form.get('username').value;
     const password = this.form.get('password').value;
     const schoolId = this.form.get('user_id').value;
     // Instructor can only register by invitation
@@ -97,7 +89,6 @@ export class RegisterFormComponent implements OnInit {
 
       const jsonObj = JSON.stringify({
         email: email,
-        username: username,
         password: password,
         schoolId: schoolId,
         active: active,

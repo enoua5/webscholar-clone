@@ -11,19 +11,6 @@
         <p class="subtitle">Account Registration</p>
 
         <div class="field">
-          <label class="label" for="username">Username:</label>
-          <p class="control has-icons-left">
-            <input id="username" class="input" type="text" placeholder="Username" formControlName="username">
-            <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-          </span>
-          </p>
-          <div class="error" *ngIf="errors.has('username')">
-            {{errors.get('username')}}
-          </div>
-        </div>
-
-        <div class="field">
           <div class="password" id="password1">
             <label class="label" for="password">Password:</label>
             <p class="control has-icons-left">

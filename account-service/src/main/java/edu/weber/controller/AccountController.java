@@ -312,7 +312,6 @@ public class AccountController {
 
         //Set non-blank values
         String email = "test@test.com";
-        String username = "bobbyJoeJuniorTheThird";
         String password = "myPassword";
         String schoolId = "W012345678";
         Boolean isActive = true;
@@ -321,7 +320,7 @@ public class AccountController {
         String lastName = "Joe";
 
         //Create the account
-        Account account = new Account(email, username, password, schoolId, isActive, userType, firstName, lastName);
+        Account account = new Account(email, password, schoolId, isActive, userType, firstName, lastName);
 
         //Save the account to the database
         accountService.accountRepository.save(account);

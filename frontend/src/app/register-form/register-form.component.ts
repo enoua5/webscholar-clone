@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {RegisterService} from './register.service';
 import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
+import {emailTakenValidator, passwordMatchValidator} from "./validators";
 
 
 @Component({
@@ -12,59 +13,10 @@ import {BrowserModule} from '@angular/platform-browser';
   styleUrls: ['./register-form.component.less']
 })
 export class RegisterFormComponent implements OnInit {
+  // Reactive form
   form: FormGroup;
-  email: FormControl = new FormControl('', {
-    validators: [
-      Validators.required,
-      Validators.email
-    ],
-    updateOn: 'blur'
-  });
-  password: FormControl = new FormControl('', {
-    validators: [
-      Validators.required,
-      Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%?&])[A-Za-z\\d$@$!%?&]{8,}$')
-    ],
-    updateOn: 'blur'
-  });
-  confirm_password: FormControl = new FormControl('', {
-    validators: [
-      Validators.required
-    ],
-    updateOn: 'blur'
-  });
-  user_id: FormControl = new FormControl('', {
-    validators: [
-      Validators.required,
-      Validators.pattern('^[0-9]{8}$')
-    ],
-    updateOn: 'blur'
-  });
-  checkbox: FormControl = new FormControl('', {
-    validators: [
-      Validators.requiredTrue
-    ],
-    updateOn: 'change'
-  });
-  first_name: FormControl = new FormControl('', {
-    validators: [
-      Validators.required
-    ],
-    updateOn: 'blur'
-  });
-  last_name: FormControl = new FormControl('', {
-    validators: [
-      Validators.required
-    ],
-    updateOn: 'blur'
-  });
-  institutions: FormControl = new FormControl('', {
-    validators: [
-      Validators.required
-    ],
-    updateOn: 'blur'
-  });
 
+  // Select element dropdown options
   institutionList: string[] = [
     'Brigham Young University',
     'Dixie State University',
@@ -81,21 +33,101 @@ export class RegisterFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private service: RegisterService) {
     this.form = this.formBuilder.group({
-      email: this.email,
-      password: this.password,
-      confirm_password: this.confirm_password,
-      user_id: this.user_id,
-      checkbox: this.checkbox,
-      first_name: this.first_name,
-      last_name: this.last_name,
-      institutions: this.institutions
-    }, { validators: this.passwordMatchValidator });
+      email: ['', {
+        validators: [
+          Validators.required,
+          Validators.email
+        ],
+        asyncValidators: [
+          emailTakenValidator(service)
+        ]
+      }],
+      passwordFields: this.formBuilder.group({
+        password: ['', {
+          validators: [
+            Validators.required,
+            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%?&])[A-Za-z\\d$@$!%?&]{8,}$')
+          ]
+        }],
+        confirm_password: ['', {
+          validators: [
+            Validators.required
+          ]
+        }]
+      }, {
+        validators: [
+          passwordMatchValidator()
+        ]
+      }),
+      user_id: ['', {
+        validators: [
+          Validators.required,
+          Validators.pattern('^[0-9]{8}$')
+        ]
+      }],
+      checkbox: ['', {
+        validators: [
+          Validators.requiredTrue
+        ]
+      }],
+      first_name: ['', {
+        validators: [
+          Validators.required
+        ]
+      }],
+      last_name: ['', {
+        validators: [
+          Validators.required
+        ]
+      }],
+      institutions: ['', {
+        validators: [
+          Validators.required
+        ]
+      }]
+    }, {
+      updateOn: 'blur'
+    });
   }
 
-  passwordMatchValidator(fg: FormGroup) {
-    return fg.get('password').value === fg.get('confirm_password').value ? null : {'err_mismatch': true};
+  // Getters for form controls
+  get email() {
+    return this.form.get('email');
   }
 
+  get passwordFields() {
+    return this.form.get('passwordFields');
+  }
+
+  get password() {
+    return this.passwordFields.get('password');
+  }
+
+  get confirm_password() {
+    return this.passwordFields.get('confirm_password');
+  }
+
+  get user_id() {
+    return this.form.get('user_id');
+  }
+
+  get checkbox() {
+    return this.form.get('checkbox');
+  }
+
+  get first_name() {
+    return this.form.get('first_name');
+  }
+
+  get last_name() {
+    return this.form.get('last_name');
+  }
+
+  get institutions() {
+    return this.form.get('institutions');
+  }
+
+  // Actually set value for select input when user changes the selected item
   changeInstitution(e) {
     this.institutions.setValue(e.target.value, {onlySelf: true});
   }
@@ -129,15 +161,16 @@ export class RegisterFormComponent implements OnInit {
       });
 
       console.log(jsonObj);
-      //this.service.createAccount(jsonObj);
+      this.service.createAccount(jsonObj).subscribe(res => {
+        // HTTP status code 200 = OK
+        if (res.status == 200) {
+          // Put whatever needs to be executed *after* the routing is done in the .then()
+          this.router.navigate(['/dashboard']).then(res => true);
+        }
+      });
 
       // Test create account
       //this.service.testAccountCreation();
-
-      //this.router.navigate(['/dashboard']).then(r => true );
-    }
-    else {
-
     }
   }
 }

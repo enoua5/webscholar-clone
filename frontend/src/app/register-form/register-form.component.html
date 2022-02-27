@@ -1,8 +1,8 @@
 <section class="section">
 
   <div class="column is-5 is-offset-4">
-<!--  <form action="/dashboard"  [formGroup]="form" (ngSubmit)="onSubmit()">-->
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" >
+    <!--  <form action="/dashboard"  [formGroup]="form" (ngSubmit)="onSubmit()">-->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="box">
         <p class="subtitle">Account Registration</p>
 
@@ -25,13 +25,18 @@
               I.e., email@example.com
             </div>
           </div>
+
+          <div class="error" *ngIf="email.hasError('err_email_taken') && email.touched">
+            Email is already taken.
+          </div>
         </div>
 
-        <div class="field">
+        <div class="field" formGroupName="passwordFields">
           <div class="password" id="password1">
             <label class="label" for="password">Password:</label>
             <p class="control has-icons-left">
-              <input id="password" class="input" type="password" placeholder="Password" formControlName="password" required>
+              <input id="password" class="input" type="password" placeholder="Password" formControlName="password"
+                     required>
               <span class="icon is-small is-left">
                <i class="fas fa-lock"></i>
             </span>
@@ -51,7 +56,8 @@
           <div class="password" id="password2">
             <label class="label" for="confirm-password">Confirm Password:</label>
             <p class="control has-icons-left">
-              <input id="confirm-password" class="input" type="password" placeholder="Confirm Password" formControlName="confirm_password" required>
+              <input id="confirm-password" class="input" type="password" placeholder="Confirm Password"
+                     formControlName="confirm_password" required>
               <span class="icon is-small is-left">
                <i class="fas fa-lock"></i>
             </span>
@@ -63,7 +69,7 @@
               </div>
             </div>
 
-            <div class="error" *ngIf="form.hasError('err_mismatch') && confirm_password.touched">
+            <div class="error" *ngIf="passwordFields.hasError('err_mismatch') && confirm_password.touched">
               Passwords do not match.
             </div>
           </div>
@@ -88,7 +94,8 @@
 
         <div class="field">
           <label class="label" for="institutions">Institution:</label>
-          <select id="institutions" class="select" formControlName="institutions" (change)="changeInstitution($event)" required>
+          <select id="institutions" class="select" formControlName="institutions" (change)="changeInstitution($event)"
+                  required>
             <option value="">Choose an Institution</option>
             <option *ngFor="let institution of institutionList">
               {{ institution }}
@@ -105,7 +112,8 @@
         <div class="field">
           <label class="label" for="first_name" id="first-name-label">First Name:</label>
           <p class="control has-icons-left">
-            <input id="first_name" class="input" type="text" placeholder="First Name" formControlName="first_name" required>
+            <input id="first_name" class="input" type="text" placeholder="First Name" formControlName="first_name"
+                   required>
             <span class="icon is-small is-left">
             <i class="fas fa-user"></i>
           </span>
@@ -121,7 +129,8 @@
         <div class="field">
           <label class="label" for="last_name" id="last-name-label">Last Name:</label>
           <p class="control has-icons-left">
-            <input id="last_name" class="input" type="text" placeholder="Last Name" formControlName="last_name" required>
+            <input id="last_name" class="input" type="text" placeholder="Last Name" formControlName="last_name"
+                   required>
             <span class="icon is-small is-left">
             <i class="fas fa-user"></i>
           </span>
@@ -173,8 +182,6 @@
             </p>
           </div>
         </div>
-
-
       </div>
     </form>
   </div>

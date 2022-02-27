@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {Form, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RegisterService} from './register.service';
-import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
+import {CommonModule} from '@angular/common';
+import {BrowserModule} from '@angular/platform-browser';
 
 
 @Component({
@@ -13,79 +13,109 @@ import { BrowserModule } from '@angular/platform-browser';
 })
 export class RegisterFormComponent implements OnInit {
   form: FormGroup;
-  error: string = null;
-  errors: Map<string, string> = new Map();
+  email: FormControl = new FormControl('', {
+    validators: [
+      Validators.required,
+      Validators.email
+    ],
+    updateOn: 'blur'
+  });
+  password: FormControl = new FormControl('', {
+    validators: [
+      Validators.required,
+      Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%?&])[A-Za-z\\d$@$!%?&]{8,}$')
+    ],
+    updateOn: 'blur'
+  });
+  confirm_password: FormControl = new FormControl('', {
+    validators: [
+      Validators.required
+    ],
+    updateOn: 'blur'
+  });
+  user_id: FormControl = new FormControl('', {
+    validators: [
+      Validators.required,
+      Validators.pattern('^[0-9]{8}$')
+    ],
+    updateOn: 'blur'
+  });
+  checkbox: FormControl = new FormControl('', {
+    validators: [
+      Validators.requiredTrue
+    ],
+    updateOn: 'change'
+  });
+  first_name: FormControl = new FormControl('', {
+    validators: [
+      Validators.required
+    ],
+    updateOn: 'blur'
+  });
+  last_name: FormControl = new FormControl('', {
+    validators: [
+      Validators.required
+    ],
+    updateOn: 'blur'
+  });
+  institutions: FormControl = new FormControl('', {
+    validators: [
+      Validators.required
+    ],
+    updateOn: 'blur'
+  });
 
+  institutionList: string[] = [
+    'Brigham Young University',
+    'Dixie State University',
+    'Southern Utah University',
+    'University of Utah',
+    'Utah State University',
+    'Utah Valley University',
+    'Weber State University'
+  ];
 
   constructor(
-    private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-
-    // Research
+    private formBuilder: FormBuilder,
     private service: RegisterService) {
     this.form = this.formBuilder.group({
-      password: [''],
-      confirm_password: [''],
-      email: [''],
-      user_id: [''],
-      checkbox: [''],
-      first_name: [''],
-      last_name:['']
-    });
+      email: this.email,
+      password: this.password,
+      confirm_password: this.confirm_password,
+      user_id: this.user_id,
+      checkbox: this.checkbox,
+      first_name: this.first_name,
+      last_name: this.last_name,
+      institutions: this.institutions
+    }, { validators: this.passwordMatchValidator });
+  }
+
+  passwordMatchValidator(fg: FormGroup) {
+    return fg.get('password').value === fg.get('confirm_password').value ? null : {'err_mismatch': true};
+  }
+
+  changeInstitution(e) {
+    this.institutions.setValue(e.target.value, {onlySelf: true});
   }
 
   ngOnInit(): void {
   }
 
-  private checkErrors(): void {
-    this.errors.clear();
-
-    //todo check if username already taken in database
-
-    //Password verification (meets requirements and passwords match)
-    if(this.form.get('password').value != this.form.get('confirm_password').value){
-      this.errors.set('confirm_password', 'Passwords do not match');
-    }
-    const validPassword = RegExp('^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,30}$');
-    if (!validPassword.test(this.form.get('password').value) || this.form.get('password').value.length == 0) {
-      this.errors.set('confirm_password', 'Password must meet requirements');
-    }
-
-    //User Id verification
-    const regex = RegExp('^[0-9]{8}$');
-    if (!regex.test(this.form.get('user_id').value) || this.form.get('user_id').value.length == 0) {
-      this.errors.set('user_id', 'Invalid user id');
-    }
-
-    //Email verification
-    const validEmail = RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$');
-    if (!validEmail.test(this.form.get('email').value) || this.form.get('email').value.length == 0) {
-      this.errors.set('email', 'Invalid email format');
-    }
-
-    //Terms and Conditions checkbox verification
-    if(this.form.get('checkbox').value !== true){
-      this.errors.set('checkbox', 'Please indicate that you have read and agree to the Terms and Conditions Policy');
-    }
-  }
-
   onSubmit(): void {
+    if (this.form.valid) {
+      console.log(this.form.value);
 
-    console.log(this.form.value);
-    this.checkErrors();
-
-    const email = this.form.get('email').value
-    const password = this.form.get('password').value;
-    const schoolId = this.form.get('user_id').value;
-    // Instructor can only register by invitation
-    const userType = "student";
-    const active = "true";
-    const firstName = this.form.get('first_name').value;
-    const lastName = this.form.get('last_name').value;
-
-
-    if(this.errors.size == 0){
+      const email = this.email.value
+      const password = this.password.value;
+      const schoolId = this.user_id.value;
+      const school = this.institutions.value;
+      // Instructor can only register by invitation
+      const userType = "student";
+      const active = "true";
+      const firstName = this.first_name.value;
+      const lastName = this.last_name.value;
 
       const jsonObj = JSON.stringify({
         email: email,
@@ -94,30 +124,20 @@ export class RegisterFormComponent implements OnInit {
         active: active,
         userType: userType,
         firstName: firstName,
-        lastName: lastName
-
+        lastName: lastName,
+        school: school
       });
 
       console.log(jsonObj);
-      this.service.createAccount(jsonObj);
+      //this.service.createAccount(jsonObj);
 
       // Test create account
       //this.service.testAccountCreation();
 
       //this.router.navigate(['/dashboard']).then(r => true );
     }
-
-  }
-
-  private processResponse(data) {
-    console.log(data);
-    if (data.success == true) {
-      this.router.navigate(['login-form']);
-    }
     else {
-      console.warn('Else Statement executed');
-      this.error = data.error;
-      this.errors = new Map(Object.entries(data.errors));
+
     }
   }
 }

@@ -75,7 +75,6 @@ public class AccountService {
 
         //Update the account's data
         account.setEmail(update.getEmail());
-        account.setUsername(update.getUsername());
         account.setPassword(update.getPassword());
         account.setSchoolId(update.getSchoolId());
         account.setActive(update.getActive());

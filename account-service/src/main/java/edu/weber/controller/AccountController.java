@@ -122,6 +122,16 @@ public class AccountController {
         }
     }
 
+    /**
+     * This method checks to see if the email already exists in the DB to prevent dupe accounts during registration
+     *
+     * @param email Email to use in DB search
+     */
+    @RequestMapping(value = "/emailTaken", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Boolean emailTaken(@RequestParam String email) {
+        return accountService.accountRepository.findAccountByEmail(email) != null;
+    }
 
     /**
      * This method updates the account details of the user by using the specified account key.
@@ -312,7 +322,6 @@ public class AccountController {
 
         //Set non-blank values
         String email = "test@test.com";
-        String username = "bobbyJoeJuniorTheThird";
         String password = "myPassword";
         String schoolId = "W012345678";
         Boolean isActive = true;
@@ -321,7 +330,7 @@ public class AccountController {
         String lastName = "Joe";
 
         //Create the account
-        Account account = new Account(email, username, password, schoolId, isActive, userType, firstName, lastName);
+        Account account = new Account(email, password, schoolId, isActive, userType, firstName, lastName);
 
         //Save the account to the database
         accountService.accountRepository.save(account);

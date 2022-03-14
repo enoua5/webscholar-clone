@@ -1,8 +1,10 @@
 package edu.weber.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import edu.weber.model.Account;
 import edu.weber.model.AccountRoles;
 import edu.weber.model.LoginDto;
+import edu.weber.repository.TokenRepository;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -196,6 +198,62 @@ public class AccountController {
     }
 
     /**
+     * This method allows a user to send a registration invitation email with a specified user role.
+     *
+     * The email is sent by the 'company' email. This is the email used
+     * for the final product in deployment.
+     *
+     * @param recipientEmail    The email the person is sending the invite to.
+     * @param roleName          The name of the role person is being invited to register as.
+     *
+     * Incorrectly formatted email addresses entered for recipientEmail
+     * will be met with SMTPAddressFailedException 553 (no email sent).
+     *
+     * Correctly formatted email addresses which don't exist will receive
+     * an "address not found" email reply back to the smtp server that is
+     * specified in the bootstrap.yml file (email sent, but does not reach
+     * a destination).
+     */
+    @GetMapping("/send_registration_invite/{recipientEmail}/{roleName}")
+    public String sendInviteWithRole(@PathVariable String recipientEmail, @PathVariable String roleName) {
+        AccountRoles role = null;
+        switch (roleName) {
+            case "student":
+                role = AccountRoles.student;
+                break;
+            case "committeMember":
+                role = AccountRoles.committeeMember;
+                break;
+            case "chair":
+                role = AccountRoles.chair;
+                break;
+            default:
+                break;
+        }
+
+        if (role == null) {
+            return "Incorrect format for roleName. Valid options are /'student/', /'committeMember/', or /'chair/'\n";
+        }
+
+        if (!accountService.sendRegistrationInvite(recipientEmail, role))
+        {
+            accountNotFound();
+        }
+
+        return "Email for " + role + " has been sent!";
+
+    }
+
+    @GetMapping("/is_token_valid/")
+    public Boolean tokenValid(@RequestParam String inputToken) {
+
+        if (accountService.tokenRepository.findAccountByToken(inputToken) != null) return true;
+
+        return false;
+    }
+
+
+    /**
      * This method sends out an email to the user with a custom link
      * that must be clicked in order to delete their account. The link
      * should direct them to the 'delete' page for web scholar. When they
@@ -307,7 +365,7 @@ public class AccountController {
         // This just verifies that the ERROR log level is active
         log.error("No actual error!  Just testing error log level -- SOURCE: testme()");
 
-        return "hello world\n";
+        return "hello world : version 1.0\n";
     }
 
 

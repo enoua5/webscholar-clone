@@ -2,19 +2,21 @@ import {Component, OnInit} from '@angular/core';
 import {Form, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RegisterService} from './register.service';
-import {CommonModule} from '@angular/common';
-import {BrowserModule} from '@angular/platform-browser';
 import {emailTakenValidator, passwordMatchValidator} from "./validators";
-
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.less']
 })
+
 export class RegisterFormComponent implements OnInit {
   // Reactive form
   form: FormGroup;
+  userIsStudent = true
+  nonStudentEmail: string
+  userType: string
+  institution: string
 
   // Select element dropdown options
   institutionList: string[] = [
@@ -133,18 +135,52 @@ export class RegisterFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params) => {
+      if (params.has('email')) {
+          this.userIsStudent = false
+      }
+      // params
+      this.nonStudentEmail = params.get('email')
+      this.userType = params.get('type')
+      this.institution = params.get('institution')
+      console.log(params)
+    })
   }
 
   onSubmit(): void {
+    let email
+    let userType
+    let school
+
     if (this.form.valid) {
       console.log(this.form.value);
 
-      const email = this.email.value
+      // This might change depending on how the params are coming in
+      if (!this.userIsStudent == false) {
+        email = this.nonStudentEmail
+      } else {
+        email = this.email.value
+      }
+
+      if (this.userType == "chair") {
+        userType = "chair"
+      }
+      else if (this.userType == "committee") {
+        userType = "committee"
+      }
+      else {
+        userType = "student"
+      }
+
+      if (this.institution != null) {
+        school = this.institution
+      }
+      else {
+        school = this.institutions.value
+      }
+
       const password = this.password.value;
       const schoolId = this.user_id.value;
-      const school = this.institutions.value;
-      // Instructor can only register by invitation
-      const userType = "student";
       const active = "true";
       const firstName = this.first_name.value;
       const lastName = this.last_name.value;
@@ -168,7 +204,6 @@ export class RegisterFormComponent implements OnInit {
           this.router.navigate(['/dashboard']).then(res => true);
         }
       });
-
       // Test create account
       //this.service.testAccountCreation();
     }

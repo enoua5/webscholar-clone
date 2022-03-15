@@ -1,8 +1,10 @@
 package edu.weber.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import edu.weber.model.Account;
 import edu.weber.model.AccountRoles;
 import edu.weber.model.LoginDto;
+import edu.weber.repository.TokenRepository;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -122,6 +124,16 @@ public class AccountController {
         }
     }
 
+    /**
+     * This method checks to see if the email already exists in the DB to prevent dupe accounts during registration
+     *
+     * @param email Email to use in DB search
+     */
+    @RequestMapping(value = "/emailTaken", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Boolean emailTaken(@RequestParam String email) {
+        return accountService.accountRepository.findAccountByEmail(email) != null;
+    }
 
     /**
      * This method updates the account details of the user by using the specified account key.
@@ -184,6 +196,62 @@ public class AccountController {
 
         //If no errors occur, an http ok response will be sent
     }
+
+    /**
+     * This method allows a user to send a registration invitation email with a specified user role.
+     *
+     * The email is sent by the 'company' email. This is the email used
+     * for the final product in deployment.
+     *
+     * @param recipientEmail    The email the person is sending the invite to.
+     * @param roleName          The name of the role person is being invited to register as.
+     *
+     * Incorrectly formatted email addresses entered for recipientEmail
+     * will be met with SMTPAddressFailedException 553 (no email sent).
+     *
+     * Correctly formatted email addresses which don't exist will receive
+     * an "address not found" email reply back to the smtp server that is
+     * specified in the bootstrap.yml file (email sent, but does not reach
+     * a destination).
+     */
+    @GetMapping("/send_registration_invite/{recipientEmail}/{roleName}")
+    public String sendInviteWithRole(@PathVariable String recipientEmail, @PathVariable String roleName) {
+        AccountRoles role = null;
+        switch (roleName) {
+            case "student":
+                role = AccountRoles.student;
+                break;
+            case "committeMember":
+                role = AccountRoles.committeeMember;
+                break;
+            case "chair":
+                role = AccountRoles.chair;
+                break;
+            default:
+                break;
+        }
+
+        if (role == null) {
+            return "Incorrect format for roleName. Valid options are /'student/', /'committeMember/', or /'chair/'\n";
+        }
+
+        if (!accountService.sendRegistrationInvite(recipientEmail, role))
+        {
+            accountNotFound();
+        }
+
+        return "Email for " + role + " has been sent!";
+
+    }
+
+    @GetMapping("/is_token_valid/")
+    public Boolean tokenValid(@RequestParam String inputToken) {
+
+        if (accountService.tokenRepository.findAccountByToken(inputToken) != null) return true;
+
+        return false;
+    }
+
 
     /**
      * This method sends out an email to the user with a custom link
@@ -297,7 +365,7 @@ public class AccountController {
         // This just verifies that the ERROR log level is active
         log.error("No actual error!  Just testing error log level -- SOURCE: testme()");
 
-        return "hello world\n";
+        return "hello world : version 1.0\n";
     }
 
 
@@ -312,7 +380,6 @@ public class AccountController {
 
         //Set non-blank values
         String email = "test@test.com";
-        String username = "bobbyJoeJuniorTheThird";
         String password = "myPassword";
         String schoolId = "W012345678";
         Boolean isActive = true;
@@ -321,7 +388,7 @@ public class AccountController {
         String lastName = "Joe";
 
         //Create the account
-        Account account = new Account(email, username, password, schoolId, isActive, userType, firstName, lastName);
+        Account account = new Account(email, password, schoolId, isActive, userType, firstName, lastName);
 
         //Save the account to the database
         accountService.accountRepository.save(account);

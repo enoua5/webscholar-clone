@@ -32,10 +32,6 @@ public class Account {
 
     @Column(nullable = false)
     @NotBlank
-    private String username;
-
-    @Column(nullable = false)
-    @NotBlank
     private String password;
 
     @Column(nullable = false)
@@ -99,7 +95,6 @@ public class Account {
     public Account(){
 
         this.email = "";
-        this.username = "";
         this.password = "";
         this.schoolId = "";
         this.active = false;
@@ -112,7 +107,6 @@ public class Account {
      * Custom constructor. Creates an account object.
      * Parameters are values that must not be blank when this object is created.
      * @param email The email associated with the user. Used for logging in and sending emails.
-     * @param username The username set by the user.
      * @param password The login value set by the user.
      * @param schoolId The students W number given by weber state.
      * @param active
@@ -120,10 +114,9 @@ public class Account {
      * @param firstName The users first name.
      * @param lastName The users last name.
      */
-    public Account(String email, String username, String password, String schoolId, Boolean active, AccountRoles userType, String firstName, String lastName){
+    public Account(String email, String password, String schoolId, Boolean active, AccountRoles userType, String firstName, String lastName){
 
         this.email = email;
-        this.username = username;
         this.password = password;
         this.schoolId = schoolId;
         this.active = active;
@@ -143,7 +136,6 @@ public class Account {
         return "Account{" +
                 "accountKey=" + accountKey +
                 ", email='" + email + '\'' +
-                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", schoolId='" + schoolId + '\'' +
                 ", active=" + active +

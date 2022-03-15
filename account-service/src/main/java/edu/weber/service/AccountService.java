@@ -1,7 +1,10 @@
 package edu.weber.service;
 
 import edu.weber.model.Account;
+import edu.weber.model.AccountRoles;
+import edu.weber.model.VerificationToken;
 import edu.weber.repository.AccountRepository;
+import edu.weber.repository.TokenRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * This class extends the functionality of 'AccountRepository'. Instead of using the default
@@ -50,6 +54,13 @@ public class AccountService {
     @Autowired
     public AccountRepository accountRepository;
 
+
+    /**
+     * This object handles queries to the database for specifically tokens.
+     */
+    @Autowired
+    public TokenRepository tokenRepository;
+
     /**
      * This method updates the data associated for an existing account.
      *
@@ -75,7 +86,6 @@ public class AccountService {
 
         //Update the account's data
         account.setEmail(update.getEmail());
-        account.setUsername(update.getUsername());
         account.setPassword(update.getPassword());
         account.setSchoolId(update.getSchoolId());
         account.setActive(update.getActive());
@@ -116,6 +126,50 @@ public class AccountService {
 
         String messageSubject = "Webscholar Invitation";
         String messageBody = senderName + " has sent you an invite to join!\n";
+
+        //Send out the email
+        sendEmail(recipientEmail, messageSubject, messageBody);
+
+        //Return success
+        return true;
+    }
+
+    /**
+     * This method sends an email message that invites a user to register for a speicifc account role (Chair, faculty, etc)
+     *
+     * @param recipientEmail    The destination email address
+     * @param role              The role recipient will be able to register for.
+     * @return Returns a success or fail flag depending on if the sender's account can be found.
+     *
+     * Note:  The sender's email address is defined in the variable senderEmail
+     * at the top of this class.
+     */
+    public boolean sendRegistrationInvite(String recipientEmail, AccountRoles role) {
+        /*
+        Account account = accountRepository.findAccountByAccountKey(accountKey);
+
+        //Verify the sender's account exists
+        if(account == null){
+
+            // Log Error
+            log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: sendInvite()");
+
+            return false;
+        }
+         */
+
+        // Get email sender's name to use in message body
+        //String senderName = account.getFirstName() + " " + account.getLastName();
+
+        VerificationToken verificationToken = new VerificationToken(UUID.randomUUID().toString());
+        tokenRepository.save(verificationToken);
+
+        // TODO save token to database associated with account.
+
+        String messageSubject = "Webscholar Invitation";
+        String messageBody = "Someone has sent you an invite to join as a " + role.name() + "!\n";
+        String webUrl = "http://localhost:4200/register?role=" + role.name() + "&token=" + verificationToken;
+        messageBody += "Invite Link: " + webUrl;
 
         //Send out the email
         sendEmail(recipientEmail, messageSubject, messageBody);

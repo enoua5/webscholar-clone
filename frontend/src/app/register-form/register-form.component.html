@@ -1,49 +1,76 @@
 <section class="section">
 
   <div class="column is-5 is-offset-4">
-<!--  <form action="/dashboard"  [formGroup]="form" (ngSubmit)="onSubmit()">-->
-    <form  [formGroup]="form" (ngSubmit)="onSubmit()" class="error" >
-      <div *ngIf="error">
-        {{error}}
-      </div>
-
+    <!--  <form action="/dashboard"  [formGroup]="form" (ngSubmit)="onSubmit()">-->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="box">
         <p class="subtitle">Account Registration</p>
 
         <div class="field">
-          <label class="label" for="username">Username:</label>
+          <label class="label" for="email" id="email-label">Email:</label>
           <p class="control has-icons-left">
-            <input id="username" class="input" type="text" placeholder="Username" formControlName="username">
+            <input id="email" class="input" type="email" placeholder="Email" formControlName="email" required>
             <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
+            <i class="fas fa-envelope"></i>
           </span>
           </p>
-          <div class="error" *ngIf="errors.has('username')">
-            {{errors.get('username')}}
+
+          <div class="error" *ngIf="email.invalid && email.touched">
+            <div *ngIf="email.errors.required">
+              Email is required.
+            </div>
+
+            <div *ngIf="email.errors.email">
+              Please enter a valid email address.<br>
+              I.e., email@example.com
+            </div>
+          </div>
+
+          <div class="error" *ngIf="email.hasError('err_email_taken') && email.touched">
+            Email is already taken.
           </div>
         </div>
 
-        <div class="field">
+        <div class="field" formGroupName="passwordFields">
           <div class="password" id="password1">
             <label class="label" for="password">Password:</label>
             <p class="control has-icons-left">
-              <input id="password" class="input" type="password" placeholder="Password" formControlName="password">
+              <input id="password" class="input" type="password" placeholder="Password" formControlName="password"
+                     required>
               <span class="icon is-small is-left">
                <i class="fas fa-lock"></i>
             </span>
             </p>
+
+            <div class="error" *ngIf="password.invalid && password.touched">
+              <div *ngIf="password.errors.required">
+                Password is required.
+              </div>
+
+              <div *ngIf="password.errors.pattern">
+                Password must fulfill all criteria.
+              </div>
+            </div>
           </div>
 
           <div class="password" id="password2">
             <label class="label" for="confirm-password">Confirm Password:</label>
             <p class="control has-icons-left">
-              <input id="confirm-password" class="input" type="password" placeholder="Confirm Password" formControlName="confirm_password">
+              <input id="confirm-password" class="input" type="password" placeholder="Confirm Password"
+                     formControlName="confirm_password" required>
               <span class="icon is-small is-left">
                <i class="fas fa-lock"></i>
             </span>
             </p>
-            <div class="error" *ngIf="errors.has('confirm_password')">
-              {{errors.get('confirm_password')}}
+
+            <div class="error" *ngIf="confirm_password.invalid && confirm_password.touched">
+              <div *ngIf="confirm_password.errors.required">
+                Please confirm the password.
+              </div>
+            </div>
+
+            <div class="error" *ngIf="passwordFields.hasError('err_mismatch') && confirm_password.touched">
+              Passwords do not match.
             </div>
           </div>
 
@@ -54,8 +81,8 @@
                 <li>Must be at least 8 characters long</li>
                 <li>Must contain at each of the following:
                   <ul>
-                    <li>One lower-case letter</li>
-                    <li>One upper-case letter</li>
+                    <li>One lowercase letter</li>
+                    <li>One uppercase letter</li>
                     <li>One number</li>
                     <li>One special symbol</li>
                   </ul>
@@ -66,67 +93,68 @@
         </div>
 
         <div class="field">
-          <label class="label">User Type:</label>
-
-          <input type="radio" class="account-type" id="radio-student" name="account-type" value="Student"  onclick='document.getElementById("user-id-label").innerHTML = "Student ID:"'  checked="checked" >
-          <label class="radio-label" for="radio-student">Student</label>
-
-          <input type="radio" class="account-type" id="radio-employee" name="account-type" value="Employee" onclick='document.getElementById("user-id-label").innerHTML = "Employee ID:"'>
-          <label class="radio-label" for="radio-employee">Employee</label>
-
-        </div>
-
-        <div class="field">
           <label class="label" for="institutions">Institution:</label>
-          <select id="institutions" name="institutions" class="select">
-            <option value="byu">Brigham Young University</option>
-            <option value="dixie">Dixie State University</option>
-            <option value="southern utah">Southern Utah University</option>
-            <option value="university of utah">University of Utah</option>
-            <option value="utah state">Utah State University</option>
-            <option value="utah valley">Utah Valley University</option>
-            <option value="weber">Weber State University</option>
+          <select id="institutions" class="select" formControlName="institutions" (change)="changeInstitution($event)"
+                  required>
+            <option value="">Choose an Institution</option>
+            <option *ngFor="let institution of institutionList">
+              {{ institution }}
+            </option>
           </select>
-        </div>
 
-        <div class="field">
-          <label class="label" for="email" id="email-label">Email:</label>
-          <p class="control has-icons-left">
-            <input id="email" class="input" type="email" placeholder="Email" formControlName="email">
-            <span class="icon is-small is-left">
-            <i class="fas fa-envelope"></i>
-          </span>
-          </p>
-          <div class="error" *ngIf="errors.has('email')">
-            {{errors.get('email')}}
+          <div class="error" *ngIf="institutions.invalid && institutions.touched">
+            <div *ngIf="institutions.errors.required">
+              Please choose an institution.
+            </div>
           </div>
         </div>
 
         <div class="field">
           <label class="label" for="first_name" id="first-name-label">First Name:</label>
           <p class="control has-icons-left">
-            <input id="first_name" class="input" type="text" placeholder="First Name" formControlName="first_name">
+            <input id="first_name" class="input" type="text" placeholder="First Name" formControlName="first_name"
+                   required>
             <span class="icon is-small is-left">
-            <i class="fas fa-envelope"></i>
+            <i class="fas fa-user"></i>
           </span>
           </p>
+
+          <div class="error" *ngIf="first_name.invalid && first_name.touched">
+            <div *ngIf="first_name.errors.required">
+              First name is required.
+            </div>
+          </div>
         </div>
 
         <div class="field">
           <label class="label" for="last_name" id="last-name-label">Last Name:</label>
           <p class="control has-icons-left">
-            <input id="last_name" class="input" type="text" placeholder="Last Name" formControlName="last_name">
+            <input id="last_name" class="input" type="text" placeholder="Last Name" formControlName="last_name"
+                   required>
             <span class="icon is-small is-left">
-            <i class="fas fa-envelope"></i>
+            <i class="fas fa-user"></i>
           </span>
           </p>
+
+          <div class="error" *ngIf="last_name.invalid && last_name.touched">
+            <div *ngIf="last_name.errors.required">
+              Last name is required.
+            </div>
+          </div>
         </div>
 
         <div class="field">
           <label class="label" id="user-id-label" for="user_id">Student ID:</label>
-          <input id="user_id" class="input" type="text" placeholder="W#" formControlName="user_id">
-          <div class="error" *ngIf="errors.has('user_id')">
-            {{errors.get('user_id')}}
+          <input id="user_id" class="input" type="text" placeholder="W#" formControlName="user_id" required>
+
+          <div class="error" *ngIf="user_id.invalid && user_id.touched">
+            <div *ngIf="user_id.errors.required">
+              Student ID is required.
+            </div>
+
+            <div *ngIf="user_id.errors.pattern">
+              Student ID must contain exactly 8 numbers.
+            </div>
           </div>
         </div>
 
@@ -136,8 +164,11 @@
               <input type="checkbox" formControlName="checkbox">
               I have read and agree to the <a class="term-and-conditions-link" href="/#">Terms and Conditions</a>
             </label>
-            <div class="error"  *ngIf="errors.has('checkbox')">
-              {{errors.get('checkbox')}}
+
+            <div class="error" *ngIf="checkbox.invalid && checkbox.touched">
+              <div *ngIf="checkbox.errors.requiredTrue">
+                You must accept the terms and conditions.
+              </div>
             </div>
           </div>
         </div>
@@ -147,13 +178,10 @@
             <p class="control">
               <a class="login-links-1" routerLink="/">Already have an account? Log in</a>
 
-              <input type="submit" value="Register" class="button is-success is-small"/>
-
+              <input [disabled]="!form.valid" type="submit" value="Register" class="button is-success is-small"/>
             </p>
           </div>
         </div>
-
-
       </div>
     </form>
   </div>

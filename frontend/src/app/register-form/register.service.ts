@@ -34,12 +34,16 @@ export class RegisterService{
      let header = new HttpHeaders({  'Content-Type': 'application/json',
        'Accept': 'application/json',
        'Access-Control-Allow-Headers': 'Content-Type',
-     })
+     });
 
      //checking if data is not null
      console.log(data);
 
-     return this.http.post<any>('http://localhost:6001/account/create', data, { headers: header, observe: 'response', responseType: 'json'}).subscribe();
+     return this.http.post<any>('http://localhost:6001/account/create', data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
+  }
+
+  public emailTaken(email: string) {
+    return this.http.get('http://localhost:6001/account/emailTaken', {params: {email: email}}).pipe();
   }
 
   //Not sure what this method was doing with the old INSERT_URL

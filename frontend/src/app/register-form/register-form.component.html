@@ -6,7 +6,7 @@
       <div class="box">
         <p class="subtitle">Account Registration</p>
 
-        <div class="field">
+        <div class="field" *ngIf="userIsStudent">
           <label class="label" for="email" id="email-label">Email:</label>
           <p class="control has-icons-left">
             <input id="email" class="input" type="email" placeholder="Email" formControlName="email" required>
@@ -93,23 +93,6 @@
         </div>
 
         <div class="field">
-          <label class="label" for="institutions">Institution:</label>
-          <select id="institutions" class="select" formControlName="institutions" (change)="changeInstitution($event)"
-                  required>
-            <option value="">Choose an Institution</option>
-            <option *ngFor="let institution of institutionList">
-              {{ institution }}
-            </option>
-          </select>
-
-          <div class="error" *ngIf="institutions.invalid && institutions.touched">
-            <div *ngIf="institutions.errors.required">
-              Please choose an institution.
-            </div>
-          </div>
-        </div>
-
-        <div class="field">
           <label class="label" for="first_name" id="first-name-label">First Name:</label>
           <p class="control has-icons-left">
             <input id="first_name" class="input" type="text" placeholder="First Name" formControlName="first_name"
@@ -143,7 +126,7 @@
           </div>
         </div>
 
-        <div class="field">
+        <div class="field" *ngIf="userIsStudent">
           <label class="label" id="user-id-label" for="user_id">Student ID:</label>
           <input id="user_id" class="input" type="text" placeholder="W#" formControlName="user_id" required>
 

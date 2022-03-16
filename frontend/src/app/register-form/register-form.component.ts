@@ -18,17 +18,6 @@ export class RegisterFormComponent implements OnInit {
   userType: string
   institution: string
 
-  // Select element dropdown options
-  institutionList: string[] = [
-    'Brigham Young University',
-    'Dixie State University',
-    'Southern Utah University',
-    'University of Utah',
-    'Utah State University',
-    'Utah Valley University',
-    'Weber State University'
-  ];
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -82,11 +71,6 @@ export class RegisterFormComponent implements OnInit {
           Validators.required
         ]
       }],
-      institutions: ['', {
-        validators: [
-          Validators.required
-        ]
-      }]
     }, {
       updateOn: 'blur'
     });
@@ -125,15 +109,6 @@ export class RegisterFormComponent implements OnInit {
     return this.form.get('last_name');
   }
 
-  get institutions() {
-    return this.form.get('institutions');
-  }
-
-  // Actually set value for select input when user changes the selected item
-  changeInstitution(e) {
-    this.institutions.setValue(e.target.value, {onlySelf: true});
-  }
-
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       if (params.has('email')) {
@@ -142,7 +117,6 @@ export class RegisterFormComponent implements OnInit {
       // params
       this.nonStudentEmail = params.get('email')
       this.userType = params.get('type')
-      this.institution = params.get('institution')
       console.log(params)
     })
   }
@@ -150,16 +124,15 @@ export class RegisterFormComponent implements OnInit {
   onSubmit(): void {
     let email
     let userType
-    let school
 
     if (this.form.valid) {
       console.log(this.form.value);
 
       // This might change depending on how the params are coming in
-      if (!this.userIsStudent == false) {
-        email = this.nonStudentEmail
-      } else {
+      if (this.userIsStudent == true) {
         email = this.email.value
+      } else {
+        email = this.nonStudentEmail
       }
 
       if (this.userType == "chair") {
@@ -170,13 +143,6 @@ export class RegisterFormComponent implements OnInit {
       }
       else {
         userType = "student"
-      }
-
-      if (this.institution != null) {
-        school = this.institution
-      }
-      else {
-        school = this.institutions.value
       }
 
       const password = this.password.value;
@@ -193,7 +159,7 @@ export class RegisterFormComponent implements OnInit {
         userType: userType,
         firstName: firstName,
         lastName: lastName,
-        school: school
+        school: "Weber State University"
       });
 
       console.log(jsonObj);

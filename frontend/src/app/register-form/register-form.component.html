@@ -92,23 +92,6 @@
           </div>
         </div>
 
-        <div class="field" *ngIf="userIsStudent">
-          <label class="label" for="institutions">Institution:</label>
-          <select id="institutions" class="select" formControlName="institutions" (change)="changeInstitution($event)"
-                  required>
-            <option value="">Choose an Institution</option>
-            <option *ngFor="let institution of institutionList">
-              {{ institution }}
-            </option>
-          </select>
-
-          <div class="error" *ngIf="institutions.invalid && institutions.touched">
-            <div *ngIf="institutions.errors.required">
-              Please choose an institution.
-            </div>
-          </div>
-        </div>
-
         <div class="field">
           <label class="label" for="first_name" id="first-name-label">First Name:</label>
           <p class="control has-icons-left">

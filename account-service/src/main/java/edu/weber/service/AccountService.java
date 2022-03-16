@@ -168,7 +168,7 @@ public class AccountService {
 
         String messageSubject = "Webscholar Invitation";
         String messageBody = "Someone has sent you an invite to join as a " + role.name() + "!\n";
-        String webUrl = "http://localhost:4200/register?role=" + role.name() + "&token=" + verificationToken;
+        String webUrl = "http://localhost:4200/register?role=" + role.name() + "&email=" + recipientEmail +"&token=" + verificationToken;
         messageBody += "Invite Link: " + webUrl;
 
         //Send out the email

@@ -221,7 +221,7 @@ public class AccountController {
             case "student":
                 role = AccountRoles.student;
                 break;
-            case "committeMember":
+            case "committeeMember":
                 role = AccountRoles.committeeMember;
                 break;
             case "chair":

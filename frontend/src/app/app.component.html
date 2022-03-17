@@ -1,8 +1,19 @@
 <header>
+  <!-- Need to change something? Go to the navbar component instead -->
   <app-navbar></app-navbar>
 </header>
-<div class="container">
 
-  <router-outlet></router-outlet>
+<div class="container">
+  <main role="main" class="pb-3">
+    <router-outlet></router-outlet>
+  </main>
 </div>
+
+<footer class="border-top footer text-muted">
+
+  <div class="container">
+    <!-- Use whatever year...2022 was when this footer was made -->
+    &copy; 2022 - WebScholar - CS 4230
+  </div>
+</footer>
 

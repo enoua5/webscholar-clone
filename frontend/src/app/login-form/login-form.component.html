@@ -1,55 +1,42 @@
-<section class="section">
-  <div class="column is-6 is-offset-3">
+<section class="container p-3">
+  <h1>Log In</h1>
 
-    <div class="box">
-      <p class="subtitle">Log In</p>
-
-      <form class="error" (ngSubmit)="onSubmit()" [formGroup]="form">
-
-        <div *ngIf="error">
-          {{error}}
-        </div>
-
-        <div class="field">
-          <label class="label" for="username">Username</label>
-          <p class="control has-icons-left">
-            <input id="username" class="input" type="text" placeholder="Username" formControlName="username"
-                   required="required">
-            <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-          </span>
-          </p>
-        </div>
-
-        <div class="field">
-          <label class="label" for="password">Password:</label>
-          <p class="control has-icons-left">
-            <input id="password" class="input" type="password" placeholder="Password" formControlName="password"
-                   required="required">
-            <span class="icon is-small is-left">
-             <i class="fas fa-lock"></i>
-          </span>
-          </p>
-        </div>
-
-        <div class="field">
-          <div class="login-btn-left">
-            <p class="control">
-              <a class="login-links-1" routerLink="/register">Create an Account</a>
-              <span class="has-dot-separator">&bull;</span>
-              <a class="login-links-1" routerLink="/forgot_password">Forgot Password?</a>
-              <span class="has-dot-separator">&bull;</span>
-              <a class="login-links-2" routerLink="/dashboard">Bypass Login Here</a>
-              <button type="submit" class="button is-success is-small">
-                Log In
-              </button>
-            </p>
-          </div>
-        </div>
-      </form>
-
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div *ngIf="error" class="error">
+      {{error}}
     </div>
-  </div>
+
+    <div class="mt-4">
+        <label for="username">Username</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-user"></i></span>
+          <input id="username" class="form-control" type="text" formControlName="username" placeholder="email@example.com" required>
+        </div>
+    </div>
+
+    <div class="mt-4">
+      <label for="password">Password</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-lock"></i></span>
+        <input id="password" class="form-control" type="password" formControlName="password" placeholder="Password" required>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <div class="login-btn-left">
+        <p class="control">
+          <a class="login-links-1" routerLink="/register">Create an Account</a>
+          <span class="has-dot-separator">&bull;</span>
+          <a class="login-links-1" routerLink="/forgot_password">Forgot Password?</a>
+          <span class="has-dot-separator">&bull;</span>
+          <a class="login-links-2" routerLink="/dashboard">Bypass Login Here</a>
+          <button type="submit" class="button is-success is-small">
+            Log In
+          </button>
+        </p>
+      </div>
+    </div>
+  </form>
 </section>
 
 

@@ -1,46 +1,39 @@
-<section class="section">
+<section class="container p-3">
+  <h1>Register a New Account</h1>
 
-  <div class="column is-5 is-offset-4">
-    <!--  <form action="/dashboard"  [formGroup]="form" (ngSubmit)="onSubmit()">-->
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="box">
-        <p class="subtitle">Account Registration</p>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mt-4" *ngIf="userIsStudent">
+      <label for="email">Username (Email)</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+        <input id="email" class="form-control" type="text" formControlName="email" placeholder="Email" required>
+      </div>
 
-        <div class="field" *ngIf="userIsStudent">
-          <label class="label" for="email" id="email-label">Email:</label>
-          <p class="control has-icons-left">
-            <input id="email" class="input" type="email" placeholder="Email" formControlName="email" required>
-            <span class="icon is-small is-left">
-            <i class="fas fa-envelope"></i>
-          </span>
-          </p>
-
-          <div class="error" *ngIf="email.invalid && email.touched">
-            <div *ngIf="email.errors.required">
-              Email is required.
-            </div>
-
-            <div *ngIf="email.errors.email">
-              Please enter a valid email address.<br>
-              I.e., email@example.com
-            </div>
-          </div>
-
-          <div class="error" *ngIf="email.hasError('err_email_taken') && email.touched">
-            Email is already taken.
-          </div>
+      <div class="error" *ngIf="email.invalid && email.touched">
+        <div *ngIf="email.errors.required">
+          Email is required.
         </div>
 
-        <div class="field" formGroupName="passwordFields">
-          <div class="password" id="password1">
-            <label class="label" for="password">Password:</label>
-            <p class="control has-icons-left">
-              <input id="password" class="input" type="password" placeholder="Password" formControlName="password"
-                     required>
-              <span class="icon is-small is-left">
-               <i class="fas fa-lock"></i>
-            </span>
-            </p>
+        <div *ngIf="email.errors.email">
+          Please enter a valid email address.<br>
+          I.e., email@example.com
+        </div>
+      </div>
+
+      <div class="error" *ngIf="email.hasError('err_email_taken') && email.touched">
+        Email is already taken.
+      </div>
+    </div>
+
+    <div class="row mt-4" formGroupName="passwordFields">
+      <div class="col-md-6 mt-2">
+        <div class="row">
+          <div class="col-md-12">
+            <label for="password">Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+              <input id="password" class="form-control" type="password" formControlName="password" required>
+            </div>
 
             <div class="error" *ngIf="password.invalid && password.touched">
               <div *ngIf="password.errors.required">
@@ -52,16 +45,16 @@
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="password" id="password2">
-            <label class="label" for="confirm-password">Confirm Password:</label>
-            <p class="control has-icons-left">
-              <input id="confirm-password" class="input" type="password" placeholder="Confirm Password"
-                     formControlName="confirm_password" required>
-              <span class="icon is-small is-left">
-               <i class="fas fa-lock"></i>
-            </span>
-            </p>
+        <div class="row mt-4">
+          <div class="col-md-12">
+            <label for="confirm_password">Confirm New Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fas fa-lock"></i></span>
+              <input id="confirm_password" class="form-control" type="password" formControlName="confirm_password"
+                     required>
+            </div>
 
             <div class="error" *ngIf="confirm_password.invalid && confirm_password.touched">
               <div *ngIf="confirm_password.errors.required">
@@ -73,101 +66,104 @@
               Passwords do not match.
             </div>
           </div>
-
-          <div class="password">
-            <div class="content">
-              <p>Password Requirements:</p>
-              <ul class="password-requirements">
-                <li>Must be at least 8 characters long</li>
-                <li>Must contain at each of the following:
-                  <ul>
-                    <li>One lowercase letter</li>
-                    <li>One uppercase letter</li>
-                    <li>One number</li>
-                    <li>One special symbol</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
+      </div>
 
-        <div class="field">
-          <label class="label" for="first_name" id="first-name-label">First Name:</label>
-          <p class="control has-icons-left">
-            <input id="first_name" class="input" type="text" placeholder="First Name" formControlName="first_name"
-                   required>
-            <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-          </span>
-          </p>
-
-          <div class="error" *ngIf="first_name.invalid && first_name.touched">
-            <div *ngIf="first_name.errors.required">
-              First name is required.
-            </div>
-          </div>
-        </div>
-
-        <div class="field">
-          <label class="label" for="last_name" id="last-name-label">Last Name:</label>
-          <p class="control has-icons-left">
-            <input id="last_name" class="input" type="text" placeholder="Last Name" formControlName="last_name"
-                   required>
-            <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-          </span>
-          </p>
-
-          <div class="error" *ngIf="last_name.invalid && last_name.touched">
-            <div *ngIf="last_name.errors.required">
-              Last name is required.
-            </div>
-          </div>
-        </div>
-
-        <div class="field" *ngIf="userIsStudent">
-          <label class="label" id="user-id-label" for="user_id">Student ID:</label>
-          <input id="user_id" class="input" type="text" placeholder="W#" formControlName="user_id" required>
-
-          <div class="error" *ngIf="user_id.invalid && user_id.touched">
-            <div *ngIf="user_id.errors.required">
-              Student ID is required.
-            </div>
-
-            <div *ngIf="user_id.errors.pattern">
-              Student ID must contain exactly 8 numbers.
-            </div>
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <label class="checkbox">
-              <input type="checkbox" formControlName="checkbox">
-              I have read and agree to the <a class="term-and-conditions-link" href="/#">Terms and Conditions</a>
-            </label>
-
-            <div class="error" *ngIf="checkbox.invalid && checkbox.touched">
-              <div *ngIf="checkbox.errors.requiredTrue">
-                You must accept the terms and conditions.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="register-btn-left">
-            <p class="control">
-              <a class="login-links-1" routerLink="/">Already have an account? Log in</a>
-
-              <input [disabled]="!form.valid" type="submit" value="Register" class="button is-success is-small"/>
-            </p>
+      <div class="col-md-6 mt-2">
+        <div class="password">
+          <div class="content">
+            <p>Password Requirements:</p>
+            <ul class="password-requirements">
+              <li>Must be at least 8 characters long</li>
+              <li>Must contain at each of the following:
+                <ul>
+                  <li>One lowercase letter</li>
+                  <li>One uppercase letter</li>
+                  <li>One number</li>
+                  <li>One special symbol</li>
+                </ul>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-    </form>
-  </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-6 mt-2">
+        <label for="first_name">First Name</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-user"></i></span>
+          <input id="first_name" class="form-control" type="text" formControlName="first_name" placeholder="First Name"
+                 required>
+        </div>
+
+        <div class="error" *ngIf="first_name.invalid && first_name.touched">
+          <div *ngIf="first_name.errors.required">
+            First name is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-2">
+        <label for="last_name">Last Name</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="fas fa-user"></i></span>
+          <input id="last_name" class="form-control" type="text" formControlName="last_name" placeholder="Last Name"
+                 required>
+        </div>
+
+        <div class="error" *ngIf="last_name.invalid && last_name.touched">
+          <div *ngIf="last_name.errors.required">
+            Last name is required.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4" *ngIf="userIsStudent">
+      <label for="user_id">Student ID</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-user"></i></span>
+        <input id="user_id" class="form-control" type="text" formControlName="user_id" placeholder="W#" required>
+      </div>
+
+      <div class="error" *ngIf="user_id.invalid && user_id.touched">
+        <div *ngIf="user_id.errors.required">
+          Student ID is required.
+        </div>
+
+        <div *ngIf="user_id.errors.pattern">
+          Student ID must contain exactly 8 numbers.
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-6 mt-2">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" formControlName="checkbox">
+          I have read and agree to the <a class="term-and-conditions-link" href="#">Terms and Conditions</a>
+        </label>
+
+        <div class="error" *ngIf="checkbox.invalid && checkbox.touched">
+          <div *ngIf="checkbox.errors.requiredTrue">
+            You must accept the terms and conditions.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 mt-2">
+        <div class="register-btn-left">
+          <p class="control">
+            <a class="login-links-1" routerLink="/">Already have an account? Log in</a>
+
+            <input [disabled]="!form.valid" type="submit" value="Register" class="button is-success is-small"/>
+          </p>
+        </div>
+      </div>
+    </div>
+  </form>
 </section>
 
 

@@ -42,6 +42,7 @@ export class RegisterService{
      return this.http.post<any>('http://localhost:6001/account/create', data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
   }
 
+
   public emailTaken(email: string) {
     return this.http.get('http://localhost:6001/account/emailTaken', {params: {email: email}}).pipe();
   }

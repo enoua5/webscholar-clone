@@ -45,6 +45,26 @@ commit;
 Select * from account;
 Select * from scholarship;
 SET FOREIGN_KEY_CHECKS=1;
+
+DROP TABLE IF EXISTS issue;
+CREATE TABLE issue
+(
+    issueId     int auto_increment not null,
+    status      varchar(50)  not null,
+    summary     varchar(150) not null,
+    description varchar(500) not null,
+    severity    varchar(100) not null,
+    priority    varchar(50)  not null,
+    reporterId  int          not null,
+    workerId    int          null,
+    PRIMARY KEY (`issueId`),
+    constraint reporter_fk
+        foreign key (reporterId) references account (accountKey),
+    constraint worker_fk
+        foreign key (workerId) references account (accountKey)
+);
+commit;
+
 # DROP TABLE IF EXISTS accountscholarship;
 # CREATE TABLE `accountscholarship` (
 #   `comboId` INT AUTO_INCREMENT NOT NULL,

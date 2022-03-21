@@ -7,7 +7,7 @@ FROM java:8-jre
 ADD ./target/scholarship-service.jar /app/
 
 #This tells the container how to run the jar file we added
-CMD ["java", "-Xmx200m", "-jar", "/app/scholarship-service.jar"]
+CMD ["java", "-Xmx300m", "-jar", "/app/scholarship-service.jar"]
 
 #This tells the container to open port 8888 to the docker host
 #The docker-compose.yml maps this port from the internal docker network to the localhost

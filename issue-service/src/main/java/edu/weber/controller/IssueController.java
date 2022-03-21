@@ -46,11 +46,11 @@ public class IssueController {
      *
      * @param issue The individual 'issue' object created with data sent from the frontend.
      */
-    @RequestMapping(path = "/create", method = RequestMethod.POST, // This might be something else. (URL WISE)
+    @RequestMapping(path = "/createIssue", method = RequestMethod.POST, // This might be something else. (URL WISE)
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    @PostMapping("/create")
+    @PostMapping("/createIssue")
     public void createNewIssue(@Valid @RequestBody Issue issue, BindingResult result) {
 
         //Validate issue information (input validation)

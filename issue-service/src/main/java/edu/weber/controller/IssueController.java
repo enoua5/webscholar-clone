@@ -1,5 +1,6 @@
 package edu.weber.controller;
 
+import edu.weber.model.Account;
 import edu.weber.model.Issue;
 import edu.weber.service.IssueService;
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Note: This class does not have '@RestController("issue")' API path specified here.
@@ -143,4 +145,68 @@ public class IssueController {
     }
 
 
+    /*
+    ----------------------------------------------------------------
+    ------------- ARC API testing code lives down here -------------
+    ----------------------------------------------------------------
+     */
+
+
+    /**
+     * API Test for the Issue Service
+     *
+     * @return Returns "The Issue Service Was Successful!" as a string
+     */
+    @GetMapping("/test_me")
+    public String testy() {
+
+        log.info("Test page as been accessed -- SOURCE: testme()");
+
+        // This just verifies that the ERROR log level is active
+        log.error("No actual error!  Just testing error log level -- SOURCE: testme()");
+
+        return "The Issue Service Was Successful!";
+    }
+
+
+    /**
+     * This method creates a dummy issue for testing purposes.
+     * Use advanced REST client to access this API.
+     * After running this API, attempt to login through the frontend with the below credentials.
+     *
+     * @return The issue in string form.
+     */
+    @PostMapping("/make_test_issue")
+    public String makeTestIssue() {
+
+        // Test Issue information
+        String status = "Test Status";
+        String summary = "Test Summary Information";
+        String description = "Test Description Information";
+        String severity = "Test Severity";
+        String priority = "Test Priority";
+        Account reporterId = new Account();
+        Account workerId = new Account();
+
+        // Create the issue
+        Issue issue = new Issue(status, summary, description, severity, priority, reporterId, workerId);
+
+        // Save the issue to the database
+        issueService.issueRepository.save(issue);
+        // Return success message and issue information
+        return "Success! Issue Created!\nDetails:\n" + issue.toString();
+    }
+
+
+    /**
+     * Returns all issues in currently in the database
+     *
+     * @return All the issues as a json object.
+     */
+    @GetMapping("/get_all_issues")
+    public List<Issue> getAllIssues() {
+
+        // Find all accounts starting after id = 0
+        return issueService.issueRepository.findAllByIssueIdAfter(0);
+    }
 }

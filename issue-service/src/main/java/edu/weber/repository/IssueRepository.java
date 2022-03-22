@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * This class connects to the database.
  * Default methods can be built by specifying the wording of the
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IssueRepository extends JpaRepository<Issue, Integer> {
 
-    //These are default database search functions
+    // These are default database search functions
 
     // Finds an issue through a given issueId
     @Query("select i from Issue i where i.issueId = ?1")
@@ -27,5 +29,9 @@ public interface IssueRepository extends JpaRepository<Issue, Integer> {
     @Modifying
     @Query("delete from Issue i where i.issueId = ?1")
     void deleteIssueByIssueId(int issueId);
+
+    // This should return all issues after the specified starting issue id
+    @Query("select i from Issue i where i.issueId > ?1")
+    List<Issue> findAllByIssueIdAfter(int startingIssueId);
 
 }

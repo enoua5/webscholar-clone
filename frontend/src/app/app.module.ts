@@ -17,7 +17,8 @@ import {NewPasswordComponent} from "./new-password-form/new-password.component";
 import {CreateScholarshipFormComponent} from './create-scholarship-form/create-scholarship-form.component';
 import {ReportIssueFormComponent} from './report-issue-form/report-issue-form.component';
 import {ScholarshipListComponent} from './scholarship-list/scholarship-list.component';
-import {NavbarComponent} from './navbar/navbar.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {NavbarComponent} from './navbar/navbar.component';
     ReportIssueFormComponent,
     ScholarshipListComponent,
     NavbarComponent,
+    StudentViewScholarshipFormComponent,
   ],
   imports: [
     BrowserModule,

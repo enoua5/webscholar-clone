@@ -22,11 +22,17 @@ export class LoginFormComponent implements OnInit {
       username: [''],
       password: [''],
     });
-
-
   }
 
   ngOnInit(): void {
+  }
+
+  get username() {
+    return this.form.get('username');
+  }
+
+  get password() {
+    return this.form.get('password');
   }
 
   onSubmit(): void {

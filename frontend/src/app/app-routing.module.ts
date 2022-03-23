@@ -13,6 +13,7 @@ import {NewPasswordComponent} from "./new-password-form/new-password.component";
 import {ReportIssueFormComponent} from "./report-issue-form/report-issue-form.component";
 import {IssuesComponent} from "./issues/issues.component";
 import {ViewIssueComponent} from "./view-issue/view-issue.component";
+import {ScholarshipListComponent} from "./scholarship-list/scholarship-list.component";
 
 const routes: Routes = [
   { path: '', component: LoginFormComponent },
@@ -26,9 +27,9 @@ const routes: Routes = [
   { path: 'issues/reportIssue', component: ReportIssueFormComponent},
   { path: 'issues', component: IssuesComponent},
   { path: 'dashboard', component: DashboardComponent},
-  { path: 'create_scholarship', component: CreateScholarshipFormComponent},
+  { path: 'scholarship/create', component: CreateScholarshipFormComponent},
   { path: 'new_password', component: NewPasswordComponent},
-
+  { path: 'scholarship', component: ScholarshipListComponent}
 ];
 
 @NgModule({

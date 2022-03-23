@@ -18,6 +18,8 @@ import { CreateScholarshipFormComponent } from './create-scholarship-form/create
 import { ReportIssueFormComponent } from './report-issue-form/report-issue-form.component';
 import {IssuesComponent} from "./issues/issues.component";
 import { ViewIssueComponent } from './view-issue/view-issue.component';
+import {ScholarshipListComponent} from './scholarship-list/scholarship-list.component';
+import {NavbarComponent} from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -35,14 +37,15 @@ import { ViewIssueComponent } from './view-issue/view-issue.component';
     ReportIssueFormComponent,
     IssuesComponent,
     ViewIssueComponent
+    ScholarshipListComponent,
+    NavbarComponent,
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        AppRoutingModule,
-        FormsModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    AppRoutingModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

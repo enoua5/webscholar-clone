@@ -11,87 +11,87 @@
   </style>
 </head>
 <body>
-  <table style="width: 264.125px;" cellpadding="1">
+  <table style="width: 264.125px;" cellpadding="1" *ngFor="let student of students">
     <tbody>
-      <tr *ngFor="let student of students">
+      <tr >
         <td style="width: 129px;">Student Name</td>
         <td style="width: 133.125px;">{{student.studentName}}</td>
       </tr>
       <tr>
         <td style="width: 129px;">Scholarship Status</td>
-        <td style="width: 133.125px;"></td>
+        <td style="width: 133.125px;">{{student.currentstatus}}</td>
       </tr>
     </tbody>
   </table>
 
-  <table style="width: 432px; height: 129px;" cellpadding="1">
+  <table style="width: 432px; height: 129px;" cellpadding="1" *ngFor="let student of students">
     <tbody>
       <tr>
         <td style="width: 100.578px;">Address</td>
-        <td style="width: 132.031px;">&nbsp;</td>
+        <td style="width: 132.031px;">{{student.address}}</td>
         <td style="width: 84.4062px;">Phone</td>
-        <td style="width: 113.984px;">&nbsp;</td>
+        <td style="width: 113.984px;">{{student.phone}}</td>
       </tr>
       <tr>
         <td style="width: 100.578px;">City</td>
-        <td style="width: 132.031px;">&nbsp;</td>
+        <td style="width: 132.031px;">{{student.city}}</td>
         <td style="width: 84.4062px;">Email</td>
-        <td style="width: 113.984px;">&nbsp;</td>
+        <td style="width: 113.984px;">{{student.email}}</td>
       </tr>
       <tr>
         <td style="width: 100.578px;">State</td>
-        <td style="width: 132.031px;">&nbsp;</td>
+        <td style="width: 132.031px;">{{student.state}}</td>
         <td style="width: 84.4062px;">D.O.B</td>
-        <td style="width: 113.984px;">&nbsp;</td>
+        <td style="width: 113.984px;">{{student.dob}}</td>
       </tr>
       <tr>
         <td style="width: 100.578px;">Zip Code</td>
-        <td style="width: 132.031px;">&nbsp;</td>
+        <td style="width: 132.031px;">{{student.zip}}</td>
         <td style="width: 84.4062px;">Gender</td>
-        <td style="width: 113.984px;">&nbsp;</td>
+        <td style="width: 113.984px;">{{student.gender}}</td>
       </tr>
     </tbody>
   </table>
 
-  <table style="width: 900px; height: 242px;" cellpadding="1">
+  <table style="width: 900px; height: 242px;" cellpadding="1" *ngFor="let student of students">
     <tbody>
       <tr style="height: 23px;">
         <td style="width: 160px; height: 23px;">wNumber</td>
-        <td style="width: 211px; height: 23px;">&nbsp;</td>
+        <td style="width: 211px; height: 23px;">{{student.wNumber}}</td>
         <td style="width: 181px; height: 23px;">Act\Sat Score</td>
-        <td style="width: 161.359px; height: 23px;">&nbsp;</td>
+        <td style="width: 161.359px; height: 23px;">{{student.actscore}}</td>
         <td style="width: 84.6406px; height: 23px;">Past Financial Aid</td>
-        <td style="width: 94px; height: 23px;">&nbsp;</td>
+        <td style="width: 94px; height: 23px;">{{student.pastFinancialAid}}</td>
       </tr>
       <tr style="height: 27.9062px;">
         <td style="width: 160px; height: 27.9062px;">Current Major</td>
-        <td style="width: 211px; height: 27.9062px;">&nbsp;</td>
-        <td style="width: 181px; height: 27.9062px;">First Semester&nbsp;</td>
-        <td style="width: 161.359px; height: 27.9062px;">&nbsp;</td>
+        <td style="width: 211px; height: 27.9062px;">{{student.currentMajor}}</td>
+        <td style="width: 181px; height: 27.9062px;">First Semester</td>
+        <td style="width: 161.359px; height: 27.9062px;">{{student.firstSemester}}</td>
         <td style="width: 84.6406px; height: 27.9062px;">Great Achievements</td>
-        <td style="width: 94px; height: 27.9062px;">&nbsp;</td>
+        <td style="width: 94px; height: 27.9062px;">{{greatestAchievements}}</td>
       </tr>
       <tr style="height: 9px;">
         <td style="width: 160px; height: 9px;">Current Academic Level</td>
-        <td style="width: 211px; height: 9px;">&nbsp;</td>
+        <td style="width: 211px; height: 9px;">{{student.currentAcademicLevel}}</td>
         <td style="width: 181px; height: 9px;">First Year</td>
-        <td style="width: 161.359px; height: 9px;">&nbsp;</td>
+        <td style="width: 161.359px; height: 9px;">{{student.firstYear}}</td>
         <td style="width: 84.6406px; height: 9px;">Honors and Awards</td>
-        <td style="width: 94px; height: 9px;">&nbsp;</td>
+        <td style="width: 94px; height: 9px;">{{student.honorsAndawards}}</td>
       </tr>
       <tr style="height: 23px;">
-        <td style="width: 160px; height: 23px;">&nbsp;GPA</td>
-        <td style="width: 211px; height: 23px;">&nbsp;</td>
-        <td style="width: 181px; height: 23px;">Ultimate Degree Goal&nbsp;</td>
-        <td style="width: 161.359px; height: 23px;">&nbsp;</td>
-        <td style="width: 84.6406px; height: 23px;">&nbsp;CS Interests</td>
-        <td style="width: 94px; height: 23px;">&nbsp;</td>
+        <td style="width: 160px; height: 23px;">GPA</td>
+        <td style="width: 211px; height: 23px;">{{student.gpa}}</td>
+        <td style="width: 181px; height: 23px;">Ultimate Degree Goal</td>
+        <td style="width: 161.359px; height: 23px;">{{student.ultimatedegreeGoal}}</td>
+        <td style="width: 84.6406px; height: 23px;">CS Interests</td>
+        <td style="width: 94px; height: 23px;">{{student.csinterests}}</td>
       </tr>
       <tr style="height: 22px;">
         <td style="width: 160px; height: 22px;">Major GPA</td>
-        <td style="width: 211px; height: 22px;">&nbsp;</td>
+        <td style="width: 211px; height: 22px;">{{student.majorGpa}}</td>
         <td style="width: 181px; height: 22px;">Past CS Courses</td>
-        <td style="width: 161.359px; height: 22px;">&nbsp;</td>
+        <td style="width: 161.359px; height: 22px;">{{student.pastCScourses}}</td>
         <td style="width: 84.6406px; height: 22px;">&nbsp;</td>
         <td style="width: 94px; height: 22px;">&nbsp;</td>
       </tr>

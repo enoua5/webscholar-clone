@@ -6,9 +6,8 @@
     "\\frontend\\src",
     "\\frontend\\src\\app",
     "\\frontend\\src\\app\\student-view-scholarship-form",
-    "\\scholarship-service",
     "\\scholarship-service\\src"
   ],
-  "SelectedNode": "\\frontend\\src\\app\\student-view-scholarship-form",
+  "SelectedNode": "\\frontend\\src\\app\\student-view-scholarship-form\\student-view-scholarship-form.component.ts",
   "PreviewInSolutionExplorer": false
 }

@@ -36,7 +36,7 @@ import {NavbarComponent} from './navbar/navbar.component';
     CreateScholarshipFormComponent,
     ReportIssueFormComponent,
     IssuesComponent,
-    ViewIssueComponent
+    ViewIssueComponent,
     ScholarshipListComponent,
     NavbarComponent,
   ],

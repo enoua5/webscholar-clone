@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { ReportIssueFormService } from './report-issue-form.service';
+import {ReportIssueFormService} from './report-issue-form.service';
 
 describe('ReportIssueFormService', () => {
   let service: ReportIssueFormService;

@@ -1,9 +1,8 @@
 // ToDO: Limit page to only be viewable if the user is logged in.
 // ToDO: Redirect back to list of issues once that page is set up.
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ReportIssueFormService} from "./report-issue-form.service";
-import {emailTakenValidator, passwordMatchValidator} from "../register-form/validators";
 
 @Component({
   selector: 'app-report-issue-form',
@@ -27,6 +26,7 @@ export class ReportIssueFormComponent implements OnInit {
   ]
   errorMessage: string = "";
   validMessage: string = "";
+  // ToDO: Add the logic to check if they're actually signed in.
   SignedIn: boolean = true;
 
 

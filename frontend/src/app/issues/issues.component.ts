@@ -15,7 +15,9 @@ export class IssuesComponent implements OnInit {
   sub!: Subscription;
   issues: Iissue[] = [];
   filteredIssues: Iissue[] = [];
-  private errorMessage: any;
+  errorMessage: string = "";
+  // ToDo: Add logic to check if the user is signed in.
+  SignedIn: boolean = true;
 
   constructor(private issueService: IssueService) {
   }

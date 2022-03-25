@@ -3,6 +3,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ReportIssueFormService} from "./report-issue-form.service";
+import {IssueService} from "../issues/issue.service";
 
 @Component({
   selector: 'app-report-issue-form',
@@ -12,18 +13,9 @@ import {ReportIssueFormService} from "./report-issue-form.service";
 export class ReportIssueFormComponent implements OnInit {
   // Reactive form
   reportIssueForm: FormGroup;
-  severityList: string[] = [
-    'Critical',
-    'Major',
-    'Moderate',
-    'Minor',
-    'Cosmetic'
-  ];
-  priorityList: string[] = [
-    'Low',
-    'Medium',
-    'High'
-  ]
+  severityList: string[];
+  priorityList: string[];
+  statusList: string[];
   errorMessage: string = "";
   validMessage: string = "";
   // ToDO: Add the logic to check if they're actually signed in.
@@ -32,6 +24,7 @@ export class ReportIssueFormComponent implements OnInit {
 
   constructor(
     private reportIssueFormService: ReportIssueFormService,
+    private issueService: IssueService,
     private formBuilder: FormBuilder) {
     this.reportIssueForm = this.formBuilder.group({
       username: ['', {validators: [Validators.required]}],
@@ -82,6 +75,9 @@ export class ReportIssueFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.priorityList = this.issueService.priorityList;
+    this.severityList = this.issueService.severityList;
+    this.statusList = this.issueService.statusList;
   }
 
   SubmitIssue() {

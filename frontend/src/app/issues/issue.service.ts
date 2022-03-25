@@ -1,13 +1,23 @@
 import {Injectable} from '@angular/core';
-import {Observable, throwError} from "rxjs";
+import {Observable, Subscription, throwError} from "rxjs";
 import {Iissue} from "./issue";
 import {catchError, map, tap} from "rxjs/operators";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {Iuser} from "./user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class IssueService {
+  private issueUrl = 'assets/fakeIssues.json';
+  private getUsersAPI = '/account/getUsers';
+  private _severityList: string[] = ['Critical', 'Major', 'Moderate', 'Minor', 'Cosmetic'];
+  private _priorityList: string[] = ['Low', 'Medium', 'High'];
+  private _statusList: string[] = ['Open', 'In Progress', 'Blocked', 'In Review', 'Done', 'Obsolete'];
+
+  get severityList(): string[] { return this._severityList; }
+  get priorityList(): string[] { return this._priorityList; }
+  get statusList(): string[] { return this._statusList; }
 
   constructor(private http: HttpClient) {
   }
@@ -17,7 +27,7 @@ export class IssueService {
    * Gets a list of all issues in the database.
    */
   getIssues(): Observable<Iissue[]> {
-    return this.http.get<Iissue[]>('[placeholder]')
+    return this.http.get<Iissue[]>(this.issueUrl)
       .pipe(
         tap(data => console.log('All: ', JSON.stringify(data))),
         catchError(this.handleError)
@@ -42,6 +52,24 @@ export class IssueService {
     return this.getIssues()
       .pipe(
         map((issues: Iissue[]) => issues.filter(i => (i.issueStatus !== "Closed")))
+      );
+  }
+
+  getUsers(): Observable<Iuser[]> {
+    return this.http.get<Iuser[]>(this.getUsersAPI)
+      .pipe(
+        tap(data => console.log('All: ', JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }
+
+  /**
+   * Get's all Open Issues
+   */
+  getActiveUsers(): Observable<Iuser[]> {
+    return this.getUsers()
+      .pipe(
+        map((user: Iuser[]) => user.filter(i => (i.userActive == true)))
       );
   }
 

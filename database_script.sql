@@ -57,7 +57,8 @@ CREATE TABLE issue
     priority    varchar(50)  not null,
     reporterId  int          not null,
     workerId    int          null,
-    PRIMARY KEY (`issueId`),
+    stepsToReCreate varchar(500) not null,
+PRIMARY KEY (`issueId`),
     constraint reporter_fk
         foreign key (reporterId) references account (accountKey),
     constraint worker_fk

@@ -42,8 +42,10 @@
     </tr>
     </tfoot>
     <tbody>
-    <tr *ngFor="let issue of filteredIssues"
-        [routerLink]="['/issues', issue.issueID]">
+    <tr [ngClass]="{'table-success': issue.issueStatus == 'In Progress', 'table-danger': issue.issueStatus == 'Blocked'}"
+        *ngFor="let issue of filteredIssues"
+        [routerLink]="['/issues', issue.issueID]"
+        >
       <td>{{ issue.issueID }}</td>
       <td>{{ issue.issueStatus }}</td>
       <td>{{ issue.issueSummary }}</td>

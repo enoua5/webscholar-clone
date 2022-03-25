@@ -19,8 +19,7 @@ export class IssuesComponent implements OnInit {
   // ToDo: Add logic to check if the user is signed in.
   SignedIn: boolean = true;
 
-  constructor(private issueService: IssueService) {
-  }
+  constructor(private issueService: IssueService) {}
 
   private _listFilter = '';
 
@@ -44,46 +43,13 @@ export class IssuesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.issues = [{
-      issueID: 123,
-      issueStatus: "Open",
-      issueSummary: "This is just a test",
-      issueDescription: "This is a longer version of the test",
-      issueSeverity: "Medium",
-      issuePriority: "Medium",
-      issueReporter: "AnthonyBahl",
-      issueWorker: "AnthonyBahl"
-    },
-      {
-        issueID: 321,
-        issueStatus: "Open",
-        issueSummary: "Fake Issue",
-        issueDescription: "This is just a fake issue.",
-        issueSeverity: "Low",
-        issuePriority: "Low",
-        issueReporter: "AnthonyBahl",
-        issueWorker: ""
-      },
-      {
-        issueID: 123456,
-        issueStatus: "Open",
-        issueSummary: "Docker Won't Start",
-        issueDescription: "I can't get Docker to work properly... Here are the things I've tried.",
-        issueSeverity: "Critical",
-        issuePriority: "High",
-        issueReporter: "AnthonyBahl",
-        issueWorker: ""
-      }];
-    this.filteredIssues = this.issues;
-
-    // ToDo: Use this code instead once we have API working
-    /*this.sub = this.issueService.getOpenIssues().subscribe({
+    this.sub = this.issueService.getOpenIssues().subscribe({
       next: issues => {
         this.issues = issues;
         this.filteredIssues = this.issues;
       },
       error: err => this.errorMessage = err
-    });*/
+    });
   }
 
   ngOnDestroy(): void {

@@ -1,10 +1,7 @@
 package edu.weber.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import edu.weber.model.Account;
-import edu.weber.model.AccountRoles;
 import edu.weber.model.LoginDto;
-import edu.weber.repository.TokenRepository;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -216,32 +213,16 @@ public class AccountController {
      */
     @GetMapping("/send_registration_invite/{recipientEmail}/{roleName}")
     public String sendInviteWithRole(@PathVariable String recipientEmail, @PathVariable String roleName) {
-        AccountRoles role = null;
-        switch (roleName) {
-            case "student":
-                role = AccountRoles.student;
-                break;
-            case "committeeMember":
-                role = AccountRoles.committeeMember;
-                break;
-            case "chair":
-                role = AccountRoles.chair;
-                break;
-            default:
-                break;
-        }
-
-        if (role == null) {
+        if (roleName == null) {
             return "Incorrect format for roleName. Valid options are /'student/', /'committeMember/', or /'chair/'\n";
         }
 
-        if (!accountService.sendRegistrationInvite(recipientEmail, role))
+        if (!accountService.sendRegistrationInvite(recipientEmail, roleName))
         {
             accountNotFound();
         }
 
-        return "Email for " + role + " has been sent!";
-
+        return "Email for " + roleName + " has been sent!";
     }
 
     @GetMapping("/is_token_valid/")
@@ -383,7 +364,7 @@ public class AccountController {
         String password = "myPassword";
         String schoolId = "W012345678";
         Boolean isActive = true;
-        AccountRoles userType = AccountRoles.student;
+        String userType = "student";
         String firstName = "Bobby";
         String lastName = "Joe";
 

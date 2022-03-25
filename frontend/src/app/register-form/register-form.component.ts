@@ -59,7 +59,8 @@ export class RegisterFormComponent implements OnInit {
       checkbox: ['', {
         validators: [
           Validators.requiredTrue
-        ]
+        ],
+        updateOn: 'change'
       }],
       first_name: ['', {
         validators: [
@@ -122,8 +123,8 @@ export class RegisterFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let email
-    let userType
+    let email = "";
+    let userType = "";
 
     if (this.form.valid) {
       console.log(this.form.value);

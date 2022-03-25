@@ -80,18 +80,6 @@
   },
 
   {
-    "issueID": 7,
-    "issueStatus": "Open",
-    "issueSummary": "[Frontend] Highlight my issues",
-    "issueDescription": "User Story: \n\tI would like the issues I'm assigned to highlighted when I open the Issue List.",
-    "issueStepsToRecreate": "",
-    "issueSeverity": "Cosmetic",
-    "issuePriority": "Medium",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Anthony B"
-  },
-
-  {
     "issueID": 8,
     "issueStatus": "In Progress",
     "issueSummary": "[Frontend] Change Status",
@@ -111,6 +99,66 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Critical",
     "issuePriority": "High",
+    "issueReporter": "Anthony B",
+    "issueWorker": "Anthony B"
+  },
+
+  {
+    "issueID": 10,
+    "issueStatus": "Open",
+    "issueSummary": "[Frontend] get Issues from database using API",
+    "issueDescription": "Need to switch from using the json as the api source to the actual database.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Critical",
+    "issuePriority": "High",
+    "issueReporter": "Anthony B",
+    "issueWorker": "Anthony B"
+  },
+
+  {
+    "issueID": 11,
+    "issueStatus": "Blocked",
+    "issueSummary": "[Frontend] get the Update Issue API working.",
+    "issueDescription": "Need to be able to update an issue from the view issue page.\nCurrently blocked by Issue 10, which gets the issues into the database.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Critical",
+    "issuePriority": "High",
+    "issueReporter": "Anthony B",
+    "issueWorker": "Anthony B"
+  },
+
+  {
+    "issueID": 12,
+    "issueStatus": "Blocked",
+    "issueSummary": "[Frontend] Add the ability to delete an Issue.",
+    "issueDescription": "The reporter of an issue should have the option to delete an issue if they want.\nCurrently blocked by issue 13 which is the API to delete an issue, as well as Issue 10, which gets Issues into the database in the first place.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Major",
+    "issuePriority": "High",
+    "issueReporter": "Anthony B",
+    "issueWorker": "Anthony B"
+  },
+
+  {
+    "issueID": 13,
+    "issueStatus": "Open",
+    "issueSummary": "[Backend] Add the ability to delete an Issue.",
+    "issueDescription": "Need an API that would allow an issue to be deleted.\nThis would be a POST, with a ID parameter, which would delete the id passed in.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Major",
+    "issuePriority": "High",
+    "issueReporter": "Anthony B",
+    "issueWorker": "Carston G"
+  },
+
+  {
+    "issueID": 14,
+    "issueStatus": "Open",
+    "issueSummary": "[Frontend] Filter to my issues",
+    "issueDescription": "User Story: \n\tI would like a way to filter to only my issues\nThis would be any issues I am assigned, or that I reported.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Cosmetic",
+    "issuePriority": "Medium",
     "issueReporter": "Anthony B",
     "issueWorker": "Anthony B"
   }

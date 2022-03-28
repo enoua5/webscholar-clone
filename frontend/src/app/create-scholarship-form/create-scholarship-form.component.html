@@ -1,150 +1,81 @@
-<section class="section">
-  <div class="box">
-    <router-outlet></router-outlet>
-    <p class="subtitle">Create Scholarship</p>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="error">
-      <div *ngIf="error">
-        {{error}}
+<section class="container p-3">
+  <h1>Create Scholarship</h1>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="error">
+    <div *ngIf="error">
+      {{error}}
+    </div>
+
+    <div class="mt-4">
+      <label for="scholarship_name">Scholarship Name</label>
+      <div class="input-group">
+        <input id="scholarship_name" class="form-control" type="text" formControlName="scholarship_name" required>
       </div>
-      <div class="field">
-        <label class="label" for="full_name">Your Full Name:</label>
-        <p class="control has-icons-left">
-          <input id="full_name" class="input" type="text" placeholder="Full Name" formControlName="full_name"
-                 required="required">
-          <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
-          </span>
-        </p>
-        <div class="error" *ngIf="errors.has('full_name')">
-          {{errors.get('full_name')}}
-        </div>
+      <div class="error" *ngIf="errors.has('scholarship_name')">
+        {{errors.get('scholarship_name')}}
       </div>
+    </div>
 
-      <div class="field">
-        <label class="label" for="your-email">School Email:</label>
-        <p class="control has-icons-left">
-          <input id="your-email" class="input" type="email" placeholder="Email" formControlName="your_email"
-                 required="required">
-          <span class="icon is-small is-left">
-            <i class="fas fa-envelope"></i>
-          </span>
-        </p>
-        <div class="error" *ngIf="errors.has('your_email')">
-          {{errors.get('your_email')}}
-        </div>
+    <div class="mt-4">
+      <label for="scholarship_provider">Scholarship Provider</label>
+      <div class="input-group">
+        <input id="scholarship_provider" class="form-control" type="text" formControlName="scholarship_provider" required>
       </div>
-
-      <div class="field">
-        <label class="label" for="scholarship_name">Scholarship Name:</label>
-        <p class="control has-icons-left">
-          <input id="scholarship_name" class="input" type="scholarship-name"
-                 placeholder="Enter the name of your scholarship" formControlName="scholarship_name"
-                 required="required">
-          <span class="icon is-small is-left">
-              <i class="fas fa-trophy"></i>
-            </span>
-        </p>
-        <div class="error" *ngIf="errors.has('scholarship_name')">
-          {{errors.get('scholarship_name')}}
-        </div>
+      <div class="error" *ngIf="errors.has('scholarship_provider')">
+        {{errors.get('scholarship_provider')}}
       </div>
+    </div>
 
-      <div class="field">
-        <label class="label" for="scholarship_provider">Scholarship Provider:</label>
-        <p class="control has-icons-left">
-          <input id="scholarship_provider" class="input" type="scholarship-provider"
-                 placeholder="Who is providing for your scholarship" formControlName="scholarship_provider"
-                 required="required">
-          <span class="icon is-small is-left">
-                <i class="fas fa-award"></i>
-              </span>
-        </p>
-        <div class="error" *ngIf="errors.has('scholarship_provider')">
-          {{errors.get('scholarship_provider')}}
-        </div>
+    <div class="mt-4">
+      <label for="scholarship_amount">Scholarship Amount</label>
+      <div class="input-group">
+        <input id="scholarship_amount" class="form-control" type="text" formControlName="scholarship_amount" required>
       </div>
-
-      <div class="field">
-        <label class="label" for="scholarship_amount">Scholarship Amount:</label>
-        <p class="control has-icons-left">
-          <input id="scholarship_amount" class="input" type="scholarship-amount" placeholder="Scholarship Amount"
-                 formControlName="scholarship_amount"
-                 required="required">
-          <span class="icon is-small is-left">
-                <i class="fas fa-medal"></i>
-              </span>
-        </p>
-        <div class="error" *ngIf="errors.has('scholarship_amount')">
-          {{errors.get('scholarship_amount')}}
-        </div>
+      <div class="error" *ngIf="errors.has('scholarship_amount')">
+        {{errors.get('scholarship_amount')}}
       </div>
+    </div>
 
-      <div class="field">
-        <label class="label" for="scholarship_info">Scholarship Information:</label>
-        <p class="control has-icons-left">
-          <textarea id="scholarship_info" class="input" type="scholarship-info"
-                    placeholder="Extra Scholarship Information" formControlName="scholarship_info"
-                    required="required" rows="4" cols="50">
-
-          </textarea>
-          <span class="icon is-small is-left">
-                <i class="fas fa-medal"></i>
-              </span>
-        </p>
-        <div class="error" *ngIf="errors.has('scholarship_info')">
-          {{errors.get('scholarship_info')}}
-        </div>
+    <div class="mt-4">
+      <label for="scholarship_info">Scholarship Amount</label>
+      <div class="input-group">
+        <textarea  id="scholarship_info" class="form-control" formControlName="scholarship_info" aria-label="With textarea" required></textarea>
       </div>
-
-      <div class="field">
-        <label class="label" for="eligible_students">Students Eligible For Scholarship:</label>
-        <p class="control has-icons-left">
-          <input id="eligible_students" class="input" type="eligible-students"
-                 placeholder="Students eligible to apply for this scholarship" formControlName="eligible_students"
-                 required="required">
-          <span class="icon is-small is-left">
-                <i class="fas fa-user-graduate"></i>
-              </span>
-        </p>
-        <div class="error" *ngIf="errors.has('eligible_students')">
-          {{errors.get('eligible_students')}}
-        </div>
+      <div class="error" *ngIf="errors.has('scholarship_info')">
+        {{errors.get('scholarship_info')}}
       </div>
+    </div>
 
-      <div class="field">
-        <div class="control">
-          <label class="checkbox">
-            <input id="donation_checkbox" type="checkbox" formControlName="donation_checkbox" required="required">
-            Check the box if you would you like to receive donations for your scholarship.
-          </label>
-        </div>
-        <div class="error" *ngIf="errors.has('donation_checkbox')">
-          {{errors.get('donation_checkbox')}}
-        </div>
+    <div class="field">
+      <div class="control">
+        <label class="checkbox">
+          <input id="donation_checkbox" type="checkbox" formControlName="donation_checkbox" required="required">
+          Check the box if you would you like to receive donations for your scholarship.
+        </label>
       </div>
-
-
-      <div class="field">
-        <div class="control">
-          <label class="checkbox">
-            <input id="terms_checkbox" type="checkbox" formControlName="terms_checkbox" required="required">
-            I have read and agree to the <a class="term-and-conditions-link" href="/#">Terms and Conditions</a>
-          </label>
-        </div>
-        <div class="error" *ngIf="errors.has('terms_checkbox')">
-          {{errors.get('terms_checkbox')}}
-        </div>
+      <div class="error" *ngIf="errors.has('donation_checkbox')">
+        {{errors.get('donation_checkbox')}}
       </div>
+    </div>
 
-      <div class="field">
-        <div class="register-btn-left">
-          <button type="submit" class="button is-success is-small">
-            Create
-          </button>
-        </div>
+    <div class="field">
+      <div class="control">
+        <label class="checkbox">
+          <input id="terms_checkbox" type="checkbox" formControlName="terms_checkbox" required="required">
+          I have read and agree to the <a class="term-and-conditions-link" href="/#">Terms and Conditions</a>
+        </label>
       </div>
-    </form>
-  </div>
+      <div class="error" *ngIf="errors.has('terms_checkbox')">
+        {{errors.get('terms_checkbox')}}
+      </div>
+    </div>
 
-
+    <div class="field">
+      <div class="register-btn-left">
+        <button type="submit" class="button is-success is-small">
+          Create
+        </button>
+      </div>
+    </div>
+  </form>
 </section>

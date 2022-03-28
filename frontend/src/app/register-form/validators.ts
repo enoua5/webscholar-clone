@@ -16,9 +16,9 @@ export function passwordMatchValidator(): ValidatorFn {
 }
 
 // Check if email already taken
-export function emailTakenValidator(service: RegisterService): AsyncValidatorFn {
+export function emailExistsValidator(service: RegisterService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<ValidationErrors> => {
-    return service.emailTaken(control.value).pipe(map(res =>
+    return service.emailExists(control.value).pipe(map(res =>
       res ? {'err_email_taken': true} : null
     ));
   }

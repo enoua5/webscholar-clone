@@ -1,6 +1,6 @@
 <div class="box">
-  <h1 class="title">Report Issue</h1>
-  <form (ngSubmit)="SubmitIssue()" [formGroup]="reportIssueForm" novalidate>
+  <h1 class="title">Issue {{issueInfo.issueID}}</h1>
+  <form (ngSubmit)="UpdateIssue()" [formGroup]="reportIssueForm" novalidate>
 
     <!-- Success Notification -->
     <div *ngIf="validMessage != ''">
@@ -16,8 +16,7 @@
     <div class="field">
       <label class="label">Reported by</label>
       <div class="control has-icons-left">
-        <!-- ToDo: Auto-Populate User based on session -->
-        <input class="input is-static" formControlName="reporter" placeholder="{User Name Placeholder}" required
+        <input [value]="issueInfo.issueReporter" class="input is-static" formControlName="reporter" required
                type="text"/>
         <span class="icon is-left">
           <i class="fas fa-user"></i>
@@ -29,7 +28,7 @@
     <div class="field">
       <label class="label">Summary</label>
       <div class="control has-icons-left">
-        <input autofocus class="input" formControlName="summary" required type="text"/>
+        <input [value]="issueInfo.issueSummary" autofocus class="input" formControlName="summary" required type="text"/>
         <span class="icon is-left">
           <i class="fas fa-thumbtack"></i>
         </span>
@@ -40,7 +39,8 @@
     <div class="field">
       <label class="label">Description</label>
       <div class="control">
-        <textarea class="textarea" formControlName="description" required></textarea>
+        <textarea [value]="issueInfo.issueDescription" class="textarea" formControlName="description"
+                  required></textarea>
       </div>
     </div>
 
@@ -80,14 +80,14 @@
     <!-- Buttons -->
     <div class="field is-grouped">
 
-      <!-- Submit -->
+      <!-- Update -->
       <div class="control">
-        <button class="button is-link">Submit</button>
+        <button class="button is-link">Update</button>
       </div>
 
-      <!-- Cancel -->
+      <!-- Back to List -->
       <div class="control">
-        <button class="button is-link is-light" routerLink="/issues">Cancel</button>
+        <button class="button is-link is-light" routerLink="/issues">Back to List</button>
       </div>
     </div>
 

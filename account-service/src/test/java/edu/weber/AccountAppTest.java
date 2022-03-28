@@ -1,7 +1,6 @@
 package edu.weber;
 
 import edu.weber.model.Account;
-import edu.weber.model.AccountRoles;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +37,7 @@ public class AccountAppTest
         account.setPassword("TestPassword");
         account.setSchoolId("W12345670");
         account.setActive(true);
-        account.setUserType(AccountRoles.student);
+        account.setUserType("student");
         account.setFirstName("TestFirstName");
         account.setMiddleName("TestMiddleName");
         account.setLastName("TestLastName");
@@ -56,7 +55,7 @@ public class AccountAppTest
         Assert.assertEquals("Password not equal","TestPassword", account.getPassword());
         Assert.assertEquals("School Id not equal","W12345670", account.getSchoolId());
         Assert.assertTrue("Account not active", account.getActive());
-        Assert.assertEquals("Usertype not equal",AccountRoles.student, account.getUserType());
+        Assert.assertEquals("Usertype not equal","student", account.getUserType());
         Assert.assertEquals("First name not equal","TestFirstName", account.getFirstName());
         Assert.assertEquals("Middle name not equal","TestMiddleName", account.getMiddleName());
         Assert.assertEquals("Last name not equal","TestLastName", account.getLastName());
@@ -123,7 +122,7 @@ public class AccountAppTest
         Assert.assertEquals("Password not equal","Password", account.getPassword());
         Assert.assertEquals("School Id not equal","W12345678", account.getSchoolId());
         Assert.assertTrue("Account not active", account.getActive());
-        Assert.assertEquals("Usertype not equal",AccountRoles.student, account.getUserType());
+        Assert.assertEquals("Usertype not equal","student", account.getUserType());
         Assert.assertEquals("First name not equal","FirstName", account.getFirstName());
         Assert.assertEquals("Middle name not equal","MiddleName", account.getMiddleName());
         Assert.assertEquals("Last name not equal","LastName", account.getLastName());

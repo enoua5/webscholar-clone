@@ -84,6 +84,10 @@ public class AccountController {
         Check password encryption
         Throw error if the password is incorrect
          */
+        if (!found.getPassword().equals(loginDto.getPassword())) {
+            log.error("Error: incorrect password -- SOURCE: login()");
+            accountIncorrectPassword();
+        }
 
         //Return the found account data to the frontend
         return found;
@@ -126,9 +130,9 @@ public class AccountController {
      *
      * @param email Email to use in DB search
      */
-    @RequestMapping(value = "/emailTaken", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/emailExists", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Boolean emailTaken(@RequestParam String email) {
+    public Boolean emailExists(@RequestParam String email) {
         return accountService.accountRepository.findAccountByEmail(email) != null;
     }
 
@@ -317,6 +321,14 @@ public class AccountController {
     public void accountNotFound() {
 
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account could not be found!");
+    }
+
+    /**
+     * Send an http response error if the specified account could not be found.
+     */
+    public void accountIncorrectPassword() {
+
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The password is incorrect for this account.");
     }
 
 

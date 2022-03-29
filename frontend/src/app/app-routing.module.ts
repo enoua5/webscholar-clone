@@ -11,6 +11,8 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
 import {CreateScholarshipFormComponent} from "./create-scholarship-form/create-scholarship-form.component";
 import {NewPasswordComponent} from "./new-password-form/new-password.component";
 import {ReportIssueFormComponent} from "./report-issue-form/report-issue-form.component";
+import {IssuesComponent} from "./issues/issues.component";
+import {ViewIssueComponent} from "./view-issue/view-issue.component";
 import {ScholarshipListComponent} from "./scholarship-list/scholarship-list.component";
 
 const routes: Routes = [
@@ -22,6 +24,8 @@ const routes: Routes = [
   { path: 'edit_profile', component: EditProfileFormComponent },
   { path: 'change_password', component: ChangePasswordFormComponent},
   { path: 'issues/reportIssue', component: ReportIssueFormComponent},
+  { path: 'issues/:id', component: ViewIssueComponent},
+  { path: 'issues', component: IssuesComponent},
   { path: 'dashboard', component: DashboardComponent},
   { path: 'scholarship/create', component: CreateScholarshipFormComponent},
   { path: 'new_password', component: NewPasswordComponent},

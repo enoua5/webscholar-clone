@@ -1,30 +1,39 @@
 <!-- If the user isn't signed in, display an error message -->
 <div class="alert alert-danger" role="alert" *ngIf="!SignedIn">
-  <h4 class="alert-heading">You must be signed in to submit an issue</h4>
+  <h4 class="alert-heading">You must be signed in to edit issues.</h4>
   <hr>
-  <p class="mb-0">Please <a class="alert-link" routerLink="/">click here</a> to be redirected to the login screen.</p>
+  <p class="mb-0">You must be signed in to edit issues. Please <a class="alert-link" routerLink="/">click here</a> to be redirected to the login screen.</p>
 </div>
 
-<section class="container p-3" *ngIf="SignedIn">
-  <h1>Report Issue</h1>
+<section class="container p-3">
+  <h1>Issue # </h1>
 
-  <form [formGroup]="reportIssueForm" (ngSubmit)="SubmitIssue()">
-    <!-- Success Notification -->
-    <div class="alert alert-success" *ngIf="validMessage">{{validMessage}}</div>
+  <form [formGroup]="updateIssueForm" (ngSubmit)="SubmitUpdate()">
     <!-- Error Notification -->
     <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</div>
 
     <!-- Reported By -->
-    <!-- ToDo: Auto-Populate User based on session -->
     <div class="mt-4">
-      <label for="username">Reported by</label>
+      <label for="reporter">Reported by</label>
       <div class="input-group">
         <span class="input-group-text"><i class="fas fa-user"></i></span>
-        <input id="username" class="form-control" type="text" formControlName="username" placeholder="{Username Placeholder}" disabled />
+        <input id="reporter" class="form-control" type="text" formControlName="reporter" [ngModel]="issueInfo.issueReporter"/>
       </div>
-      <div class="error" *ngIf="username.invalid && username.touched">
-        <div *ngIf="username.errors.required">
-          Username is required.
+    </div>
+
+    <!-- Worker -->
+    <div class="mt-2">
+      <label for="worker">Worker</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-bug"></i></span>
+        <select id="worker" class="form-control" formControlName="worker" [ngModel]="issueInfo.issueWorker">
+          <option [ngValue]="0" selected>Unassigned</option>
+          <option *ngFor="let worker of userList" [value]="worker"> {{worker}}</option>
+        </select>
+      </div>
+      <div class="error" *ngIf="severity.invalid && severity.touched">
+        <div *ngIf="severity.errors.required">
+          Severity is required.
         </div>
       </div>
     </div>
@@ -34,7 +43,7 @@
       <label for="summary">Summary</label>
       <div class="input-group">
         <span class="input-group-text"><i class="fas fa-tag"></i></span>
-        <input id="summary" class="form-control" type="text" formControlName="summary" />
+        <input id="summary" class="form-control" type="text" formControlName="summary" [ngModel]="issueInfo.issueSummary"/>
       </div>
       <div class="error" *ngIf="summary.invalid && summary.touched">
 
@@ -54,7 +63,7 @@
       <label for="description">Description</label>
       <div class="input-group">
         <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
-        <textarea id="description" class="form-control" formControlName="description" rows="5"> </textarea>
+        <textarea id="description" class="form-control" formControlName="description" rows="5" [ngModel]="issueInfo.issueDescription"> </textarea>
       </div>
       <div class="error" *ngIf="description.invalid && description.touched">
 
@@ -71,21 +80,10 @@
 
     <!-- Steps to ReCreate -->
     <div class="mt-2">
-      <label for="recreate">Steps to recreate issue</label>
+      <label for="stepsToRecreate">Steps to recreate issue</label>
       <div class="input-group">
         <span class="input-group-text"><i class="fas fa-list-ol"></i></span>
-        <textarea id="recreate" class="form-control" formControlName="description" rows="5"></textarea>
-      </div>
-      <div class="error" *ngIf="recreate.invalid && recreate.touched">
-
-        <div *ngIf="recreate.errors.required">
-          Description is required.
-        </div>
-
-        <div *ngIf="recreate.errors.pattern">
-          Steps to recreate must be at least 15 characters long.
-        </div>
-
+        <textarea id="stepsToRecreate" class="form-control" formControlName="stepsToRecreate" rows="5" [ngModel]="issueInfo.issueStepsToRecreate"></textarea>
       </div>
     </div>
 
@@ -94,7 +92,7 @@
       <label for="severity">Severity</label>
       <div class="input-group">
         <span class="input-group-text"><i class="fas fa-bug"></i></span>
-        <select id="severity" class="form-control" formControlName="severity">
+        <select id="severity" class="form-control" formControlName="severity" [ngModel]="issueInfo.issueSeverity">
           <option [ngValue]="0" disabled selected>Select Severity</option>
           <option *ngFor="let severity of severityList" [value]="severity"> {{severity}}</option>
         </select>
@@ -112,7 +110,7 @@
       <label for="priority">Priority</label>
       <div class="input-group">
         <span class="input-group-text"><i class="fas fa-chevron-circle-up"></i></span>
-        <select id="priority" class="form-control" formControlName="priority">
+        <select id="priority" class="form-control" formControlName="priority" [ngModel]="issueInfo.issuePriority">
           <option [ngValue]="0" disabled selected>Select Priority</option>
           <option *ngFor="let priority of priorityList" [value]="priority"> {{priority}}</option>
         </select>
@@ -126,8 +124,8 @@
 
     <!-- Buttons -->
     <div class="btn-toolbar mt-4">
-      <button style="margin-right: 10px" [disabled]="!reportIssueForm.valid" class="btn btn-success btn-lg">Submit</button>
-      <button class="btn btn-outline-danger btn-lg" routerLink="/issues">Cancel</button>
+      <button style="margin-right: 10px" [disabled]="!updateIssueForm.valid" class="btn btn-success btn-lg">Update Issue</button>
+      <button class="btn btn-outline-secondary btn-lg" routerLink="/issues">Back to Issue List</button>
     </div>
 
   </form>

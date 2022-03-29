@@ -7,7 +7,7 @@ FROM java:8-jre
 ADD ./target/config-service.jar /app/
 
 #This tells the container how to run the jar file we added
-CMD ["java", "-Xmx200m", "-jar", "/app/config-service.jar"]
+CMD ["java", "-Xmx300m", "-jar", "/app/config-service.jar"]
 
 HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:8888/actuator/health || exit 1
 

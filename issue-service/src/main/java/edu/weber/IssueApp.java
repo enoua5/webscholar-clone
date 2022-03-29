@@ -10,7 +10,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableCircuitBreaker
@@ -20,6 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = "edu.weber.model")
 @AutoConfigurationPackage
 
+@SpringBootApplication
 public class IssueApp {
     public static void main(String[] args) {
         SpringApplication.run(IssueApp.class, args);

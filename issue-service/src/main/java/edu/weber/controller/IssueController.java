@@ -5,10 +5,10 @@ import edu.weber.service.IssueService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
@@ -17,8 +17,8 @@ import java.util.List;
  * Note: This class does not have '@RestController("issue")' API path specified here.
  * The path is specified in the 'config-services/src/resources/shared/issue-service.yaml' file.
  */
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class IssueController {
 
     /**
@@ -167,45 +167,53 @@ public class IssueController {
     }
 
 
-    /**
-     * This method creates a dummy issue for testing purposes.
-     * Use advanced REST client to access this API.
-     * After running this API, attempt to login through the frontend with the below credentials.
-     *
-     * @return The issue in string form.
-     */
-    @PostMapping("/make_test_issue")
-    public String makeTestIssue() {
-        RestTemplate rest = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        String body = "";
-
-        HttpEntity<String> requestEntity = new HttpEntity<String>(body, headers);
-        ResponseEntity<String> responseEntity = rest.exchange("http://localhost:6001/account/make_test_account_for_issue", HttpMethod.POST, requestEntity, String.class);
-        HttpStatus httpStatus = responseEntity.getStatusCode();
-        int responseStatus = httpStatus.value();
-        String response = responseEntity.getBody();
-        System.out.println("Response status: " + responseStatus);
-        System.out.println(response);
-
-        int reporterId = IssueService.accountRepository.findAccountByEmail("Akshan@gmail.com").getAccountKey();
-
-        // Test Issue information
-        String status = "Test Status";
-        String summary = "Test Summary Information";
-        String description = "Test Description Information";
-        String severity = "Test Severity";
-        String priority = "Test Priority";
-        String steps = "Test Steps To Recreate";
-
-        // Create the issue: We're using reporter twice since we don't need to make a separate account.
-        Issue issue = new Issue(status, summary, description, severity, priority, steps, reporterId, reporterId);
-
-        // Save the issue to the database
-        issueService.issueRepository.save(issue);
-        // Return success message and issue information
-        return "Success! Issue Created!\nDetails:\n" + issue.toString();
-    }
+//    /**
+//     * This method creates a dummy issue for testing purposes.
+//     * Use advanced REST client to access this API.
+//     * After running this API, attempt to login through the frontend with the below credentials.
+//     *
+//     * @return The issue in string form.
+//     */
+//
+//    @PostMapping("/make_test_issue")
+//    public String makeTestIssue() {
+//        ClientHttpRequestFactory requestFactory = new
+//                HttpComponentsClientHttpRequestFactory(HttpClients.createDefault());
+//
+//        RestTemplate rest = new RestTemplate(requestFactory);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        String body = "";
+//
+//        HttpEntity<String> requestEntity = new HttpEntity<String>(body, headers);
+//        ResponseEntity<String> responseEntity = rest.exchange("http://host.docker.internal:6001/account/make_test_account_for_issue", HttpMethod.POST, requestEntity, String.class);
+//        HttpStatus httpStatus = responseEntity.getStatusCode();
+//        int responseStatus = httpStatus.value();
+//        String response = responseEntity.getBody();
+//        System.out.println("Response status: " + responseStatus);
+//        System.out.println(response);
+//
+//        Account account = IssueService.accountRepository.findAccountByEmail("Akshan@gmail.com");
+//        System.out.println(account.toString());
+//
+//        int reporterId = account.getAccountKey();
+//
+//        // Test Issue information
+//        String status = "Test Status";
+//        String summary = "Test Summary Information";
+//        String description = "Test Description Information";
+//        String severity = "Test Severity";
+//        String priority = "Test Priority";
+//        String steps = "Test Steps To Recreate";
+//
+//        // Create the issue: We're using reporter twice since we don't need to make a separate account.
+//        Issue issue = new Issue(status, summary, description, severity, priority, steps, reporterId, reporterId);
+//
+//        // Save the issue to the database
+//        issueService.issueRepository.save(issue);
+//        // Return success message and issue information
+//        return "Success! Issue Created!\nDetails:\n" + issue.toString();
+//    }
 
 
     /**

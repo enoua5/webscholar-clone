@@ -1,6 +1,7 @@
 package edu.weber.service;
 
 import edu.weber.model.Issue;
+import edu.weber.repository.AccountRepository;
 import edu.weber.repository.IssueRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,8 @@ public class IssueService {
     @Autowired
     public IssueRepository issueRepository;
 
+    public static AccountRepository accountRepository;
+
     /**
      * This method updates the data associated for an existing issue.
      *
@@ -39,7 +42,7 @@ public class IssueService {
      */
     public boolean saveChanges(int issueId, Issue update) {
 
-        //Get the current scholarship
+        // Get the current issue
         Issue issue = issueRepository.findIssueByIssueId(issueId);
 
         if (issue == null) {
@@ -50,7 +53,7 @@ public class IssueService {
 
         Assert.notNull(issue, "can't find issue with id " + issueId);
 
-        //Update the issue's data
+        // Update the issue's data
         issue.setStatus(update.getStatus());
         issue.setSummary(update.getSummary());
         issue.setDescription(update.getDescription());
@@ -59,7 +62,7 @@ public class IssueService {
         issue.setReporterId(update.getReporterId());
         issue.setWorkerId(update.getReporterId());
 
-        //Save the updated issue
+        // Save the updated issue
         issueRepository.save(issue);
 
         return true;

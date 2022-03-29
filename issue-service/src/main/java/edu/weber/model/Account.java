@@ -82,14 +82,6 @@ public class Account {
     @Column
     private String race;
 
-    //TODO: Add array variable that holds keywords
-    //The tags are used to help recommend scholarship to the user.
-    //These tags are categories the user is interested in and should correspond to scholarship tags.
-
-    //TODO: Make this constructor protected.
-    //This object should only be created with the constructor that requires non-blank values.
-    //Making this constructor protected only allows child classes to call it.
-
     /**
      * The default constructor
      */

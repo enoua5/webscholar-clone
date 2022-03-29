@@ -1,20 +1,18 @@
 package edu.weber.controller;
 
-import edu.weber.model.Account;
 import edu.weber.model.Issue;
 import edu.weber.service.IssueService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
-
 /**
  * Note: This class does not have '@RestController("issue")' API path specified here.
  * The path is specified in the 'config-services/src/resources/shared/issue-service.yaml' file.
@@ -55,7 +53,7 @@ public class IssueController {
     @PostMapping("/createIssue")
     public void createNewIssue(@Valid @RequestBody Issue issue, BindingResult result) {
 
-        //Validate issue information (input validation)
+        // Validate issue information (input validation)
         if (result.hasErrors()) {
 
             //Log Error
@@ -66,7 +64,7 @@ public class IssueController {
 
         } else {
 
-            //Save the new issue we just created to the database
+            // Save the new issue we just created to the database
             issueService.issueRepository.save(issue);
         }
     }
@@ -178,6 +176,19 @@ public class IssueController {
      */
     @PostMapping("/make_test_issue")
     public String makeTestIssue() {
+        RestTemplate rest = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        String body = "";
+
+        HttpEntity<String> requestEntity = new HttpEntity<String>(body, headers);
+        ResponseEntity<String> responseEntity = rest.exchange("http://localhost:6001/account/make_test_account_for_issue", HttpMethod.POST, requestEntity, String.class);
+        HttpStatus httpStatus = responseEntity.getStatusCode();
+        int responseStatus = httpStatus.value();
+        String response = responseEntity.getBody();
+        System.out.println("Response status: " + responseStatus);
+        System.out.println(response);
+
+        int reporterId = IssueService.accountRepository.findAccountByEmail("Akshan@gmail.com").getAccountKey();
 
         // Test Issue information
         String status = "Test Status";
@@ -185,11 +196,10 @@ public class IssueController {
         String description = "Test Description Information";
         String severity = "Test Severity";
         String priority = "Test Priority";
-        Account reporterId = new Account();
-        Account workerId = new Account();
+        String steps = "Test Steps To Recreate";
 
-        // Create the issue
-        Issue issue = new Issue(status, summary, description, severity, priority, reporterId, workerId);
+        // Create the issue: We're using reporter twice since we don't need to make a separate account.
+        Issue issue = new Issue(status, summary, description, severity, priority, steps, reporterId, reporterId);
 
         // Save the issue to the database
         issueService.issueRepository.save(issue);

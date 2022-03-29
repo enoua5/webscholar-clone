@@ -1,10 +1,8 @@
 package edu.weber.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import edu.weber.model.Account;
 import edu.weber.model.AccountRoles;
 import edu.weber.model.LoginDto;
-import edu.weber.repository.TokenRepository;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -386,6 +384,32 @@ public class AccountController {
         AccountRoles userType = AccountRoles.student;
         String firstName = "Bobby";
         String lastName = "Joe";
+
+        //Create the account
+        Account account = new Account(email, password, schoolId, isActive, userType, firstName, lastName);
+
+        //Save the account to the database
+        accountService.accountRepository.save(account);
+
+        //Return success message and account details
+        return "Success! Account Created!\nDetails:\n" + account.toString();
+    }
+
+/**
+     * This method creates a dummy account for the issue testing purposes.
+     * @return The account in string form.
+     */
+    @PostMapping("/make_test_account_for_issue")
+    public String makeDummyAccountForIssue() {
+
+        //Set non-blank values
+        String email = "Akshan@gmail.com";
+        String password = "akshanPassword";
+        String schoolId = "20210722";
+        Boolean isActive = true;
+        AccountRoles userType = AccountRoles.student;
+        String firstName = "Akshan";
+        String lastName = "Shurima";
 
         //Create the account
         Account account = new Account(email, password, schoolId, isActive, userType, firstName, lastName);

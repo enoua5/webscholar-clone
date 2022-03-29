@@ -12,7 +12,7 @@ import java.util.List;
  * This class connects to the database.
  * Default methods can be built by specifying the wording of the
  * method signature.
- * eg. 'findAccountBy' followed by a variable name 'AccountKey', 'firstName', etc.
+ * eg. 'findIssueBy' followed by a variable name 'IssueId', 'Status', etc.
  * Note: intelliJ helps you build these methods when you start writing the method signature.
  * Note: You can also create complex queries using the @Query annotation and specifying the sql statement.
  */

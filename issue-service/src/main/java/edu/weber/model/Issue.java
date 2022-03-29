@@ -1,5 +1,6 @@
 package edu.weber.model;
 
+import edu.weber.service.IssueService;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,6 +48,11 @@ public class Issue {
     @NotBlank
     private String priority;
 
+    // The priority of an issue
+    @Column(name = "stepsToReCreate", nullable = false, length = 500)
+    @NotBlank
+    private String stepsToReCreate;
+
     // Reference to the account that created the issue.
     // (By default, whoever makes the report is inserted into this field)
     @ManyToOne(optional = false)
@@ -61,38 +67,6 @@ public class Issue {
     private Account workerId;
 
     /**
-     * Custom constructor for a new issue without the workerId
-     *
-     * @param status      // The status associated with an issue
-     * @param summary     // The summary associated with an issue
-     * @param description // The description associated with an issue
-     * @param severity    // The severity associated with an issue
-     * @param priority    // The priority associated with an issue
-     * @param reporter    // The reporter who created the issue
-     */
-    public Issue(String status, String summary, String description, String severity, String priority, Account reporter) {
-        this.status = status;
-        this.summary = summary;
-        this.description = description;
-        this.severity = severity;
-        this.priority = priority;
-        this.reporterId = reporter;
-        this.workerId = null;
-    }
-
-    /**
-     * Default Constructor that SHOULDN'T run. We should always use the one above
-     */
-    public Issue() {
-        this.status = "N/A";
-        this.summary = "N/A";
-        this.description = "N/A";
-        this.severity = "N/A";
-        this.priority = "N/A";
-        this.reporterId = new Account();
-    }
-
-    /**
      * Custom constructor for a new issue with the workerId
      *
      * @param status      // The status associated with an issue
@@ -100,17 +74,57 @@ public class Issue {
      * @param description // The description associated with an issue
      * @param severity    // The severity associated with an issue
      * @param priority    // The priority associated with an issue
+     * @param steps // The steps to recreate a reported issue
      * @param reporterId  // The reporter who created the issue
+     * @param workerId // The worker who is working on the issue
      */
-    public Issue(String status, String summary, String description, String severity, String priority, Account reporterId, Account workerId) {
+    public Issue(String status, String summary, String description, String severity, String priority, String steps, int reporterId, int workerId) {
+        IssueService issueService = new IssueService();
         this.status = status;
         this.summary = summary;
         this.description = description;
         this.severity = severity;
         this.priority = priority;
-        this.reporterId = reporterId;
-        this.workerId = workerId;
+        this.stepsToReCreate = steps;
+        this.reporterId = IssueService.accountRepository.findAccountByAccountKey(reporterId);
+        this.workerId = IssueService.accountRepository.findAccountByAccountKey(workerId);
     }
+
+    /**
+     * Custom constructor for a new issue WITHOUT the workerId
+     *
+     * @param status      // The status associated with an issue
+     * @param summary     // The summary associated with an issue
+     * @param description // The description associated with an issue
+     * @param severity    // The severity associated with an issue
+     * @param priority    // The priority associated with an issue
+     * @param steps // The steps to recreate a reported issue
+     * @param reporterId  // The reporter who created the issue
+     */
+    public Issue(String status, String summary, String description, String severity, String priority, String steps, int reporterId) {
+        IssueService issueService = new IssueService();
+        this.status = status;
+        this.summary = summary;
+        this.description = description;
+        this.severity = severity;
+        this.priority = priority;
+        this.stepsToReCreate = steps;
+        this.reporterId = IssueService.accountRepository.findAccountByAccountKey(reporterId);
+    }
+
+    /**
+     * Default Constructor that SHOULDN'T run.
+     */
+    public Issue() {
+        this.status = "N/A";
+        this.summary = "N/A";
+        this.description = "N/A";
+        this.severity = "N/A";
+        this.priority = "N/A";
+        this.stepsToReCreate = "N/A";
+        this.reporterId = new Account();
+    }
+
 
     /**
      * Getter for an issue's workerId

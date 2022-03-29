@@ -8,9 +8,6 @@
     <version>1.0-SNAPSHOT</version>
     <name>issue-service</name>
 
-    <!-- FIXME change it to the project's website -->
-    <!--    <url>http://www.example.com</url>-->
-
     <parent>
         <groupId>edu.weber</groupId>
         <artifactId>WebScholar</artifactId>
@@ -83,7 +80,24 @@
             <artifactId>spring-boot-starter-mail</artifactId>
             <version>2.4.4</version>
         </dependency>
+        <dependency>
+            <groupId>weber.edu</groupId>
+            <artifactId>account-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.joshworks.unirest</groupId>
+            <artifactId>unirest-java</artifactId>
+            <version>1.8.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>

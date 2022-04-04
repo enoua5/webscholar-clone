@@ -13,4 +13,15 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getName() {
+    return sessionStorage.getItem('name');
+  }
+
+  logout() {
+    // Alternatively use sessionStorage.clear() to remove all keys
+    sessionStorage.removeItem('name');
+    sessionStorage.removeItem('userType');
+
+    this.router.navigate(['/']).then(res => true);
+  }
 }

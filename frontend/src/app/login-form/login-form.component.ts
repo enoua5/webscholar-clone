@@ -61,7 +61,13 @@ export class LoginFormComponent implements OnInit {
     this.service.login(jsonObj).subscribe(
       res => {
         // Put whatever needs to be executed *after* the routing is done in the .then()
-        this.router.navigate(['/dashboard']).then(res => true);
+        sessionStorage.setItem('name', `${ res.body.firstName } ${ res.body.lastName }`);
+        sessionStorage.setItem('userType', res.body.userType);
+
+        this.router.navigate(['/dashboard']).then(() => {
+          console.log(sessionStorage.getItem('name'));
+          console.log(sessionStorage.getItem('userType'));
+        });
       },
       err => {
         console.log(err);

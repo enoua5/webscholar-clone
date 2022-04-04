@@ -162,15 +162,23 @@ export class RegisterFormComponent implements OnInit {
       });
 
       console.log(jsonObj);
-      this.service.createAccount(jsonObj).subscribe(res => {
+      this.service.createAccount(jsonObj).subscribe(
+        res => {
           // Put whatever needs to be executed *after* the routing is done in the .then()
-          this.router.navigate(['/dashboard']).then(res => true);
+          sessionStorage.setItem('name', `${ firstName } ${ lastName }`);
+          sessionStorage.setItem('userType', userType);
+
+          this.router.navigate(['/dashboard']).then(() => {
+            console.log(sessionStorage.getItem('name'));
+            console.log(sessionStorage.getItem('userType'));
+          });
         },
         err => {
           console.log(err);
-          // TODO: display error message in a better way
+          // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
           alert(err.error.message);
-        });
+        }
+      );
       // Test create account
       //this.service.testAccountCreation();
     }

@@ -1,11 +1,9 @@
 import {Component,OnInit} from '@angular/core';
 
-
-
 @Component({
-
   selector: 'app-student-view-scholarship-form.component',
   templateUrl: './student-view-scholarship-form.component.html',
+  styleUrls: ['./student-view-scholarship-form.component.less']
 })
 
 export class StudentViewScholarshipFormComponent implements OnInit {
@@ -47,12 +45,11 @@ export class StudentViewScholarshipFormComponent implements OnInit {
   }
 
     ngOnInit(): void {
-        throw new Error('Method not implemented.');
     }
 
 
- 
-    
-  
+
+
+
 }
 

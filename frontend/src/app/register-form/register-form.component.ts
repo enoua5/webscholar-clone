@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Form, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RegisterService} from './register.service';
-import {emailTakenValidator, passwordMatchValidator} from "./validators";
+import {emailExistsValidator, passwordMatchValidator} from "./validators";
 
 @Component({
   selector: 'app-register-form',
@@ -30,7 +30,7 @@ export class RegisterFormComponent implements OnInit {
           Validators.email
         ],
         asyncValidators: [
-          emailTakenValidator(service)
+          emailExistsValidator(service)
         ]
       }],
       passwordFields: this.formBuilder.group({
@@ -113,7 +113,7 @@ export class RegisterFormComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       if (params.has('email')) {
-          this.userIsStudent = false
+        this.userIsStudent = false
       }
       // params
       this.nonStudentEmail = params.get('email')
@@ -138,11 +138,9 @@ export class RegisterFormComponent implements OnInit {
 
       if (this.userType == "chair") {
         userType = "chair"
-      }
-      else if (this.userType == "committee") {
+      } else if (this.userType == "committee") {
         userType = "committee"
-      }
-      else {
+      } else {
         userType = "student"
       }
 
@@ -164,13 +162,23 @@ export class RegisterFormComponent implements OnInit {
       });
 
       console.log(jsonObj);
-      this.service.createAccount(jsonObj).subscribe(res => {
-        // HTTP status code 200 = OK
-        if (res.status == 200) {
+      this.service.createAccount(jsonObj).subscribe(
+        res => {
           // Put whatever needs to be executed *after* the routing is done in the .then()
-          this.router.navigate(['/dashboard']).then(res => true);
+          sessionStorage.setItem('name', `${ firstName } ${ lastName }`);
+          sessionStorage.setItem('userType', userType);
+
+          this.router.navigate(['/dashboard']).then(() => {
+            console.log(sessionStorage.getItem('name'));
+            console.log(sessionStorage.getItem('userType'));
+          });
+        },
+        err => {
+          console.log(err);
+          // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
+          alert(err.error.message);
         }
-      });
+      );
       // Test create account
       //this.service.testAccountCreation();
     }

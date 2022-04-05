@@ -12,6 +12,7 @@ export class RegistrationInvitationFormComponent implements OnInit {
   form: FormGroup;
   emails: string[];
   fullPath: string = "";
+  separator: string = "";
   error: string = null;
   type: boolean;
   errors: Map<string, string> = new Map();
@@ -37,7 +38,7 @@ export class RegistrationInvitationFormComponent implements OnInit {
 
     //Check email
     const validEmail = RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$');
-    for(let i = 0; i <= this.emails.length; i++){
+    for(let i = 0; i < this.emails.length; i++){
       if (this.emails[i].length == 0 || !validEmail.test(this.emails[i])) {
         this.errors.set('emails', 'Invalid email');
       }
@@ -53,30 +54,28 @@ export class RegistrationInvitationFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.createEmailArray());
-    console.log(this.form.value);
+    this.createEmailArray()
+    console.log(this.emails);
     this.checkErrors();
     if (this.errors.size == 0) {
-      //Get service here and send information over
-      //if chair take first element of string array of emails
-      //else send whole array over
-      //Need to create service file in registration invitation form
-      // for(let i = 0; i <= this.emails.length; i++){
-      //   this.fullPath += '/' + this.emails[i];
-      // }
       if(this.type){
-        this.fullPath = "/committeeMember";
-      } else this.fullPath = "/chair"
-      this.service.sendEmail(this.emails[0]+this.fullPath).subscribe((data) => this.processResponse(data));
+        this.fullPath += "chair";
+      } else this.fullPath += "committeeMember"
+      this.fullPath += "/?recipientEmails=";
+      for(let i = 0; i < this.emails.length; i++){
+        this.fullPath += this.separator + this.emails[i];
+        this.separator = ",";
+      }
+      console.log(this.fullPath);
+      this.service.sendEmail(this.fullPath).subscribe((data) => this.processResponse(data));
     }
   }
 
   private processResponse(data) {
-    console.log(data);
+    console.log("Success")
     if (data.success == true) {
-      //Save the scholarship
       this.router.navigate(['../dashboard']);
-      //this.errors.clear();
+      this.errors.clear();
     }
     else {
       console.warn('Else Statement executed');

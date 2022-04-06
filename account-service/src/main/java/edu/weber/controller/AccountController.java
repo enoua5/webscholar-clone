@@ -1,7 +1,9 @@
 package edu.weber.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import edu.weber.model.Account;
 import edu.weber.model.LoginDto;
+import edu.weber.repository.TokenRepository;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,10 +86,6 @@ public class AccountController {
         Check password encryption
         Throw error if the password is incorrect
          */
-        if (!found.getPassword().equals(loginDto.getPassword())) {
-            log.error("Error: incorrect password -- SOURCE: login()");
-            accountIncorrectPassword();
-        }
 
         //Return the found account data to the frontend
         return found;
@@ -130,9 +128,9 @@ public class AccountController {
      *
      * @param email Email to use in DB search
      */
-    @RequestMapping(value = "/emailExists", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/emailTaken", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Boolean emailExists(@RequestParam String email) {
+    public Boolean emailTaken(@RequestParam String email) {
         return accountService.accountRepository.findAccountByEmail(email) != null;
     }
 
@@ -204,7 +202,7 @@ public class AccountController {
      * The email is sent by the 'company' email. This is the email used
      * for the final product in deployment.
      *
-     * @param recipientEmail    The email the person is sending the invite to.
+     * @param recipientEmails    The emails the person is sending the invite to.
      * @param roleName          The name of the role person is being invited to register as.
      *
      * Incorrectly formatted email addresses entered for recipientEmail
@@ -215,18 +213,36 @@ public class AccountController {
      * specified in the bootstrap.yml file (email sent, but does not reach
      * a destination).
      */
-    @GetMapping("/send_registration_invite/{recipientEmail}/{roleName}")
-    public String sendInviteWithRole(@PathVariable String recipientEmail, @PathVariable String roleName) {
-        if (roleName == null) {
+    @GetMapping("/send_registration_invite/{roleName}/")
+    public String sendInviteWithRole(@RequestParam String[] recipientEmails, @PathVariable String roleName) {
+        String role = "";
+        switch (roleName) {
+            case "student":
+                role = "student";
+                break;
+            case "committeeMember":
+                role = "committeeMember";
+                break;
+            case "chair":
+                role = "chair";
+                break;
+            default:
+                break;
+        }
+
+        if (role == null) {
             return "Incorrect format for roleName. Valid options are /'student/', /'committeMember/', or /'chair/'\n";
         }
 
-        if (!accountService.sendRegistrationInvite(recipientEmail, roleName))
+        for (String recipientEmail : recipientEmails)
         {
-            accountNotFound();
-        }
+            if (!accountService.sendRegistrationInvite(recipientEmail, role))
+            {
+                accountNotFound();
+            }
 
-        return "Email for " + roleName + " has been sent!";
+        }
+        return "Email sending successful.";
     }
 
     @GetMapping("/is_token_valid/")
@@ -321,14 +337,6 @@ public class AccountController {
     public void accountNotFound() {
 
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account could not be found!");
-    }
-
-    /**
-     * Send an http response error if the specified account could not be found.
-     */
-    public void accountIncorrectPassword() {
-
-        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The password is incorrect for this account.");
     }
 
 

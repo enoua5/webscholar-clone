@@ -1,80 +1,65 @@
 <section class="container p-3">
   <h1>Create Scholarship</h1>
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="error">
-    <div *ngIf="error">
-      {{error}}
-    </div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
     <div class="mt-4">
-      <label for="scholarship_name">Scholarship Name</label>
+      <label for="scholarshipName">Scholarship Name</label>
       <div class="input-group">
-        <input id="scholarship_name" class="form-control" type="text" formControlName="scholarship_name" required>
+        <input id="scholarshipName" class="form-control" type="text" formControlName="scholarshipName" required>
       </div>
-      <div class="error" *ngIf="errors.has('scholarship_name')">
-        {{errors.get('scholarship_name')}}
-      </div>
-    </div>
 
-    <div class="mt-4">
-      <label for="scholarship_provider">Scholarship Provider</label>
-      <div class="input-group">
-        <input id="scholarship_provider" class="form-control" type="text" formControlName="scholarship_provider" required>
-      </div>
-      <div class="error" *ngIf="errors.has('scholarship_provider')">
-        {{errors.get('scholarship_provider')}}
+      <div class="error" *ngIf="scholarshipName.invalid && scholarshipName.touched">
+        <div *ngIf="scholarshipName.errors.required">
+          Scholarship name is required.
+        </div>
       </div>
     </div>
 
     <div class="mt-4">
-      <label for="scholarship_amount">Scholarship Amount</label>
+      <label for="scholarshipProvider">Scholarship Provider</label>
       <div class="input-group">
-        <input id="scholarship_amount" class="form-control" type="text" formControlName="scholarship_amount" required>
+        <input id="scholarshipProvider" class="form-control" type="text" formControlName="scholarshipProvider" required>
       </div>
-      <div class="error" *ngIf="errors.has('scholarship_amount')">
-        {{errors.get('scholarship_amount')}}
+
+      <div class="error" *ngIf="scholarshipProvider.invalid && scholarshipProvider.touched">
+        <div *ngIf="scholarshipProvider.errors.required">
+          Scholarship provider is required.
+        </div>
       </div>
     </div>
 
     <div class="mt-4">
-      <label for="scholarship_info">Scholarship Amount</label>
+      <label for="scholarshipAmount">Scholarship Amount</label>
       <div class="input-group">
-        <textarea  id="scholarship_info" class="form-control" formControlName="scholarship_info" aria-label="With textarea" required></textarea>
+        <input id="scholarshipAmount" class="form-control" type="text" formControlName="scholarshipAmount" required>
       </div>
-      <div class="error" *ngIf="errors.has('scholarship_info')">
-        {{errors.get('scholarship_info')}}
+
+      <div class="error" *ngIf="scholarshipAmount.invalid && scholarshipAmount.touched">
+        <div *ngIf="scholarshipAmount.errors.required">
+          Scholarship amount is required.
+        </div>
       </div>
     </div>
 
-    <div class="field">
-      <div class="control">
-        <label class="checkbox">
-          <input id="donation_checkbox" type="checkbox" formControlName="donation_checkbox" required="required">
-          Check the box if you would you like to receive donations for your scholarship.
-        </label>
+    <div class="mt-4">
+      <label for="scholarshipInfo">Scholarship Info</label>
+      <div class="input-group">
+        <textarea  id="scholarshipInfo" class="form-control" formControlName="scholarshipInfo" aria-label="With textarea" required></textarea>
       </div>
-      <div class="error" *ngIf="errors.has('donation_checkbox')">
-        {{errors.get('donation_checkbox')}}
+
+      <div class="error" *ngIf="scholarshipInfo.invalid && scholarshipInfo.touched">
+        <div *ngIf="scholarshipInfo.errors.required">
+          Scholarship info is required.
+        </div>
       </div>
     </div>
 
-    <div class="field">
-      <div class="control">
-        <label class="checkbox">
-          <input id="terms_checkbox" type="checkbox" formControlName="terms_checkbox" required="required">
-          I have read and agree to the <a class="term-and-conditions-link" href="/#">Terms and Conditions</a>
-        </label>
-      </div>
-      <div class="error" *ngIf="errors.has('terms_checkbox')">
-        {{errors.get('terms_checkbox')}}
-      </div>
-    </div>
-
-    <div class="field">
+    <div class="col-md-12 mt-2">
       <div class="register-btn-left">
-        <button type="submit" class="button is-success is-small">
-          Create
-        </button>
+        <p class="control">
+          <input [disabled]="!form.valid" type="submit" value="Create Scholarship" class="button is-success is-small"/>
+        </p>
       </div>
     </div>
   </form>

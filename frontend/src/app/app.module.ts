@@ -19,7 +19,8 @@ import { ReportIssueFormComponent } from './report-issue-form/report-issue-form.
 import {IssuesComponent} from "./issues/issues.component";
 import { ViewIssueComponent } from './view-issue/view-issue.component';
 import {ScholarshipListComponent} from './scholarship-list/scholarship-list.component';
-import {NavbarComponent} from './navbar/navbar.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {NavbarComponent} from './navbar/navbar.component';
     ViewIssueComponent,
     ScholarshipListComponent,
     NavbarComponent,
+    StudentViewScholarshipFormComponent,
   ],
   imports: [
     BrowserModule,

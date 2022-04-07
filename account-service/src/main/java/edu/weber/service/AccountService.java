@@ -1,7 +1,6 @@
 package edu.weber.service;
 
 import edu.weber.model.Account;
-import edu.weber.model.AccountRoles;
 import edu.weber.model.VerificationToken;
 import edu.weber.repository.AccountRepository;
 import edu.weber.repository.TokenRepository;
@@ -14,7 +13,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -144,7 +142,7 @@ public class AccountService {
      * Note:  The sender's email address is defined in the variable senderEmail
      * at the top of this class.
      */
-    public boolean sendRegistrationInvite(String recipientEmail, AccountRoles role) {
+    public boolean sendRegistrationInvite(String recipientEmail, String role) {
         /*
         Account account = accountRepository.findAccountByAccountKey(accountKey);
 
@@ -167,8 +165,8 @@ public class AccountService {
         // TODO save token to database associated with account.
 
         String messageSubject = "Webscholar Invitation";
-        String messageBody = "Someone has sent you an invite to join as a " + role.name() + "!\n";
-        String webUrl = "http://localhost:4200/register?role=" + role.name() + "&email=" + recipientEmail +"&token=" + verificationToken;
+        String messageBody = "Someone has sent you an invite to join as a " + role + "!\n";
+        String webUrl = "http://localhost:4200/register?role=" + role + "&email=" + recipientEmail +"&token=" + verificationToken;
         messageBody += "Invite Link: " + webUrl;
 
         //Send out the email

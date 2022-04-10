@@ -20,7 +20,12 @@ export class CreateScholarshipFormComponent implements OnInit {
     this.form = this.fb.group({
       scholarshipName: ['', Validators.required],
       scholarshipProvider: ['', Validators.required],
-      scholarshipAmount: ['', Validators.required],
+      scholarshipAmount: ['',  {
+        validators: [
+          Validators.required,
+          Validators.pattern('^(\\d+(\\.\\d{0,2})?|\\.?\\d{1,2})$')
+        ]
+      }],
       scholarshipInfo: ['', Validators.required],
     });
   }

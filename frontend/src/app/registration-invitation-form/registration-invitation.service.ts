@@ -14,7 +14,7 @@ export class AccountService{
 
   public sendEmail(data): Observable<any> {
     INSERT_URL += data;
-    return this.http.post(INSERT_URL, data);
+    return this.http.get(INSERT_URL, data);
   }
 
 }

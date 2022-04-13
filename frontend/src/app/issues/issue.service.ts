@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subscription, throwError} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {Iissue} from "./issue";
 import {catchError, map, tap} from "rxjs/operators";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {Iuser} from "./user";
+import {Icomment} from "./comment";
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import {Iuser} from "./user";
 export class IssueService {
   private issueUrl = 'assets/fakeIssues.json';
   private getUsersAPI = '/account/getUsers';
+  private getCommentsAPI = '/account/getComments';
   private _severityList: string[] = ['Critical', 'Major', 'Moderate', 'Minor', 'Cosmetic'];
   private _priorityList: string[] = ['Low', 'Medium', 'High'];
   private _statusList: string[] = ['Open', 'In Progress', 'Blocked', 'In Review', 'Done', 'Obsolete'];
@@ -30,7 +32,7 @@ export class IssueService {
     return this.http.get<Iissue[]>(this.issueUrl)
       .pipe(
         tap(data => console.log('All: ', JSON.stringify(data))),
-        catchError(this.handleError)
+        catchError(IssueService.handleError)
       );
   }
 
@@ -59,7 +61,18 @@ export class IssueService {
     return this.http.get<Iuser[]>(this.getUsersAPI)
       .pipe(
         tap(data => console.log('All: ', JSON.stringify(data))),
-        catchError(this.handleError)
+        catchError(IssueService.handleError)
+      );
+  }
+
+  /**
+   * Get's all Comments for issue
+   */
+  getIssueComments(id: number): Observable<Icomment[]> {
+    return this.http.get<Icomment[]>(this.getCommentsAPI + '/' + id)
+      .pipe(
+        tap(data => console.log('All: ', JSON.stringify(data))),
+        catchError(IssueService.handleError)
       );
   }
 
@@ -73,15 +86,17 @@ export class IssueService {
       );
   }
 
+
+
   /**
    * Handles any errors
    * @param err - Response from HTTP request
    * @private
    */
-  private handleError(err: HttpErrorResponse): Observable<never> {
+  private static handleError(err: HttpErrorResponse): Observable<never> {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
-    let errorMessage = '';
+    let errorMessage: string;
     if (err.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       errorMessage = `An error occurred: ${err.error.message}`;

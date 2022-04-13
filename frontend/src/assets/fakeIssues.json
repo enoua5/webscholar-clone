@@ -69,9 +69,9 @@
 
   {
     "issueID": 7,
-    "issueStatus": "Open",
+    "issueStatus": "Blocked",
     "issueSummary": "[Frontend] Add Ticket Comment System",
-    "issueDescription": "Would need to create a way to view comment history, then also to add a new comment\nWould also want a checkbox to make the comment private.",
+    "issueDescription": "Would need to create a way to view comment history, then also to add a new comment\nWould also want a checkbox to make the comment private.\n\n*** BLOCKED ***\nCurrently the logic is set up to display the comments, however we don't yet have an API to get comments from the database. We also don't have the API to submit a comment.",
     "issueStepsToRecreate": "",
     "issueSeverity": "Major",
     "issuePriority": "High",

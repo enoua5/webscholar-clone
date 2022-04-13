@@ -6,7 +6,7 @@
 </div>
 
 <section class="container p-3">
-  <h1>Issue # </h1>
+  <h1>Issue # {{issueID}} </h1>
 
   <form [formGroup]="updateIssueForm" (ngSubmit)="SubmitUpdate()">
     <!-- Error Notification -->
@@ -138,4 +138,31 @@
     </div>
 
   </form>
+
+  <!-- Comments -->
+  <div class="shadow-sm p-3 mb-5 bg-white rounded mt-4">
+    <div *ngFor="let comment of comments">
+      <div class="row">
+        <div class="col-md-11">
+          <div class="row">
+            <div class="col-md-12">
+              <h5>{{comment.username}}</h5>
+              <p>{{comment.comment}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form>
+      <div class="form-group mt-4">
+        <label for="comment">Comment</label>
+        <textarea class="form-control" id="comment" rows="3" placeholder="Enter comment"></textarea>
+      </div>
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+      </div>
+    </form>
+  </div>
+
 </section>

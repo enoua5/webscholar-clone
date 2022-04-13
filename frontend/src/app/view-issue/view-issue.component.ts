@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Iissue} from "../issues/issue";
 import {IssueService} from "../issues/issue.service";
 import {Iuser} from "../issues/user";
+import {Icomment} from "../issues/comment";
 
 @Component({
   selector: 'app-view-issue',
@@ -15,11 +16,13 @@ export class ViewIssueComponent implements OnInit {
   severityList: string[];
   priorityList: string[];
   statusList: string[];
+  comments: Icomment[];
   errorMessage: string = "";
   issueInfo: Iissue | undefined;
   // ToDo: Have this actually check if they are signed in.
   SignedIn: boolean = true;
   userList: Iuser[];
+  issueID: number;
 
   constructor(private issueService: IssueService,
               private route: ActivatedRoute,
@@ -75,12 +78,17 @@ export class ViewIssueComponent implements OnInit {
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
+    this.issueID = id;
+
     this.severityList = this.issueService.severityList;
     this.priorityList = this.issueService.priorityList;
     this.statusList = this.issueService.statusList;
 
-    // ToDo: Add this once we have the API Working
+    // ToDo: Add this once we have the Users API Working
     // this.getUsers();
+
+    // ToDo: Add this once we have the Comments API Working
+    // this.getComments(id);
 
     if (id) { this.getIssueInfo(id); }
 
@@ -106,6 +114,13 @@ export class ViewIssueComponent implements OnInit {
   getUsers(): void {
     this.issueService.getActiveUsers().subscribe({
       next: userList => this.userList = userList,
+      error: err => this.errorMessage = err
+    });
+  }
+
+  getComments(id: number): void {
+    this.issueService.getIssueComments(id).subscribe({
+      next: comments => this.comments = comments,
       error: err => this.errorMessage = err
     });
   }

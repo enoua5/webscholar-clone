@@ -39,6 +39,9 @@
         <div *ngIf="scholarshipAmount.errors.required">
           Scholarship amount is required.
         </div>
+        <div *ngIf="scholarshipAmount.errors.pattern">
+          Must be a valid amount.
+        </div>
       </div>
     </div>
 

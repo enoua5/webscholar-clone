@@ -22,6 +22,6 @@ export class ScholarshipService{
     //checking if data is not null
     console.log(data);
 
-    return this.http.post<any>('http://localhost:6001/', data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
+    return this.http.post<any>('http://localhost:6001/AccountScholarship/create', data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
   }
 }

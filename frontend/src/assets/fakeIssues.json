@@ -7,8 +7,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Cosmetic",
     "issuePriority": "Low",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Carston G"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Back End Worker"
   },
   {
     "issueID": 2,
@@ -18,8 +18,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Major",
     "issuePriority": "High",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Carston G"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Back End Worker"
   },
   {
     "issueID": 3,
@@ -29,8 +29,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Minor",
     "issuePriority": "Low",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Carston G"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Back End Worker"
   },
   {
     "issueID": 4,
@@ -40,8 +40,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Minor",
     "issuePriority": "Low",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Carston G"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Back End Worker"
   },
 
   {
@@ -52,8 +52,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Minor",
     "issuePriority": "Low",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Anthony B"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
   },
   {
     "issueID": 6,
@@ -63,8 +63,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Major",
     "issuePriority": "High",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Carston G"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Back End Worker"
   },
 
   {
@@ -75,8 +75,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Major",
     "issuePriority": "High",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Anthony B"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
   },
 
   {
@@ -87,8 +87,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Critical",
     "issuePriority": "High",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Anthony B"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
   },
 
   {
@@ -99,8 +99,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Critical",
     "issuePriority": "High",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Anthony B"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
   },
 
   {
@@ -111,8 +111,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Critical",
     "issuePriority": "High",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Anthony B"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
   },
 
   {
@@ -123,8 +123,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Critical",
     "issuePriority": "High",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Anthony B"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
   },
 
   {
@@ -135,8 +135,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Major",
     "issuePriority": "High",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Anthony B"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
   },
 
   {
@@ -147,8 +147,8 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Major",
     "issuePriority": "High",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Carston G"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Back End Worker"
   },
 
   {
@@ -159,7 +159,7 @@
     "issueStepsToRecreate": "",
     "issueSeverity": "Cosmetic",
     "issuePriority": "Medium",
-    "issueReporter": "Anthony B",
-    "issueWorker": "Anthony B"
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
   }
 ]

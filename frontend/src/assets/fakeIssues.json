@@ -81,7 +81,7 @@
 
   {
     "issueID": 8,
-    "issueStatus": "In Progress",
+    "issueStatus": "Closed",
     "issueSummary": "[Frontend] Change Status",
     "issueDescription": "Add a way to update the issue status somewhere on the view issue page.",
     "issueStepsToRecreate": "",

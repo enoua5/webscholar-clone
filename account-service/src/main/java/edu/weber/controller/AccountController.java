@@ -128,9 +128,9 @@ public class AccountController {
      *
      * @param email Email to use in DB search
      */
-    @RequestMapping(value = "/emailTaken", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/emailExists", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Boolean emailTaken(@RequestParam String email) {
+    public Boolean emailExists(@RequestParam String email) {
         return accountService.accountRepository.findAccountByEmail(email) != null;
     }
 

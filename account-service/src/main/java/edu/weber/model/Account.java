@@ -45,7 +45,7 @@ public class Account {
 
     @Column
     @NotNull
-    private AccountRoles userType;
+    private String userType;
 
     @Column(nullable = false)
     @NotBlank
@@ -98,7 +98,7 @@ public class Account {
         this.password = "";
         this.schoolId = "";
         this.active = false;
-        this.userType = AccountRoles.student;
+        this.userType = "student";
         this.firstName = "";
         this.lastName = "";
     }
@@ -114,7 +114,7 @@ public class Account {
      * @param firstName The users first name.
      * @param lastName The users last name.
      */
-    public Account(String email, String password, String schoolId, Boolean active, AccountRoles userType, String firstName, String lastName){
+    public Account(String email, String password, String schoolId, Boolean active, String userType, String firstName, String lastName){
 
         this.email = email;
         this.password = password;

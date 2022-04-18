@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
   <div class="container">
     <!-- TODO: replace text in link with logo (optional) -->
-    <a class="navbar-brand temp-logo" routerLink="">WebScholar</a>
+    <a class="navbar-brand temp-logo" routerLink="{{ getName() == null ? '/' : '/dashboard' }}">WebScholar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
             aria-controls="navbarSupportedContent"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -9,11 +9,11 @@
     </button>
     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
       <ul class="navbar-nav flex-grow-1">
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="getName() == null">
           <a class="nav-link text-dark" routerLink="/">Home</a>
         </li>
 
-        <ng-container *ngIf="router.url !== '/' && router.url !== '/register'">
+        <ng-container *ngIf="getName() != null">
           <li class="nav-item">
             <a class="nav-link text-dark" routerLink="/edit_profile">Profile</a>
           </li>
@@ -28,6 +28,9 @@
               </li>
               <li>
                 <a class="dropdown-item" routerLink="/scholarship/create">Create Scholarship</a>
+              </li>
+              <li>
+                <a class="dropdown-item" routerLink="/studentviewscholarship">View Scholarship Status</a>
               </li>
             </ul>
           </li>
@@ -58,13 +61,13 @@
       <ul class="navbar-nav">
         <!-- TODO: Hook this up to some login/register & logout functionality -->
         <!-- TODO: Change which links are displayed depending on if user is authenticated instead of using URL -->
-        <ng-container *ngIf="router.url !== '/' && router.url !== '/register'; else notLoggedIn">
+        <ng-container *ngIf="getName() != null; else notLoggedIn">
           <li class="nav-item">
             <!-- TODO: Display name of logged in user -->
-            <a class="nav-link text-dark" routerLink="/edit_profile">Welcome, [SOME USER]</a>
+            <a class="nav-link text-dark" routerLink="/edit_profile">Welcome, {{ getName() }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-dark" routerLink="/">Logout</a>
+            <a class="nav-link text-dark" (click)="logout()" role="button">Logout</a>
           </li>
         </ng-container>
 

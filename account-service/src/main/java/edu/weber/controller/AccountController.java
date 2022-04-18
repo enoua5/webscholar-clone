@@ -1,7 +1,6 @@
 package edu.weber.controller;
 
 import edu.weber.model.Account;
-import edu.weber.model.AccountRoles;
 import edu.weber.model.LoginDto;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
@@ -127,9 +126,9 @@ public class AccountController {
      *
      * @param email Email to use in DB search
      */
-    @RequestMapping(value = "/emailTaken", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/emailExists", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Boolean emailTaken(@RequestParam String email) {
+    public Boolean emailExists(@RequestParam String email) {
         return accountService.accountRepository.findAccountByEmail(email) != null;
     }
 
@@ -201,7 +200,7 @@ public class AccountController {
      * The email is sent by the 'company' email. This is the email used
      * for the final product in deployment.
      *
-     * @param recipientEmail    The email the person is sending the invite to.
+     * @param recipientEmails    The emails the person is sending the invite to.
      * @param roleName          The name of the role person is being invited to register as.
      *
      * Incorrectly formatted email addresses entered for recipientEmail
@@ -212,18 +211,18 @@ public class AccountController {
      * specified in the bootstrap.yml file (email sent, but does not reach
      * a destination).
      */
-    @GetMapping("/send_registration_invite/{recipientEmail}/{roleName}")
-    public String sendInviteWithRole(@PathVariable String recipientEmail, @PathVariable String roleName) {
-        AccountRoles role = null;
+    @GetMapping("/send_registration_invite/{roleName}/")
+    public String sendInviteWithRole(@RequestParam String[] recipientEmails, @PathVariable String roleName) {
+        String role = "";
         switch (roleName) {
             case "student":
-                role = AccountRoles.student;
+                role = "student";
                 break;
             case "committeeMember":
-                role = AccountRoles.committeeMember;
+                role = "committeeMember";
                 break;
             case "chair":
-                role = AccountRoles.chair;
+                role = "chair";
                 break;
             default:
                 break;
@@ -233,13 +232,15 @@ public class AccountController {
             return "Incorrect format for roleName. Valid options are /'student/', /'committeMember/', or /'chair/'\n";
         }
 
-        if (!accountService.sendRegistrationInvite(recipientEmail, role))
+        for (String recipientEmail : recipientEmails)
         {
-            accountNotFound();
+            if (!accountService.sendRegistrationInvite(recipientEmail, role))
+            {
+                accountNotFound();
+            }
+
         }
-
-        return "Email for " + role + " has been sent!";
-
+        return "Email sending successful.";
     }
 
     @GetMapping("/is_token_valid/")
@@ -381,7 +382,7 @@ public class AccountController {
         String password = "myPassword";
         String schoolId = "W012345678";
         Boolean isActive = true;
-        AccountRoles userType = AccountRoles.student;
+        String userType = "student";
         String firstName = "Bobby";
         String lastName = "Joe";
 

@@ -1,13 +1,9 @@
 package edu.weber.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * This class handles who can handle which API and how they can access it.
@@ -40,10 +36,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/accounts/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/accounts/**").permitAll()
 
+                // Allow's access to the issue-service Testing API
+                .antMatchers(HttpMethod.POST, "/issue/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/issue/**").permitAll()
+
                 .and()
                 .csrf().disable()
                 .formLogin().disable()
                 .sessionManagement().disable();
+        http.csrf().disable();
     }
 
     //TODO: Add user authentication in here (for oauth2 and regular email/password authentication)

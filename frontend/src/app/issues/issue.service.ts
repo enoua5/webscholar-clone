@@ -3,11 +3,23 @@ import {Observable, throwError} from "rxjs";
 import {Iissue} from "./issue";
 import {catchError, map, tap} from "rxjs/operators";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {Iuser} from "./user";
+import {Icomment} from "./comment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class IssueService {
+  private issueUrl = 'assets/fakeIssues.json';
+  private getUsersAPI = '/account/getUsers';
+  private getCommentsAPI = '/account/getComments';
+  private _severityList: string[] = ['Critical', 'Major', 'Moderate', 'Minor', 'Cosmetic'];
+  private _priorityList: string[] = ['Low', 'Medium', 'High'];
+  private _statusList: string[] = ['Open', 'In Progress', 'Blocked', 'In Review', 'Done', 'Obsolete'];
+
+  get severityList(): string[] { return this._severityList; }
+  get priorityList(): string[] { return this._priorityList; }
+  get statusList(): string[] { return this._statusList; }
 
   constructor(private http: HttpClient) {
   }
@@ -17,10 +29,10 @@ export class IssueService {
    * Gets a list of all issues in the database.
    */
   getIssues(): Observable<Iissue[]> {
-    return this.http.get<Iissue[]>('[placeholder]')
+    return this.http.get<Iissue[]>(this.issueUrl)
       .pipe(
         tap(data => console.log('All: ', JSON.stringify(data))),
-        catchError(this.handleError)
+        catchError(IssueService.handleError)
       );
   }
 
@@ -45,15 +57,46 @@ export class IssueService {
       );
   }
 
+  getUsers(): Observable<Iuser[]> {
+    return this.http.get<Iuser[]>(this.getUsersAPI)
+      .pipe(
+        tap(data => console.log('All: ', JSON.stringify(data))),
+        catchError(IssueService.handleError)
+      );
+  }
+
+  /**
+   * Get's all Comments for issue
+   */
+  getIssueComments(id: number): Observable<Icomment[]> {
+    return this.http.get<Icomment[]>(this.getCommentsAPI + '/' + id)
+      .pipe(
+        tap(data => console.log('All: ', JSON.stringify(data))),
+        catchError(IssueService.handleError)
+      );
+  }
+
+  /**
+   * Get's all Open Issues
+   */
+  getActiveUsers(): Observable<Iuser[]> {
+    return this.getUsers()
+      .pipe(
+        map((user: Iuser[]) => user.filter(i => (i.userActive == true)))
+      );
+  }
+
+
+
   /**
    * Handles any errors
    * @param err - Response from HTTP request
    * @private
    */
-  private handleError(err: HttpErrorResponse): Observable<never> {
+  private static handleError(err: HttpErrorResponse): Observable<never> {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console
-    let errorMessage = '';
+    let errorMessage: string;
     if (err.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       errorMessage = `An error occurred: ${err.error.message}`;

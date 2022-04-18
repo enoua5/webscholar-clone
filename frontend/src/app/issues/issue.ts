@@ -1,10 +1,11 @@
 export interface Iissue {
   issueID: number;
+  issueDescription: string;
+  issueStepsToRecreate: string;
+  issuePriority: string;
+  issueSeverity: string;
   issueStatus: string;
   issueSummary: string;
-  issueDescription: string;
-  issueSeverity: string;
-  issuePriority: string;
   issueReporter: string;
   issueWorker: string;
 }

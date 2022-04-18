@@ -42,12 +42,13 @@ import { StudentViewScholarshipFormComponent } from './student-view-scholarship-
     NavbarComponent,
     StudentViewScholarshipFormComponent,
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

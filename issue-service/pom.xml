@@ -4,12 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>weber.edu</groupId>
-    <artifactId>account-service</artifactId>
+    <artifactId>issue-service</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>account-service</name>
-
-    <!-- FIXME change it to the project's website -->
-<!--    <url>http://www.example.com</url>-->
+    <name>issue-service</name>
 
     <parent>
         <groupId>edu.weber</groupId>
@@ -84,6 +81,11 @@
             <version>2.4.4</version>
         </dependency>
         <dependency>
+            <groupId>weber.edu</groupId>
+            <artifactId>account-service</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>io.joshworks.unirest</groupId>
             <artifactId>unirest-java</artifactId>
             <version>1.8.0</version>
@@ -91,13 +93,14 @@
         </dependency>
     </dependencies>
 
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <finalName>account-service</finalName>
+                    <finalName>issue-service</finalName>
                 </configuration>
             </plugin>
         </plugins>

@@ -21,6 +21,8 @@ import { ViewIssueComponent } from './view-issue/view-issue.component';
 import {ScholarshipListComponent} from './scholarship-list/scholarship-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
+import { RegistrationInvitationFormComponent } from './registration-invitation-form/registration-invitation-form.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -41,14 +43,17 @@ import { StudentViewScholarshipFormComponent } from './student-view-scholarship-
     ScholarshipListComponent,
     NavbarComponent,
     StudentViewScholarshipFormComponent,
+    RegistrationInvitationFormComponent
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        AppRoutingModule,
-        FormsModule
-    ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    RouterModule.forRoot([
+      {path: 'registration_invitation_form/:type', component: RegistrationInvitationFormComponent }
+    ])
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -15,15 +15,15 @@ export class RegisterFormComponent implements OnInit {
   form: FormGroup;
   userIsStudent = true
   nonStudentEmail: string
-  userType: string
-  institution: string
+  role: string
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
     private service: RegisterService) {
-    this.form = this.formBuilder.group({
+
+      this.form = this.formBuilder.group({
       email: ['', {
         validators: [
           Validators.required,
@@ -110,21 +110,33 @@ export class RegisterFormComponent implements OnInit {
     return this.form.get('last_name');
   }
 
+  setRoleValidators() {
+    const emailControl = this.form.get('email');
+    const userIdControl = this.form.get('user_id');
+
+    emailControl.setValidators(null);
+    userIdControl.setValidators(null);
+
+    emailControl.updateValueAndValidity();
+    userIdControl.updateValueAndValidity();
+  }
+
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       if (params.has('email')) {
-        this.userIsStudent = false
+        this.userIsStudent = false;
+        // params
+        this.nonStudentEmail = params.get('email');
+        this.role = params.get('role');
+        this.setRoleValidators()
+        console.log(params)
       }
-      // params
-      this.nonStudentEmail = params.get('email')
-      this.userType = params.get('type')
-      console.log(params)
     })
   }
 
   onSubmit(): void {
     let email = "";
-    let userType = "";
+    let role = "";
 
     if (this.form.valid) {
       console.log(this.form.value);
@@ -136,12 +148,12 @@ export class RegisterFormComponent implements OnInit {
         email = this.nonStudentEmail
       }
 
-      if (this.userType == "chair") {
-        userType = "chair"
-      } else if (this.userType == "committee") {
-        userType = "committee"
+      if (this.role == "chair") {
+        role = "chair"
+      } else if (this.role == "committeeMember") {
+        role = "committeeMember"
       } else {
-        userType = "student"
+        role = "student"
       }
 
       const password = this.password.value;
@@ -155,7 +167,7 @@ export class RegisterFormComponent implements OnInit {
         password: password,
         schoolId: schoolId,
         active: active,
-        userType: userType,
+        role: role,
         firstName: firstName,
         lastName: lastName,
         school: "Weber State University"
@@ -166,11 +178,11 @@ export class RegisterFormComponent implements OnInit {
         res => {
           // Put whatever needs to be executed *after* the routing is done in the .then()
           sessionStorage.setItem('name', `${ firstName } ${ lastName }`);
-          sessionStorage.setItem('userType', userType);
+          sessionStorage.setItem('role', role);
 
           this.router.navigate(['/dashboard']).then(() => {
             console.log(sessionStorage.getItem('name'));
-            console.log(sessionStorage.getItem('userType'));
+            console.log(sessionStorage.getItem('role'));
           });
         },
         err => {

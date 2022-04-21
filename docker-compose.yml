@@ -62,6 +62,24 @@ services:
       - front-end
       - back-end
 
+  #Spring issue-service micro-service container Settings
+  issue-service:
+    #    environment:
+    #      CONFIG_SERVICE_PASSWORD: password
+    build: issue-service
+    #    image: webscholar/issue-service
+    #    restart: always
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - 6005:6005
+    expose:
+      - 6005
+    networks:
+      - front-end
+      - back-end
+
 
 
   #MySql container settings (not a spring micro-service)

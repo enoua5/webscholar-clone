@@ -10,8 +10,12 @@ import {Icomment} from "./comment";
   providedIn: 'root'
 })
 export class IssueService {
+  // ToDo: Replace with working API Key
+  // ToDO: Delete assets/fakeIssues.json once we have a working API Key
   private issueUrl = 'assets/fakeIssues.json';
+  // ToDo: Replace with working API Key
   private getUsersAPI = '/account/getUsers';
+  // ToDo: Replace with working API Key
   private getCommentsAPI = '/account/getComments';
   private _severityList: string[] = ['Critical', 'Major', 'Moderate', 'Minor', 'Cosmetic'];
   private _priorityList: string[] = ['Low', 'Medium', 'High'];
@@ -24,9 +28,9 @@ export class IssueService {
   constructor(private http: HttpClient) {
   }
 
-  // ToDo: Replace placeholder with api to get Issues
   /**
    * Gets a list of all issues in the database.
+   * @return {Observable<Iissue[]>}
    */
   getIssues(): Observable<Iissue[]> {
     return this.http.get<Iissue[]>(this.issueUrl)
@@ -37,8 +41,9 @@ export class IssueService {
   }
 
   /**
-   * Get's a specific issue.
+   * Gets a specific issue.
    * @param id - ID of issue to return.
+   * @return {Observable<Iissue>}
    */
   getIssue(id: number): Observable<Iissue> {
     return this.getIssues()
@@ -48,7 +53,8 @@ export class IssueService {
   }
 
   /**
-   * Get's all Open Issues
+   * Gets a list of all open issues in the database.
+   * @return {Observable<Iissue[]>}
    */
   getOpenIssues(): Observable<Iissue[]> {
     return this.getIssues()
@@ -57,6 +63,10 @@ export class IssueService {
       );
   }
 
+  /**
+   * Gets a list of all Users in the database.
+   * @return {Observable<Iissue[]>}
+   */
   getUsers(): Observable<Iuser[]> {
     return this.http.get<Iuser[]>(this.getUsersAPI)
       .pipe(
@@ -65,8 +75,11 @@ export class IssueService {
       );
   }
 
+
   /**
-   * Get's all Comments for issue
+   * Get a list of all comments for a specific issue.
+   * @param id - ID of issue to return.
+   * @return {Observable<Icomment[]>}
    */
   getIssueComments(id: number): Observable<Icomment[]> {
     return this.http.get<Icomment[]>(this.getCommentsAPI + '/' + id)
@@ -77,7 +90,8 @@ export class IssueService {
   }
 
   /**
-   * Get's all Open Issues
+   * Get a list of all Active Users in the database.
+   * @return {Observable<Iissue[]>}
    */
   getActiveUsers(): Observable<Iuser[]> {
     return this.getUsers()
@@ -91,6 +105,7 @@ export class IssueService {
   /**
    * Handles any errors
    * @param err - Response from HTTP request
+   * @return {any}
    * @private
    */
   private static handleError(err: HttpErrorResponse): Observable<never> {

@@ -111,6 +111,10 @@ export class ViewIssueComponent implements OnInit {
     });
   }
 
+  /**
+   * Gets a list of active Users
+   * @returns {Iuser[]}
+   */
   getUsers(): void {
     this.issueService.getActiveUsers().subscribe({
       next: userList => this.userList = userList,
@@ -118,6 +122,11 @@ export class ViewIssueComponent implements OnInit {
     });
   }
 
+  /**
+   * Gets a list of Comments for the Issue
+   * @param {number} id
+   * @returns {Icomment[]}
+   */
   getComments(id: number): void {
     this.issueService.getIssueComments(id).subscribe({
       next: comments => this.comments = comments,

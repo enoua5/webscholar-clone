@@ -35,6 +35,7 @@ export class IssuesComponent implements OnInit {
   /**
    * Filters the list of issues based on their summary field.
    * @param filterBy - String to filter summary based on.
+   * @returns {Iissue[]} - Filtered list of issues.
    */
   performFilter(filterBy: string): Iissue[] {
     filterBy = filterBy.toLocaleLowerCase();

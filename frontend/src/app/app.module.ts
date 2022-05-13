@@ -50,6 +50,7 @@ import {RouterModule} from "@angular/router";
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    FormsModule,
     RouterModule.forRoot([
       {path: 'registration_invitation_form/:type', component: RegistrationInvitationFormComponent }
     ])

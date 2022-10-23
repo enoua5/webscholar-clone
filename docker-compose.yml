@@ -13,10 +13,9 @@ services:
 
   #Spring config-service micro-service container settings
   config-service:
-#    environment:
-#      CONFIG_SERVICE_PASSWORD: password
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     build: config-service
-#    image: webscholar/config-service
     ports:
       - 8888:8888
     networks:
@@ -28,8 +27,8 @@ services:
 
   #Spring registry micro-service container settings
   registry:
-#    environment:
-#      CONFIG_SERVICE_PASSWORD: password
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     build: registry
 #    image: webscholar/registry
 #    restart: always
@@ -42,12 +41,27 @@ services:
       - front-end
       - back-end
 
+  #Spring gateway micro-service container settings
+  gateway:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    build: gateway
+    #    image: webscholar/registry
+    #    restart: always
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+    networks:
+      - front-end
+      - back-end
 
 
   #Spring account-service micro-service container settings
   account-service:
-#    environment:
-#      CONFIG_SERVICE_PASSWORD: password
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     build: account-service
 #    image: webscholar/account-service
 #    restart: always
@@ -64,8 +78,8 @@ services:
 
   #Spring issue-service micro-service container Settings
   issue-service:
-    #    environment:
-    #      CONFIG_SERVICE_PASSWORD: password
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     build: issue-service
     #    image: webscholar/issue-service
     #    restart: always

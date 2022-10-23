@@ -9,7 +9,7 @@ ADD ./target/config-service.jar /app/
 #This tells the container how to run the jar file we added
 CMD ["java", "-Xmx300m", "-jar", "/app/config-service.jar"]
 
-HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:8888/actuator/health || exit 1
+HEALTHCHECK --interval=30s --timeout=30s CMD curl -f http://localhost:8888/actuator/health || exit 1
 
 #This tells the container to open port 8888 to the docker host
 #The docker-compose.yml maps this port from the internal docker network to the localhost

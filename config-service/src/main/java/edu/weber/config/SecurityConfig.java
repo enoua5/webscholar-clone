@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
+                .antMatchers("/actuator/**").permitAll()
 
                 //Todo: Add 'role' access levels
                 //Anyone can access this endpoint
@@ -39,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Allow's access to the issue-service Testing API
                 .antMatchers(HttpMethod.POST, "/issue/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/issue/**").permitAll()
+                .anyRequest().authenticated()
 
                 .and()
                 .csrf().disable()

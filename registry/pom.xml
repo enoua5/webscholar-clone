@@ -2,6 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>edu.weber</groupId>
+        <artifactId>WebScholar</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
     <groupId>weber.edu</groupId>
     <artifactId>registry</artifactId>
@@ -11,11 +16,6 @@
     <!-- FIXME change it to the project's website -->
 <!--    <url>http://www.example.com</url>-->
 
-    <parent>
-        <groupId>edu.weber</groupId>
-        <artifactId>WebScholar</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
 
     <dependencies>
         <dependency>
@@ -45,6 +45,10 @@
             <artifactId>unirest-java</artifactId>
             <version>1.8.0</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
     </dependencies>
 

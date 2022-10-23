@@ -94,31 +94,21 @@ services:
       - front-end
       - back-end
 
-
-
   #MySql container settings (not a spring micro-service)
   account-db:
     image: mysql:5.7
     restart: always
     environment:
       MYSQL_DATABASE: webscholar-db
-      MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: password
       MYSQL_TCP_PORT: 6002
-#    environment:
-#      DATABASE_HOST: account-db
-#      DATABASE_USER: root
-#      DATABASE_PASSWORD: password
-#      DATABASE_NAME: webscholar-db
-#      DATABASE_PORT: 6602
     ports:
       - 6002:6002
     expose:
       - 6002
     #Data persistence for mysql database files
     volumes:
-      - ./account-db:/var/lib/mysql
-
+      - "./.data/db:/var/lib/mysql"
     networks:
       - front-end
       - back-end
@@ -139,17 +129,16 @@ services:
 
   #Spring scholarship-service micro-service container settings
   scholarship-service:
-
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     build: scholarship-service
     depends_on:
       config-service:
         condition: service_healthy
-
     ports:
       - 6003:6003
     expose:
       - 6003
-
     networks:
       - front-end
       - back-end
@@ -158,12 +147,12 @@ services:
 
   #Spring account-scholarship-service micro-service container settings
   account-scholarship-service:
-
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     build: account-scholarship-service
     depends_on:
       config-service:
         condition: service_healthy
-
     ports:
       - 6004:6004
     expose:
@@ -171,8 +160,6 @@ services:
     networks:
       - front-end
       - back-end
-
-
 
 #Networking settings that splits up containers
 #for the backend and frontend

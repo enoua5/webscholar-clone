@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .formLogin().disable()
                 .sessionManagement().disable();
-        http.csrf().disable();
+        //http.csrf().disable();
     }
 
     //TODO: Add user authentication in here (for oauth2 and regular email/password authentication)

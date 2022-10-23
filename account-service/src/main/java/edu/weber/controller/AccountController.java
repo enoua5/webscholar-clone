@@ -1,6 +1,7 @@
 package edu.weber.controller;
 
 import edu.weber.model.Account;
+import edu.weber.model.AccountRoles;
 import edu.weber.model.LoginDto;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
@@ -413,7 +414,7 @@ public class AccountController {
         String lastName = "Shurima";
 
         //Create the account
-        Account account = new Account(email, password, schoolId, isActive, userType, firstName, lastName);
+        Account account = new Account(email, password, schoolId, isActive, "student", firstName, lastName);
 
         //Save the account to the database
         accountService.accountRepository.save(account);

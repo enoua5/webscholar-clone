@@ -1,7 +1,7 @@
 #This file builds a custom image to run the specified spring boot application micro-service
 
 #This is the base image
-FROM java:8-jre
+FROM openjdk:17-oracle
 
 #This adds the jar file built by maven into the images app folder
 ADD ./target/account-scholarship-service.jar /app/

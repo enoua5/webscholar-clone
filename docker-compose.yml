@@ -179,6 +179,23 @@ services:
       - front-end
       - back-end
 
+  #Spring security-service micro-service container settings
+#  TODO It seems like the depends on should be updated for each container to depend on the security service?
+  security-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    build: security-service
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - 6005:6005
+    expose:
+      - 6005
+    networks:
+      - front-end
+      - back-end
+
 #Networking settings that splits up containers
 #for the backend and frontend
 networks:

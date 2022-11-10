@@ -148,3 +148,6 @@ gradle-app.setting
 
 # Database folders
 .data
+
+# Remove lock file
+package-lock.json

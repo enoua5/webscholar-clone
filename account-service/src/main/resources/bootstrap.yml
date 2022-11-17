@@ -11,7 +11,7 @@ spring:
       password: ${CONFIG_SERVICE_PASSWORD}
       username: user
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://account-db:6002/webscholar-db?useSSL=false
     username: root
     password: password
@@ -20,6 +20,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+
 
   # TODO: Establish a permanent smtp server account for sending emails.
   #

@@ -1,0 +1,10 @@
+spring:
+
+server:
+  servlet:
+    context-path: /issue
+  port: 6005
+
+feign:
+  hystrix:
+    enabled: true

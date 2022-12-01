@@ -1,0 +1,10 @@
+spring:
+
+server:
+  servlet:
+    context-path: /account
+  port: 6001
+
+feign:
+  hystrix:
+    enabled: true

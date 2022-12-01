@@ -35,8 +35,12 @@ CREATE TABLE `scholarship` (
                                `organization` varchar(255) NOT NULL,
                                `description` varchar(100) NOT NULL,
                                `requirements` varchar(50) NOT NULL,
-                               `amount` DOUBLE NOT NULL,
-                               PRIMARY KEY (`scholarshipId`)
+                               `amount` DECIMAL(18,2) NOT NULL,
+                               `applyDeadline` timestamp NOT NULL,
+                               `levels` varchar(50) NOT NULL,
+                               `awardType` varchar(50) NOT NULL,
+                                PRIMARY KEY (`scholarshipId`)
+
 );
 
 commit;

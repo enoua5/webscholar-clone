@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * Thas handles the access control for all micro-services.
  */
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class AuthConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * This method takes an incoming http request and applies restrictions to it.
@@ -46,6 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .formLogin().disable()
                 .sessionManagement().disable();
+        //TODO for testing purposes only.
         //http.csrf().disable();
     }
 

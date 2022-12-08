@@ -1,7 +1,7 @@
 spring:
-  config:
-    import:
-      configserver: http://config-service:8888
+#  config:
+#    import:
+#      configserver: http://config-service:8888
   application:
     name: monitoring
   cloud:
@@ -12,5 +12,5 @@ spring:
       password: ${CONFIG_SERVICE_PASSWORD}
       username: user
 
-
-
+server:
+  port: 8081

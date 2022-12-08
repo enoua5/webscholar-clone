@@ -52,6 +52,7 @@
         <module>account-scholarship-service</module>
         <module>issue-service</module>
         <module>gateway</module>
+        <module>monitoring</module>
 
         <!--        <module>frontend</module>-->
     </modules>

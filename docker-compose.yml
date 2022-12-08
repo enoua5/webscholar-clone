@@ -113,6 +113,24 @@ services:
       - front-end
       - back-end
 
+  #Monitoring
+  monitoring:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+#    image: webscholar-monitoring
+    build: monitoring
+    restart: always
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - 8081:8081
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+
 
 
    #Container for the frontend

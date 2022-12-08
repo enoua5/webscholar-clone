@@ -10,11 +10,11 @@
     </parent>
 
     <groupId>edu.weber</groupId>
-    <artifactId>security-service</artifactId>
+    <artifactId>auth-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>security-service</name>
+    <name>auth</name>
 
     <description>OAuth2 Security Server</description>
 
@@ -101,6 +101,13 @@
                 <configuration>
                     <finalName>auth-service</finalName>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>

@@ -179,12 +179,12 @@ services:
       - front-end
       - back-end
 
-  #Spring security-service micro-service container settings
+  #Spring auth-service micro-service container settings
 #  TODO It seems like the depends on should be updated for each container to depend on the security service?
-  security-service:
+  auth-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    build: security-service
+    build: auth-service
     depends_on:
       config-service:
         condition: service_healthy

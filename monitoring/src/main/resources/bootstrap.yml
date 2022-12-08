@@ -1,9 +1,14 @@
 spring:
-application:
-  name: monitoring
-cloud:
-  config:
-    uri: http://config-service:8888
-    fail-fast: true
-    password: ${CONFIG_SERVICE_PASSWORD}
-    username: user
+
+  application:
+    name: monitoring
+  cloud:
+    config:
+      import-check:
+        enabled: false
+      uri: http://config-service:8888
+      fail-fast: false
+      password: ${CONFIG_SERVICE_PASSWORD}
+      username: user
+
+

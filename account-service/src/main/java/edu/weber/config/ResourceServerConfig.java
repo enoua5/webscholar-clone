@@ -21,4 +21,5 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
         ;
     }
+
 }

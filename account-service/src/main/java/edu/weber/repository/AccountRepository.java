@@ -25,4 +25,7 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     //This should return all accounts after the specified starting account id
     List<Account> findAllByAccountKeyAfter(int startingAccountKey);
+
+    //lookup spring boot repository methods? Forget email spring boot service
+    Account findAccountByDeleteLinkHash(String generatedHash);
 }

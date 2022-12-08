@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -42,6 +43,9 @@ public class AccountController {
      */
     @Autowired
     private AccountService accountService;// = new AccountService();
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
 
     /**
@@ -79,15 +83,24 @@ public class AccountController {
         }
 
         /*
-        TODO: This code will be changed once weber state oauth2 login is implemented
+            TODO: This code will be changed once weber state oauth2 login is implemented
 
-        TODO: Verify password hash (for non-oauth login)
-        Check password encryption
-        Throw error if the password is incorrect
+            TODO: Verify password hash (for non-oauth login)
+            Check password encryption
+            Throw error if the password is incorrect
          */
 
-        //Return the found account data to the frontend
-        return found;
+        //Verify the hashed password matches
+        log.info("Found account, comparing against " + loginDto.getPassword());
+        if( passwordEncoder.matches(loginDto.getPassword(), found.getPassword()) ){
+            //Return the found account data to the frontend
+            return found;
+        }
+        else{
+            log.error("ERROR: Account password does not match. Expected: " + found.getPassword() + " Actual: " + passwordEncoder.encode(loginDto.getPassword()));
+            accountNotFound();
+            return null;
+        }
     }
 
 
@@ -104,7 +117,7 @@ public class AccountController {
     public void createNewAccount(@Valid @RequestBody Account account, BindingResult result) {
 
 
-            log.info(account.toString());
+        log.info(account.toString());
         //Validate account information (input validation)
         if (result.hasErrors()) {
 
@@ -116,6 +129,12 @@ public class AccountController {
         } else {
 
             //TODO: Send a confirmation email (not necessary for weber state oauth2 login)
+            //Presently, outlook blocks api calls if it thinks you're 'spamming' from too many tests
+            //We should probably setup something a little more permanent. But services like outlook, gmail require 2FA (IE a phone number) to use a api-key right now.
+            accountService.sendEmail(account.getEmail(), "Registration email", "Thank you for registering!");
+
+            //Encrypt the password
+            account.setPassword(passwordEncoder.encode(account.getPassword()));
 
             //Create an account in the database
             accountService.accountRepository.save(account);
@@ -164,6 +183,35 @@ public class AccountController {
         }
     }
 
+    @RequestMapping(path = "/forgot/password", method = RequestMethod.POST)
+    public String forgotPassword(@RequestParam int accountKey){
+
+        Account found = accountService.accountRepository.findAccountByAccountKey(accountKey);
+        if(found == null){
+            accountNotFound();
+            return "Could not find the account via accountKey.";
+        }
+        if(!accountService.sendForgotPassword(accountKey)){
+            log.error("Failed to send forgotten password.");
+        }
+
+        return "done";
+    }
+
+    @RequestMapping(path = "/forgot/account", method = RequestMethod.POST)
+    public String forgotAccount(@RequestParam String accountEmail){
+        Account found = accountService.accountRepository.findAccountByEmail(accountEmail);
+        if(found == null){
+            accountNotFound();
+            log.error("Could not find an account associated with that email.");
+            return "Could not find the account via accountEmail. Either email is incorrect, or no account with that email is registered";
+        }
+        if(!accountService.sendForgotAccount(accountEmail)){
+            log.error("Failed to send forgotten account.");
+        }
+
+        return "done";
+    }
 
     /**
      * This method allows a user to send a registration invitation email.
@@ -182,18 +230,22 @@ public class AccountController {
      * specified in the bootstrap.yml file (email sent, but does not reach 
      * a destination).
      */
-    @GetMapping("/send_invite/{accountKey}/{recipientEmail}")
-    public void sendInvite(@PathVariable int accountKey, @PathVariable String recipientEmail) {
+    @GetMapping("/send_invite/{accountKey}")
+    public String sendInvite(@PathVariable int accountKey, @PathVariable String recipientEmail) {
 
+        log.error("Okay going to try to send an invite with " + accountKey + " to " + recipientEmail);
         //Attempt sending the mail
         if(!accountService.sendInvite(accountKey, recipientEmail)) {
 
             //Throw http error if account could not be found 
             accountNotFound();
+            return "Account not found.";
         }
 
-        //If no errors occur, an http ok response will be sent
+        //If no errors occur, a http ok response will be sent
+        return "Email successfully sent!";
     }
+
 
     /**
      * This method allows a user to send a registration invitation email with a specified user role.
@@ -213,7 +265,7 @@ public class AccountController {
      * a destination).
      */
     @GetMapping("/send_registration_invite/{roleName}/")
-    public String sendInviteWithRole(@RequestParam String[] recipientEmails, @PathVariable String roleName) {
+    public String sendInviteWithRole(@RequestParam String[] recipientEmails, @RequestParam int accountKey, @PathVariable String roleName) {
         String role = "";
         switch (roleName) {
             case "student":
@@ -233,9 +285,10 @@ public class AccountController {
             return "Incorrect format for roleName. Valid options are /'student/', /'committeMember/', or /'chair/'\n";
         }
 
+
         for (String recipientEmail : recipientEmails)
         {
-            if (!accountService.sendRegistrationInvite(recipientEmail, role))
+            if (!accountService.sendRegistrationInvite(recipientEmail, accountKey, role))
             {
                 accountNotFound();
             }
@@ -260,12 +313,11 @@ public class AccountController {
      * click 'yes, delete account' the 'deleteAccount' API will be called.
      * @param accountKey
      */
-    //TODO: Create an method that sends an email for deleting an account
     @GetMapping("/request_account_deletion/{accountKey}")
     public void requestAccountRemoval(@PathVariable int accountKey){
 
         //Generate the link and save it to the users account
-        String emailLink = accountService.generateLink(accountKey);
+        String emailLink = accountService.generateDeletionLink(accountKey);
 
         //If 'error', the account does not exist
         if (emailLink.equals("error")) {
@@ -297,8 +349,8 @@ public class AccountController {
      * a 'yes, delete account' button.
      * @param linkHash The hash sent out as part of the link emailed to the user.
      */
-    @GetMapping("/delete_account/{generatedLink}")
-    public void deleteAccount(@PathVariable String linkHash){
+    @GetMapping("/delete_account") //WAS: /delete_account/{generatedLink}
+    public void deleteAccount(@RequestParam String linkHash){ //WAS: @pathvariable
 
         /*
         Note: We want just the query string, not the whole link!
@@ -320,7 +372,6 @@ public class AccountController {
             accountNotFound();
         }
     }
-
 
     /**
      * Send an http response error if data sent did not follow model restrictions.
@@ -398,20 +449,44 @@ public class AccountController {
     }
 
 /**
-     * This method creates a dummy account for the issue testing purposes.
-     * @return The account in string form.
-     */
+    * This method creates a dummy account for the issue testing purposes.
+    * At present, this does not work; instead, use localhost:6001/account/create
+    *       POST, using Body set to JSON:
+             *       {
+             * 	"accountKey":  0,
+             * 	"email": "HumanManPerson@weber.mail.edu",
+             * 	"password": "password123",
+             * 	"schoolId": "w01010110",
+             * 	"active": "false",
+             * 	"userType": "student",
+             * 	"firstName": "person",
+             * 	"middleName": "b" ,
+             * 	"lastName": "humanman",
+             * 	"address1": "123street",
+             * 	"address2": "apart20",
+             * 	"city": "cityplace",
+             * 	"state": "utah",
+             * 	"zipCode": "99999",
+             * 	"school": "weber",
+             * 	"sex": "male",
+             * 	"race": "human"
+             * }
+    * @return The account in string form.
+    */
     @PostMapping("/make_test_account_for_issue")
     public String makeDummyAccountForIssue() {
 
         //Set non-blank values
-        String email = "Akshan@gmail.com";
-        String password = "akshanPassword";
+        String email = "supertestingemail3000@gmail.com";
+        String password = "Weber123A!?@";
         String schoolId = "20210722";
         Boolean isActive = true;
         AccountRoles userType = AccountRoles.student;
         String firstName = "Akshan";
         String lastName = "Shurima";
+
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        password = bCryptPasswordEncoder.encode(password);
 
         //Create the account
         Account account = new Account(email, password, schoolId, isActive, "student", firstName, lastName);
@@ -430,7 +505,6 @@ public class AccountController {
      */
     @GetMapping("/get_all_accounts")
     public List<Account> getAllAccounts(){
-
         //Find all accounts starting after id = 0
         return accountService.accountRepository.findAllByAccountKeyAfter(0);
     }

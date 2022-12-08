@@ -20,6 +20,8 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
 
   # TODO: Establish a permanent smtp server account for sending emails.
@@ -38,10 +40,10 @@ spring:
   # webscholar documentation)
 
   mail:
-    host: smtp.gmail.com
+    host: smtp-mail.outlook.com
     port: 587
-    username: supertestingemail3000@gmail.com
-    password: Weber123A!?@
+    username: webscholar-test@outlook.com
+    password: MPvyNtmb5fF4RAx
     properties:
       mail:
         smtp:

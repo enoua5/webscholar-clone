@@ -1,9 +1,9 @@
 //This Model exists to connect Account and Scholarship so individual accounts can be linked to scholarships.
 package edu.weber.model;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+//import lombok.AccessLevel;
+//import lombok.Getter;
+//import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -14,8 +14,8 @@ import javax.validation.constraints.NotBlank;
  * to the frontend in a standardized format. (Yes, I did just copy-pasta a comment XD)
  */
 
-@Getter //This uses javax validation to generate the getters and setters for all variables
-@Setter //This uses javax validation to generate the getters and setters for all variables
+//@Getter //This uses javax validation to generate the getters and setters for all variables
+//@Setter //This uses javax validation to generate the getters and setters for all variables
 @Entity
 public class AccountScholarship {
 
@@ -26,7 +26,7 @@ public class AccountScholarship {
     )
 
     //This prevents the javax setter from being generated for this value
-    @Setter(AccessLevel.PRIVATE)
+//    @Setter(AccessLevel.PRIVATE)
     private int comboId;
 
     //accountKey of the attached account
@@ -71,4 +71,27 @@ public class AccountScholarship {
                 ", scholarshipId=" + scholarshipId + '}';
     }
 
+    public int getComboId() {
+        return comboId;
+    }
+
+    public void setComboId(int comboId) {
+        this.comboId = comboId;
+    }
+
+    public int getAccountKey() {
+        return accountKey;
+    }
+
+    public void setAccountKey(int accountKey) {
+        this.accountKey = accountKey;
+    }
+
+    public int getScholarshipId() {
+        return scholarshipId;
+    }
+
+    public void setScholarshipId(int scholarshipId) {
+        this.scholarshipId = scholarshipId;
+    }
 }

@@ -1,0 +1,10 @@
+spring:
+
+server:
+  servlet:
+    context-path: /scholarship
+  port: 6003
+
+feign:
+  hystrix:
+    enabled: true

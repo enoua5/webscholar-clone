@@ -6,11 +6,16 @@ Visit the <a href="https://drive.google.com/drive/folders/1bsIXJINnvqcdaYSIDFlM-
 
 ## CS4760 Channel on Pluralsight
 
-A free license to <a href="https://www.pluralsight.com/>Pluralsight</a> is provided to every registered student in this class. Please reach out to the instructor if you do not have one. Please join the <a href="https://app.pluralsight.com/channels/details/8defa958-55fe-4afd-8bd7-c2152939893c?s=1/">CS 4760 channel</a> on Pluralsight. This channel collects all the resources/lectures needed to develop enterprise web applications.
+A free license to <a href="https://www.pluralsight.com/">Pluralsight</a> is provided to every registered student in this class. Please reach out to the instructor if you do not have one. Please join the <a href="https://app.pluralsight.com/channels/details/8defa958-55fe-4afd-8bd7-c2152939893c?s=1/">CS 4760 channel</a> on Pluralsight. This channel collects all the resources/lectures needed to develop enterprise web applications.
 
 ## Microservice Architecture
 
-To learn about Microservice, please read this recommended article <a href="https://martinfowler.com/articles/microservices.html">Microservice Architecture Introduction</a> by Martin Fowler. 
+To learn about Microservice, please read this recommended article <a href="https://martinfowler.com/articles/microservices.html">Microservice Architecture Introduction</a> by Martin Fowler. There are some excellent sample projects using Microservice architecture and spring framework. Check them out: 
+* <a href="https://github.com/sqshq/PiggyMetrics">PiggyMetrics</a>
+* <a href="https://github.com/mdeket/spring-cloud-movie-recommendation">spring-cloud-movie-recommendation</a>
+* <a href="https://github.com/anilallewar/microservices-basics-spring-boot">Spring Boot MicroServices Template</a>
+* <a href="https://github.com/microservices-patterns/ftgo-application">FTGO example application</a>
+* <a href="https://github.com/spring-petclinic/spring-petclinic-microservices">Distributed version of the Spring PetClinic Sample Application built with Spring Cloud</a>
 
 
 

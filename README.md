@@ -17,6 +17,7 @@ To learn about Microservice, please read this recommended article <a href="https
 * <a href="https://github.com/microservices-patterns/ftgo-application">FTGO example application</a>
 * <a href="https://github.com/spring-petclinic/spring-petclinic-microservices">Distributed version of the Spring PetClinic Sample Application built with Spring Cloud</a>
 
+Microservice Tutorials: <a href="https://howtodoinjava.com/microservices/microservices-definition-principles-benefits/">Microservices – Definition, Principles and Benefits</a>
 
 
 ## Clone a repository

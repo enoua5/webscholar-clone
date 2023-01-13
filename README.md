@@ -24,8 +24,11 @@ Microservice Tutorials: <a href="https://howtodoinjava.com/microservices/microse
 Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems. Coordination of distributed systems leads to boiler plate patterns, and using Spring Cloud developers can quickly stand up services and applications that implement those patterns. They will work well in any distributed environment, including the developer’s own laptop, bare metal data centers, and managed platforms such as Cloud Foundry. Spring Cloud is implemented based on Spring Boot. Spring Cloud has many sub-projects, the one we will be learning and using is  <a href="https://spring.io/projects/spring-cloud-netflix">Spring Cloud Netflix</a>. Spring Cloud can be treated as concrete implementations of the Microservice architecture.
 
 * <a href="https://howtodoinjava.com/spring-cloud/">Spring Cloud Tutorials</a>
-* <a href="https://howtodoinjava.com/spring-boot-tutorials/">Spring Boot Tutorials</a>* 
+* <a href="https://howtodoinjava.com/spring-boot-tutorials/">Spring Boot Tutorials</a>
 
+## Trello
+
+We will be using Trello (trello.com) for project management to keep track of progress. The <a href="https://trello.com/b/a7Xnd8rP/webscholar">Trello Board WebScholar</a> is set to be Team Visible. A team CS4760 has been created and all students in this class are invited to this team.
 
 
 ## Clone a repository

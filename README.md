@@ -19,6 +19,14 @@ To learn about Microservice, please read this recommended article <a href="https
 
 Microservice Tutorials: <a href="https://howtodoinjava.com/microservices/microservices-definition-principles-benefits/">Microservices – Definition, Principles and Benefits</a>
 
+## Spring Cloud
+
+Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems. Coordination of distributed systems leads to boiler plate patterns, and using Spring Cloud developers can quickly stand up services and applications that implement those patterns. They will work well in any distributed environment, including the developer’s own laptop, bare metal data centers, and managed platforms such as Cloud Foundry. Spring Cloud is implemented based on Spring Boot. Spring Cloud has many sub-projects, the one we will be learning and using is  <a href="https://spring.io/projects/spring-cloud-netflix">Spring Cloud Netflix</a>. Spring Cloud can be treated as concrete implementations of the Microservice architecture.
+
+* <a href="https://howtodoinjava.com/spring-cloud/">Spring Cloud Tutorials</a>
+* <a href="https://howtodoinjava.com/spring-boot-tutorials/">Spring Boot Tutorials</a>* 
+
+
 
 ## Clone a repository
 

@@ -189,9 +189,9 @@ services:
       config-service:
         condition: service_healthy
     ports:
-      - 6005:6005
+      - 6006:6006
     expose:
-      - 6005
+      - 6006
     networks:
       - front-end
       - back-end

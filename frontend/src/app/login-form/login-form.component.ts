@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LoginService} from "./login.service";
+import {emailExistsValidator} from "./validators";
 
 @Component({
   selector: 'app-login-form',
@@ -10,7 +11,6 @@ import {LoginService} from "./login.service";
 })
 export class LoginFormComponent implements OnInit {
   form: FormGroup;
-  error: string = null;
 
   constructor(
     private fb: FormBuilder,
@@ -19,37 +19,61 @@ export class LoginFormComponent implements OnInit {
     private service: LoginService
   ) {
     this.form = this.fb.group({
-      username: [''],
-      password: [''],
+      username: ['', {
+        validators: [
+          Validators.required,
+          Validators.email
+        ],
+        asyncValidators: [
+          emailExistsValidator(service)
+        ]
+      }],
+      password: ['', {
+        validators: [
+          Validators.required
+        ],
+        updateOn: 'change'
+      }]
+    }, {
+      updateOn: 'blur'
     });
-
-
-  }
-
-  //hash the password in md5
-  private hashPassword(password: string): string {
-    return btoa(password);
   }
 
   ngOnInit(): void {
   }
 
-  onSubmit(): void {
-    this.form.value.password = this.hashPassword(this.form.value.password);
-    console.log(this.form.value);
-    this.service.login(this.form.value)
-      .subscribe((data) => this.processResponse(data));
-
+  get username() {
+    return this.form.get('username');
   }
 
-  private processResponse(data) {
-    console.log(data);
-    if (data.success === true) {
-      // this.router.navigate(['/']);
-      alert("login in");
-    } else {
-      this.error = data.error;
-    }
+  get password() {
+    return this.form.get('password');
+  }
 
+  onSubmit(): void {
+    console.log(this.form.value);
+
+    const jsonObj = JSON.stringify({
+      email: this.username.value,
+      password: this.password.value
+    });
+
+    this.service.login(jsonObj).subscribe(
+      res => {
+        // Put whatever needs to be executed *after* the routing is done in the .then()
+        sessionStorage.setItem('name', `${ res.body.firstName } ${ res.body.lastName }`);
+        sessionStorage.setItem('userType', res.body.userType);
+
+        this.router.navigate(['/dashboard']).then(() => {
+          console.log(sessionStorage.getItem('name'));
+          console.log(sessionStorage.getItem('userType'));
+        });
+      },
+      err => {
+        console.log(err);
+        // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
+        alert(err.error.message);
+      }
+    );
   }
 }

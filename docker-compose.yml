@@ -1,21 +1,34 @@
 version: '2.1'
 services:
+  #Message broker container settings (not a spring micro-service)
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - 5672:5672
+      - 15672:15672
+    networks:
+      - front-end
+      - back-end
 
+
+
+  #Spring config-service micro-service container settings
   config-service:
-#    environment:
-#      CONFIG_SERVICE_PASSWORD: password
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     build: config-service
-#    image: webscholar/config-service
     ports:
       - 8888:8888
+    networks:
+      - front-end
+      - back-end
 #    restart: always
+
+
+
+  #Spring registry micro-service container settings
   registry:
-#    environment:
-#      CONFIG_SERVICE_PASSWORD: password
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     build: registry
 #    image: webscholar/registry
 #    restart: always
@@ -24,10 +37,31 @@ services:
         condition: service_healthy
     ports:
       - 8765:8765
+    networks:
+      - front-end
+      - back-end
 
+  #Spring gateway micro-service container settings
+  gateway:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    build: gateway
+    #    image: webscholar/registry
+    #    restart: always
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - 8080:8080
+    networks:
+      - front-end
+      - back-end
+
+
+  #Spring account-service micro-service container settings
   account-service:
-#    environment:
-#      CONFIG_SERVICE_PASSWORD: password
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     build: account-service
 #    image: webscholar/account-service
 #    restart: always
@@ -38,28 +72,139 @@ services:
       - 6001:6001
     expose:
       - 6001
-#    environment:
-#      DATABASE_HOST: account-db
-#      DATABASE_USER: root
-#      DATABASE_PASSWORD: password
-#      DATABASE_NAME: webscholar-db
-#      DATABASE_PORT: 6602
+    networks:
+      - front-end
+      - back-end
+
+  #Spring issue-service micro-service container Settings
+  issue-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    build: issue-service
+    #    image: webscholar/issue-service
+    #    restart: always
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - 6005:6005
+    expose:
+      - 6005
+    networks:
+      - front-end
+      - back-end
+
+  #MySql container settings (not a spring micro-service)
   account-db:
     image: mysql:5.7
     restart: always
-
     environment:
       MYSQL_DATABASE: webscholar-db
-      #MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: password
       MYSQL_TCP_PORT: 6002
     ports:
       - 6002:6002
     expose:
       - 6002
+    #Data persistence for mysql database files
     volumes:
-      - ./account-db:/var/lib/mysql
+      - "./.data/db:/var/lib/mysql"
+    networks:
+      - front-end
+      - back-end
 
+  #Monitoring
+  monitoring:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+#    image: webscholar-monitoring
+    build: monitoring
+    restart: always
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - 8081:8081
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+
+
+
+   #Container for the frontend
+#  frontend:
+#    build: frontend
+#    ports:
+#      - 4200:4200
+#    expose:
+#     - 4200
+#   networks:
+#     - front-end
+
+
+
+  #Spring scholarship-service micro-service container settings
+  scholarship-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    build: scholarship-service
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - 6003:6003
+    expose:
+      - 6003
+    networks:
+      - front-end
+      - back-end
+
+
+
+  #Spring account-scholarship-service micro-service container settings
+  account-scholarship-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    build: account-scholarship-service
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - 6004:6004
+    expose:
+      - 6004
+    networks:
+      - front-end
+      - back-end
+
+  #Spring auth-service micro-service container settings
+#  TODO It seems like the depends on should be updated for each container to depend on the security service?
+  auth-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    build: auth-service
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - 6006:6006
+    expose:
+      - 6006
+    networks:
+      - front-end
+      - back-end
+
+#Networking settings that splits up containers
+#for the backend and frontend
+networks:
+  front-end:
+  back-end:
+
+
+
+   #Old MySql container settings
 #  db-service:
 #    image: mysql:5.7
 #    restart: always

@@ -1,93 +1,198 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {Form, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RegisterService} from './register.service';
-
+import {emailExistsValidator, passwordMatchValidator} from "./validators";
 
 @Component({
   selector: 'app-register-form',
   templateUrl: './register-form.component.html',
   styleUrls: ['./register-form.component.less']
 })
-export class RegisterFormComponent implements OnInit {
-  form: FormGroup;
-  error: string = null;
-  errors: Map<string, string> = new Map();
 
+export class RegisterFormComponent implements OnInit {
+  // Reactive form
+  form: FormGroup;
+  userIsStudent = true
+  nonStudentEmail: string
+  role: string
 
   constructor(
-    private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private formBuilder: FormBuilder,
     private service: RegisterService) {
-    this.form = this.fb.group({
-      username: [''],
-      password: [''],
-      confirm_password: [''],
-      school_email: [''],
-      school_id: [''],
-      checkbox: ['']
+
+      this.form = this.formBuilder.group({
+      email: ['', {
+        validators: [
+          Validators.required,
+          Validators.email
+        ],
+        asyncValidators: [
+          emailExistsValidator(service)
+        ]
+      }],
+      passwordFields: this.formBuilder.group({
+        password: ['', {
+          validators: [
+            Validators.required,
+            Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%?&])[A-Za-z\\d$@$!%?&]{8,}$')
+          ]
+        }],
+        confirm_password: ['', {
+          validators: [
+            Validators.required
+          ]
+        }]
+      }, {
+        validators: [
+          passwordMatchValidator()
+        ]
+      }),
+      user_id: ['', {
+        validators: [
+          Validators.required,
+          Validators.pattern('^[0-9]{8}$')
+        ]
+      }],
+      checkbox: ['', {
+        validators: [
+          Validators.requiredTrue
+        ],
+        updateOn: 'change'
+      }],
+      first_name: ['', {
+        validators: [
+          Validators.required
+        ]
+      }],
+      last_name: ['', {
+        validators: [
+          Validators.required
+        ]
+      }],
+    }, {
+      updateOn: 'blur'
     });
   }
 
+  // Getters for form controls
+  get email() {
+    return this.form.get('email');
+  }
+
+  get passwordFields() {
+    return this.form.get('passwordFields');
+  }
+
+  get password() {
+    return this.passwordFields.get('password');
+  }
+
+  get confirm_password() {
+    return this.passwordFields.get('confirm_password');
+  }
+
+  get user_id() {
+    return this.form.get('user_id');
+  }
+
+  get checkbox() {
+    return this.form.get('checkbox');
+  }
+
+  get first_name() {
+    return this.form.get('first_name');
+  }
+
+  get last_name() {
+    return this.form.get('last_name');
+  }
+
+  setRoleValidators() {
+    const emailControl = this.form.get('email');
+    const userIdControl = this.form.get('user_id');
+
+    emailControl.setValidators(null);
+    userIdControl.setValidators(null);
+
+    emailControl.updateValueAndValidity();
+    userIdControl.updateValueAndValidity();
+  }
+
   ngOnInit(): void {
-  }
-
-  //hash the password in md5
-  private hashPassword(password: string): string {
-    return btoa(password);
-  }
-
-  //check if the user already exists in the mysql database and return boolean
-
-  private checkErrors(): void{
-    this.errors.clear();
-    if(this.form.get('password').value != this.form.get('confirm_password').value){
-      this.errors.set('confirm_password', 'Password does not match');
-    }
-    const regex = RegExp('^W[0-9]{8}$');
-    if(!regex.test(this.form.get('school_id').value)){
-      this.errors.set('school_id', 'Invalid format');
-    }
-    //todo check if check mark is set
-    let checkboxvalue = this.form.get('checkbox').value;
-    if(checkboxvalue !== true){
-      this.errors.set('checkbox', 'Please indicate that you have read and agree to the Terms and Conditions Policy');
-    }
+    this.route.queryParamMap.subscribe((params) => {
+      if (params.has('email')) {
+        this.userIsStudent = false;
+        // params
+        this.nonStudentEmail = params.get('email');
+        this.role = params.get('role');
+        this.setRoleValidators()
+        console.log(params)
+      }
+    })
   }
 
   onSubmit(): void {
-    this.form.value.password = this.hashPassword(this.form.value.password);
-    this.form.value.confirm_password = this.hashPassword(this.form.value.confirm_password);
-    console.log(this.form.value);
-    this.checkErrors();
-    if(this.errors.size == 0){
-      this.service.register(this.form.value).subscribe(
-        (data) => {
-          this.router.navigate(['/']).then(r => {
-            console.log(r);
+    let email = "";
+    let role = "";
+
+    if (this.form.valid) {
+      console.log(this.form.value);
+
+      // This might change depending on how the params are coming in
+      if (this.userIsStudent == true) {
+        email = this.email.value
+      } else {
+        email = this.nonStudentEmail
+      }
+
+      if (this.role == "chair") {
+        role = "chair"
+      } else if (this.role == "committeeMember") {
+        role = "committeeMember"
+      } else {
+        role = "student"
+      }
+
+      const password = this.password.value;
+      const schoolId = this.user_id.value;
+      const active = "true";
+      const firstName = this.first_name.value;
+      const lastName = this.last_name.value;
+
+      const jsonObj = JSON.stringify({
+        email: email,
+        password: password,
+        schoolId: schoolId,
+        active: active,
+        role: role,
+        firstName: firstName,
+        lastName: lastName,
+        school: "Weber State University"
+      });
+
+      console.log(jsonObj);
+      this.service.createAccount(jsonObj).subscribe(
+        res => {
+          // Put whatever needs to be executed *after* the routing is done in the .then()
+          sessionStorage.setItem('name', `${ firstName } ${ lastName }`);
+          sessionStorage.setItem('role', role);
+
+          this.router.navigate(['/dashboard']).then(() => {
+            console.log(sessionStorage.getItem('name'));
+            console.log(sessionStorage.getItem('role'));
           });
         },
-        (error) => {
-          this.error = error.error.message;
+        err => {
+          console.log(err);
+          // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
+          alert(err.error.message);
         }
       );
-      //this.service.insert(this.form.value)
-      //  .subscribe((data) => this.processResponse(data));
+      // Test create account
+      //this.service.testAccountCreation();
     }
   }
-
-  private processResponse(data) {
-    console.log(data);
-    if (data.success === true) {
-      console.log('success');
-      this.router.navigate(['/']);
-    } else {
-      console.log('error');
-      this.error = data.error;
-      this.errors = new Map(Object.entries(data.errors));
-    }
-
-  }
-
 }

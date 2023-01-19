@@ -1,0 +1,69 @@
+<section class="container p-3">
+  <h1>Create Scholarship</h1>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <div class="mt-4">
+      <label for="scholarshipName">Scholarship Name</label>
+      <div class="input-group">
+        <input id="scholarshipName" class="form-control" type="text" formControlName="scholarshipName" required>
+      </div>
+
+      <div class="error" *ngIf="scholarshipName.invalid && scholarshipName.touched">
+        <div *ngIf="scholarshipName.errors.required">
+          Scholarship name is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <label for="scholarshipProvider">Scholarship Provider</label>
+      <div class="input-group">
+        <input id="scholarshipProvider" class="form-control" type="text" formControlName="scholarshipProvider" required>
+      </div>
+
+      <div class="error" *ngIf="scholarshipProvider.invalid && scholarshipProvider.touched">
+        <div *ngIf="scholarshipProvider.errors.required">
+          Scholarship provider is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <label for="scholarshipAmount">Scholarship Amount</label>
+      <div class="input-group">
+        <input id="scholarshipAmount" class="form-control" type="text" formControlName="scholarshipAmount" required>
+      </div>
+
+      <div class="error" *ngIf="scholarshipAmount.invalid && scholarshipAmount.touched">
+        <div *ngIf="scholarshipAmount.errors.required">
+          Scholarship amount is required.
+        </div>
+        <div *ngIf="scholarshipAmount.errors.pattern">
+          Must be a valid amount.
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <label for="scholarshipInfo">Scholarship Info</label>
+      <div class="input-group">
+        <textarea  id="scholarshipInfo" class="form-control" formControlName="scholarshipInfo" aria-label="With textarea" required></textarea>
+      </div>
+
+      <div class="error" *ngIf="scholarshipInfo.invalid && scholarshipInfo.touched">
+        <div *ngIf="scholarshipInfo.errors.required">
+          Scholarship info is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 mt-2">
+      <div class="register-btn-left">
+        <p class="control">
+          <input [disabled]="!form.valid" type="submit" value="Create Scholarship" class="button is-success is-small"/>
+        </p>
+      </div>
+    </div>
+  </form>
+</section>

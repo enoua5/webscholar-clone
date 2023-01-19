@@ -1,0 +1,165 @@
+[
+  {
+    "issueID": 1,
+    "issueStatus": "Open",
+    "issueSummary": "[Backend] Settup issue foreign keys.",
+    "issueDescription": "This is just an OCD thing for me, doesn't have to be done. In fact, I work for Wayfair.com and we don't do any key formatting. No columns are listed as primary keys (though we do have them) and foreign keys are never linked. So I'm actually kinda used to things not being linked if you want to leave it as un-linked. Only benefit would be to other students",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Cosmetic",
+    "issuePriority": "Low",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Back End Worker"
+  },
+  {
+    "issueID": 2,
+    "issueStatus": "Open",
+    "issueSummary": "[Backend] Get list of accounts",
+    "issueDescription": "I checked account-service and there isn't an API for this yet that I could find.\nWhen editing an open issue I'll want them to be able to re-assign the worker field to another person, but I want to restrict this to valid active accounts... So I'll need to get a list of accounts for them to choose from for that as well.\nDepending on how you set up the 'create issue' API, I'd also need to lookup their account_ID in order to submit the new issue.\nI'm assuming the API to get the issue will only return a worker ID, so I'll need to pull a list of accounts in order to get the username associated with the ID. Alternatively you could change what the API Pulls to something like the query that I'll put below this (I'm used to writing SQL in BigQuery, so my syntax may be wrong for MySQL but it'll be similar). However like I said that is something I can do on the frontend if you'd rather.\nAnother thing to consider is we would want this to be restricted to only be available to internal use. Don't want a user doing a postman get request to receive all Users. Though if I'm being honest idk how to restrict it like that so maybe we just keep that part hush hush?\nSELECT\n\ta.issue_id,\n\ta.description,\n\ta.priority,\n\ta.severity,\n\ta.status,\n\ta.summary,\n\tb.username AS reporter,\n\tc.username AS worker\nFROM issue a\n\tLEFT JOIN account b ON a.reporter_id = b.account_key\n\tLEFT JOIN account c ON a.worker_id = c.account_key\n;",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Major",
+    "issuePriority": "High",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Back End Worker"
+  },
+  {
+    "issueID": 3,
+    "issueStatus": "Open",
+    "issueSummary": "[Backend] Add steps to recreate.",
+    "issueDescription": "Add a `stepsToRecreate` column to the `issue` table.\nThis will allow us to gather data on how to troubleshoot issues.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Minor",
+    "issuePriority": "Low",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Back End Worker"
+  },
+  {
+    "issueID": 4,
+    "issueStatus": "Open",
+    "issueSummary": "[Backend] Add Capability to Upload Files.",
+    "issueDescription": "This would require another table that would link to the issues table and would hold any uploaded files.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Minor",
+    "issuePriority": "Low",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Back End Worker"
+  },
+
+  {
+    "issueID": 5,
+    "issueStatus": "Open",
+    "issueSummary": "[Frontend] Add Capability to Upload Files.",
+    "issueDescription": "Would need to update the Report issue and the update issue pages.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Minor",
+    "issuePriority": "Low",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
+  },
+  {
+    "issueID": 6,
+    "issueStatus": "Open",
+    "issueSummary": "[Backend] Add Ticket Comment System",
+    "issueDescription": "This would require another table that would link to the issues table and would hold any Comments\nWould need columns for:\n\tcommentID,\n\tcommentTimeStamp,\n\tCommenter,\n\tcommentUpdated (boolean),\n\tcomment,\n\tcommentIsPrivate (boolean)\n\nThe Comment is private would be for personal notes that the worker can put on the comment.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Major",
+    "issuePriority": "High",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Back End Worker"
+  },
+
+  {
+    "issueID": 7,
+    "issueStatus": "Blocked",
+    "issueSummary": "[Frontend] Add Ticket Comment System",
+    "issueDescription": "Would need to create a way to view comment history, then also to add a new comment\nWould also want a checkbox to make the comment private.\n\n*** BLOCKED ***\nCurrently the logic is set up to display the comments, however we don't yet have an API to get comments from the database. We also don't have the API to submit a comment.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Major",
+    "issuePriority": "High",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
+  },
+
+  {
+    "issueID": 8,
+    "issueStatus": "Closed",
+    "issueSummary": "[Frontend] Change Status",
+    "issueDescription": "Add a way to update the issue status somewhere on the view issue page.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Critical",
+    "issuePriority": "High",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
+  },
+
+  {
+    "issueID": 9,
+    "issueStatus": "Blocked",
+    "issueSummary": "[Frontend] get Users using API",
+    "issueDescription": "Get users via API in order to populate the worker dropdown in the view screen.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Critical",
+    "issuePriority": "High",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
+  },
+
+  {
+    "issueID": 10,
+    "issueStatus": "Open",
+    "issueSummary": "[Frontend] get Issues from database using API",
+    "issueDescription": "Need to switch from using the json as the api source to the actual database.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Critical",
+    "issuePriority": "High",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
+  },
+
+  {
+    "issueID": 11,
+    "issueStatus": "Blocked",
+    "issueSummary": "[Frontend] get the Update Issue API working.",
+    "issueDescription": "Need to be able to update an issue from the view issue page.\nCurrently blocked by Issue 10, which gets the issues into the database.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Critical",
+    "issuePriority": "High",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
+  },
+
+  {
+    "issueID": 12,
+    "issueStatus": "Blocked",
+    "issueSummary": "[Frontend] Add the ability to delete an Issue.",
+    "issueDescription": "The reporter of an issue should have the option to delete an issue if they want.\nCurrently blocked by issue 13 which is the API to delete an issue, as well as Issue 10, which gets Issues into the database in the first place.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Major",
+    "issuePriority": "High",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
+  },
+
+  {
+    "issueID": 13,
+    "issueStatus": "Open",
+    "issueSummary": "[Backend] Add the ability to delete an Issue.",
+    "issueDescription": "Need an API that would allow an issue to be deleted.\nThis would be a POST, with a ID parameter, which would delete the id passed in.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Major",
+    "issuePriority": "High",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Back End Worker"
+  },
+
+  {
+    "issueID": 14,
+    "issueStatus": "Open",
+    "issueSummary": "[Frontend] Filter to my issues",
+    "issueDescription": "User Story: \n\tI would like a way to filter to only my issues\nThis would be any issues I am assigned, or that I reported.",
+    "issueStepsToRecreate": "",
+    "issueSeverity": "Cosmetic",
+    "issuePriority": "Medium",
+    "issueReporter": "Anonymous Front End Worker",
+    "issueWorker": "Anonymous Front End Worker"
+  }
+]

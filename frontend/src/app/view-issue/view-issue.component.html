@@ -1,0 +1,168 @@
+<!-- If the user isn't signed in, display an error message -->
+<div class="alert alert-danger" role="alert" *ngIf="!SignedIn">
+  <h4 class="alert-heading">You must be signed in to edit issues.</h4>
+  <hr>
+  <p class="mb-0">You must be signed in to edit issues. Please <a class="alert-link" routerLink="/">click here</a> to be redirected to the login screen.</p>
+</div>
+
+<section class="container p-3">
+  <h1>Issue # {{issueID}} </h1>
+
+  <form [formGroup]="updateIssueForm" (ngSubmit)="SubmitUpdate()">
+    <!-- Error Notification -->
+    <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+
+    <!-- Reported By -->
+    <div class="mt-4">
+      <label for="reporter">Reported by</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-user"></i></span>
+        <input id="reporter" class="form-control" type="text" formControlName="reporter" [ngModel]="issueInfo.issueReporter"/>
+      </div>
+    </div>
+
+  <!-- Status -->
+    <label for="status">Status</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="fas fa-exclamation-circle"></i></span>
+      <select id="status" class="form-control" formControlName="status" [ngModel]="issueInfo.issueStatus">
+        <option *ngFor="let status of statusList" [ngValue]="status">{{status}}</option>
+      </select>`
+    </div>
+
+    <!-- Worker -->
+    <div class="mt-2">
+      <label for="worker">Worker</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-bug"></i></span>
+        <select id="worker" class="form-control" formControlName="worker" [ngModel]="issueInfo.issueWorker">
+          <option [ngValue]="0" selected>Unassigned</option>
+          <option *ngFor="let worker of userList" [value]="worker"> {{worker}}</option>
+        </select>
+      </div>
+      <div class="error" *ngIf="severity.invalid && severity.touched">
+        <div *ngIf="severity.errors.required">
+          Severity is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="mt-2">
+      <label for="summary">Summary</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-tag"></i></span>
+        <input id="summary" class="form-control" type="text" formControlName="summary" [ngModel]="issueInfo.issueSummary"/>
+      </div>
+      <div class="error" *ngIf="summary.invalid && summary.touched">
+
+        <div *ngIf="summary.errors.required">
+          Summary is required.
+        </div>
+
+        <div *ngIf="summary.errors.pattern">
+          Summary must be at least 15 characters long.
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="mt-2">
+      <label for="description">Description</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-file-alt"></i></span>
+        <textarea id="description" class="form-control" formControlName="description" rows="5" [ngModel]="issueInfo.issueDescription"> </textarea>
+      </div>
+      <div class="error" *ngIf="description.invalid && description.touched">
+
+        <div *ngIf="description.errors.required">
+          Description is required.
+        </div>
+
+        <div *ngIf="description.errors.pattern">
+          Description must be at least 50 characters long.
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Steps to ReCreate -->
+    <div class="mt-2">
+      <label for="stepsToRecreate">Steps to recreate issue</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-list-ol"></i></span>
+        <textarea id="stepsToRecreate" class="form-control" formControlName="stepsToRecreate" rows="5" [ngModel]="issueInfo.issueStepsToRecreate"></textarea>
+      </div>
+    </div>
+
+    <!-- Severity -->
+    <div class="mt-2">
+      <label for="severity">Severity</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-bug"></i></span>
+        <select id="severity" class="form-control" formControlName="severity" [ngModel]="issueInfo.issueSeverity">
+          <option [ngValue]="0" disabled selected>Select Severity</option>
+          <option *ngFor="let severity of severityList" [value]="severity"> {{severity}}</option>
+        </select>
+      </div>
+      <div class="error" *ngIf="severity.invalid && severity.touched">
+        <div *ngIf="severity.errors.required">
+          Severity is required.
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Priority -->
+    <div class="mt-2">
+      <label for="priority">Priority</label>
+      <div class="input-group">
+        <span class="input-group-text"><i class="fas fa-chevron-circle-up"></i></span>
+        <select id="priority" class="form-control" formControlName="priority" [ngModel]="issueInfo.issuePriority">
+          <option [ngValue]="0" disabled selected>Select Priority</option>
+          <option *ngFor="let priority of priorityList" [value]="priority"> {{priority}}</option>
+        </select>
+      </div>
+      <div class="error" *ngIf="priority.invalid && priority.touched">
+        <div *ngIf="priority.errors.required">
+          Priority is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="btn-toolbar mt-4">
+      <button style="margin-right: 10px" [disabled]="!updateIssueForm.valid" class="btn btn-success btn-lg">Update Issue</button>
+      <button class="btn btn-outline-secondary btn-lg" routerLink="/issues">Back to Issue List</button>
+    </div>
+
+  </form>
+
+  <!-- Comments -->
+  <div class="shadow-sm p-3 mb-5 bg-white rounded mt-4">
+    <div *ngFor="let comment of comments">
+      <div class="row">
+        <div class="col-md-11">
+          <div class="row">
+            <div class="col-md-12">
+              <h5>{{comment.username}}</h5>
+              <p>{{comment.comment}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form>
+      <div class="form-group mt-4">
+        <label for="comment">Comment</label>
+        <textarea class="form-control" id="comment" rows="3" placeholder="Enter comment"></textarea>
+      </div>
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+      </div>
+    </form>
+  </div>
+
+</section>

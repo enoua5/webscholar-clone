@@ -8,8 +8,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -18,7 +20,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //@EnableJpaRepositories(basePackages = {"edu.weber.service"})
 //@ComponentScan(basePackages = {"edu.weber.service","edu.weber"})
 @EnableJpaRepositories("edu.weber.repository")
-@EntityScan(basePackages = "edu.weber.domain")
+@EntityScan(basePackages = "edu.weber.model")
 
 public class AccountApp
 {
@@ -27,5 +29,10 @@ public class AccountApp
     {
         logM.debug("AccountApp.main() Started Debug");
         SpringApplication.run(AccountApp.class, args);
+    }
+
+    @Bean
+    public BCryptPasswordEncoder PasswordEncoderBean() {
+        return new BCryptPasswordEncoder();
     }
 }

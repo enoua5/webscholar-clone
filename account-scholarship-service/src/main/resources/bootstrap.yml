@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: account-scholarship-service
+  cloud:
+    enabled: true
+    config:
+      #This tells the 'account-service' to connect to the docker image
+      #named 'config-service' when running in the docker host
+      uri: http://config-service:8888
+      fail-fast: true
+      password: ${CONFIG_SERVICE_PASSWORD}
+      username: user
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://account-db:6002/webscholar-db?useSSL=false
+    username: root
+    password: password
+    # TODO: Make sure this does not have issues with the 'account-service' bootstrap.yml
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop

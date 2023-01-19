@@ -1,0 +1,53 @@
+<section class="container p-3">
+  <h1>Scholarships</h1>
+
+  <div class="table-responsive">
+    <table class="table table-bordered w-100 table-hover accordion">
+      <thead>
+      <th scope="col">Title</th>
+      <th scope="col">Organization</th>
+      <th scope="col">Amount</th>
+      <th scope="col"></th>
+      </thead>
+
+      <tbody>
+      <ng-container *ngFor="let scholarship of scholarships">
+        <tr role="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#accordion'+scholarship.scholarshipId">
+          <td>{{ scholarship.title }}</td>
+          <td>{{ scholarship.organization }}</td>
+          <td>{{ scholarship.amount | currency: 'USD' : 'symbol' : '1.2-2' }}</td>
+          <td>
+            <div class="text-center">
+              <!-- TODO: EITHER create page for viewing specific scholarship OR hook this up to backend to apply -->
+              <a routerLink="/scholarship/apply/{{ scholarship.scholarshipId }}" class="btn btn-success m-2"
+                 role="button">
+                <i class="fas fa-edit"></i>
+                Apply
+              </a>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="4">
+            <div [id]="'accordion'+scholarship.scholarshipId" data-bs-parent=".table" class="collapse accordion-collapse">
+              <p>
+                <strong>Requirements: </strong>
+                {{ scholarship.requirements }}
+              </p>
+              <p>
+                <strong>Description: </strong>
+                {{ scholarship.description }}
+              </p>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+      </tbody>
+
+      <tfoot>
+      <em>Select a row for more information.</em>
+      </tfoot>
+    </table>
+  </div>
+</section>

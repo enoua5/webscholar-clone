@@ -1,0 +1,38 @@
+version: '2.1'
+services:
+  #Message broker container settings (not a spring micro-service)
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 15672:15672
+    networks:
+      - front-end
+      - back-end
+
+  #MySql container settings (not a spring micro-service)
+  account-db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: webscholar-db
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_TCP_PORT: 6002
+    ports:
+      - 6002:6002
+    expose:
+      - 6002
+    #Data persistence for mysql database files
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    networks:
+      - front-end
+      - back-end
+
+
+
+#Networking settings that splits up containers
+#for the backend and frontend
+networks:
+  front-end:
+  back-end:
+

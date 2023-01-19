@@ -30,4 +30,3 @@ Spring Cloud provides tools for developers to quickly build some of the common p
 
 We will be using Trello (trello.com) for project management to keep track of progress. The <a href="https://trello.com/b/a7Xnd8rP/webscholar">Trello Board WebScholar</a> is set to be Team Visible. A team ***CS4760*** has been created and all students in this class are invited to this team.
 
-

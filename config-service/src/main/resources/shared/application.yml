@@ -13,7 +13,8 @@ eureka:
     healthcheck:
       enabled: true
     serviceUrl:
-      defaultZone: http://registry:8765/eureka/
+      defaultZone: http://user:password@localhost:8765/eureka/
+      #defaultZone: http://registry:8765/eureka/
 
 spring:
   rabbitmq:

@@ -10,6 +10,12 @@ spring:
       username: user
   profiles:
     active: native
+  security:
+    basic:
+      enabled: true
+    user:
+      name: user
+      password: ${EUREKA_SERVICE_PASSWORD}
 
 eureka:
   instance:

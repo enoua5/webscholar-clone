@@ -14,7 +14,7 @@ spring:
     basic:
       enabled: true
     user:
-      name: user
+      name: ${EUREKA_SERVICE_USERNAME}
       password: ${EUREKA_SERVICE_PASSWORD}
 
 eureka:

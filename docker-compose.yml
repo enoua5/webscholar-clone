@@ -15,6 +15,8 @@ services:
   config-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      EUREKA_SERVICE_USERNAME: $EUREKA_SERVICE_USERNAME
+      EUREKA_SERVICE_PASSWORD: $EUREKA_SERVICE_PASSWORD
     build: config-service
     ports:
       - 8888:8888
@@ -29,6 +31,8 @@ services:
   registry:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      EUREKA_SERVICE_USERNAME: $EUREKA_SERVICE_USERNAME
+      EUREKA_SERVICE_PASSWORD: $EUREKA_SERVICE_PASSWORD
     build: registry
 #    image: webscholar/registry
 #    restart: always

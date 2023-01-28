@@ -3,6 +3,9 @@
 #This is the base image
 FROM openjdk:17-oracle
 
+ENV EUREKA_SERVICE_USERNAME=user
+ENV EUREKA_SERVICE_PASSWORDE=password
+
 #This adds the jar file built by maven into the images app folder
 ADD ./target/config-service.jar /app/
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router';
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { navigationState, setNavigationState } from '../../../state/reducers/navigationSlice';
@@ -7,6 +8,7 @@ import NavButton from './navButton'
 function Navigation() {
   const selectedTab = useAppSelector(state => state.navigation.menu);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleClick = (menu: string, submenu: string, popoutOpen: boolean) => {
     dispatch(setNavigationState({
@@ -20,13 +22,43 @@ function Navigation() {
     <NavigationBar>
       <Section>
         <LogoButton>WebScholar</LogoButton>
-        <NavButton label="Home" selected={selectedTab === "Home"} handleClick={handleClick}/>
-        <NavButton label="About" selected={selectedTab === "About"} handleClick={handleClick}/>
-        <NavButton label="Help" selected={selectedTab === "Help"} handleClick={handleClick}/>
+        <NavButton 
+          label="Home" 
+          handleClick={() => {
+            handleClick("Home", "", false);
+            navigate("/");
+          }}
+        />
+        <NavButton 
+          label="About" 
+          handleClick={() => {
+            handleClick("About", "", false);
+            navigate("/about");
+          }}
+        />
+        <NavButton 
+          label="Help" 
+          handleClick={() => {
+            handleClick("Help", "", false);
+            navigate("/help");
+          }}
+        />
       </Section>
       <Section>
-        <NavButton label="Login" selected={selectedTab === "Login"} handleClick={handleClick}/>
-        <NavButton label="Register" selected={selectedTab === "Register"} handleClick={handleClick}/>
+        <NavButton 
+          label="Login" 
+          handleClick={() => {
+            handleClick("Login", "", false);
+            navigate("/login");
+          }}
+        />
+        <NavButton 
+          label="Register" 
+          handleClick={() => {
+            handleClick("Register", "", false);
+            navigate("/register");
+          }}
+        />
       </Section>
     </NavigationBar>
   )

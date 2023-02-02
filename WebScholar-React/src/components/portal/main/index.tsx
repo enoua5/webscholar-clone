@@ -2,12 +2,14 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import AccountRecovery from '../../pages/accountRecoveryPage';
+import LoginPage from '../../pages/loginPage';
 import Footer from '../footer';
 
 function Main() {
 
   let menu: React.ReactElement[] = [
     <Route key='/forgotPassword' path='/forgotPassword' element={<AccountRecovery />} />,
+    <Route path="/login" element={<LoginPage />} />,
     <Route key='/' path='/' element={<>HOME PAGE</>} />
   ];
 

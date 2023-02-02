@@ -24,8 +24,7 @@ export const navigationSlice = createSlice({
     },
     setNavigationState: (state, action: PayloadAction<navigationState>) => {
       const {menu, submenu, popoutOpen} = action.payload; 
-      Object.assign(state, {menu, submenu, popoutOpen}) // assign state
-
+      Object.assign(state, {menu, submenu, popoutOpen})
       // This does the same thing
       // state.menu = menu;
       // state.submenu = submenu;
@@ -37,4 +36,7 @@ export const navigationSlice = createSlice({
 
 export const { setDefaultNavigation, setNavigationState } = navigationSlice.actions;
 export const navigationState = (state: RootState) => state.navigation;
+export const selectedMenuItem = (state: RootState) => state.navigation.menu;
+export const selectedSubMenuItem = (state: RootState) => state.navigation.submenu;
+export const navPopoutOpen = (state: RootState) => state.navigation.popoutOpen;
 export default navigationSlice.reducer;

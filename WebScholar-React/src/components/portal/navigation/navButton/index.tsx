@@ -1,10 +1,14 @@
 import React from 'react'
 import styled from 'styled-components';
+import { useAppSelector } from '../../../../hooks';
+import { selectedMenuItem } from '../../../../state/reducers/navigationSlice';
 
-export default function NavButton(props: { label: string; selected: boolean; handleClick: Function; }) {
-  const {label, selected, handleClick} = props;
+export default function NavButton(props: { label: string, handleClick: Function }) {
+  const {label, handleClick} = props;
+  const _selectedNavItem = useAppSelector(selectedMenuItem);
+
   return (
-    <AnimatedButton selected={selected} onClick={e => handleClick(label, "", false)} >{label}</AnimatedButton>
+    <AnimatedButton selected={_selectedNavItem === label} onClick={e => handleClick(label, "", false)} >{label}</AnimatedButton>
   )
 };
 
@@ -28,7 +32,7 @@ const AnimatedButton = styled.div<({selected: boolean})>`
   background-size: 200% 100%;
   background-position: -100%;
   position: relative;
-  background-clip: text;
+  background-clip: inherit;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   transition: all 0.4s ease-in-out;

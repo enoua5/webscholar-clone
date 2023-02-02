@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { navigationState, setNavigationState } from '../../../state/reducers/navigationSlice';
-import NavButton from './navButton'
+import { navPopoutOpen, setNavigationState } from '../../../state/reducers/navigationSlice';
+import NavButton from './navButton';
+import NavPopout from './navPopout';
 
 function Navigation() {
-  const selectedTab = useAppSelector(state => state.navigation.menu);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const _navPopoutOpen = useAppSelector(navPopoutOpen);
 
   const handleClick = (menu: string, submenu: string, popoutOpen: boolean) => {
     dispatch(setNavigationState({
@@ -19,6 +20,7 @@ function Navigation() {
   };
 
   return (
+  <>
     <NavigationBar>
       <Section>
         <LogoButton>WebScholar</LogoButton>
@@ -39,7 +41,7 @@ function Navigation() {
         <NavButton 
           label="Help" 
           handleClick={() => {
-            handleClick("Help", "", false);
+            handleClick("Help", "", !_navPopoutOpen);
             navigate("/help");
           }}
         />
@@ -61,6 +63,9 @@ function Navigation() {
         />
       </Section>
     </NavigationBar>
+
+    {_navPopoutOpen && <NavPopout />}
+  </>
   )
 }
 

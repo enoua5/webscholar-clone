@@ -9,7 +9,7 @@ function Main() {
 
   let menu: React.ReactElement[] = [
     <Route key='/forgotPassword' path='/forgotPassword' element={<AccountRecovery />} />,
-    <Route path="/login" element={<LoginPage />} />,
+    <Route key='/login' path="/login" element={<LoginPage />} />,
     <Route key='/' path='/' element={<>HOME PAGE</>} />
   ];
 

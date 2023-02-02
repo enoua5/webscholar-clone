@@ -2,18 +2,21 @@ import React from 'react'
 import styled from 'styled-components';
 import { useAppSelector } from '../../../../hooks';
 import { selectedMenuItem } from '../../../../state/reducers/navigationSlice';
+import { ChevronDown} from 'react-feather';
 
 export default function NavButton(props: { label: string, handleClick: Function }) {
   const {label, handleClick} = props;
   const _selectedNavItem = useAppSelector(selectedMenuItem);
 
   return (
-    <AnimatedButton selected={_selectedNavItem === label} onClick={e => handleClick(label, "", false)} >{label}</AnimatedButton>
+    <AnimatedButton selected={_selectedNavItem === label} onClick={e => handleClick(label, "", false)} >
+      {label === "Help" ? <>{label} <ChevronDown /></> : label}
+    </AnimatedButton>
   )
 };
 
 
-const AnimatedButton = styled.div<({selected: boolean})>`
+const AnimatedButton = styled.div<{selected: boolean}>`
   display: flex;
   align-items: center;
   justify-content: center;

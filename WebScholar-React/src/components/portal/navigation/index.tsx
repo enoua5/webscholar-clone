@@ -23,7 +23,7 @@ function Navigation() {
   <>
     <NavigationBar>
       <Section>
-        <LogoButton>WebScholar</LogoButton>
+        <LogoButton onClick={() => navigate("/")}>WebScholar</LogoButton>
         <NavButton 
           label="Home" 
           handleClick={() => {
@@ -52,13 +52,6 @@ function Navigation() {
           handleClick={() => {
             handleClick("Login", "", false);
             navigate("/login");
-          }}
-        />
-        <NavButton 
-          label="Register" 
-          handleClick={() => {
-            handleClick("Register", "", false);
-            navigate("/register");
           }}
         />
       </Section>

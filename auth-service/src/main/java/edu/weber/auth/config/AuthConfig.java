@@ -1,4 +1,4 @@
-package edu.weber.config;
+package edu.weber.auth.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

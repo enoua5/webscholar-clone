@@ -1,8 +1,8 @@
 import React from 'react'
-import { Route, RouteObject, Routes } from 'react-router-dom';
-import AccountRecovery from '../../pages/accountRecovery';
+import { Route, Routes } from 'react-router-dom';
+import styled from 'styled-components';
+import AccountRecovery from '../../pages/accountRecoveryPage';
 import Footer from '../footer';
-import "./index.less";
 
 function Main() {
 
@@ -12,13 +12,22 @@ function Main() {
   ];
 
   return (
-    <div className="main_container" id="main_container">
+    <MainContainer>
       <Routes>
        {menu}
       </Routes>
       <Footer />
-      </div>
+    </MainContainer>
   );
 }
 
 export default Main
+
+const MainContainer = styled.div`
+  height: calc(100vh - 65px);
+  width: 100%;
+  min-width: 1000px;
+  position: relative;
+  overflow: auto;
+  background-color: #f0f2f5;
+`

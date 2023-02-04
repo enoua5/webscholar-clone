@@ -1,15 +1,24 @@
 spring:
+  application:
+    name: auth-service
   cloud:
+    enabled: true
     config:
-      server:
-        native:
-          search-locations: classpath:/shared
-  profiles:
-    active: native
-  security:
-    user:
-      password: ${SECURITY_SERVICE_PASSWORD}
-
-server:
-  port: 8888
-
+      #This tells the 'auth-service' to connect to the docker image
+      #named 'config-service' when running in the docker host
+      uri: http://config-service:8888
+      fail-fast: true
+      password: ${CONFIG_SERVICE_PASSWORD}
+      username: user
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://account-db:6002/webscholar-db?useSSL=false
+    username: root
+    password: password
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl

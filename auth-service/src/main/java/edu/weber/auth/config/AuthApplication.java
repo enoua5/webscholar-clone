@@ -2,6 +2,7 @@ package edu.weber.auth.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -10,6 +11,8 @@ import edu.weber.auth.config.*;
 @SpringBootApplication
 @EnableResourceServer
 @EnableDiscoveryClient
+@EnableJpaRepositories("edu.weber.auth.repository")
+@EntityScan(basePackages = "edu.weber.auth.model")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthApplication {
 

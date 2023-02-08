@@ -6,7 +6,7 @@ function Footer() {
   return (
     <>
     <FooterText>
-      &copy; {thisYear  + " - WebScholar - CS 4760"}
+      &copy; {thisYear  + " - WebScholar"}
     </FooterText>
     </>
   )

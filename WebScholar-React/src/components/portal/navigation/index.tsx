@@ -100,8 +100,8 @@ const LogoButton = styled.div`
   font-family: sans-serif;
   display: flex;
   align-items: center;
-  color: #711212;
+  color: #8a2222;
   &:hover{
-    color: #ad3636;
+    color: #8a2222c7;
   }
 `;

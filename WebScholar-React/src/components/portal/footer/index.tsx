@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components';
 
 function Footer() {
@@ -15,11 +14,10 @@ function Footer() {
 export default Footer
 
 const FooterText = styled.div`
-  width: 100%;
+  width: 75%;
   text-align: center;
-  border-top: 1px solid #d9d9d9;
+  align-self: center;
   padding-top: 15px;
-  margin-top: 15px;
-  position: absolute;
-  bottom: 15px;
+  margin: 15px auto auto auto;
+  border-top: 1px solid #d9d9d9;
 `;

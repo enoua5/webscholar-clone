@@ -26,9 +26,12 @@ function Main() {
 export default Main
 
 const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   height: calc(100vh - 65px);
   width: 100%;
   min-width: 1000px;
   position: relative;
   overflow: auto;
+  background-color: #f3f3f3;
 `;

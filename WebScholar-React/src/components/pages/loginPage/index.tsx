@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import LoginForm from '../../forms/LoginForm';
 
 export default function LoginPage() {
   return <>
-      <PageTitle>Welcome back</PageTitle>
-    </>
+    <PageContainer>
+      <LoginForm />
+    </PageContainer>
+  </>
 }
 
-const PageTitle = styled.div`
-  font-size: 36px;
-  font-weight: 600;
-  color: #131313;
+const PageContainer = styled.div`
+  
 `;

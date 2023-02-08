@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Reducer, ReducerState } from 'react';
 import { RootState } from '../store';
 
 interface userState {

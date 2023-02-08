@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useAppSelector } from '../../../hooks'
 import { userState } from '../../../state/reducers/userSlice'
 
-function AccountRecovery() {
+export default function AccountRecoveryPage() {
   
   const user = useAppSelector(userState)
 
@@ -10,5 +10,3 @@ function AccountRecovery() {
     <div>{user.role.toUpperCase()} Account Recovery for {user.name.toUpperCase()}</div>
   )
 }
-
-export default AccountRecovery

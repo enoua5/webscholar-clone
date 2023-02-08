@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
+import styled from 'styled-components';
 
-function Login() {
+export default function LoginPage() {
   return (
     <>
       <div>Login Page</div>
@@ -9,5 +10,3 @@ function Login() {
     </>
   )
 }
-
-export default Login

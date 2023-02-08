@@ -15,7 +15,8 @@ import {IssuesComponent} from "./issues/issues.component";
 import {ViewIssueComponent} from "./view-issue/view-issue.component";
 import {ScholarshipListComponent} from "./scholarship-list/scholarship-list.component";
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
-import {RegistrationInvitationFormComponent} from "./registration-invitation-form/registration-invitation-form.component";
+import { RegistrationInvitationFormComponent } from "./registration-invitation-form/registration-invitation-form.component";
+import { CommitteeComponent } from "./scholarship-committee/committee.component";
 
 const routes: Routes = [
   { path: '', component: LoginFormComponent },
@@ -33,7 +34,8 @@ const routes: Routes = [
   { path: 'new_password', component: NewPasswordComponent},
   { path: 'scholarship', component: ScholarshipListComponent },
   { path: 'studentviewscholarship', component: StudentViewScholarshipFormComponent },
-  { path: 'registration_invitation_form', component: RegistrationInvitationFormComponent}
+  { path: 'registration_invitation_form', component: RegistrationInvitationFormComponent },
+  { path: 'committee', component: CommitteeComponent}
 ];
 
 @NgModule({

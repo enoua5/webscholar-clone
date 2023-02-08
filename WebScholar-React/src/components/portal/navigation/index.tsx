@@ -78,14 +78,16 @@ function Navigation() {
 export default Navigation
 
 const NavigationBar = styled.div`
+  position: sticky;
+  top: 0;
+  width: auto;
   display: flex;
   height: 65px;
   justify-content: space-between;
   padding: 0 50px;
-  width: auto;
   min-width: 900px;
-  margin-bottom: 3px;
-  box-shadow: 0px 6px 50px rgb(220 220 220);
+  box-shadow: 0px 6px 10px #b9b9b9;
+  z-index: 1;
 `;
 
 const Section = styled.div`

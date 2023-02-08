@@ -441,6 +441,9 @@ public class AccountController {
         //Create the account
         Account account = new Account(email, password, schoolId, isActive, userType, firstName, lastName);
 
+        //Encrypt the password
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+
         //Save the account to the database
         accountService.accountRepository.save(account);
 

@@ -31,5 +31,4 @@ const MainContainer = styled.div`
   min-width: 1000px;
   position: relative;
   overflow: auto;
-  background-color: #f0f2f5;
-`
+`;

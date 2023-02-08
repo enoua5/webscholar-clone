@@ -1,14 +1,25 @@
 import React from 'react'
+import styled from 'styled-components';
 
 function Footer() {
   const thisYear: number = new Date().getFullYear();
   return (
     <>
-    <div style={{width: "100%", textAlign: "left", borderTop: "1px solid #d9d9d9", paddingTop: "15px", marginTop: "15px"}}>
+    <FooterText>
       &copy; {thisYear  + " - WebScholar - CS 4760"}
-    </div>
+    </FooterText>
     </>
   )
 }
 
 export default Footer
+
+const FooterText = styled.div`
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid #d9d9d9;
+  padding-top: 15px;
+  margin-top: 15px;
+  position: absolute;
+  bottom: 15px;
+`;

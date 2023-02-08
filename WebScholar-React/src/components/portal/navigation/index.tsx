@@ -25,21 +25,24 @@ function Navigation() {
       <Section>
         <LogoButton onClick={() => navigate("/")}>WebScholar</LogoButton>
         <NavButton 
-          label="Home" 
+          label="Home"
+          type="box"
           handleClick={() => {
             handleClick("Home", "", false);
             navigate("/");
           }}
         />
         <NavButton 
-          label="About" 
+          label="About"
+          type="box"
           handleClick={() => {
             handleClick("About", "", false);
             navigate("/about");
           }}
         />
         <NavButton 
-          label="Help" 
+          label="Help"
+          type="box" 
           handleClick={() => {
             handleClick("Help", "", !_navPopoutOpen);
             navigate("/help");
@@ -47,11 +50,21 @@ function Navigation() {
         />
       </Section>
       <Section>
+      
         <NavButton 
-          label="Login" 
+          label="Login"
+          type="box" 
           handleClick={() => {
             handleClick("Login", "", false);
             navigate("/login");
+          }}
+        />
+        <NavButton 
+          label="Start for free"
+          type="round" 
+          handleClick={() => {
+            handleClick("Start for free", "", false);
+            navigate("/register");
           }}
         />
       </Section>
@@ -72,7 +85,7 @@ const NavigationBar = styled.div`
   width: auto;
   min-width: 900px;
   margin-bottom: 3px;
-  box-shadow: 0 2px 4px -1px rgba(0,0,0,0.25);
+  box-shadow: 0px 6px 50px rgb(220 220 220);
 `;
 
 const Section = styled.div`

@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import LoginForm from '../../forms/LoginForm';
 
 export default function LoginPage() {
-  return (
-    <>
-      <div>Login Page</div>
-      <div>Enter Username</div>
-      <div>Enter Password</div>
-    </>
-  )
+  return <>
+    <PageContainer>
+      <LoginForm />
+    </PageContainer>
+  </>
 }
+
+const PageContainer = styled.div`
+  
+`;

@@ -6,15 +6,15 @@ function App() {
 
   return (
     <ConfigProvider
-    theme={{
-      token: {
-        colorPrimary: '#2C9EB5',
-      },
-    }}
-  >
-    <Routes>
-      <Route path="/*" element={<Portal />} />
-    </Routes>
+      theme={{
+        token: {
+          colorPrimary: '#2C9EB5',
+        },
+      }}
+    >
+      <Routes>
+        <Route path="/*" element={<Portal />} />
+      </Routes>
     </ConfigProvider>
   )
 }

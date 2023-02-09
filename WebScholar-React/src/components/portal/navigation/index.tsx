@@ -1,3 +1,4 @@
+import { Avatar } from 'antd';
 import React from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components'
@@ -5,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { navPopoutOpen, setNavigationState } from '../../../state/reducers/navigationSlice';
 import NavButton from './navButton';
 import NavPopout from './navPopout';
+import SmallLogo from '../../../assets/small-logo.svg';
 
 function Navigation() {
   const dispatch = useAppDispatch();
@@ -23,6 +25,7 @@ function Navigation() {
   <>
     <NavigationBar>
       <Section>
+        <Avatar src={SmallLogo} style={{height: "50px", width: "50px"}}/>
         <LogoButton onClick={() => navigate("/")}>WebScholar</LogoButton>
         <NavButton 
           label="Home"
@@ -40,22 +43,14 @@ function Navigation() {
             navigate("/about");
           }}
         />
-        <NavButton 
-          label="Help"
-          type="box" 
-          handleClick={() => {
-            handleClick("Help", "", !_navPopoutOpen);
-            navigate("/help");
-          }}
-        />
       </Section>
       <Section>
       
         <NavButton 
-          label="Login"
+          label="Log in"
           type="box" 
           handleClick={() => {
-            handleClick("Login", "", false);
+            handleClick("Log in", "", false);
             navigate("/login");
           }}
         />
@@ -84,7 +79,7 @@ const NavigationBar = styled.div`
   display: flex;
   height: 65px;
   justify-content: space-between;
-  padding: 0 50px;
+  padding: 0 30px;
   min-width: 900px;
   box-shadow: 0px 6px 10px #b9b9b9;
   z-index: 1;
@@ -92,18 +87,19 @@ const NavigationBar = styled.div`
 
 const Section = styled.div`
   display: flex;
+  align-items: center;
   gap: 25px;
 `;
 
 const LogoButton = styled.div`
   cursor: pointer;
   font-size: 22px;
-  font-weight: 600;
+  font-weight: 200;
   font-family: sans-serif;
   display: flex;
   align-items: center;
-  color: #8a2222;
+  color: black;
   &:hover{
-    color: #8a2222c7;
+    color: #2C9EB5;
   }
 `;

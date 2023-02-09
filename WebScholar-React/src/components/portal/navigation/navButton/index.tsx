@@ -14,7 +14,7 @@ export default function NavButton(props: { label: string, handleClick: Function,
     </AnimatedButton>
   )
   else if (type === 'round') return (
-      <ButtonContainer>
+      <ButtonContainer onClick={e => handleClick(label, "", false)}>
         <RoundedText>{label}</RoundedText>
       </ButtonContainer>
   )
@@ -27,28 +27,18 @@ const AnimatedButton = styled.div<{selected: boolean}>`
   justify-content: center;
   text-align: center;
   cursor: pointer;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 300;
   font-family: sans-serif;
   height: 65px;
   min-width: 90px;
-  background-image: linear-gradient(
-    to right,
-    #ad3636,
-    #ad3636 50%,
-    #000 50%
-  );
-  background-size: 200% 100%;
-  background-position: -100%;
+  color: #2C9EB5;
   position: relative;
-  background-clip: inherit;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   transition: all 0.4s ease-in-out;
   
 &:before{
   content: '';
-  background: #ad3636;
+  background: #2C9EB5;
   display: block;
   position: absolute;
   bottom: 0px;
@@ -56,10 +46,6 @@ const AnimatedButton = styled.div<{selected: boolean}>`
   width: 0;
   height: 3px;
   transition: all 0.3s ease-in-out;
-}
-
-&:hover {
- background-position: 0;
 }
 
 &:hover::before{
@@ -82,14 +68,13 @@ ${({selected}) => selected && `
 `;
 
 const ButtonContainer = styled.div`
-
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   cursor: pointer;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 300;
   font-family: sans-serif;
   height: 65px;
   min-width: 90px;
@@ -100,11 +85,11 @@ const RoundedText = styled.div`
   border-radius: 20px;
   height: 20px;
   padding: 5px 10px;
-  background-color:#ad3636;
+  background-color:#2C9EB5;
   color: white;
   transition: all 0.1s ease-in;
 
   &:hover {
-    background: #ad3636cc;
+    background: #2c9eb5bc;
   }
 `;

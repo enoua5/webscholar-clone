@@ -40,7 +40,7 @@ const Link = styled.div`
   transition: all .2s ease-in;
   &:hover{
     background-color: #dedada;
-    color: #ad3636;
+    color: #2C9EB5;
     border-radius: 5px;
   }
 `

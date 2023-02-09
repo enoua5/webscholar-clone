@@ -3,21 +3,29 @@ import styled from 'styled-components';
 function Footer() {
   const thisYear: number = new Date().getFullYear();
   return (
-    <>
-    <FooterText>
-      &copy; {thisYear  + " - WebScholar"}
-    </FooterText>
-    </>
+    <FooterBar>
+      <FooterText>
+        &copy; {thisYear  + " - WebScholar"}
+      </FooterText>
+    </FooterBar>
   )
 }
 
 export default Footer
 
+const FooterBar = styled.div`
+  width: 100%;
+  height: 35px;
+  background-color: #CDD7DF;
+  display: flex;
+  justify-self: flex-end;
+`;
+
 const FooterText = styled.div`
-  width: 75%;
-  text-align: center;
+  display: flex;
   align-self: center;
-  padding-top: 15px;
-  margin: 15px auto auto auto;
-  border-top: 1px solid #d9d9d9;
+  margin: 0 30px 0 auto;
+  font-size: 13px;
+  font-family: sans-serif;
+  font-weight: 200;
 `;

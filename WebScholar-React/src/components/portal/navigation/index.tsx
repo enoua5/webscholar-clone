@@ -97,13 +97,16 @@ const Section = styled.div`
 
 const LogoButton = styled.div`
   cursor: pointer;
-  font-size: 22px;
-  font-weight: 600;
-  font-family: sans-serif;
+  font-family: Comfortaa;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 32px;
+  letter-spacing: -0.015em;
+  text-align: center;
   display: flex;
   align-items: center;
-  color: #8a2222;
+  color: black;
   &:hover{
-    color: #8a2222c7;
+    color: #2C9EB5;
   }
 `;

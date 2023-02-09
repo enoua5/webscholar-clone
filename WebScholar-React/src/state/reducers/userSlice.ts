@@ -19,12 +19,9 @@ export const userSlice = createSlice({
       state.name = "",
       state.role = ""
     },
-    setUserState: (state, action: PayloadAction<any>) => {
-      state = {
-        ...state,
-        name : action.payload.name,
-        role : action.payload.role
-      }
+    setUserState: (state, action: PayloadAction<userState>) => {
+      const {name, role} = action.payload;
+      Object.assign(state, {name, role})
     }
   }
 });

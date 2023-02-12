@@ -24,6 +24,11 @@ export default function RegistrationForm() {
   const [errorText, setErrorText] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  function handleUserChange(property: string, value: string){
+    setError(false);
+    setUser({...user, [property]: value})
+  }
+
   function checkPassword(password: string){
     var regularExpression = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     return regularExpression.test(password);
@@ -32,6 +37,7 @@ export default function RegistrationForm() {
   //this kind of validation should probably happen on the api
   const register = (user: User) => {
     setError(false)
+    setErrorText("")
     if(user.firstName === ""){
       setError(true);
       setErrorText("Please provide your first name");
@@ -64,42 +70,56 @@ export default function RegistrationForm() {
   <FormContainer>
     <Section>
       <Label>Create an account</Label>
-      {error && <Error>{errorText}</Error>}
       <Row>
-        <StyledInput 
-          placeholder="First name"
-          value={user.firstName}
-          status={errorText.includes('first name') ? 'error' : ''}
-          onChange={e => setUser({...user, firstName: e.target.value})}
-        />
-        <StyledInput 
-          placeholder="Last name"
-          value={user.lastName}
-          status={errorText.includes('last name') ? 'error' : ''}
-          onChange={e => setUser({...user, lastName: e.target.value})}
+        <Section>
+          {(error && errorText.includes("first")) && <Error>{errorText}</Error>}
+          <StyledInput 
+            placeholder="First name"
+            value={user.firstName}
+            status={error && errorText.includes('first name') ? 'error' : ''}
+            onChange={e => handleUserChange("firstName", e.target.value)}
           />
+        </Section>
+        <Section>
+          {(error && errorText.includes("last name")) && <Error>{errorText}</Error>}
+          <StyledInput 
+            placeholder="Last name"
+            value={user.lastName}
+            status={error && errorText.includes('last name') ? 'error' : ''}
+            onChange={e => handleUserChange("lastName", e.target.value)}
+            />
+        </Section>
       </Row>
-      <StyledInput 
-        placeholder="Email address"
-        value={user.email}
-        status={errorText.includes('email address') ? 'error' : ''}
-        onChange={e => setUser({...user, email: e.target.value})}
-      />
-      <StyledInputPassword
-        type='password'
-        placeholder="Create password"
-        value={user.password}
-        status={errorText.includes('password') ? 'error' : ''}
-        onChange={e => setUser({...user, password: e.target.value})}
-      />
+      <Section>
+        {(error && errorText.includes("email")) && <Error>{errorText}</Error>}
+        <StyledInput 
+          placeholder="Email address"
+          value={user.email}
+          status={error && errorText.includes('email address') ? 'error' : ''}
+          onChange={e => handleUserChange("email", e.target.value)}
+          />
+        </Section>
+      <Section>
+        {(error && errorText.includes("special")) && <Error>{errorText}</Error>}
         <StyledInputPassword
-        type='password'
-        placeholder="Confirm password"
-        value={confirmPassword}
-        status={errorText.includes('password') || confirmPassword === user.password ? '' : 'warning'}
-        onChange={e => setConfirmPassword(e.target.value)}
-      />
-      <Radio.Group onChange={e => setUser({...user, role: e.target.value})} value={user.role}>
+          type='password'
+          placeholder="Create password"
+          value={user.password}
+          status={error && errorText.includes('Password') ? 'error' : ''}
+          onChange={e => handleUserChange("password", e.target.value)}
+          />
+      </Section>
+      <Section>
+        {(error && errorText.includes("match")) && <Error>{errorText}</Error>}
+        <StyledInputPassword
+          type='password'
+          placeholder="Confirm password"
+          value={confirmPassword}
+          status={error && errorText.includes('match') ? 'error' : confirmPassword !== user.password ? 'warning' :  ''}
+          onChange={e => {setError(false); setConfirmPassword(e.target.value)}}
+        />
+        </Section>
+      <Radio.Group onChange={e => handleUserChange("role", e.target.value)} value={user.role}>
         <Radio value={"student"}>Student</Radio>
         <Radio value={"staff"}>Staff</Radio>
       </Radio.Group>
@@ -117,7 +137,7 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 300px;
+  height: 325px;
   width: 450px;
   border-radius: 3px;
   border: 1px solid #d9d9d9;
@@ -173,7 +193,6 @@ const ColoredButton = styled(Button)`
 const Error = styled.div`
   margin: -15px 0px;
   color: red;
-  background-color: #fd83838d;
+  /* background-color: #fd83838d; */
   font-size: 12px;
-  padding: 2px 0;
 `;

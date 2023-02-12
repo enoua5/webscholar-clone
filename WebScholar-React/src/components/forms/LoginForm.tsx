@@ -55,7 +55,7 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 300px;
+  height: 325px;
   width: 450px;
   border-radius: 3px;
   border: 1px solid #d9d9d9;

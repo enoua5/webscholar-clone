@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { navPopoutOpen, setNavigationState } from '../../../state/reducers/navigationSlice';
 import NavButton from './navButton';
 import NavPopout from './navPopout';
-import SmallLogo from '../../../assets/small-logo.svg';
+import WebScholarLogo from '../../../assets/logo.png';
 
 function Navigation() {
   const dispatch = useAppDispatch();
@@ -25,7 +25,7 @@ function Navigation() {
   <>
     <NavigationBar>
       <Section>
-        <Avatar src={SmallLogo} style={{height: "65px", width: "65px"}}/>
+        <Avatar src={WebScholarLogo} style={{height: "65px", width: "65px"}}/>
         <WebScholarButton onClick={() => navigate("/")}>WebScholar</WebScholarButton>
         <NavButton 
           label="Home"

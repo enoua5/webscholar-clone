@@ -1,13 +1,23 @@
-import { Button, Input } from 'antd'
-import { useState } from 'react'
-import { Lock, User } from 'react-feather'
+import { Button, Input } from 'antd';
+import { useState } from 'react';
+import { Lock, User } from 'react-feather';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
   const navigate = useNavigate();
+
+  function handleLogin(username: string, password: string){
+    //call API to validate user
+    if(username === "test@test.com" && password === "Password123!"){
+      navigate('/home');
+    } else {
+      setError(true);
+    }
+  }
 
   return <>
   <FormContainer>
@@ -17,17 +27,19 @@ export default function LoginForm() {
           prefix={<User style={{height: "18px"}}/>}
           placeholder="Email address"
           value={username}
-          onChange={e => setUsername(e.target.value)}
+          status={error ? 'error' : ''}
+          onChange={e => {setError(false); setUsername(e.target.value)}}
         />
-        <StyledInput 
+        <StyledInputPassword 
           prefix={<Lock style={{height: "18px"}}/>}
           placeholder="Password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          status={error ? 'error' : ''}
+          onChange={e => {setError(false); setPassword(e.target.value)}}
         />
         <ButtonPanel>
           <ColoredButton
-            onClick={e => console.log("sign in")}
+            onClick={e => handleLogin(username, password)}
           >
             Log in
           </ColoredButton>
@@ -38,6 +50,7 @@ export default function LoginForm() {
             Forgot your password?
           </ForgotPassButton>
         </ButtonPanel>
+        {error && <Error>{"Username or Password incorrect"}</Error>}
       </Section>
       <Section>
         <Label>New to WebScholar?</Label>
@@ -55,7 +68,7 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 300px;
+  height: 325px;
   width: 450px;
   border-radius: 3px;
   border: 1px solid #d9d9d9;
@@ -85,6 +98,11 @@ const StyledInput = styled(Input)`
   width: 80%;
 `;
 
+const StyledInputPassword = styled(Input.Password)`
+  border-radius: 3px;
+  width: 80%;
+`;
+
 const ButtonPanel = styled.div`
   display: flex;
   width: 80%;
@@ -110,4 +128,10 @@ const ForgotPassButton = styled(Button)`
   &:hover{
     color: #27abc6c5 !important;
   }
+`;
+
+const Error = styled.div`
+  margin-bottom: -15px;
+  color: red;
+  font-size: 12px;
 `;

@@ -25,8 +25,8 @@ function Navigation() {
   <>
     <NavigationBar>
       <Section>
-        <Avatar src={SmallLogo} style={{height: "50px", width: "50px"}}/>
-        <LogoButton onClick={() => navigate("/")}>WebScholar</LogoButton>
+        <Avatar src={SmallLogo} style={{height: "65px", width: "65px"}}/>
+        <WebScholarButton onClick={() => navigate("/")}>WebScholar</WebScholarButton>
         <NavButton 
           label="Home"
           type="box"
@@ -91,7 +91,7 @@ const Section = styled.div`
   gap: 25px;
 `;
 
-const LogoButton = styled.div`
+const WebScholarButton = styled.div`
   cursor: pointer;
   font-size: 22px;
   font-weight: 200;

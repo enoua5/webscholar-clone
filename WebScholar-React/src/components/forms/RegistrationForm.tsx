@@ -193,6 +193,5 @@ const ColoredButton = styled(Button)`
 const Error = styled.div`
   margin: -15px 0px;
   color: red;
-  /* background-color: #fd83838d; */
   font-size: 12px;
 `;

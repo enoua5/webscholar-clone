@@ -132,7 +132,7 @@ public class AccountController {
             //Presently, outlook blocks api calls if it thinks you're 'spamming' from too many tests
             //We should probably setup something a little more permanent. But services like outlook, gmail require 2FA (IE a phone number) to use a api-key right now.
 
-            //accountService.sendEmail(account.getEmail(), "Registration email", "Thank you for registering!");
+            accountService.sendEmail(account.getEmail(), "Registration email", "Thank you for registering!");
 
             //Encrypt the password
             account.setPassword(passwordEncoder.encode(account.getPassword()));

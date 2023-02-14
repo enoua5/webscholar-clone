@@ -15,58 +15,66 @@ function Navigation() {
 
   const handleClick = (menu: string, submenu: string, popoutOpen: boolean) => {
     dispatch(setNavigationState({
-      menu: menu, 
-      submenu: submenu, 
+      menu: menu,
+      submenu: submenu,
       popoutOpen: popoutOpen
     }))
   };
 
   return (
-  <>
-    <NavigationBar>
-      <Section>
-        <Avatar src={SmallLogo} style={{height: "50px", width: "50px"}}/>
-        <LogoButton onClick={() => navigate("/")}>WebScholar</LogoButton>
-        <NavButton 
-          label="Home"
-          type="box"
-          handleClick={() => {
-            handleClick("Home", "", false);
-            navigate("/");
-          }}
-        />
-        <NavButton 
-          label="About"
-          type="box"
-          handleClick={() => {
-            handleClick("About", "", false);
-            navigate("/about");
-          }}
-        />
-      </Section>
-      <Section>
-      
-        <NavButton 
-          label="Log in"
-          type="box" 
-          handleClick={() => {
-            handleClick("Log in", "", false);
-            navigate("/login");
-          }}
-        />
-        <NavButton 
-          label="Start for free"
-          type="round" 
-          handleClick={() => {
-            handleClick("Start for free", "", false);
-            navigate("/register");
-          }}
-        />
-      </Section>
-    </NavigationBar>
+    <>
+      <NavigationBar>
+        <Section>
+          <Avatar src={SmallLogo} style={{ height: "50px", width: "50px" }} />
+          <LogoButton onClick={() => navigate("/")}>WebScholar</LogoButton>
+          <NavButton
+            label="Home"
+            type="box"
+            handleClick={() => {
+              handleClick("Home", "", false);
+              navigate("/");
+            }}
+          />
+          <NavButton
+            label="Progress"
+            type="box"
+            handleClick={() => {
+              handleClick("Progress", "", false);
+              navigate("/progress-page")
+            }}
+          />
+          <NavButton
+            label="About"
+            type="box"
+            handleClick={() => {
+              handleClick("About", "", false);
+              navigate("/about");
+            }}
+          />
+        </Section>
+        <Section>
 
-    {_navPopoutOpen && <NavPopout />}
-  </>
+          <NavButton
+            label="Log in"
+            type="box"
+            handleClick={() => {
+              handleClick("Log in", "", false);
+              navigate("/login");
+            }}
+          />
+          <NavButton
+            label="Start for free"
+            type="round"
+            handleClick={() => {
+              handleClick("Start for free", "", false);
+              navigate("/register");
+            }}
+          />
+        </Section>
+      </NavigationBar>
+
+      {_navPopoutOpen && <NavPopout />}
+    </>
   )
 }
 

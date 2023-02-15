@@ -29,7 +29,7 @@ function Navigation() {
       label="Home"
       type="underline"
       onClick={() => {
-        handleClick("Home", "", !_navPopoutOpen);
+        handleClick("Home", "", false);
         navigate("/");
       }}
     />,
@@ -38,7 +38,7 @@ function Navigation() {
       label="About"
       type="underline"
       onClick={() => {
-        handleClick("About", "", !_navPopoutOpen);
+        handleClick("About", "", false);
         navigate("/about");
       }}
     />
@@ -51,7 +51,6 @@ function Navigation() {
       type="underline"
       onClick={() => {
         handleClick("Scholarships", "", !_navPopoutOpen);
-        navigate("/dummy");
       }}
     />
   ];
@@ -62,7 +61,7 @@ function Navigation() {
       label="Review"
       type="underline"
       onClick={() => {
-        handleClick("Review", "", !_navPopoutOpen);
+        handleClick("Review", "", false);
         navigate("/dummy");
       }}
     />
@@ -74,7 +73,7 @@ function Navigation() {
       label="Log in"
       type="underline" 
       onClick={() => {
-        handleClick("Log in", "", !_navPopoutOpen);
+        handleClick("Log in", "", false);
         navigate("/login");
       }}
     />,
@@ -83,7 +82,7 @@ function Navigation() {
       label="Start for free"
       type="box" 
       onClick={() => {
-        handleClick("Start for free", "", !_navPopoutOpen);
+        handleClick("Start for free", "", false);
         navigate("/register");
       }}
     />
@@ -120,7 +119,7 @@ function Navigation() {
       </Section>
     </NavigationBar>
 
-    {_navPopoutOpen && <NavPopout />}
+    <NavPopout />
   </>
   )
 }

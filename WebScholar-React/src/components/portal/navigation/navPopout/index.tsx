@@ -2,7 +2,7 @@ import { CornerRightUp } from 'react-feather';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '../../../../hooks';
-import { navigationState, navPopoutOpen, selectedSubMenuItem, setNavPopout } from '../../../../state/reducers/navigationSlice';
+import { navigationState, setNavPopout } from '../../../../state/reducers/navigationSlice';
 
 export default function NavPopout() {
   const dispatch = useAppDispatch();
@@ -17,9 +17,15 @@ export default function NavPopout() {
   return (
     <Container open={popoutOpen}>
       {submenuItems.map((item, index) => 
-      <UnderlinedButton selected={submenu === item.label} onClick={e => navigate(item.path)} key={index}>
-        {item.label}
-      </UnderlinedButton>)}
+        <UnderlinedButton 
+          selected={submenu === item.label} 
+          onClick={e => {
+            navigate(item.path)
+            dispatch(setNavPopout({open: false}))}} 
+          key={index}
+        >
+          {item.label}
+        </UnderlinedButton>)}
       <CloseButton onClick={e => dispatch(setNavPopout({open: false}))}/>
     </Container>
   )
@@ -32,28 +38,30 @@ const HelpItems = [
 ]
 
 const ScholarshipItems = [
-  {label: "View Applicants", path: "/dummy1"},
-  {label: "Add Scholarship", path: "/dummy2"},
-  {label: "Award", path: "/dummy3"},
+  {label: "View Applicants", path: "/dummy"},
+  {label: "Add Scholarship", path: "/dummy"},
+  {label: "Award", path: "/dummy"},
 ]
 
 const Container = styled.div<{open: boolean}>`
   position: sticky;
   top: 65px;
   left: 0px;
-  display: none;
-  flex-direction: column;
+  display: grid;
   width: 100%;
-  height: 150px;
+  height: 0px;
+  overflow: hidden;
   z-index: 1;
-  background-color: #f9f9f9;
+  background-color: #e0e0e0;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   grid-template-columns: repeat(4, auto);
   grid-template-rows: repeat(3, auto);
   gap: 10px;
+  transition: all .3s ease-out;
 
   ${({open}) => open && `
-    display: grid !important;
+    height: 150px;
+    background-color: #ffffff;
   `}
 `;
 

@@ -4,17 +4,17 @@ import { useAppSelector } from '../../../../hooks';
 import { selectedMenuItem } from '../../../../state/reducers/navigationSlice';
 import { ChevronDown} from 'react-feather';
 
-export default function NavButton(props: { label: string, handleClick: Function, type: string }) {
-  const {label, handleClick, type} = props;
+export default function NavButton(props: { label: string, onClick: Function, type: string }) {
+  const {label, onClick, type} = props;
   const _selectedNavItem = useAppSelector(selectedMenuItem);
 
   if(type === 'underline')return (
-    <UnderlinedButton selected={_selectedNavItem === label} onClick={e => handleClick(label, "", false)} >
+    <UnderlinedButton selected={_selectedNavItem === label} onClick={e => onClick()} >
       {label === "Help" ? <>{label} <ChevronDown /></> : label}
     </UnderlinedButton>
   )
   else if (type === 'box') return (
-      <ButtonContainer onClick={e => handleClick(label, "", false)}>
+      <ButtonContainer onClick={e => onClick()}>
         <BoxText>{label}</BoxText>
       </ButtonContainer>
   )

@@ -14,7 +14,7 @@ export default function LoginForm() {
   const dispatch = useAppDispatch();
 
   function handleLogin(username: string, password: string){
-    //call API to validate user and load response into redux store
+    // TODO: call API to validate user 
     if(username === "student@test.com" && password === "Password123!"){
       dispatch(setUserState({firstName: "Ron", lastName: "Weasley", email: "student@test.com", role: "student", active: true}))
       navigate('/');

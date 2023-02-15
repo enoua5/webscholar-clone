@@ -108,7 +108,7 @@ function Navigation() {
 
   return (
   <>
-    <NavigationBar>
+    <NavigationBar id="navbarContainer">
       <Section>
         <Avatar src={WebScholarLogo} style={{height: "65px", width: "65px"}}/>
         <WebScholarButton onClick={() => navigate("/")}>WebScholar</WebScholarButton>

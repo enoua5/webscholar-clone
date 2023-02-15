@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { CornerRightUp } from 'react-feather';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
@@ -9,13 +10,27 @@ export default function NavPopout() {
   const navigate = useNavigate();
   const {menu, submenu, popoutOpen} = useAppSelector(navigationState);
 
+  const handleOutsideClick = (e: any) => {
+    if (!e.target.closest("#popoutContainer") && !e.target.closest("#navbarContainer")) {
+      dispatch(setNavPopout({open: false}));
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    }
+  })
+
   let submenuItems: any[] = [];
 
   if(menu === "Help") submenuItems = HelpItems;
   if(menu === "Scholarships") submenuItems = ScholarshipItems;
 
   return (
-    <Container open={popoutOpen}>
+    <Container open={popoutOpen} id="popoutContainer">
       {submenuItems.map((item, index) => 
         <UnderlinedButton 
           selected={submenu === item.label} 

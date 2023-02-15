@@ -1,33 +1,36 @@
 package edu.weber.auth.model;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 // TODO
 @Entity
-@Table(name="user")
+@Table(name="user_auth")
 public class User implements Serializable {
 
-/**
-	 * 
+	/**
+	 * This is a data model. It helps us put data into the backend and send data
+	 * to the frontend in a standardized format.
 	 */
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 //	private static final long serialVersionUID = 983648238746032841L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="user_id")
+	@Column(name="user_auth_id")
 	private int userId;
 	
-	@Column(name="user_name")
+	@Column(name="user_auth_name")
 	private String userName;
 	
-	@Column(name="password")
+	@Column(name="user_auth_password")
 	private String password;
 	
-	@Column(name="user_type")
+	@Column(name="user_auth_type")
 	private String userType;
 
 	@ManyToOne

@@ -1,5 +1,6 @@
 package edu.weber.auth.model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -18,36 +19,37 @@ import javax.persistence.Table;
 
 // TODO
 @Entity
-@Table(name="role")
+@Table(name="user_auth_role")
 public class Role implements  Serializable{
 	
+	@Serial
 	private static final long serialVersionUID = 1567637283572978119L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="role_id")
+	@Column(name="auth_role_id")
 	private int roleId;
 	
-	@Column(name="role_name")
+	@Column(name="auth_role_name")
 	private String roleName;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
-            name = "role_permission",
-            joinColumns = {@JoinColumn(name = "role_id")},
+            name = "auth_role_permission",
+            joinColumns = {@JoinColumn(name = "auth_role_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")}
     )
+
 	private Set<Permission> permissions;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="role_Id")
+    @JoinColumn(name="auth_role_id")
 	private Set<User> users;
 
 
 	public Role() {
 		super();
 	}
-	
 	
 	public Role(int roleId, String roleName, Set<Permission> permissions) {
 		super();

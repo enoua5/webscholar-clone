@@ -2,6 +2,7 @@ package edu.weber.auth.model;
 
 import java.io.Serializable;
 import java.util.Set;
+import java.io.Serial;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,9 +19,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // TODO
 @Entity
-@Table(name="permission")
+@Table(name="auth_permission")
 public class Permission implements  Serializable{
 
+	@Serial
 	private static final long serialVersionUID = 8087275050725156377L;
 
 	@Id

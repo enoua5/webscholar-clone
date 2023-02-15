@@ -8,6 +8,7 @@ import WebScholarLogo from '../../../assets/logo.png';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { setDefaultUser, userState } from '../../../state/reducers/userSlice';
 import { navPopoutOpen, setNavigationState } from '../../../state/reducers/navigationSlice';
+import ProfileButton from '../../elements/ProfileButton';
 
 function Navigation() {
   const dispatch = useAppDispatch();
@@ -67,7 +68,7 @@ function Navigation() {
     />
   ];
 
-  const LoginRegisterButtons: React.ReactElement[] = [
+  const Login_Register_Buttons: React.ReactElement[] = [
     <NavButton
       key="Log in" 
       label="Log in"
@@ -88,7 +89,8 @@ function Navigation() {
     />
   ];
 
-  const LogoutButton = 
+  const Logout_Profile_Buttons: React.ReactElement[] = [
+    <ProfileButton />,
     <NavButton 
       label="Logout"
       type="box" 
@@ -97,6 +99,8 @@ function Navigation() {
         navigate("/");
       }}
     />
+  ]
+    
 
   if(user.role === 'student'){
     studentNavigation.forEach(button => NavButtons.push(button))
@@ -115,7 +119,7 @@ function Navigation() {
         {NavButtons}
       </Section>
       <Section>
-       {user.active ? LogoutButton : LoginRegisterButtons}
+       {user.active ? Logout_Profile_Buttons : Login_Register_Buttons}
       </Section>
     </NavigationBar>
 

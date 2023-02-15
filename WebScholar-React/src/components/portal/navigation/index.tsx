@@ -28,8 +28,8 @@ function Navigation() {
       key="Home"
       label="Home"
       type="underline"
-      handleClick={() => {
-        handleClick("Home", "", false);
+      onClick={() => {
+        handleClick("Home", "", !_navPopoutOpen);
         navigate("/");
       }}
     />,
@@ -37,8 +37,8 @@ function Navigation() {
       key="About"
       label="About"
       type="underline"
-      handleClick={() => {
-        handleClick("About", "", false);
+      onClick={() => {
+        handleClick("About", "", !_navPopoutOpen);
         navigate("/about");
       }}
     />
@@ -49,9 +49,9 @@ function Navigation() {
       key="Scholarships" 
       label="Scholarships"
       type="underline"
-      handleClick={() => {
-        handleClick("Scholarships", "", false);
-        navigate("/scholarships");
+      onClick={() => {
+        handleClick("Scholarships", "", !_navPopoutOpen);
+        navigate("/dummy");
       }}
     />
   ];
@@ -61,9 +61,9 @@ function Navigation() {
       key="Review" 
       label="Review"
       type="underline"
-      handleClick={() => {
-        handleClick("Review", "", false);
-        navigate("/review-applicants");
+      onClick={() => {
+        handleClick("Review", "", !_navPopoutOpen);
+        navigate("/dummy");
       }}
     />
   ];
@@ -73,8 +73,8 @@ function Navigation() {
       key="Log in" 
       label="Log in"
       type="underline" 
-      handleClick={() => {
-        handleClick("Log in", "", false);
+      onClick={() => {
+        handleClick("Log in", "", !_navPopoutOpen);
         navigate("/login");
       }}
     />,
@@ -82,8 +82,8 @@ function Navigation() {
       key="Start for free"
       label="Start for free"
       type="box" 
-      handleClick={() => {
-        handleClick("Start for free", "", false);
+      onClick={() => {
+        handleClick("Start for free", "", !_navPopoutOpen);
         navigate("/register");
       }}
     />
@@ -93,7 +93,7 @@ function Navigation() {
     <NavButton 
       label="Logout"
       type="box" 
-      handleClick={() => {
+      onClick={() => {
         dispatch(setDefaultUser());
         navigate("/");
       }}

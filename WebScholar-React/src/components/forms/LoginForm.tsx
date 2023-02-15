@@ -1,20 +1,28 @@
-import { Button, Input } from 'antd';
 import { useState } from 'react';
+import { Button, Input } from 'antd';
+import styled from 'styled-components';
 import { Lock, User } from 'react-feather';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import { useAppDispatch } from '../../hooks';
+import { setUserState } from '../../state/reducers/userSlice';
 
 export default function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   function handleLogin(username: string, password: string){
-    //call API to validate user
-    if(username === "test@test.com" && password === "Password123!"){
-      navigate('/home');
-    } else {
+    //call API to validate user and load response into redux store
+    if(username === "student@test.com" && password === "Password123!"){
+      dispatch(setUserState({firstName: "Ron", lastName: "Weasley", email: "student@test.com", role: "student", active: true}))
+      navigate('/');
+    } else if (username === "staff@test.com" && password === "Password123!"){
+      dispatch(setUserState({firstName: "Albus", lastName: "Dumbledore", email: "staff@test.com", role: "staff", active: true}))
+      navigate('/');
+    }
+    else {
       setError(true);
     }
   }
@@ -40,6 +48,7 @@ export default function LoginForm() {
         <ButtonPanel>
           <ColoredButton
             onClick={e => handleLogin(username, password)}
+            type='primary'
           >
             Log in
           </ColoredButton>
@@ -56,6 +65,7 @@ export default function LoginForm() {
         <Label>New to WebScholar?</Label>
         <ColoredButton
           onClick={e => navigate("/register")}
+          type='primary'
         >
           Register Now
         </ColoredButton>
@@ -67,6 +77,8 @@ export default function LoginForm() {
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-self: center;
+  margin: auto 0;
   justify-content: space-between;
   height: 325px;
   width: 450px;
@@ -112,14 +124,6 @@ const ButtonPanel = styled.div`
 const ColoredButton = styled(Button)`
   border-radius: 3px;
   width: 150px;
-  background-color: #2C9EB5;
-  border: 1px solid #2C9EB5;
-  color: white;
-  &:hover{
-    color: white !important;
-    background-color: #2c9eb5c7;
-    border-color: #2c9eb5c7 !important;
-  }
 `;
 
 const ForgotPassButton = styled(Button)`

@@ -8,20 +8,20 @@ export default function NavButton(props: { label: string, handleClick: Function,
   const {label, handleClick, type} = props;
   const _selectedNavItem = useAppSelector(selectedMenuItem);
 
-  if(type === 'box')return (
-    <AnimatedButton selected={_selectedNavItem === label} onClick={e => handleClick(label, "", false)} >
+  if(type === 'underline')return (
+    <UnderlinedButton selected={_selectedNavItem === label} onClick={e => handleClick(label, "", false)} >
       {label === "Help" ? <>{label} <ChevronDown /></> : label}
-    </AnimatedButton>
+    </UnderlinedButton>
   )
-  else if (type === 'round') return (
+  else if (type === 'box') return (
       <ButtonContainer onClick={e => handleClick(label, "", false)}>
-        <RoundedText>{label}</RoundedText>
+        <BoxText>{label}</BoxText>
       </ButtonContainer>
   )
   return <></>
 };
 
-const AnimatedButton = styled.div<{selected: boolean}>`
+const UnderlinedButton = styled.div<{selected: boolean}>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,8 +81,8 @@ const ButtonContainer = styled.div`
   transition: all 0.1s ease-in;
 `;
 
-const RoundedText = styled.div`
-  border-radius: 20px;
+const BoxText = styled.div`
+  border-radius: 3px;
   height: 20px;
   padding: 5px 10px;
   background-color:#2C9EB5;

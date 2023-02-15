@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import { useAppDispatch } from '../../hooks';
 import { setNavigationState } from '../../state/reducers/navigationSlice';
+import { Header } from '../elements/Header';
 import { PageContainer } from '../elements/PageContainer'
+import { Text } from '../elements/Text';
 
 export default function WelcomePage() {
   const navigate = useNavigate();
@@ -64,20 +66,6 @@ export default function WelcomePage() {
     </PageContainer>
   </>
 }
-
-const Header = styled.div`
-  font-size: 36px;
-  font-weight: 200;
-  font-family: sans-serif;
-`;
-
-const Text = styled.div`
-  font-size: 24px;
-  font-weight: 200;
-  font-family: sans-serif;
-  text-align: center;
-  padding: 25px;
-`;
 
 const ButtonPanel = styled.div`
   display: flex;

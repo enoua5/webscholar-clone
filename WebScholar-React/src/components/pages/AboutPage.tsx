@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch } from '../../hooks'
 import { setNavigationState } from '../../state/reducers/navigationSlice';
+import { Header } from '../elements/Header';
 import { PageContainer } from '../elements/PageContainer'
+import { Text } from '../elements/Text';
 
 export default function AboutPage() {
   const dispatch = useAppDispatch();
@@ -62,20 +64,6 @@ export default function AboutPage() {
     </PageContainer>
   </>
 }
-
-const Header = styled.div`
-  font-size: 36px;
-  font-weight: 200;
-  font-family: sans-serif;
-`;
-
-const Text = styled.div`
-  font-size: 24px;
-  font-weight: 200;
-  font-family: sans-serif;
-  text-align: center;
-  padding: 25px;
-`;
 
 const GridLayout = styled.div`
   display: grid;

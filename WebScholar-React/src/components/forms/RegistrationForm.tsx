@@ -149,6 +149,7 @@ const FormContainer = styled.div`
   background: white;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   padding: 25px;
+  margin: 50px;
 `;
 
 const Section = styled.div`

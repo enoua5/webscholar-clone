@@ -4,10 +4,9 @@ export const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto;
   align-self: center;
-  min-height: 550px;
+  height: fit-content;
   min-width: 1000px;
   background-color: white;
-  padding: 25px;
+  padding: 50px;
 `;

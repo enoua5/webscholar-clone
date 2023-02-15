@@ -54,7 +54,7 @@ export default Main
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 94%;
+  height: calc(100vh - 138px);
   width: 94%;
   min-width: 1000px;
   position: absolute;

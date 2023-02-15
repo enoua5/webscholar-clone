@@ -43,6 +43,9 @@ export default function WelcomePage() {
           Create an account
         </ColoredButton>
       </ButtonPanel>
+
+      <Spacer/>
+
       <Header>How does it work?</Header>
       <Text>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Impedit libero quia eum ullam deleniti! 
@@ -66,7 +69,6 @@ const Header = styled.div`
   font-size: 36px;
   font-weight: 200;
   font-family: sans-serif;
-  margin-top: 75px;
 `;
 
 const Text = styled.div`
@@ -74,16 +76,21 @@ const Text = styled.div`
   font-weight: 200;
   font-family: sans-serif;
   text-align: center;
-  padding: 25px 50px;
+  padding: 25px;
 `;
 
 const ButtonPanel = styled.div`
   display: flex;
   width: 350px;
   justify-content: space-between;
+  margin: 10px;
 `;
 
 const ColoredButton = styled(Button)`
   border-radius: 3px;
   width: 150px;
+`;
+
+const Spacer = styled.div`
+  height: 75px;
 `;

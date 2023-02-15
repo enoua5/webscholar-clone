@@ -79,11 +79,11 @@ function Navigation() {
       }}
     />,
     <NavButton
-      key="Start for free"
-      label="Start for free"
+      key="Get Started"
+      label="Get Started"
       type="box" 
       onClick={() => {
-        handleClick("Start for free", "", false);
+        handleClick("Get Started", "", false);
         navigate("/register");
       }}
     />

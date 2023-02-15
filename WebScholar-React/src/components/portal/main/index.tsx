@@ -24,11 +24,11 @@ function Main() {
   ];
 
   const studentMenu: React.ReactElement[] = [
-    <Route key='/scholarships' path="/scholarships" element={<DummyPage />} />,
+    <Route key='/scholarships' path="/dummy" element={<DummyPage />} />,
   ];
 
   const administratorMenu: React.ReactElement[] = [
-    <Route key='/review-applicants' path="/review-applicants" element={<DummyPage />} />,
+    <Route key='/review-applicants' path="/dummy" element={<DummyPage />} />,
   ]
 
   if(user?.role === 'student'){
@@ -57,7 +57,9 @@ const MainContainer = styled.div`
   height: 94%;
   width: 94%;
   min-width: 1000px;
-  position: relative;
+  position: absolute;
+  top: 65px;
+  left: 0;
   overflow: auto;
   background-color: #f3f3f3;
   padding: 3%;

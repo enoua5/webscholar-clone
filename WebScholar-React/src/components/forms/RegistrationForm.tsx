@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Input, Radio } from 'antd';
 import styled from 'styled-components';
+import { useAppDispatch } from '../../hooks';
+import { setUserState } from '../../state/reducers/userSlice';
 
 export default function RegistrationForm() {
 
@@ -23,6 +25,7 @@ export default function RegistrationForm() {
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const dispatch = useAppDispatch();
 
   function handleUserChange(property: string, value: string){
     setError(false);
@@ -60,7 +63,7 @@ export default function RegistrationForm() {
     } else {
       setError(false)
       // call the API to create a new user
-      console.log("Registered :", user)
+      dispatch(setUserState({firstName: user.firstName, lastName: user.lastName, email: user.email, role: user.role, active: true}))
     }
 
    
@@ -137,6 +140,8 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-self: center;
+  margin: auto 0;
   height: 325px;
   width: 450px;
   border-radius: 3px;

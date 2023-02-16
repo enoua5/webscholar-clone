@@ -1,46 +1,142 @@
-import React from 'react'
+import { useEffect } from 'react';
+import { CornerRightUp } from 'react-feather';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
-import { useAppSelector } from '../../../../hooks';
-import { navPopoutOpen } from '../../../../state/reducers/navigationSlice';
+import { useAppDispatch, useAppSelector } from '../../../../hooks';
+import { navigationState, setNavPopout } from '../../../../state/reducers/navigationSlice';
 
 export default function NavPopout() {
-  const _navPopoutOpen = useAppSelector(navPopoutOpen);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const {menu, submenu, popoutOpen} = useAppSelector(navigationState);
+
+  const handleOutsideClick = (e: any) => {
+    if (!e.target.closest("#popoutContainer") && !e.target.closest("#navbarContainer")) {
+      dispatch(setNavPopout({open: false}));
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    }
+  })
+
+  let submenuItems: any[] = [];
+
+  if(menu === "Help") submenuItems = HelpItems;
+  if(menu === "Scholarships") submenuItems = ScholarshipItems;
+
   return (
-    <Container open={_navPopoutOpen}>
-      <Link>Contact Us</Link>
-      <Link>Known Issues</Link>
+    <Container open={popoutOpen} id="popoutContainer">
+      {submenuItems.map((item, index) => 
+        <UnderlinedButton 
+          selected={submenu === item.label} 
+          onClick={e => {
+            navigate(item.path)
+            dispatch(setNavPopout({open: false}))}} 
+          key={index}
+        >
+          {item.label}
+        </UnderlinedButton>)}
+      <CloseButton onClick={e => dispatch(setNavPopout({open: false}))}/>
     </Container>
   )
 }
 
+
+const HelpItems = [
+  {label: "Contact", path: "/contact"},
+  {label: "Known Issues", path: "/known-issues"},
+]
+
+const ScholarshipItems = [
+  {label: "View Applicants", path: "/dummy"},
+  {label: "Add Scholarship", path: "/dummy"},
+  {label: "Award", path: "/dummy"},
+]
+
 const Container = styled.div<{open: boolean}>`
-  position: absolute;
+  position: sticky;
   top: 65px;
-  left: 453px;
-  display: none;
-  flex-direction: column;
-  min-width: 150px;
-  height: 200px;
+  left: 0px;
+  display: grid;
+  width: 100%;
+  height: 0px;
+  overflow: hidden;
   z-index: 1;
-  background-color: #f9f9f9;
+  background-color: #e0e0e0;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  grid-template-columns: repeat(4, auto);
+  grid-template-rows: repeat(3, auto);
+  gap: 10px;
+  transition: all .3s ease-out;
 
   ${({open}) => open && `
-    display: flex !important;
+    height: 150px;
+    background-color: #ffffff;
   `}
 `;
 
-const Link = styled.div`
+const CloseButton = styled(CornerRightUp)`
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px; 
+  grid-column: span 4;
   cursor: pointer;
-  margin: 5px 5px 0 5px;
-  height: 20px;
-  font-size: 18px;
-  padding: 5px;
-  font-family: sans-serif;
-  transition: all .2s ease-in;
   &:hover{
-    background-color: #dedada;
-    color: #ad3636;
-    border-radius: 5px;
+    color: #00000093;
   }
-`
+`;
+
+const UnderlinedButton = styled.div<{selected: boolean}>`
+  grid-column: span 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 300;
+  font-family: sans-serif;
+  height: 65px;
+  min-width: 90px;
+  color: black;
+  position: relative;
+  transition: all 0.4s ease-in-out;
+  
+&:before{
+  content: '';
+  background: #32c4e191;
+  display: block;
+  position: absolute;
+  bottom: 0px;
+  left: 15%;
+  width: 0;
+  height: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+&:hover::before{
+  width: 70%;
+}
+
+${({selected}) => selected && `
+  &:before{
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    left: 15%;
+    width: 70%;
+    height: 3px;
+    background: #2C9EB5;
+  }
+  color: #2C9EB5;
+  background-position: 0;
+`}
+`;

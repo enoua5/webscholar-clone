@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { useAppSelector } from '../../../hooks'
-import { userState } from '../../../state/reducers/userSlice'
+import { useAppSelector } from '../../hooks'
+import { userState } from '../../state/reducers/userSlice'
 
 export default function AccountRecoveryPage() {
   

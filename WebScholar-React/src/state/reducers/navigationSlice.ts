@@ -29,12 +29,16 @@ export const navigationSlice = createSlice({
       // state.menu = menu;
       // state.submenu = submenu;
       // state.popoutOpen = popoutOpen;
+    },
+    setNavPopout: (state, action: PayloadAction<any>) => {
+      const { open } = action.payload;
+      state.popoutOpen = open;
     }
   }
 });
 
 
-export const { setDefaultNavigation, setNavigationState } = navigationSlice.actions;
+export const { setDefaultNavigation, setNavigationState, setNavPopout } = navigationSlice.actions;
 export const navigationState = (state: RootState) => state.navigation;
 export const selectedMenuItem = (state: RootState) => state.navigation.menu;
 export const selectedSubMenuItem = (state: RootState) => state.navigation.submenu;

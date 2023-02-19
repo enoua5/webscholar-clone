@@ -60,7 +60,7 @@ const Container = styled.div<{open: boolean}>`
   top: 75px;
   right: 10px;
   height: 0px;
-  width: 180px;
+  width: fit-content;
   border-radius: 10px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   transition: all .3s ease-out;
@@ -89,7 +89,7 @@ const LinkButton = styled.div`
   color: black;
   display: flex;
   gap: 7px;
-  font-size: 18px;
+  font-size: 16px;
   font-family: sans-serif;
   
   cursor: pointer;

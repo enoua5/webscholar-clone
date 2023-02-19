@@ -21,7 +21,7 @@ export default function ProfileDropdown() {
           }}
           >
           <Settings/>
-          Profile Settings
+          Account Settings
         </LinkButton>
         <LinkButton
           onClick={() => {

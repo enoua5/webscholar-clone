@@ -85,6 +85,7 @@ const Layout = styled.div`
 `;
 
 const LinkButton = styled.div`
+  padding: 5px;
   color: black;
   display: flex;
   gap: 7px;

@@ -20,7 +20,8 @@ export default function ProfileButton() {
 const StyledAvatar = styled(Avatar)`
   height: 40px;
   width: 40px; 
-  background-color: #2C9EB5; 
+  background-color: #2C9EB5;
+  border: 1px solid #228092;
   color: white;
   cursor: pointer;
   display: flex; 

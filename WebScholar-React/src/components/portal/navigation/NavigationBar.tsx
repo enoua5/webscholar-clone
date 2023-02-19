@@ -36,6 +36,9 @@ function NavigationBar() {
         navigate("/");
       }}
     />,
+  ];
+
+  let noActiveUserNavigation: React.ReactElement[] = [
     <NavButton
       key="About"
       label="About"
@@ -48,6 +51,15 @@ function NavigationBar() {
   ];
 
   let studentNavigation: React.ReactElement[] = [
+    <NavButton
+      key="Profile" 
+      label="Profile"
+      type="underline"
+      onClick={() => {
+        handleClick("Profile", "", false);
+        navigate("/profile")
+      }}
+    />,
     <NavButton
       key="Scholarships" 
       label="Scholarships"
@@ -92,17 +104,20 @@ function NavigationBar() {
   ];
 
   const Profile_Buttons: React.ReactElement[] = [
-   
     <ProfileButton />,
     <ProfileDropdown />
   ]
 
+  if(user.email === ""){
+    noActiveUserNavigation.forEach(button => NavButtons.push(button));
+  }
+
   if(user.role === 'student'){
-    studentNavigation.forEach(button => NavButtons.push(button))
+    studentNavigation.forEach(button => NavButtons.push(button));
   }
 
   if(user.role === 'staff'){
-    staffNavigation.forEach(button => NavButtons.push(button))
+    staffNavigation.forEach(button => NavButtons.push(button));
   }
 
   return (

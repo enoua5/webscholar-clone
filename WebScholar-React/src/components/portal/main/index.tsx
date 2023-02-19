@@ -16,27 +16,48 @@ import ApplicantProfilePage from '../../pages/ApplicantProfilePage';
 function Main() {
   const user = useAppSelector(userState);
 
+  // default paths available to anyone
   let menu: React.ReactElement[] = [
     <Route key='/' path='/' element={user.email !== "" ? <HomePage /> : <WelcomePage />} />,
     <Route key='/login' path="/login" element={<LoginPage />} />,
+  ];
+
+  // paths available to users who are not logged in
+  const noActiveUserMenu: React.ReactElement[] = [
     <Route key='/register' path="/register" element={<RegistrationPage />} />,
-    <Route key='/account-recovery' path='/account-recovery' element={<AccountRecoveryPage />} />,
     <Route key='/about' path="/about" element={<AboutPage />} />,
-    <Route key='/profile' path='/profile' element={user.role === "student" ? <ApplicantProfilePage /> : <></>} />,
-  ];
+  ]
 
+  // paths available to logged/active users
+  const activeUserMenu: React.ReactElement[] = [
+    <Route key='/account-recovery' path='/account-recovery' element={<AccountRecoveryPage />} />,
+    <Route key='/account-settings' path='/account-settings' element={user.role === 'student' ? <></> : <></>} />,
+  ]
+
+  // paths available to Student users
   const studentMenu: React.ReactElement[] = [
-    <Route key='/scholarships' path="/dummy" element={<DummyPage />} />,
+    <Route key='/scholarships' path='/dummy' element={<DummyPage />} />,
+    <Route key='/profile' path='/profile' element={<ApplicantProfilePage />} />,
   ];
 
+  // paths available to Administrator users
   const administratorMenu: React.ReactElement[] = [
     <Route key='/review-applicants' path="/dummy" element={<DummyPage />} />,
   ]
 
+  // add routes based on active user
+  if(user.email === ""){
+    noActiveUserMenu.forEach(route => menu.push(route));
+  } else {
+    activeUserMenu.forEach(route => menu.push(route));
+  }
+
+  // add student roles if student
   if(user?.role === 'student'){
     studentMenu.forEach(route => menu.push(route));
   }
 
+  // add administrator paths if administrator
   if(user?.role === 'staff'){
     administratorMenu.forEach(route => menu.push(route));
   }

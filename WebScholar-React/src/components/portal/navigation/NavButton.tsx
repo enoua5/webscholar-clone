@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
-import { useAppSelector } from '../../../../hooks';
-import { selectedMenuItem } from '../../../../state/reducers/navigationSlice';
+import { useAppSelector } from '../../../hooks';
+import { selectedMenuItem } from '../../../state/reducers/navigationSlice';
 import { ChevronDown} from 'react-feather';
 
 export default function NavButton(props: { label: string, onClick: Function, type: string }) {

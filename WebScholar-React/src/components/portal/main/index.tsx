@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import AboutPage from '../../pages/AboutPage';
-import AccountRecovery from '../../pages/AccountRecoveryPage';
+import AccountRecoveryPage from '../../pages/AccountRecoveryPage';
 import WelcomePage from '../../pages/WelcomePage';
 import LoginPage from '../../pages/LoginPage';
 import RegistrationPage from '../../pages/RegistrationPage';
@@ -11,6 +11,7 @@ import HomePage from '../../pages/HomePage';
 import { useAppSelector } from '../../../hooks';
 import { userState } from '../../../state/reducers/userSlice';
 import DummyPage from '../../pages/DummyPage';
+import ApplicantProfilePage from '../../pages/ApplicantProfilePage';
 
 function Main() {
   const user = useAppSelector(userState);
@@ -19,8 +20,9 @@ function Main() {
     <Route key='/' path='/' element={user.email !== "" ? <HomePage /> : <WelcomePage />} />,
     <Route key='/login' path="/login" element={<LoginPage />} />,
     <Route key='/register' path="/register" element={<RegistrationPage />} />,
-    <Route key='/account-recovery' path='/account-recovery' element={<AccountRecovery />} />,
+    <Route key='/account-recovery' path='/account-recovery' element={<AccountRecoveryPage />} />,
     <Route key='/about' path="/about" element={<AboutPage />} />,
+    <Route key='/profile' path='/profile' element={user.role === "student" ? <ApplicantProfilePage /> : <></>} />,
   ];
 
   const studentMenu: React.ReactElement[] = [

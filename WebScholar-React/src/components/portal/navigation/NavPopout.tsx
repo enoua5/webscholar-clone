@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { CornerRightUp } from 'react-feather';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
-import { useAppDispatch, useAppSelector } from '../../../../hooks';
-import { navigationState, setNavPopout } from '../../../../state/reducers/navigationSlice';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { navigationState, setNavPopout } from '../../../state/reducers/navigationSlice';
 
 export default function NavPopout() {
   const dispatch = useAppDispatch();
@@ -53,9 +53,7 @@ const HelpItems = [
 ]
 
 const ScholarshipItems = [
-  {label: "View Applicants", path: "/dummy"},
-  {label: "Add Scholarship", path: "/dummy"},
-  {label: "Award", path: "/dummy"},
+  {label: "Search All Scholarships", path: "/dummy"},
 ]
 
 const Container = styled.div<{open: boolean}>`

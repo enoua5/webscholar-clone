@@ -17,7 +17,7 @@ export default function ProfileDropdown() {
       <Layout>
         <LinkButton
           onClick={() => {
-            navigate("/profile")
+            navigate("/account-settings")
           }}
           >
           <Settings/>

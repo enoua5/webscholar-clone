@@ -104,8 +104,8 @@ function NavigationBar() {
   ];
 
   const Profile_Buttons: React.ReactElement[] = [
-    <ProfileButton />,
-    <ProfileDropdown />
+    <ProfileButton key="profile button"/>,
+    <ProfileDropdown key="profile dropdown"/>
   ]
 
   if(user.email === ""){

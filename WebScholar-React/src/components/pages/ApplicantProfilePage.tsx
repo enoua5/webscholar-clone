@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Header } from '../elements/Header';
 import PersonalInfoForm from '../forms/PersonalInfoForm';
 import AcademicHistoryForm from '../forms/AcademicHistoryForm';
+import ExtracurricularActivityForm from '../forms/ExtracurricularActivityForm';
 
 export default function ApplicantProfilePage() {
   return <>
@@ -25,8 +26,8 @@ export default function ApplicantProfilePage() {
         { 
           label: "Extracurricular Activities",
           key: "extracurricular",
-          children: <></>,
-          disabled: true
+          children: <ExtracurricularActivityForm />,
+          disabled: false
         },
         { 
           label: "Awards and Accomplishments",

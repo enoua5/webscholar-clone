@@ -41,6 +41,7 @@ export default function PersonalInfoForm() {
         onFinishFailed={handleSubmitFailure}
         autoComplete='off'
         requiredMark='optional'
+        labelWrap={true}
       >
         <PersonalInfoSection {...formProps} />
         <ContactInfoSection {...formProps}/>

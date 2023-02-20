@@ -55,6 +55,7 @@ export default function FinancialInfoSection(props: any) {
       name='taxStatus'
       tooltip={`This is based off of your taxes from the previous year (${previousYear})`}
       rules={[{ required: true, message: 'Please select your current status' }]}
+      labelCol={{span: 3}}
     >
       <Radio.Group >
         <Col>

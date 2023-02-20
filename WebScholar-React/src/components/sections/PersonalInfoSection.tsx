@@ -58,6 +58,17 @@ export default function PersonalInfoSection(props: any) {
       />
     </Form.Item>
 
+    <Form.Item
+      label='Gender'
+      name='gender'
+      rules={[{required: true, message: 'Please select your gender'}]}
+    >
+      <Radio.Group>
+        <Radio value='male'>Male</Radio>
+        <Radio value='female'>Female</Radio>
+      </Radio.Group>
+    </Form.Item>
+
     <Form.Item 
       label='Ethnicity'
       name='ethnicity'
@@ -74,17 +85,6 @@ export default function PersonalInfoSection(props: any) {
           <Radio value='islander'>Native Hawaiian or other Pacific Islander</Radio>
           <Radio value='other'>Other</Radio>
         </RadioLayout>
-      </Radio.Group>
-    </Form.Item>
-
-    <Form.Item
-      label='Gender'
-      name='gender'
-      rules={[{required: true, message: 'Please select your gender'}]}
-    >
-      <Radio.Group>
-        <Radio value='male'>Male</Radio>
-        <Radio value='female'>Female</Radio>
       </Radio.Group>
     </Form.Item>
 

@@ -1,7 +1,7 @@
+import { Form, Input } from 'antd';
 import styled from 'styled-components';
-import { Form, Input, Select } from 'antd';
-import { FiftyStates } from '../forms/FiftyStates';
 import { FormHeader } from '../forms/PersonalInfoForm';
+import FiftyStatesDropdown from '../elements/FiftyStatesDropdown';
 
 export default function ContactInfoSection(props: any) {
   return <>
@@ -18,6 +18,7 @@ export default function ContactInfoSection(props: any) {
           label='Phone'
           name='phone'
           tooltip='Please enter in the format: 1234567890'
+          rules={[{required: true, message: 'Please enter your phone number'}]}
         >
           <Input 
             type='tel'
@@ -55,11 +56,7 @@ export default function ContactInfoSection(props: any) {
           name='state'
           rules={[{ required: true, message: 'Please select your state' }]}
         >
-          <Select style={{width: "35%"}} placeholder='Select one'>
-            {FiftyStates.map((state, index) => {
-              return <Select.Option key={index} value={state.value}>{state.label}</Select.Option>
-            })}
-          </Select>
+          <FiftyStatesDropdown width={"35%"}/>
         </Form.Item>
 
         <Form.Item 

@@ -1,45 +1,61 @@
 import { Space, Tabs } from 'antd'
 import styled from 'styled-components'
 import { Header } from '../elements/Header'
+import AcademicHistoryForm from '../forms/AcademicHistoryForm'
+import PersonalInfoForm from '../forms/PersonalInfoForm'
 
 export default function ApplicantProfilePage() {
   return <>
-  <Header>Application Profile</Header>
-    <Spacer />
-    <Tabs
+  <Header style={{paddingBottom: "20px", marginTop: "-20px"}}>Application Profile</Header>
+    <StyledTabs
       tabPosition='left'
       items={[
         { 
           label: "Personal Information",
           key: "personal",
-          children: <></>
+          children: <PersonalInfoForm />,
+          disabled: false
         },
         { 
           label: "Academic History",
           key: "academic",
-          children: <></>
+          children: <AcademicHistoryForm />,
+          disabled: false
         },
         { 
           label: "Extracurricular Activities",
           key: "extracurricular",
-          children: <></>
+          children: <></>,
+          disabled: true
         },
         { 
           label: "Awards and Accomplishments",
           key: "awards",
-          children: <></>
+          children: <></>,
+          disabled: true
         },
         { 
           label: "About You",
           key: "about",
-          children: <></>
+          children: <></>,
+          disabled: true
         }
       ]}
     />
   </>
 }
 
+const StyledTabs = styled(Tabs)`
+  height: fit-content;
 
-const Spacer = styled.div`
-  height: 50px;
+  .ant-tabs-nav {
+    background-color: white;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 10px;
+    height: 100%;
+  }
+  .ant-tabs-content-holder {
+    border-left: none;
+  }
 `;

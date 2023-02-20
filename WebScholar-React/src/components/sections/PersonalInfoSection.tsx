@@ -111,7 +111,7 @@ export default function PersonalInfoSection(props: any) {
         </Radio.Group>
       </Form.Item>
          
-      {visaStatus && <Form.Item label="Upload proof of current student visa" labelCol={{span: 9}}>
+      {visaStatus && <Form.Item requiredMark={undefined} label="Upload proof of current student visa" labelCol={{span: 7}} >
         <Form.Item 
           name="visa" 
           valuePropName="visa" 
@@ -119,7 +119,7 @@ export default function PersonalInfoSection(props: any) {
           noStyle
           rules={[{required: true, message: 'Please upload proof of a current student visa'}]}
           >
-          <Upload.Dragger name="visa" action="/visas"> {/* need an endpoint to send files to (/visas) */}
+          <Upload.Dragger name="visaFile" action="/files" style={{width: "70%"}}> {/* need an endpoint to send files to (/files) */}
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
             </p>
@@ -131,7 +131,7 @@ export default function PersonalInfoSection(props: any) {
   </>
 }
 
-const EditButton = styled.button`
+export const EditButton = styled.button`
   width: 120px;
   height: 50px;
   font-size: 18px;

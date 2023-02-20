@@ -36,7 +36,7 @@ export default function PersonalInfoForm() {
         labelCol={{span: 6}}
         form={form}
         name="student"
-        initialValues={{firstName: user.firstName, lastName: user.lastName, email: user.email}}
+        initialValues={{firstName: user.firstName, lastName: user.lastName, email: user.email, citizen: true}}
         onFinish={handleSubmitSuccess}
         onFinishFailed={handleSubmitFailure}
         autoComplete='off'
@@ -81,13 +81,23 @@ export const FormHeader = styled.div`
   border-bottom: 1px solid #d9d9d9;
 `;
 
-const SaveButton = styled(Button)`
+export const FormSubHeader = styled.div`
+font-size: 16px;
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+font-weight: 700;
+width: 50%;
+border-bottom: 1px solid #d9d9d9;
+margin-bottom: 25px;
+padding-bottom: 10px;
+`;
+
+export const SaveButton = styled(Button)`
   width: 120px;
   height: 50px;
   font-size: 18px;
 `;
 
-const SavedText = styled.div`
+export const SavedText = styled.div`
   color: green;
   font-size: 20px;
   font-family: sans-serif;

@@ -95,6 +95,10 @@ export const SaveButton = styled(Button)`
   width: 120px;
   height: 50px;
   font-size: 18px;
+  background-color: green !important;
+  &:hover{
+    background-color: #008000cd !important;
+  }
 `;
 
 export const SavedText = styled.div`

@@ -1,10 +1,21 @@
 import dayjs from 'dayjs';
 import styled from 'styled-components';
-import { DatePicker, Form, Input, Radio } from 'antd';
+import { InboxOutlined } from '@ant-design/icons';
 import { FormHeader } from '../forms/PersonalInfoForm';
+import { DatePicker, Form, Input, Radio, Upload } from 'antd';
 
 export default function PersonalInfoSection(props: any) {
-  const {submitted, setSubmitted} = props;
+  const {form, submitted, setSubmitted} = props;
+  const citizen = Form.useWatch('citizen', form);
+  const visaStatus = Form.useWatch('visaStatus', form);
+
+  const uploadFile = (e: any) => {
+    console.log('Upload event:', e);
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
   
   return <>
    <FormHeader>
@@ -65,6 +76,58 @@ export default function PersonalInfoSection(props: any) {
         </RadioLayout>
       </Radio.Group>
     </Form.Item>
+
+    <Form.Item
+      label='Gender'
+      name='gender'
+      rules={[{required: true, message: 'Please select your gender'}]}
+    >
+      <Radio.Group>
+        <Radio value='male'>Male</Radio>
+        <Radio value='female'>Female</Radio>
+      </Radio.Group>
+    </Form.Item>
+
+    <Form.Item
+      label='Are you a US citizen?'
+      name='citizen'
+      rules={[{required: true, message: 'Please select your citizenship status'}]}
+    >
+      <Radio.Group>
+        <Radio value={true}>Yes</Radio>
+        <Radio value={false}>No</Radio>
+      </Radio.Group>
+    </Form.Item>
+
+    {!citizen && <>
+      <Form.Item
+        label='Do you have a student visa?'
+        name='visaStatus'
+        rules={[{required: true, message: 'Please indicate if you have a visa'}]}
+      >
+        <Radio.Group>
+          <Radio value={true}>Yes</Radio>
+          <Radio value={false}>No</Radio>
+        </Radio.Group>
+      </Form.Item>
+         
+      {visaStatus && <Form.Item label="Upload proof of current student visa" labelCol={{span: 9}}>
+        <Form.Item 
+          name="visa" 
+          valuePropName="visa" 
+          getValueFromEvent={uploadFile} 
+          noStyle
+          rules={[{required: true, message: 'Please upload proof of a current student visa'}]}
+          >
+          <Upload.Dragger name="visa" action="/visas"> {/* need an endpoint to send files to (/visas) */}
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+          </Upload.Dragger>
+        </Form.Item>
+      </Form.Item>}
+    </>}
   </>
 }
 

@@ -1,11 +1,10 @@
-import React from 'react'
 import Main from './main'
-import Navigation from './navigation'
+import NavigationBar from './navigation/NavigationBar'
 
 function Portal() {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <Navigation />
+      <NavigationBar />
       <Main />
     </div>
   )

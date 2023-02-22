@@ -2,31 +2,40 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 interface userState {
-  name: string,
-  role: string
+  firstName: string,
+  lastName: string,
+  email: string,
+  role: string,
+  active: boolean
 }
 
 const initialState: userState = {
-  name: "Joe Shmoe",
-  role: "student"
+  firstName: "",
+  lastName: "",
+  email: "",
+  role: "",
+  active: false
 }
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers:{
-    setDefault: state => {
-      state.name = "",
-      state.role = ""
+    setDefaultUser: state => {
+      state.firstName = "",
+      state.lastName = "",
+      state.email = "",
+      state.role = "",
+      state.active = false
     },
     setUserState: (state, action: PayloadAction<userState>) => {
-      const {name, role} = action.payload;
-      Object.assign(state, {name, role})
+      const {firstName, lastName, email, role, active} = action.payload;
+      Object.assign(state, {firstName, lastName, email, role, active})
     }
   }
 });
 
 
-export const { setDefault, setUserState } = userSlice.actions;
+export const { setDefaultUser, setUserState } = userSlice.actions;
 export const userState = (state: RootState) => state.user;
 export default userSlice.reducer;

@@ -1,27 +1,27 @@
 import React from 'react'
 import styled from 'styled-components';
-import { useAppSelector } from '../../../../hooks';
-import { selectedMenuItem } from '../../../../state/reducers/navigationSlice';
+import { useAppSelector } from '../../../hooks';
+import { selectedMenuItem } from '../../../state/reducers/navigationSlice';
 import { ChevronDown} from 'react-feather';
 
-export default function NavButton(props: { label: string, handleClick: Function, type: string }) {
-  const {label, handleClick, type} = props;
+export default function NavButton(props: { label: string, onClick: Function, type: string }) {
+  const {label, onClick, type} = props;
   const _selectedNavItem = useAppSelector(selectedMenuItem);
 
-  if(type === 'box')return (
-    <AnimatedButton selected={_selectedNavItem === label} onClick={e => handleClick(label, "", false)} >
+  if(type === 'underline')return (
+    <UnderlinedButton selected={_selectedNavItem === label} onClick={e => onClick()} >
       {label === "Help" ? <>{label} <ChevronDown /></> : label}
-    </AnimatedButton>
+    </UnderlinedButton>
   )
-  else if (type === 'round') return (
-      <ButtonContainer onClick={e => handleClick(label, "", false)}>
-        <RoundedText>{label}</RoundedText>
+  else if (type === 'box') return (
+      <ButtonContainer onClick={e => onClick()}>
+        <BoxText>{label}</BoxText>
       </ButtonContainer>
   )
   return <></>
 };
 
-const AnimatedButton = styled.div<{selected: boolean}>`
+const UnderlinedButton = styled.div<{selected: boolean}>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,8 +81,8 @@ const ButtonContainer = styled.div`
   transition: all 0.1s ease-in;
 `;
 
-const RoundedText = styled.div`
-  border-radius: 20px;
+const BoxText = styled.div`
+  border-radius: 3px;
   height: 20px;
   padding: 5px 10px;
   background-color:#2C9EB5;

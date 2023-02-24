@@ -47,7 +47,7 @@ export default function PersonalInfoForm() {
         <ContactInfoSection {...formProps}/>
         <FinancialInfoSection {...formProps}/>
         
-        <Form.Item>
+        <Form.Item name='saveButton'>
           {!submitted ? 
             <SaveButton type='primary' htmlType='submit'>Save</SaveButton>
           :

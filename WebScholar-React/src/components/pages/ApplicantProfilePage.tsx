@@ -5,6 +5,7 @@ import PersonalInfoForm from '../forms/PersonalInfoForm';
 import AcademicHistoryForm from '../forms/AcademicHistoryForm';
 import ExtracurricularActivityForm from '../forms/ExtracurricularActivityForm';
 import AwardsForm from '../forms/AwardsForm';
+import AboutYouForm from '../forms/AboutYouForm';
 
 export default function ApplicantProfilePage() {
   return <>
@@ -39,8 +40,8 @@ export default function ApplicantProfilePage() {
         { 
           label: "About You",
           key: "about",
-          children: <></>,
-          disabled: true
+          children: <AboutYouForm />,
+          disabled: false
         }
       ]}
     >

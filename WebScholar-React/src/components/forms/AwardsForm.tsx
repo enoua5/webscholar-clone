@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { CheckCircle } from 'react-feather';
 import { EditButton } from '../sections/PersonalInfoSection';
 
-export default function ExtracurricularActivityForm() {
+export default function AwardsForm() {
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -24,7 +24,7 @@ export default function ExtracurricularActivityForm() {
   return <>
     <FormContainer>
       <Form
-        name="extracurricular"
+        name="awards"
         onFinish={handleSubmitSuccess}
         onFinishFailed={handleSubmitFailure}
         style={{width: "100%"}}
@@ -35,11 +35,11 @@ export default function ExtracurricularActivityForm() {
       >
 
         <FormHeader>
-          Extracurricular Activies
+          Awards and Accomplishments
           {submitted && <EditButton onClick={e => setSubmitted(false)}>Edit</EditButton>}
         </FormHeader>
 
-        <Form.List name="activities">
+        <Form.List name="awards">
           {(fields, { add, remove }, { errors }) => (
             <>
             {fields.length === 0 && <EmptyMessage submitted={submitted} />}
@@ -57,7 +57,7 @@ export default function ExtracurricularActivityForm() {
                         name={[field.name, 'name']}
                         key={`${field.key}-name`}
                         validateTrigger={['onChange', 'onBlur']}
-                        rules={[{required: true, whitespace: true, message: "Please enter a name or remove this activity",  }]}
+                        rules={[{required: true, whitespace: true, message: "Please enter a name or remove this award/accomplishment",  }]}
                       >
                         <Input 
                           placeholder='Name' 
@@ -112,7 +112,7 @@ export default function ExtracurricularActivityForm() {
 
 function EmptyMessage(props: {submitted: boolean}){
   if(props.submitted) return <StyledText>
-    No extracurricular activities.
+    No awards or accomplishments.
   </StyledText>
 
   return <StyledText>

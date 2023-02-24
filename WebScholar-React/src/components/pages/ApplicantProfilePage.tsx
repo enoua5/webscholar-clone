@@ -4,6 +4,7 @@ import { Header } from '../elements/Header';
 import PersonalInfoForm from '../forms/PersonalInfoForm';
 import AcademicHistoryForm from '../forms/AcademicHistoryForm';
 import ExtracurricularActivityForm from '../forms/ExtracurricularActivityForm';
+import AwardsForm from '../forms/AwardsForm';
 
 export default function ApplicantProfilePage() {
   return <>
@@ -32,8 +33,8 @@ export default function ApplicantProfilePage() {
         { 
           label: "Awards and Accomplishments",
           key: "awards",
-          children: <></>,
-          disabled: true
+          children: <AwardsForm />,
+          disabled: false
         },
         { 
           label: "About You",

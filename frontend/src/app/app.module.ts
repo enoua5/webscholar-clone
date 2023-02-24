@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,16 +13,18 @@ import { HttpClientModule} from "@angular/common/http";
 import { EditProfileFormComponent } from './edit-profile-form/edit-profile-form.component';
 import { ChangePasswordFormComponent } from './change-password-form/change-password-form.component';
 import { DashboardComponent } from "./dashboard/dashboard.component";
-import {NewPasswordComponent} from "./new-password-form/new-password.component";
+import { NewPasswordComponent } from "./new-password-form/new-password.component";
 import { CreateScholarshipFormComponent } from './create-scholarship-form/create-scholarship-form.component';
 import { ReportIssueFormComponent } from './report-issue-form/report-issue-form.component';
-import {IssuesComponent} from "./issues/issues.component";
+import { IssuesComponent } from "./issues/issues.component";
 import { ViewIssueComponent } from './view-issue/view-issue.component';
-import {ScholarshipListComponent} from './scholarship-list/scholarship-list.component';
+import { ScholarshipListComponent } from './scholarship-list/scholarship-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 import { RegistrationInvitationFormComponent } from './registration-invitation-form/registration-invitation-form.component';
+import { RequestRoleFormComponent } from './request-role/request-role-form.component';
 import {RouterModule} from "@angular/router";
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -43,10 +45,12 @@ import {RouterModule} from "@angular/router";
     ScholarshipListComponent,
     NavbarComponent,
     StudentViewScholarshipFormComponent,
-    RegistrationInvitationFormComponent
+    RegistrationInvitationFormComponent,
+    RequestRoleFormComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,

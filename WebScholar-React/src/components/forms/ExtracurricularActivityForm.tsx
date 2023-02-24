@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Tooltip } from 'antd';
 import { FormContainer, FormHeader, SaveButton, SavedText } from './PersonalInfoForm';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { CheckCircle } from 'react-feather';
+import { CheckCircle, Info } from 'react-feather';
 import { EditButton } from '../sections/PersonalInfoSection';
 
 export default function ExtracurricularActivityForm() {
@@ -35,7 +35,13 @@ export default function ExtracurricularActivityForm() {
       >
 
         <FormHeader>
-          Extracurricular Activies
+          <div>
+            Extracurricular Activies
+            <Tooltip title="Any school related activites, clubs, or sports may be added here.">
+              <Info style={{height: "20px", width: "20px", margin: "10px 0 0 10px"}}/>
+            </Tooltip>
+          </div>
+          
           {submitted && <EditButton onClick={e => setSubmitted(false)}>Edit</EditButton>}
         </FormHeader>
 

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Tooltip } from 'antd';
 import { FormContainer, FormHeader, SaveButton, SavedText } from './PersonalInfoForm';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { CheckCircle } from 'react-feather';
+import { CheckCircle, Info } from 'react-feather';
 import { EditButton } from '../sections/PersonalInfoSection';
 
 export default function AwardsForm() {
@@ -35,7 +35,12 @@ export default function AwardsForm() {
       >
 
         <FormHeader>
-          Awards and Accomplishments
+        <div>
+            Awards and Accomplishments
+            <Tooltip title="Please list out any awards, certifications or other major accomplishments, school related or not.">
+              <Info style={{height: "20px", width: "20px", margin: "10px 0 0 10px"}}/>
+            </Tooltip>
+          </div>
           {submitted && <EditButton onClick={e => setSubmitted(false)}>Edit</EditButton>}
         </FormHeader>
 

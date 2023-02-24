@@ -12,6 +12,7 @@ import { useAppSelector } from '../../../hooks';
 import { userState } from '../../../state/reducers/userSlice';
 import DummyPage from '../../pages/DummyPage';
 import ApplicantProfilePage from '../../pages/ApplicantProfilePage';
+import AdministratorScholarshipPage from '../../pages/AdministratorScholarshipsPage'
 
 function Main() {
   const user = useAppSelector(userState);
@@ -43,31 +44,32 @@ function Main() {
   // paths available to Administrator users
   const administratorMenu: React.ReactElement[] = [
     <Route key='/review-applicants' path="/dummy" element={<DummyPage />} />,
+    <Route key='/scholarshipsAdministrator' path="/scholarshipsAdministrator" element={<AdministratorScholarshipPage />} />,
   ]
 
   // add routes based on active user
-  if(user.email === ""){
+  if (user.email === "") {
     noActiveUserMenu.forEach(route => menu.push(route));
   } else {
     activeUserMenu.forEach(route => menu.push(route));
   }
 
   // add student roles if student
-  if(user?.role === 'student'){
+  if (user?.role === 'student') {
     studentMenu.forEach(route => menu.push(route));
   }
 
   // add administrator paths if administrator
-  if(user?.role === 'staff'){
+  if (user?.role === 'staff') {
     administratorMenu.forEach(route => menu.push(route));
   }
 
   return (
     <MainContainer>
       <Routes>
-       {menu}
+        {menu}
       </Routes>
-      <Footer/>
+      <Footer />
     </MainContainer>
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar } from 'antd';
-import NavButton from './navButton';
-import NavPopout from './navPopout';
+import NavButton from './NavButton';
+import NavPopout from './NavPopout';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import WebScholarLogo from '../../../assets/logo.png';
@@ -9,8 +9,9 @@ import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { setDefaultUser, userState } from '../../../state/reducers/userSlice';
 import { navPopoutOpen, setNavigationState } from '../../../state/reducers/navigationSlice';
 import ProfileButton from '../../elements/ProfileButton';
+import ProfileDropdown from './ProfileDropdown';
 
-function Navigation() {
+function NavigationBar() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const _navPopoutOpen = useAppSelector(navPopoutOpen);
@@ -20,7 +21,8 @@ function Navigation() {
     dispatch(setNavigationState({
       menu: menu, 
       submenu: submenu, 
-      popoutOpen: popoutOpen
+      popoutOpen: popoutOpen,
+      profileDropdownOpen: false
     }))
   };
 
@@ -34,6 +36,9 @@ function Navigation() {
         navigate("/");
       }}
     />,
+  ];
+
+  let noActiveUserNavigation: React.ReactElement[] = [
     <NavButton
       key="About"
       label="About"
@@ -46,6 +51,15 @@ function Navigation() {
   ];
 
   let studentNavigation: React.ReactElement[] = [
+    <NavButton
+      key="Profile" 
+      label="Profile"
+      type="underline"
+      onClick={() => {
+        handleClick("Profile", "", false);
+        navigate("/profile")
+      }}
+    />,
     <NavButton
       key="Scholarships" 
       label="Scholarships"
@@ -89,48 +103,44 @@ function Navigation() {
     />
   ];
 
-  const Logout_Profile_Buttons: React.ReactElement[] = [
-    <ProfileButton />,
-    <NavButton 
-      label="Logout"
-      type="box" 
-      onClick={() => {
-        dispatch(setDefaultUser());
-        navigate("/");
-      }}
-    />
+  const Profile_Buttons: React.ReactElement[] = [
+    <ProfileButton key="profile button"/>,
+    <ProfileDropdown key="profile dropdown"/>
   ]
-    
+
+  if(user.email === ""){
+    noActiveUserNavigation.forEach(button => NavButtons.push(button));
+  }
 
   if(user.role === 'student'){
-    studentNavigation.forEach(button => NavButtons.push(button))
+    studentNavigation.forEach(button => NavButtons.push(button));
   }
 
   if(user.role === 'staff'){
-    staffNavigation.forEach(button => NavButtons.push(button))
+    staffNavigation.forEach(button => NavButtons.push(button));
   }
 
   return (
   <>
-    <NavigationBar id="navbarContainer">
+    <NavigationBarContainer id="navbarContainer">
       <Section>
         <Avatar src={WebScholarLogo} style={{height: "65px", width: "65px"}}/>
         <WebScholarButton onClick={() => navigate("/")}>WebScholar</WebScholarButton>
         {NavButtons}
       </Section>
       <Section>
-       {user.active ? Logout_Profile_Buttons : Login_Register_Buttons}
+       {user.active ? Profile_Buttons : Login_Register_Buttons}
       </Section>
-    </NavigationBar>
+    </NavigationBarContainer>
 
     <NavPopout />
   </>
   )
 }
 
-export default Navigation
+export default NavigationBar
 
-const NavigationBar = styled.div`
+const NavigationBarContainer = styled.div`
   position: sticky;
   top: 0;
   width: auto;

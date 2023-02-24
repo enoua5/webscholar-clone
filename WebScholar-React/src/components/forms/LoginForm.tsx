@@ -16,10 +16,10 @@ export default function LoginForm() {
   function handleLogin(username: string, password: string){
     // TODO: call API to validate user 
     if(username === "student@test.com" && password === "Password123!"){
-      dispatch(setUserState({firstName: "Ron", lastName: "Weasley", email: "student@test.com", role: "student", active: true}))
+      dispatch(setUserState({firstName: "John", lastName: "Doe", email: "student@test.com", role: "student", active: true}))
       navigate('/');
     } else if (username === "staff@test.com" && password === "Password123!"){
-      dispatch(setUserState({firstName: "Albus", lastName: "Dumbledore", email: "staff@test.com", role: "staff", active: true}))
+      dispatch(setUserState({firstName: "Jane", lastName: "Smith", email: "staff@test.com", role: "staff", active: true}))
       navigate('/');
     }
     else {

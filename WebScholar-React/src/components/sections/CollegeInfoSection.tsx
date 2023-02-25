@@ -36,14 +36,12 @@ export default function CollegeInfoSection(props: any) {
       <Input />
     </Form.Item>
 
-    <Form.Item
-      label='What state is your college located in?'
-      name='collegeState'
-      rules={[{required: true, message: 'Please select a state'}]}
-      labelCol={{span: 16}}
-    >
-      <FiftyStatesDropdown />
-    </Form.Item>
+    <FiftyStatesDropdown 
+      width={"35%"} 
+      label={"What state is your college located in?"} 
+      name={"collegeState"} 
+      rules={[{required: true, message: "Please select a state"}]}
+    />
     
     <Form.Item
       label='I will be attending as a '

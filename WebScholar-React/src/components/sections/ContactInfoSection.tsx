@@ -52,7 +52,12 @@ export default function ContactInfoSection(props: any) {
         </Form.Item>
 
 
-        <FiftyStatesDropdown width={"35%"}/>
+        <FiftyStatesDropdown 
+          width={"35%"}
+          name={"state"}
+          label={"State"}
+          rules={[{required: true, message: "Please select a state"}]}
+        />
 
         <Form.Item 
           label='Zip'

@@ -42,7 +42,7 @@ export default function PersonalInfoSection(props: any) {
       label='Middle Initial'
       name='middle'
     >
-      <Input style={{width: "10%"}}/>
+      <Input style={{width: "10%"}} maxLength={1}/>
     </Form.Item>
 
     <Form.Item 
@@ -52,9 +52,10 @@ export default function PersonalInfoSection(props: any) {
     >
       <DatePicker
         style={{width: "35%"}}
-        disabledDate={current => current && current > dayjs().subtract(10, 'years')} 
-        allowClear={false}
         placeholder="YYYY-MM-DD"
+        format="YYYY-MM-DD"
+        allowClear={false}
+        disabledDate={current => current && current > dayjs().subtract(10, 'years')} 
       />
     </Form.Item>
 

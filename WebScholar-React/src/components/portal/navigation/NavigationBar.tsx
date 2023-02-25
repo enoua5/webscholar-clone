@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import WebScholarLogo from '../../../assets/logo.png';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { setDefaultUser, userState } from '../../../state/reducers/userSlice';
+import { userState } from '../../../state/reducers/userSlice';
 import { navPopoutOpen, setNavigationState } from '../../../state/reducers/navigationSlice';
 import ProfileButton from '../../elements/ProfileButton';
 import ProfileDropdown from './ProfileDropdown';
@@ -70,7 +70,7 @@ function NavigationBar() {
     />
   ];
 
-  let staffNavigation: React.ReactElement[] = [
+  let administratorNavigation: React.ReactElement[] = [
     <NavButton
       key="Review" 
       label="Review"
@@ -116,8 +116,8 @@ function NavigationBar() {
     studentNavigation.forEach(button => NavButtons.push(button));
   }
 
-  if(user.role === 'staff'){
-    staffNavigation.forEach(button => NavButtons.push(button));
+  if(user.role === 'administrator'){
+    administratorNavigation.forEach(button => NavButtons.push(button));
   }
 
   return (

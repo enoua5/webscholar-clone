@@ -66,6 +66,7 @@ export default function PersonalInfoSection(props: any) {
       <Radio.Group>
         <Radio value='male'>Male</Radio>
         <Radio value='female'>Female</Radio>
+        <Radio value='other'>Other</Radio>
       </Radio.Group>
     </Form.Item>
 
@@ -84,6 +85,7 @@ export default function PersonalInfoSection(props: any) {
           <Radio value='native'>Native American</Radio>
           <Radio value='islander'>Native Hawaiian or other Pacific Islander</Radio>
           <Radio value='other'>Other</Radio>
+          <Radio value='unknown'>I prefer not to say</Radio>
         </RadioLayout>
       </Radio.Group>
     </Form.Item>

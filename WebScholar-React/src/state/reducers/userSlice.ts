@@ -5,7 +5,7 @@ interface userState {
   firstName: string,
   lastName: string,
   email: string,
-  role: string,
+  role: "student" | "administrator" | "committee" | "",
   active: boolean
 }
 

@@ -1,12 +1,12 @@
 import { Form, Select } from 'antd';
 
 export default function FiftyStatesDropdown(props: any) {
-  const { width } = props;
+  const { width, label, name, rules } = props;
   return <>
     <Form.Item 
-      label='State'
-      name='state'
-      rules={[{ required: true, message: 'Please select your state' }]}
+      label={label}
+      name={name}
+      rules={rules}
     >
       <Select style={{width: width ? width : ''}}> 
         {FiftyStates.map(state => {

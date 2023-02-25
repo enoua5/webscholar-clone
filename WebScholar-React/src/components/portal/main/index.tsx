@@ -58,7 +58,7 @@ function Main() {
   }
 
   // add administrator paths if administrator
-  if(user?.role === 'staff'){
+  if(user?.role === 'administrator'){
     administratorMenu.forEach(route => menu.push(route));
   }
 

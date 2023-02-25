@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import styled from "styled-components";
-import { Col, Form, Input, Radio } from "antd";
+import { Col, Form, Input, InputNumber, Radio } from "antd";
 import { FormHeader } from "../forms/PersonalInfoForm";
 
 
@@ -71,7 +71,7 @@ export default function FinancialInfoSection(props: any) {
       name='dependentsClaimed'
       rules={[{required: true, message: 'Please enter the total number of dependents claimed'}]}
     >
-      <Input style={{width: "100px"}}/>
+      <InputNumber style={{width: "100px"}} min={0} step={1} />
     </Form.Item>
 
     <Form.Item

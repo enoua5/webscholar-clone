@@ -18,8 +18,8 @@ export default function LoginForm() {
     if(username === "student@test.com" && password === "Password123!"){
       dispatch(setUserState({firstName: "John", lastName: "Doe", email: "student@test.com", role: "student", active: true}))
       navigate('/');
-    } else if (username === "staff@test.com" && password === "Password123!"){
-      dispatch(setUserState({firstName: "Jane", lastName: "Smith", email: "staff@test.com", role: "staff", active: true}))
+    } else if (username === "administrator@test.com" && password === "Password123!"){
+      dispatch(setUserState({firstName: "Jane", lastName: "Smith", email: "administrator@test.com", role: "administrator", active: true}))
       navigate('/');
     }
     else {

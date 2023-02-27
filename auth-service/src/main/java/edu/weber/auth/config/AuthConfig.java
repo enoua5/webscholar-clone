@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 // TODO
 /**
  * This class handles who can handle which API and how they can access it.
- * Thas handles the access control for all micro-services.
+ * Thus handles the access control for all microservices.
  */
 @Configuration
 @EnableWebSecurity
@@ -16,7 +16,7 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * This method takes an incoming http request and applies restrictions to it.
-     * These restrictions limit whether or not a request is accepted by the backend controllers.
+     * These restrictions limit whether a request is accepted by the backend controllers.
      * - The API URL can be specified to narrow the restrictions to certain parts of code.
      * - The API mapping type can be restricted (get, post, delete etc).
      * - The user role can be restricted (student, admin, etc).
@@ -29,28 +29,36 @@ public class AuthConfig extends WebSecurityConfigurerAdapter {
 
         //Set authentication and access level for each API endpoint
         http
+                // Enables HTTP Basic authentication for the web application
                 .httpBasic()
                 .and()
+                // Specifies that access control should be applied to all requests to the application's API endpoints
                 .authorizeRequests()
+                // Allows unrestricted access to any endpoint under the "/actuator" path
                 .antMatchers("/actuator/**").permitAll()
 
-                //Todo: Add 'role' access levels
-                //Anyone can access this endpoint
+                // Todo: Add 'role' access levels
+                // Anyone can access this endpoint
+                // Allows unrestricted access to any POST request to an endpoint under the "/accounts" path
                 .antMatchers(HttpMethod.POST, "/accounts/**").permitAll()
+                // Allows unrestricted access to any POST request to an endpoint under the "/accounts" path
                 .antMatchers(HttpMethod.GET, "/accounts/**").permitAll()
 
-                // Allow's access to the issue-service Testing API
+                // Allows access to the issue-service Testing API
+                // Allows unrestricted access to any POST request to an endpoint under the "/issue" path
                 .antMatchers(HttpMethod.POST, "/issue/**").permitAll()
+                // Allows unrestricted access to any POST request to an endpoint under the "/issue" path
                 .antMatchers(HttpMethod.GET, "/issue/**").permitAll()
+                //  Requires authentication for all other requests.
                 .anyRequest().authenticated()
 
                 .and()
+                // Disables Cross-Site Request Forgery (CSRF) protection
+                // Todo: This is only for testing purposes. Should be removed. CSRF protection is important
                 .csrf().disable()
+                // Disables form-based login
                 .formLogin().disable()
+                //  Application won't track user sessions
                 .sessionManagement().disable();
-        //TODO for testing purposes only.
-        //http.csrf().disable();
     }
-
-
 }

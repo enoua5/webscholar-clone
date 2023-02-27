@@ -20,17 +20,18 @@ export class EditProfileFormComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private service: EditProfileService)
-{ this.form = this.fb.group({
-    fist_name: [''],
-    last_name: [''],
-    email: [''],
-    phone_number: [''],
-    city: [''],
-    state: [''],
-    zip: [''],
-    student_number: [''],
-    major: ['']
-  });
+  {
+    this.form = this.fb.group({
+      first_name: [''],
+      last_name: [''],
+      email: [''],
+      phone_number: [''],
+      city: [''],
+      state: [''],
+      zip: [''],
+      student_number: [''],
+      major: ['']
+    });
   }
 
   ngOnInit(): void {

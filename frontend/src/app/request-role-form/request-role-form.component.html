@@ -1,0 +1,22 @@
+<section class="section">
+  <div>
+    <h1>{{ pageTitle }}</h1>
+    <p>
+      In order to have your account upgraded to Committee Member or Committee Chair status, you must request a role below.
+      Committee chair members can approve or deny your request.
+    </p>
+  </div>
+  <div>
+    <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="role-selector" class="form-label">Role to Request:</label>
+        <select formControlName="roleControl" id="role-selector" class="form-select form-select-lg">
+          <option *ngFor="let role of roles">{{ role }}</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</section>
+
+

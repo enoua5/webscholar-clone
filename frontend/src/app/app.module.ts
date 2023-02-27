@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginFormComponent } from './login-form/login-form.component';
@@ -22,9 +21,8 @@ import { ScholarshipListComponent } from './scholarship-list/scholarship-list.co
 import { NavbarComponent } from './navbar/navbar.component';
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 import { RegistrationInvitationFormComponent } from './registration-invitation-form/registration-invitation-form.component';
-import { RequestRoleFormComponent } from './request-role/request-role-form.component';
-import {RouterModule} from "@angular/router";
-import { CommonModule } from '@angular/common';
+import { RequestRoleFormComponent } from './request-role-form/request-role-form.component';
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -50,7 +48,6 @@ import { CommonModule } from '@angular/common';
   ],
   imports: [
     BrowserModule,
-    CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,

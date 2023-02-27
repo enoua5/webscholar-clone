@@ -16,7 +16,7 @@ import {ViewIssueComponent} from "./view-issue/view-issue.component";
 import {ScholarshipListComponent} from "./scholarship-list/scholarship-list.component";
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 import {RegistrationInvitationFormComponent} from "./registration-invitation-form/registration-invitation-form.component";
-import { RequestRoleFormComponent } from './request-role/request-role-form.component';
+import { RequestRoleFormComponent } from './request-role-form/request-role-form.component';
 
 const routes: Routes = [
   { path: '', component: LoginFormComponent },

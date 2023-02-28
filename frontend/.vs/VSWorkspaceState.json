@@ -2,8 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\src",
-    "\\src\\app"
+    "\\src\\app",
+    "\\src\\app\\dashboard",
+    "\\src\\app\\login-form",
+    "\\src\\app\\navbar",
+    "\\src\\app\\scholarship-committee",
+    "\\src\\app\\scholarship-list"
   ],
-  "SelectedNode": "\\src\\app\\register-form-faculty",
+  "SelectedNode": "\\src\\app\\login-form\\login-form.component.ts",
   "PreviewInSolutionExplorer": false
 }

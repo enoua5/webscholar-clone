@@ -40,4 +40,7 @@ export class ScholarshipListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getUserType() {
+    return "committeeMember"//sessionStorage.getItem("userType");
+  }
 }

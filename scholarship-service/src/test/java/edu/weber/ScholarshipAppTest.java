@@ -7,14 +7,11 @@ import edu.weber.service.ScholarshipService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
 
 
 /**
@@ -23,7 +20,6 @@ import java.util.ArrayList;
 
 public class ScholarshipAppTest
 {
-    @Autowired
     private ScholarshipService scholarshipService;
     private Scholarship TestScholarship;
 

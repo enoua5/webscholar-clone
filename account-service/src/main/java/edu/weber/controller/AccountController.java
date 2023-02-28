@@ -160,7 +160,7 @@ public class AccountController {
      * @param updateAccount The form object sent from the frontend that is converted into an account model object.
      */
     @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveChanges(@PathVariable int accountKey, @RequestBody Account updateAccount, BindingResult result) {
 
         //Validate input

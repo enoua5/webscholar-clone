@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { RequestRoleService } from './request-role.service';
 
 // Component Metadata
 @Component({
@@ -17,7 +18,7 @@ export class RequestRoleFormComponent implements OnInit
   });
 
   // Default constructor
-  constructor() {}
+  constructor(private service: RequestRoleService) {}
 
   // Component Methods
   ngOnInit(): void 
@@ -27,12 +28,13 @@ export class RequestRoleFormComponent implements OnInit
 
   onSubmit(): void
   {
-    console.log(this.roleForm.get('roleControl').value)
+    console.log(this.roleForm.get('roleControl').value);
+    this.service.insert(this.roleForm.value).subscribe((data) => this.processResponse(data));
   }
 
   private processResponse(data)
   {
     // TODO: backend should report if the user already has an existing request.
+    console.log(data);
   }
-
 }

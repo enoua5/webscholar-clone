@@ -4,8 +4,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from "@angular/forms"
 // Component Metadata
 @Component({
   selector: 'request-role-form',
-  templateUrl: './request-role-form.component.html',
-  styleUrls: ['./request-role-form.component.less']
+  templateUrl: './request-role-form.component.html'
 })
 
 export class RequestRoleFormComponent implements OnInit 

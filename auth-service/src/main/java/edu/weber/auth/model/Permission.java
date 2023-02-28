@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // TODO
 @Entity
-@Table(name="auth_permission")
+@Table(name="permission")
 public class Permission implements  Serializable{
 
 	@Serial

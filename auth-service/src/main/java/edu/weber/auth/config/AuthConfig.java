@@ -1,64 +1,44 @@
 package edu.weber.auth.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.approval.UserApprovalHandler;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+
+import javax.sql.DataSource;
 // TODO
 /**
  * This class handles who can handle which API and how they can access it.
  * Thus handles the access control for all microservices.
  */
 @Configuration
-@EnableWebSecurity
-public class AuthConfig extends WebSecurityConfigurerAdapter {
+@EnableAuthorizationServer
+public class AuthConfig extends AuthorizationServerConfigurerAdapter {
 
-    /**
-     * This method takes an incoming http request and applies restrictions to it.
-     * These restrictions limit whether a request is accepted by the backend controllers.
-     * - The API URL can be specified to narrow the restrictions to certain parts of code.
-     * - The API mapping type can be restricted (get, post, delete etc).
-     * - The user role can be restricted (student, admin, etc).
-     * - Other settings can be restricted as well. Look at the spring documentation.
-     * @param http This is the incoming http object that holds the incoming request information.
-     * @throws Exception Throws an error if the http request could not be handled.
-     */
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private TokenStore tokenStore;
+
+    @Autowired
+    private UserApprovalHandler userApprovalHandler;
+
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-
-        //Set authentication and access level for each API endpoint
-        http
-                // Enables HTTP Basic authentication for the web application
-                .httpBasic()
-                .and()
-                // Specifies that access control should be applied to all requests to the application's API endpoints
-                .authorizeRequests()
-                // Allows unrestricted access to any endpoint under the "/actuator" path
-                .antMatchers("/actuator/**").permitAll()
-
-                // Todo: Add 'role' access levels
-                // Anyone can access this endpoint
-                // Allows unrestricted access to any POST request to an endpoint under the "/accounts" path
-                .antMatchers(HttpMethod.POST, "/accounts/**").permitAll()
-                // Allows unrestricted access to any POST request to an endpoint under the "/accounts" path
-                .antMatchers(HttpMethod.GET, "/accounts/**").permitAll()
-
-                // Allows access to the issue-service Testing API
-                // Allows unrestricted access to any POST request to an endpoint under the "/issue" path
-                .antMatchers(HttpMethod.POST, "/issue/**").permitAll()
-                // Allows unrestricted access to any POST request to an endpoint under the "/issue" path
-                .antMatchers(HttpMethod.GET, "/issue/**").permitAll()
-                //  Requires authentication for all other requests.
-                .anyRequest().authenticated()
-
-                .and()
-                // Disables Cross-Site Request Forgery (CSRF) protection
-                // Todo: This is only for testing purposes. Should be removed. CSRF protection is important
-                .csrf().disable()
-                // Disables form-based login
-                .formLogin().disable()
-                //  Application won't track user sessions
-                .sessionManagement().disable();
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        // TODO: Define the endpoints required for configuring the authorization server
+        super.configure(endpoints);
     }
+
+    // This method tells the authorization server where to find the ClientDetailsService implementation?
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients
+                .jdbc(dataSource);
+    }
+
 }

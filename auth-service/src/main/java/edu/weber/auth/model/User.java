@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 // TODO
 @Entity
-@Table(name="user_auth")
+@Table(name="user")
 public class User implements Serializable {
 
 	/**
@@ -21,16 +21,16 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="user_auth_id")
+	@Column(name="user_id")
 	private int userId;
 	
-	@Column(name="user_auth_name")
+	@Column(name="user_name")
 	private String userName;
 	
-	@Column(name="user_auth_password")
+	@Column(name="user_password")
 	private String password;
 	
-	@Column(name="user_auth_type")
+	@Column(name="user_type")
 	private String userType;
 
 	@ManyToOne

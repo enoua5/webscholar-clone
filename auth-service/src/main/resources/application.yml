@@ -22,6 +22,11 @@ spring:
       ddl-auto: create-drop
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  security:
+    oauth2:
+      client:
+        client-id: first-client
+        client-secret: super-secret
 
 server:
   port: 6006

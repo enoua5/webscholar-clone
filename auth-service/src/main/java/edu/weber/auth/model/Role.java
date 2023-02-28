@@ -19,7 +19,7 @@ import javax.persistence.Table;
 
 // TODO
 @Entity
-@Table(name="user_auth_role")
+@Table(name="user_role")
 public class Role implements  Serializable{
 	
 	@Serial
@@ -27,16 +27,16 @@ public class Role implements  Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="auth_role_id")
+	@Column(name="role_id")
 	private int roleId;
 	
-	@Column(name="auth_role_name")
+	@Column(name="role_name")
 	private String roleName;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(
-            name = "auth_role_permission",
-            joinColumns = {@JoinColumn(name = "auth_role_id")},
+            name = "role_permission",
+            joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")}
     )
 

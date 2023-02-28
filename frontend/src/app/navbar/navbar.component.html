@@ -64,6 +64,9 @@
               <!-- TODO: create contact page -->
               <a class="dropdown-item" routerLink="/contact">Contact</a>
             </li>
+            <li *ngIf="getName() != null">
+              <a class="dropdown-item" routerLink="/roles/request">Request Role</a>
+            </li>
             <div class="dropdown-divider"></div>
             <li>
               <a class="dropdown-item" routerLink="/issues">Known Issues</a>

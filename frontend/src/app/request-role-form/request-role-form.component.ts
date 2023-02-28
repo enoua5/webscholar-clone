@@ -14,7 +14,7 @@ export class RequestRoleFormComponent implements OnInit
   pageTitle: string = "Request Role";
   roles: string[] = ['Committee Member', 'Committee Chair'];
   roleForm = new FormGroup({
-    roleControl: new FormControl('', [Validators.required])
+    roleControl: new FormControl('Committee Member', [Validators.required])
   });
 
   // Default constructor
@@ -23,22 +23,17 @@ export class RequestRoleFormComponent implements OnInit
   // Component Methods
   ngOnInit(): void 
   {
-    // TODO
-  }
-
-  private checkErrors(): void 
-  {
-    // TODO
+    // TODO: get currently logged-in user's email to send to backend with request.
   }
 
   onSubmit(): void
   {
-    console.log(this.roleForm)
+    console.log(this.roleForm.get('roleControl').value)
   }
 
   private processResponse(data)
   {
-    // TODO
+    // TODO: backend should report if the user already has an existing request.
   }
 
 }

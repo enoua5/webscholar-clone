@@ -104,7 +104,7 @@ public class AccountService {
         if(Objects.nonNull(update.getPassword()) && !"".equalsIgnoreCase(update.getPassword())) {
             account.setPassword(update.getPassword());
         }
-        if(Objects.nonNull(update.getSchoolId()) && !"".equalsIgnoreCase(update.getSchool())) {
+        if(Objects.nonNull(update.getSchoolId()) && !"".equalsIgnoreCase(update.getSchoolId())) {
             account.setSchoolId(update.getSchoolId());
         }
         if(Objects.nonNull(update.getActive())) {
@@ -113,11 +113,13 @@ public class AccountService {
         if(Objects.nonNull(update.getUserType()) && !"".equalsIgnoreCase(update.getUserType())) {
             account.setUserType(update.getUserType());
         }
+        //First name...
         if(Objects.nonNull(update.getFirstName()) && !"".equalsIgnoreCase(update.getFirstName())) {
             account.setFirstName(update.getFirstName());
         }
         //Middle name can be blank or null.
         account.setMiddleName(update.getMiddleName());
+        //Last name.
         if(Objects.nonNull(update.getLastName()) && !"".equalsIgnoreCase(update.getLastName())) {
             account.setLastName(update.getLastName());
         }

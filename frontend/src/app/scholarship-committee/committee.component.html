@@ -1,9 +1,39 @@
-<section class="section">
-  <div class="box">
-    <div class="Edit_header"><strong>Scholarship Committee</strong></div>
-    <p class="Edit_sub">This page is an extremely basic skeleton for the scholarship committee page.</p>
-    <p class="Edit_sub">The goal was to create a page and have it linked to the current dashboard.</p>
-    <p class="Edit_sub">This page will be expanded upon to meet the needs of a committee member.</p>
-    <a routerLink="/dashboard">Dashboard</a>
+<section class="container p-3">
+
+  <h1></h1>
+
+  <div class="table-responsive">
+    <table class="table table-bordered w-100 table-hover accordion">
+      <thead>
+        <th scope="col">Applicant Name</th>
+        <th scope="col">Application ID</th>
+        <th scope="col">School ID</th>
+        <th scope="col">Application Score</th>
+        <th scope="col"></th>
+      </thead>
+
+      <tbody>
+        <ng-container *ngFor="let applicant of applicants">
+          <tr role="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#accordion'+scholarship.scholarshipId">
+            <td>{{ applicant.name }}</td>
+            <td>{{ applicant.applicationId }}</td>
+            <td>{{ applicant.schoolId }}</td>
+            <ng-container *ngIf="applicant.applicationScore != null">
+              <td>{{ applicant.applicationScore}}</td>
+            </ng-container>
+            <ng-container *ngIf="applicant.applicationScore == null">
+              <td>No Score</td>
+            </ng-container>
+            <td>
+              <a routerLink="/scoring/{{ applicant.applicationId}}" class="btn btn-success m-2 text-white" role="button">
+                <i class="fas fa-edit"></i>
+                Score Applicant
+              </a>
+            </td>
+          </tr>    
+        </ng-container>
+      </tbody>
+    </table>
   </div>
 </section>
+

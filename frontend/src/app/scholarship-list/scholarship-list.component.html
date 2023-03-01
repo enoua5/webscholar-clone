@@ -28,7 +28,7 @@
               </ng-container>
               <ng-container *ngIf="getUserType() == 'committeeMember'">
                 <div class="text-center">
-                  <a routerLink="/committee" class="btn btn-success m-2" role="button">
+                  <a routerLink="/committee/{{ scholarship.scholarshipId}}" class="btn btn-success m-2" role="button">
                     <i class="fas fa-edit"></i>
                     Score Applicants
                   </a>

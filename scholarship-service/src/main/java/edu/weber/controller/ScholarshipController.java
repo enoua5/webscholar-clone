@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Note: This class does not have '@RestController("scholarship")' API path specified here.
@@ -37,8 +36,12 @@ public class ScholarshipController {
      * instantiated. This is because the '@Autowired' annotation tells
      * spring to inject the instance at run time.
      */
-    @Autowired
     private ScholarshipService scholarshipService;
+
+    @Autowired
+    private void setScholarshipService(ScholarshipService scholarshipService) {
+        this.scholarshipService = scholarshipService;
+    }
 
 
     /**

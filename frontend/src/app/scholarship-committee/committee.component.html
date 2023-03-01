@@ -1,6 +1,6 @@
 <section class="container p-3">
-
-  <h1></h1>
+  <h1>{{scholarshipTitle}}</h1>
+  <br/>
 
   <div class="table-responsive">
     <table class="table table-bordered w-100 table-hover accordion">
@@ -14,7 +14,7 @@
 
       <tbody>
         <ng-container *ngFor="let applicant of applicants">
-          <tr role="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#accordion'+scholarship.scholarshipId">
+          <tr role="button" data-bs-toggle="collapse">
             <td>{{ applicant.name }}</td>
             <td>{{ applicant.applicationId }}</td>
             <td>{{ applicant.schoolId }}</td>

@@ -10,35 +10,32 @@
           {{error}}
         </div>
 
+
         <div class="form-group" >
           <div class="row">
             <div class="col-sm-6">
               <label for="first_name" class="col-sm-12 control-label">First Name:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="first_name" placeholder="First Name" formControlName="first_name">
-                <div class="error" *ngIf="errors.has('first_name')">
-                  {{errors.get('first_name')}}
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <label for="last_name" class="col-sm-12 control-label">Last Name</label>
-              <div class="col-sm-12">
-                <input type="text" class="form-control" id="last_name" placeholder="Last Name" formControlName="last_name">
-                <div class="error" *ngIf="errors.has('last_name')">
-                  {{errors.get('last_name')}}
-                </div>
+                <input type="text" class="form-control" id="first_name" formControlName="first_name">
               </div>
             </div>
 
+            <div class="col-sm-6">
+              <label for="last_name" class="col-sm-12 control-label">Last Name</label>
+              <div class="col-sm-12">
+                <input type="text" class="form-control" id="last_name" formControlName="last_name">
+              </div>
+            </div>
           </div>
         </div>
+
+
         <div class="form-group">
           <div class="row">
             <div class="col-sm-12">
               <label for="email" class="col-sm-12 control-label">Contact Email:</label>
               <div class="col-sm-12">
-                <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
+                <input type="email" class="form-control" id="email" placeholder="example@mail.com" formControlName="email">
                 <div class="error" *ngIf="errors.has('email')">
                   {{errors.get('email')}}
                 </div>
@@ -47,12 +44,13 @@
           </div>
         </div>
 
+
         <div class="form-group">
           <div class="row">
             <div class="col-sm-12">
               <label for="phone_number" class="col-sm-12 control-label">Contact Phone Number:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="phone_number" placeholder="phone number" formControlName="phone_number">
+                <input type="text" class="form-control" id="phone_number" placeholder="555-555-5555" formControlName="phone_number">
                 <div class="error" *ngIf="errors.has('phone_number')">
                   {{errors.get('phone_number')}}
                 </div>
@@ -67,29 +65,21 @@
             <div class="col-sm-6">
               <label for="city" class="col-sm-12 control-label">City:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="city" placeholder="City" formControlName="city">
-                <div class="error" *ngIf="errors.has('city')">
-                  {{errors.get('city')}}
-                </div>
+                <input type="text" class="form-control" id="city" formControlName="city">
               </div>
             </div>
+
             <div class="col-sm-3">
               <label for="state" class="col-sm-12 control-label">State:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="state" placeholder="State" formControlName="state">
-                <div class="error" *ngIf="errors.has('state')">
-                  {{errors.get('state')}}
-                </div>
+                <input type="text" class="form-control" id="state" formControlName="state">
               </div>
             </div>
 
             <div class="col-sm-3">
               <label for="zip" class="col-sm-12 control-label">Zip Code:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="zip" placeholder="Code" formControlName="zip">
-                <div class="error" *ngIf="errors.has('zip')">
-                  {{errors.get('zip')}}
-                </div>
+                <input type="text" class="form-control" id="zip" formControlName="zip">
               </div>
             </div>
           </div>
@@ -99,9 +89,9 @@
         <div class="form-group">
           <div class="row">
             <div class="col-sm-12">
-              <label for="student_number" class="col-sm-12 control-label">Student ID #:</label>
+              <label for="student_number" class="col-sm-12 control-label">Student ID:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="student_number" placeholder="Student ID #" formControlName="student_number">
+                <input type="text" class="form-control" id="student_number" placeholder="########" formControlName="student_number">
                 <div class="error" *ngIf="errors.has('student_number')">
                   {{errors.get('student_number')}}
                 </div>
@@ -116,14 +106,13 @@
             <div class="col-sm-12">
               <label for="major" class="col-sm-12 control-label">Major:</label>
               <div class="col-sm-12">
-                <input type="text" class="form-control" id="major" placeholder="Your Major" formControlName="major">
-                <div class="error" *ngIf="errors.has('major')">
-                  {{errors.get('major')}}
-                </div>
+                <input type="text" class="form-control" id="major" formControlName="major">
               </div>
             </div>
           </div>
         </div>
+
+
         <div class="form-group">
           <a class="login-links-1" routerLink="/dashboard">Go Back</a>
           <input type="submit" class="update" value="Update"/>

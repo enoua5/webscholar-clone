@@ -35,7 +35,7 @@ const routes: Routes = [
   { path: 'scholarship', component: ScholarshipListComponent },
   { path: 'studentviewscholarship', component: StudentViewScholarshipFormComponent },
   { path: 'registration_invitation_form', component: RegistrationInvitationFormComponent },
-  { path: 'committee', component: CommitteeComponent}
+  { path: 'committee/:id', component: CommitteeComponent}
 ];
 
 @NgModule({

@@ -4,11 +4,11 @@
     "\\src",
     "\\src\\app",
     "\\src\\app\\dashboard",
-    "\\src\\app\\login-form",
-    "\\src\\app\\navbar",
+    "\\src\\app\\issues",
     "\\src\\app\\scholarship-committee",
-    "\\src\\app\\scholarship-list"
+    "\\src\\app\\scholarship-list",
+    "\\src\\app\\view-issue"
   ],
-  "SelectedNode": "\\src\\app\\login-form\\login-form.component.ts",
+  "SelectedNode": "\\src\\app\\view-issue\\view-issue.component.html",
   "PreviewInSolutionExplorer": false
 }

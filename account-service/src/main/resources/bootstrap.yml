@@ -46,8 +46,8 @@ spring:
   mail:
     host: smtp-mail.outlook.com
     port: 587
-    username: webscholar-test@outlook.com
-    password: MPvyNtmb5fF4RAx
+    username: webscholartest@outlook.com
+    password: Lw!QMgRaZ87Cm9i
     properties:
       mail:
         smtp:

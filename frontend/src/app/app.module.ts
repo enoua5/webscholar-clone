@@ -23,6 +23,7 @@ import { StudentViewScholarshipFormComponent } from './student-view-scholarship-
 import { RegistrationInvitationFormComponent } from './registration-invitation-form/registration-invitation-form.component';
 import { RequestRoleFormComponent } from './request-role-form/request-role-form.component';
 import { RouterModule } from "@angular/router";
+import { PendingRoleRequestsComponent } from './pending-role-requests/pending-role-requests.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { RouterModule } from "@angular/router";
     NavbarComponent,
     StudentViewScholarshipFormComponent,
     RegistrationInvitationFormComponent,
-    RequestRoleFormComponent
+    RequestRoleFormComponent,
+    PendingRoleRequestsComponent
   ],
   imports: [
     BrowserModule,

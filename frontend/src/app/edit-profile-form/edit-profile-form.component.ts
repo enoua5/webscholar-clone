@@ -52,19 +52,19 @@ export class EditProfileFormComponent implements OnInit {
     // all these fields are ok to be null, they just won't get set in the db by the backend
     //Email verification
     const validEmail = RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$');
-    if (!validEmail.test(this.email.value) && this.email.value.length != 0) {
+    if (!validEmail.test(this.email.value) || this.email.value.length == 0) {
       this.errors.set('email', 'Invalid email format');
     }
 
     //Phone Number verification
     const validPhone = RegExp('^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$');
-    if(!validPhone.test(this.phone_number.value) && this.phone_number.value.length != 0){
+    if(!validPhone.test(this.phone_number.value) || this.phone_number.value.length == 0){
       this.errors.set('phone_number', 'Invalid phone number format');
     }
 
     //User Id verification
     const regex = RegExp('^[0-9]{8}$');
-    if (!regex.test(this.student_number.value) && this.student_number.value.length != 0) {
+    if (!regex.test(this.student_number.value) || this.student_number.value.length == 0) {
       this.errors.set('student_number', 'Invalid student ID');
     }
   }

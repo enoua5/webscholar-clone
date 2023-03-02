@@ -178,10 +178,12 @@ export class RegisterFormComponent implements OnInit {
         res => {
           // Put whatever needs to be executed *after* the routing is done in the .then()
           sessionStorage.setItem('name', `${ firstName } ${ lastName }`);
+          sessionStorage.setItem('accountKey', res.body.accountKey);
           sessionStorage.setItem('role', role);
 
           this.router.navigate(['/dashboard']).then(() => {
             console.log(sessionStorage.getItem('name'));
+            console.log(sessionStorage.getItem('accountKey'));
             console.log(sessionStorage.getItem('role'));
           });
         },

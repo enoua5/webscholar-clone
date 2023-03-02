@@ -27,7 +27,6 @@ export class ReportIssueFormComponent implements OnInit {
     private issueService: IssueService,
     private formBuilder: FormBuilder) {
     this.reportIssueForm = this.formBuilder.group({
-      username: ['', {validators: [Validators.required]}],
       summary: ['', {
         validators: [
           Validators.required,

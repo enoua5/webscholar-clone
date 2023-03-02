@@ -115,6 +115,7 @@ export class EditProfileFormComponent implements OnInit {
     this.checkErrors();
 
     if(this.errors.size == 0){
+      // create JSON object
       const email = this.email.value;
       const schoolId = this.student_number.value;
       const firstName = this.first_name.value;
@@ -138,15 +139,14 @@ export class EditProfileFormComponent implements OnInit {
           // change name in session storage if needed
           if(this.first_name.value != '' && this.last_name.value != ''){
             sessionStorage.setItem('name', `${ this.first_name.value } ${ this.last_name.value }`);
-          }else if(this.first_name.value != ''){
+          }else if(this.first_name.value != ''){ // only first name changed
             let oldLastName: string = sessionStorage.getItem('name').split(" ")[1];
             sessionStorage.setItem('name', `${ this.first_name.value } ${ oldLastName }`);
-          }else if(this.last_name.value != ''){
+          }else if(this.last_name.value != ''){ // only last name changed
             let oldFirstName: string = sessionStorage.getItem('name').split(" ")[0];
             sessionStorage.setItem('name', `${ oldFirstName } ${ this.last_name.value }`);
           }
 
-          window.location.reload();
           alert("Your information has been updated!");
         },
         err => {

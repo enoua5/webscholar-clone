@@ -16,11 +16,10 @@ export class EditProfileService{
       'Access-Control-Allow-Headers': 'Content-Type',
     });
 
-    //checking if data is not null
     console.log(data);
 
+    // get user account key from storage to call api
     let urlString : string = 'http://localhost:6001/account/update/' + sessionStorage.getItem('accountKey');
-    // TODO: figure out how to get the current account key, then pass it as part of the url
     return this.http.post<any>(urlString, data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
   }
 }

@@ -19,7 +19,8 @@ export class EditProfileService{
     //checking if data is not null
     console.log(data);
 
+    let urlString : string = 'http://localhost:6001/account/update/' + sessionStorage.getItem('accountKey');
     // TODO: figure out how to get the current account key, then pass it as part of the url
-    return this.http.post<any>('http://localhost:6001/account/update/1', data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
+    return this.http.post<any>(urlString, data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
   }
 }

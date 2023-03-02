@@ -52,19 +52,19 @@ export class EditProfileFormComponent implements OnInit {
     // all these fields are ok to be null, they just won't get set in the db by the backend
     //Email verification
     const validEmail = RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$');
-    if (!validEmail.test(this.email.value) || this.email.value.length == 0) {
+    if (!validEmail.test(this.email.value) && this.email.value != '') {
       this.errors.set('email', 'Invalid email format');
     }
 
     //Phone Number verification
     const validPhone = RegExp('^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$');
-    if(!validPhone.test(this.phone_number.value) || this.phone_number.value.length == 0){
+    if(!validPhone.test(this.phone_number.value) && this.phone_number.value != ''){
       this.errors.set('phone_number', 'Invalid phone number format');
     }
 
     //User Id verification
     const regex = RegExp('^[0-9]{8}$');
-    if (!regex.test(this.student_number.value) || this.student_number.value.length == 0) {
+    if(!regex.test(this.student_number.value) && this.student_number.value != ''){
       this.errors.set('student_number', 'Invalid student ID');
     }
   }
@@ -134,7 +134,21 @@ export class EditProfileFormComponent implements OnInit {
       });
 
       this.service.updateAccount(jsonObj).subscribe(
-        res => {},
+        res => {
+          // change name in session storage if needed
+          if(this.first_name.value != '' && this.last_name.value != ''){
+            sessionStorage.setItem('name', `${ this.first_name.value } ${ this.last_name.value }`);
+          }else if(this.first_name.value != ''){
+            let oldLastName: string = sessionStorage.getItem('name').split(" ")[1];
+            sessionStorage.setItem('name', `${ this.first_name.value } ${ oldLastName }`);
+          }else if(this.last_name.value != ''){
+            let oldFirstName: string = sessionStorage.getItem('name').split(" ")[0];
+            sessionStorage.setItem('name', `${ oldFirstName } ${ this.last_name.value }`);
+          }
+
+          window.location.reload();
+          alert("Your information has been updated!");
+        },
         err => {
           console.log(err);
           // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
@@ -144,16 +158,16 @@ export class EditProfileFormComponent implements OnInit {
     }
   }
 
-  private processResponse(data) {
-    console.log(data);
-    if (data.success == true) {
-      this.router.navigate(['../dashboard']);
-    }
-    else {
-      console.warn('Else Statement executed');
-      this.error = data.error;
-      this.errors = new Map(Object.entries(data.errors));
-    }
-  }
+  // private processResponse(data) {
+  //   console.log(data);
+  //   if (data.success == true) {
+  //     this.router.navigate(['../dashboard']);
+  //   }
+  //   else {
+  //     console.warn('Else Statement executed');
+  //     this.error = data.error;
+  //     this.errors = new Map(Object.entries(data.errors));
+  //   }
+  // }
 
 }

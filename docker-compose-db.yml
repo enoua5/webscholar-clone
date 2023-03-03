@@ -29,6 +29,25 @@ services:
       - back-end
 
 
+  scholarship-db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: scholarship-db
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_TCP_PORT: 6010
+    ports:
+      - "6010:6010"
+    expose:
+      - 6010
+    # Data persistence
+    volumes:
+      - "./.data/db:/var/lib/mysql_scholarship_db"
+    networks:
+      - front-end
+      - back-end
+
+
 
 #Networking settings that splits up containers
 #for the backend and frontend

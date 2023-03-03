@@ -1,5 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Form, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { Form, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PendingRoleRequestsService } from './pending-role-requests.service';
 
 // Component Metadata
 @Component({
@@ -11,17 +12,24 @@ export class PendingRoleRequestsComponent implements OnInit
 {
     // Component Attributes
     pageTitle: string = "Role Requests";
+    requestList: {id: number,
+                  first_name: string,
+                  last_name: string,
+                  e_mail: string,
+                  role: string,
+                 }[];
     requestForm = new FormGroup({
         requestControl: new FormControl('')
     });
 
     // Constructor
-    constructor() {}
+    constructor(private service: PendingRoleRequestsService) {}
 
     // Component Methods
     ngOnInit(): void 
     {
         // TODO: Populate requests list with random data from service.
+        this.requestList = this.service.getRequests();
     }
 
     onSubmit(): void

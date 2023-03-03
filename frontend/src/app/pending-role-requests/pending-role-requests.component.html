@@ -15,12 +15,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><input class="form-check-input" type="checkbox" value=""></td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>mark.otto@edu.com</td>
-                    <td>Member</td>
+                <tr *ngFor="let request of requestList">
+                    <td><input class="form-check-input" type="checkbox" [ngValue]="request.id"></td>
+                    <td>{{ request.first_name }}</td>
+                    <td>{{ request.last_name }}</td>
+                    <td>{{ request.email }}</td>
+                    <td>{{ request.role }}</td>
                 </tr>
             </tbody>
         </table>

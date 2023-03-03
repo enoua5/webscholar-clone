@@ -16,7 +16,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let request of requestList">
-                    <td><input class="form-check-input" type="checkbox" [ngValue]="request.id"></td>
+                    <td><input formControlName="{{ request.id }}" class="form-check-input" type="checkbox" [ngValue]="request.id"></td>
                     <td>{{ request.first_name }}</td>
                     <td>{{ request.last_name }}</td>
                     <td>{{ request.email }}</td>

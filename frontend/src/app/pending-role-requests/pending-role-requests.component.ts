@@ -18,9 +18,7 @@ export class PendingRoleRequestsComponent implements OnInit
                   e_mail: string,
                   role: string,
                  }[];
-    requestForm = new FormGroup({
-        requestControl: new FormControl('')
-    });
+    requestForm = new FormGroup({});
 
     // Constructor
     constructor(private service: PendingRoleRequestsService) {}
@@ -28,12 +26,18 @@ export class PendingRoleRequestsComponent implements OnInit
     // Component Methods
     ngOnInit(): void 
     {
-        // TODO: Populate requests list with random data from service.
+        // Query the backend for a list of all of the requests, then
+        // dynamically populate the form according to how many requests
+        // there are.
         this.requestList = this.service.getRequests();
+        this.requestList.forEach((request) => {
+            this.requestForm.addControl("" + request.id, new FormControl())
+        });
     }
 
     onSubmit(): void
     {
         // TODO: Submit fake API call to backend.
+        console.log(this.requestForm)
     }
 }

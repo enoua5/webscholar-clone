@@ -16,7 +16,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let request of requestList">
-                    <td><input formControlName="{{ request.id }}" class="form-check-input" type="checkbox" [ngValue]="request.id"></td>
+                    <td><input formControlName="{{ request.id }}" class="form-check-input" type="checkbox" [ngValue]="request.id" id="{{ request.id }}"></td>
                     <td>{{ request.first_name }}</td>
                     <td>{{ request.last_name }}</td>
                     <td>{{ request.email }}</td>
@@ -24,8 +24,8 @@
                 </tr>
             </tbody>
         </table>
-        <button type="submit" class="btn btn-primary me-2">Approve</button>
-        <button type="submit" class="btn btn-danger">Deny</button>
+        <button [disabled]="requestForm.invalid" type="submit" class="btn btn-primary me-2">Approve</button>
+        <button [disabled]="requestForm.invalid" type="button" (click)="denyRequests" class="btn btn-danger">Deny</button>
       </form>
     </div>
   </section>

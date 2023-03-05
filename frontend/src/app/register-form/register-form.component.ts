@@ -173,17 +173,13 @@ export class RegisterFormComponent implements OnInit {
         school: "Weber State University"
       });
 
-      console.log(jsonObj);
+      //console.log(jsonObj);
       this.service.createAccount(jsonObj).subscribe(
         res => {
-          // Put whatever needs to be executed *after* the routing is done in the .then()
-          sessionStorage.setItem('name', `${ firstName } ${ lastName }`);
-          sessionStorage.setItem('role', role);
-
-          this.router.navigate(['/dashboard']).then(() => {
-            console.log(sessionStorage.getItem('name'));
-            console.log(sessionStorage.getItem('role'));
-          });
+           // The only purpose of this function is to retreive AccountID in order to 
+           // place it into the sessionStorage. Would not be necessary if the auth services 
+           // ran, or if the create account API call returned the object of a newly created user.
+          this.loginLogic();
         },
         err => {
           console.log(err);
@@ -194,5 +190,30 @@ export class RegisterFormComponent implements OnInit {
       // Test create account
       //this.service.testAccountCreation();
     }
+  }
+
+  // Only purpose is to be able to retreive accountKey
+  loginLogic(): void
+  {
+    const jsonObjToLogin = JSON.stringify({
+      email: this.email.value,
+      password: this.password.value
+    });
+    
+    this.service.login(jsonObjToLogin).subscribe(
+      res => {
+        // Put whatever needs to be executed *after* the routing is done in the .then()
+        sessionStorage.setItem('name', `${ res.body.firstName } ${ res.body.lastName }`);
+        sessionStorage.setItem('email', `${ res.body.email }`);
+        sessionStorage.setItem('userType', res.body.userType);
+        sessionStorage.setItem('accountKey', res.body.accountKey);
+
+         // Print the storage
+         console.log(sessionStorage.getItem('name'));
+         console.log(sessionStorage.getItem('email'));
+         console.log(sessionStorage.getItem('userType'));
+         console.log(sessionStorage.getItem('accountKey'));
+      }
+    );
   }
 }

@@ -180,6 +180,10 @@ export class RegisterFormComponent implements OnInit {
            // place it into the sessionStorage. Would not be necessary if the auth services 
            // ran, or if the create account API call returned the object of a newly created user.
           this.loginLogic();
+
+          this.router.navigate(['/dashboard']).then(() => {
+           
+          });
         },
         err => {
           console.log(err);

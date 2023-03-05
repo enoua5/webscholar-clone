@@ -5,6 +5,16 @@ import {Observable} from "rxjs";
 // TODO: Replace the below URL with the one created by the backend team for role requests.
 const INSERT_URL = 'http://localhost:6001/account/test_me';
 
+// Declare our RequestList type so we don't have to copy it over and over.
+type RequestList =  
+{
+    id: number,
+    first_name: string,
+    last_name: string,
+    email: string,
+    role: string,
+}[];
+
 @Injectable({
   providedIn: 'root',
 })
@@ -64,12 +74,7 @@ export class PendingRoleRequestsService
    */
   private parseRequestJSON(roleRequestJSON: string): any
   {
-    let requestList: {id: number,
-                      first_name: string,
-                      last_name: string,
-                      email: string,
-                      role: string,
-                     }[] = [];
+    let requestList: RequestList = [];
     let raw_json = JSON.parse(roleRequestJSON);
 
     // Iterates over returned JSON and adds its requests into our array.
@@ -88,29 +93,25 @@ export class PendingRoleRequestsService
   /**
    * Approves the given requests and removes them from our request list, if successful.
    * 
-   * @param requestID A list of the IDs of the requests that we're approving.
-   * @returns True if all of the requests were successfully approved; false otherwise.
+   * @param requestID A list of the requests that we're approving.
+   * @returns A list of error messages on failure, or nothing on success. 
    */
-  public approveRequests(requestIDList: number[]): boolean
+  public approveRequests(requestList: RequestList): string[] | undefined
   {
     let returnSuccess: boolean = true;
+    let errorQueue: string[] = [];
 
-    requestIDList.forEach((request) => {
+    requestList.forEach((request) => {
       // TODO: Send API call and remove from our requestList if successful.
-      let success = this.approveRequest(request);
+      let success = this.approveRequest(request['id']);
 
       if (!success)
       {
-        console.log("Failed to approve request: " + request);
-        returnSuccess = false;
-      }
-      else
-      {
-        console.log("Approved request: " + request);
+        errorQueue.push("Failed to approve request for: " + request['last_name'] + ", " + request['first_name'] + ".")
       }
     });
 
-    return returnSuccess;
+    return (errorQueue.length > 0 ? errorQueue : undefined);
   }
 
   /**
@@ -130,29 +131,25 @@ export class PendingRoleRequestsService
   /**
    * Denies the given requests and removes them from our request list, if successful.
    * 
-   * @param requestID A list of the IDs of the requests that we're denying.
-   * @returns True if all of the requests were successfully denied; false otherwise.
+   * @param requestID A list of the requests that we're denying.
+   * @returns A list of error messages on failure, or nothing on success. 
    */
-  public denyRequests(requestIDList: number[]): boolean
+  public denyRequests(requestList: RequestList): string[] | undefined
   {
     let returnSuccess: boolean = true;
+    let errorQueue: string[] = [];
 
-    requestIDList.forEach((request) => {
+    requestList.forEach((request) => {
       // TODO: Send API call and remove from our requestList if successful.
-      let success = this.denyRequest(request);
+      let success = this.denyRequest(request['id']);
 
       if (!success)
       {
-        console.log("Failed to deny request: " + request);
-        returnSuccess = false;
-      }
-      else
-      {
-        console.log("Denied request: " + request);
+        errorQueue.push("Failed to deny request for: " + request['last_name'] + ", " + request['first_name'] + ".")
       }
     });
 
-    return returnSuccess;
+    return (errorQueue.length > 0 ? errorQueue : undefined);
   }
 
   /**
@@ -166,7 +163,7 @@ export class PendingRoleRequestsService
     let httpRequestBody = JSON.stringify({id: requestID, approved: false});
     // this.http.post(INSERT_URL, httpRequestBody, {responseType: 'text'}).subscribe((response) => this.processResponse(response));
 
-    return true;
+    return false;
   }
 
   private processResponse(response)

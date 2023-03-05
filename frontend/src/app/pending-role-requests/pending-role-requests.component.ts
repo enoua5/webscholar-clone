@@ -3,6 +3,16 @@ import { Form, FormBuilder, FormControl, FormGroup, Validators } from '@angular/
 import { requireSelectionValidator } from './pending-role-requests-validators';
 import { PendingRoleRequestsService } from './pending-role-requests.service';
 
+// Declare our RequestList type so we don't have to copy it over and over.
+type RequestList =  
+{
+    id: number,
+    first_name: string,
+    last_name: string,
+    email: string,
+    role: string,
+}[];
+
 // Component Metadata
 @Component({
     selector: 'pending-role-requests',
@@ -14,27 +24,59 @@ export class PendingRoleRequestsComponent implements OnInit
 {
     // Component Attributes
     pageTitle: string = "Role Requests";
-    requestList: {id: number,
-                  first_name: string,
-                  last_name: string,
-                  email: string,
-                  role: string,
-                 }[];
+    requestList: RequestList;
     requestForm = new FormGroup({}, requireSelectionValidator());
+    errorList: string[];
 
     // Constructor
     constructor(private service: PendingRoleRequestsService) {}
 
-    // Component Methods
-    ngOnInit(): void 
+    /**
+     * Queries the backend for all of the current role requests and then populates
+     * our FormGroup with the appropriate number of controls.
+     */
+    private populateRequestTable(): void
     {
-        // Query the backend for a list of all of the requests, then
-        // dynamically populate the form according to how many requests
-        // there are.
         this.requestList = this.service.getRequests();
+
+        // Clears the form each time on load. Prevents duplicate rows.
+        Object.keys(this.requestForm.controls).forEach((control) => {
+            this.requestForm.removeControl(control);
+        });
+
         this.requestList.forEach((request) => {
             this.requestForm.addControl("" + request.id, new FormControl())
         });
+    }
+
+    /**
+     * Populates our page with all of the current role requests on load.
+     */
+    ngOnInit(): void 
+    {
+        this.populateRequestTable();
+    }
+
+    /**
+     * Parses the submitted form and pulls out all of the request IDs for the selected requests.
+     * 
+     * @returns A RequestList containing the selected requests.
+     */
+    private getSelectedRequests(): RequestList
+    {
+        let selectedRequests: RequestList = [];
+
+        Object.keys(this.requestForm.controls).forEach((controlName) => {
+            const control = this.requestForm.controls[controlName];
+
+            if (control.value == true)
+            {
+                let matchingRequest = this.requestList.find(request => "" + request['id'] === controlName);
+                selectedRequests.push(matchingRequest);
+            }
+        });
+
+        return selectedRequests;
     }
 
     /**
@@ -44,29 +86,12 @@ export class PendingRoleRequestsComponent implements OnInit
     {
         // TODO: Submit fake API call to backend.
         console.log(this.requestForm)
-        let selectedRequests: number[] = this.getSelectedRequests();
-        this.service.approveRequests(selectedRequests);
-    }
+        this.errorList = null;
 
-    /**
-     * Parses the submitted form and pulls out all of the request IDs for the selected requests.
-     * 
-     * @returns A list of all of the selected requests' IDs.
-     */
-    private getSelectedRequests(): number[]
-    {
-        let requestIDList: number[] = [];
+        let selectedRequests: RequestList = this.getSelectedRequests();
+        this.errorList = this.service.approveRequests(selectedRequests);
 
-        Object.keys(this.requestForm.controls).forEach((controlName) => {
-            const control = this.requestForm.controls[controlName];
-
-            if (control.value == true)
-            {
-                requestIDList.push(+controlName);
-            }
-        });
-
-        return requestIDList;
+        this.populateRequestTable();
     }
 
     /**
@@ -75,7 +100,11 @@ export class PendingRoleRequestsComponent implements OnInit
     denyRequests(): void
     {
         console.log(this.requestForm)
-        let selectedRequests: number[] = this.getSelectedRequests();
-        this.service.denyRequests(selectedRequests);
+        this.errorList = null;
+
+        let selectedRequests: RequestList = this.getSelectedRequests();
+        this.errorList = this.service.denyRequests(selectedRequests);
+
+        this.populateRequestTable();
     }
 }

@@ -6,7 +6,8 @@ import { PendingRoleRequestsService } from './pending-role-requests.service';
 // Component Metadata
 @Component({
     selector: 'pending-role-requests',
-    templateUrl: './pending-role-requests.component.html'
+    templateUrl: './pending-role-requests.component.html',
+    styleUrls: ['./pending-role-requests.component.less']
 })
 
 export class PendingRoleRequestsComponent implements OnInit
@@ -16,7 +17,7 @@ export class PendingRoleRequestsComponent implements OnInit
     requestList: {id: number,
                   first_name: string,
                   last_name: string,
-                  e_mail: string,
+                  email: string,
                   role: string,
                  }[];
     requestForm = new FormGroup({}, requireSelectionValidator());
@@ -73,6 +74,8 @@ export class PendingRoleRequestsComponent implements OnInit
      */
     denyRequests(): void
     {
-
+        console.log(this.requestForm)
+        let selectedRequests: number[] = this.getSelectedRequests();
+        this.service.denyRequests(selectedRequests);
     }
 }

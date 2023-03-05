@@ -14,36 +14,6 @@ export class PendingRoleRequestsService
   {
     // Empty constructor; no body needed yet.
   }
-  
-  /**
-   * Parses the given JSON string and adds any objects found into a list.
-   * 
-   * @param roleRequestJSON The raw JSON string returned by our API call.
-   * @returns A list of all of the request objects found in the given JSON.
-   */
-  private parseRequestJSON(roleRequestJSON: string): any
-  {
-    // Clear requestList array and then populate with any requests found.
-    let requestList: {id: number,
-                      first_name: string,
-                      last_name: string,
-                      e_mail: string,
-                      role: string,
-                     }[] = [];
-    let raw_json = JSON.parse(roleRequestJSON);
-
-    // Iterates over returned JSON and adds its requests into our array.
-    raw_json["requests"].forEach(request => {
-        requestList.push({
-        id: request["id"],
-        first_name: request["first_name"],
-        last_name: request["last_name"],
-        email: request["email"],
-        role: request["role"]
-    })});
-
-    return requestList;
-  }
 
   /**
    * Queries the account services API to get all of the current role requests.
@@ -87,6 +57,35 @@ export class PendingRoleRequestsService
   }
 
   /**
+   * Parses the given JSON string and adds any request objects found into a list.
+   * 
+   * @param roleRequestJSON The raw JSON string returned by our API call.
+   * @returns A list of all of the request objects found.
+   */
+  private parseRequestJSON(roleRequestJSON: string): any
+  {
+    let requestList: {id: number,
+                      first_name: string,
+                      last_name: string,
+                      email: string,
+                      role: string,
+                     }[] = [];
+    let raw_json = JSON.parse(roleRequestJSON);
+
+    // Iterates over returned JSON and adds its requests into our array.
+    raw_json["requests"].forEach(request => {
+        requestList.push({
+        id: request["id"],
+        first_name: request["first_name"],
+        last_name: request["last_name"],
+        email: request["email"],
+        role: request["role"]
+    })});
+
+    return requestList;
+  }
+
+  /**
    * Approves the given requests and removes them from our request list, if successful.
    * 
    * @param requestID A list of the IDs of the requests that we're approving.
@@ -120,9 +119,51 @@ export class PendingRoleRequestsService
    * @param requestID The ID of the request to approve.
    * @returns True if the request was succesfully approved on the backend; false otherwise.
    */
-  public approveRequest(requestID: number): boolean
+  private approveRequest(requestID: number): boolean
   {
     let httpRequestBody = JSON.stringify({id: requestID, approved: true});
+    // this.http.post(INSERT_URL, httpRequestBody, {responseType: 'text'}).subscribe((response) => this.processResponse(response));
+
+    return true;
+  }
+
+  /**
+   * Denies the given requests and removes them from our request list, if successful.
+   * 
+   * @param requestID A list of the IDs of the requests that we're denying.
+   * @returns True if all of the requests were successfully denied; false otherwise.
+   */
+  public denyRequests(requestIDList: number[]): boolean
+  {
+    let returnSuccess: boolean = true;
+
+    requestIDList.forEach((request) => {
+      // TODO: Send API call and remove from our requestList if successful.
+      let success = this.denyRequest(request);
+
+      if (!success)
+      {
+        console.log("Failed to deny request: " + request);
+        returnSuccess = false;
+      }
+      else
+      {
+        console.log("Denied request: " + request);
+      }
+    });
+
+    return returnSuccess;
+  }
+
+  /**
+   * Sends a request to the backend to deny a single role request.
+   * 
+   * @param requestID The ID of the request to deny.
+   * @returns True if the request was succesfully denied on the backend; false otherwise.
+   */
+  private denyRequest(requestID: number): boolean
+  {
+    let httpRequestBody = JSON.stringify({id: requestID, approved: false});
     // this.http.post(INSERT_URL, httpRequestBody, {responseType: 'text'}).subscribe((response) => this.processResponse(response));
 
     return true;

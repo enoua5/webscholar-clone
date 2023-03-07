@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: application-service
+  cloud:
+    config:
+      uri: http://config-service:8888
+      fail-fast: true
+      username: user
+      password: ${CONFIG-SERVICE-PASSWORD}
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://account-db:6002/webscholar-db
+    username: root
+    password: password

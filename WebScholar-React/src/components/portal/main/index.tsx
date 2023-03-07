@@ -12,6 +12,7 @@ import { useAppSelector } from '../../../hooks';
 import { userState } from '../../../state/reducers/userSlice';
 import DummyPage from '../../pages/DummyPage';
 import ApplicantProfilePage from '../../pages/ApplicantProfilePage';
+import ScholarshipSearchPage from '../../pages/ScholarshipSearchPage';
 
 function Main() {
   const user = useAppSelector(userState);
@@ -36,7 +37,7 @@ function Main() {
 
   // paths available to Student users
   const studentMenu: React.ReactElement[] = [
-    <Route key='/scholarships' path='/dummy' element={<DummyPage />} />,
+    <Route key='/scholarships' path='/scholarships' element={<ScholarshipSearchPage />} />,
     <Route key='/profile' path='/profile' element={<ApplicantProfilePage />} />,
   ];
 
@@ -77,7 +78,7 @@ export default Main
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 138px);
+  height: calc(100vh - 155px);
   width: 94%;
   min-width: 1000px;
   position: absolute;

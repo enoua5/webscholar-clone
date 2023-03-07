@@ -1,4 +1,3 @@
-import { parseStyle } from '@ant-design/cssinjs/lib/hooks/useStyleRegister';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 

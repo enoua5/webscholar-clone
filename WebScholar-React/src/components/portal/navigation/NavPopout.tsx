@@ -53,7 +53,7 @@ const HelpItems = [
 ]
 
 const ScholarshipItems = [
-  {label: "Search All Scholarships", path: "/dummy"},
+  {label: "Search Scholarships", path: "/scholarships"},
 ]
 
 const Container = styled.div<{open: boolean}>`

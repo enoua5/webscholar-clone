@@ -1,14 +1,30 @@
 spring:
   application:
-    name: application-service
+    # Name cannot begin with "application-" so I changed it to "app-"
+    # Waiting for Dr Zhang to provide an alternative name
+    name: app-service
   cloud:
     config:
       uri: http://config-service:8888
       fail-fast: true
       username: user
       password: ${CONFIG-SERVICE-PASSWORD}
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://account-db:6002/webscholar-db
-    username: root
-    password: password
+
+# TODO: Database is still a work in progress for now:
+#       After adding the dependencies for MySQL and JPA,
+#       ApplicationApp AND AccountApp started throwing errors
+#       Need to figure out why before enabling database connectivity
+#       Dependencies are currently commented out in pom file
+#
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://account-db:6002/webscholar-db
+#    username: root
+#    password: password
+#  jpa:
+#    database: mysql
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: create-drop
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl

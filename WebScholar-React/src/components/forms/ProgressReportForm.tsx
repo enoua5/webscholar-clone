@@ -94,3 +94,8 @@ const ProgressReportForm: React.FC<ReportCreateFormProps> = ({
 }
 
 export default ProgressReportForm;
+
+// const StyledModal = styled(Modal)`
+//     width: 500px;
+//     background-color: dimgray;
+// `

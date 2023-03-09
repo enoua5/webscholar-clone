@@ -1,7 +1,10 @@
 import { Form, Row } from 'antd';
 import { useForm } from 'antd/es/form/Form';
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import { CheckCircle } from 'react-feather';
+import { useAppDispatch } from '../../hooks';
+import { setUserForm } from '../../state/reducers/userSlice';
 import CollegeInfoSection from '../sections/CollegeInfoSection';
 import HighSchoolInfoSection from '../sections/HighSchoolInfoSection';
 import { EditButton } from '../sections/PersonalInfoSection';
@@ -9,12 +12,25 @@ import { FormContainer, FormHeader, SaveButton, SavedText } from './PersonalInfo
 
 export default function AcademicHistoryForm() {
   const [form] = useForm();
+  const dispatch = useAppDispatch();
   const [submitted, setSubmitted] = useState(false);
   const formProps = {form, submitted, setSubmitted};
 
-  // should update values in redux and call API to save form
+  // TODO: call API to save form
   const handleSubmitSuccess = (values: any) => {
-    console.log("FORM SUBMITTED SUCCESSFULLY: ", values);
+    const highSchoolGraduationDate = dayjs(values.highSchoolGraduation).format('YYYY-MM-DD');
+    const collegeGraduationDate = dayjs(values.collegeGraduation).format('YYYY-MM-DD');
+    const highSchoolTranscript = values.highSchoolTranscript[0]?.name;
+    const collegeTranscript = values.collegeTranscript[0]?.name;
+    const submitValues = {
+      ...values, 
+      highSchoolGraduationDate: highSchoolGraduationDate, 
+      collegeGraduationDate: collegeGraduationDate, 
+      highSchoolTranscript: highSchoolTranscript, 
+      collegeTranscript: collegeTranscript
+    }
+
+    dispatch(setUserForm({name: 'academicInfo', form: submitValues}))
     setSubmitted(true);
   };
 
@@ -32,7 +48,7 @@ export default function AcademicHistoryForm() {
         labelAlign='left'
         labelCol={{span: 7}}
         form={form}
-        name="student"
+        name="academicInfo"
         onFinish={handleSubmitSuccess}
         onFinishFailed={handleSubmitFailure}
         autoComplete='off'

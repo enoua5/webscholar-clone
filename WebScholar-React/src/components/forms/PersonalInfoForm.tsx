@@ -3,22 +3,27 @@ import styled from 'styled-components';
 import { Button, Form, Row } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { CheckCircle } from 'react-feather';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { PageContainer } from '../elements/PageContainer';
-import { userState } from '../../state/reducers/userSlice';
+import { setUserForm, userState } from '../../state/reducers/userSlice';
 import ContactInfoSection from '../sections/ContactInfoSection';
 import PersonalInfoSection from '../sections/PersonalInfoSection';
 import FinancialInfoSection from '../sections/FinancialInfoSection';
+import dayjs from 'dayjs';
 
 export default function PersonalInfoForm() {
+  const dispatch = useAppDispatch();
   const [form] = useForm();
   const user = useAppSelector(userState);
   const [submitted, setSubmitted] = useState(false);
   const formProps = {form, user, submitted, setSubmitted };
 
-  // should update values in redux and call API to save form
+  // TODO: call API to save form
   const handleSubmitSuccess = (values: any) => {
-      console.log("FORM SUBMITTED SUCCESSFULLY: ", values);
+      const dateString = dayjs(values.birth).format('YYYY-MM-DD');
+      const visa = values.visa[0]?.name;
+      const submitValues = {...values, birth: dateString, visa: visa};
+      dispatch(setUserForm({name: 'personalInfo', form: submitValues}))
       setSubmitted(true);
   };
 
@@ -35,7 +40,7 @@ export default function PersonalInfoForm() {
         labelAlign='left'
         labelCol={{span: 6}}
         form={form}
-        name="student"
+        name="personalInfo"
         initialValues={{firstName: user.firstName, lastName: user.lastName, email: user.email, citizen: true}}
         onFinish={handleSubmitSuccess}
         onFinishFailed={handleSubmitFailure}
@@ -47,7 +52,7 @@ export default function PersonalInfoForm() {
         <ContactInfoSection {...formProps}/>
         <FinancialInfoSection {...formProps}/>
         
-        <Form.Item name='saveButton'>
+        <Form.Item>
           {!submitted ? 
             <SaveButton type='primary' htmlType='submit'>Save</SaveButton>
           :

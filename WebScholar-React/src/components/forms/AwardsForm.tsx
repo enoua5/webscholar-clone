@@ -5,14 +5,16 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import { CheckCircle, Info } from 'react-feather';
 import { EditButton } from '../sections/PersonalInfoSection';
+import { useAppDispatch } from '../../hooks';
+import { setUserForm } from '../../state/reducers/userSlice';
 
 export default function AwardsForm() {
-
+  const dispatch = useAppDispatch();
   const [submitted, setSubmitted] = useState(false);
 
     // should update values in redux and call API to save form
     const handleSubmitSuccess = (values: any) => {
-      console.log("FORM SUBMITTED SUCCESSFULLY: ", values);
+      dispatch(setUserForm({name: 'awards', form: values}))
       setSubmitted(true);
     };
   

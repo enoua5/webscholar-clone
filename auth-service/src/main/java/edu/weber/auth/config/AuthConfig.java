@@ -10,11 +10,11 @@ import org.springframework.security.oauth2.provider.approval.UserApprovalHandler
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 import javax.sql.DataSource;
-// TODO
-/**
- * This class handles who can handle which API and how they can access it.
- * Thus handles the access control for all microservices.
+
+/*
+ * This class configures the authorization server
  */
+
 @Configuration
 @EnableAuthorizationServer
 public class AuthConfig extends AuthorizationServerConfigurerAdapter {

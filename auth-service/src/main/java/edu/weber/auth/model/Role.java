@@ -43,9 +43,8 @@ public class Role implements  Serializable{
 	private Set<Permission> permissions;
 	
 	@OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="auth_role_id")
+    @JoinColumn(name="role_id")
 	private Set<User> users;
-
 
 	public Role() {
 		super();
@@ -82,11 +81,9 @@ public class Role implements  Serializable{
 		this.permissions = permissions;
 	}
 
-
 	public Set<User> getUsers() {
 		return users;
 	}
-
 
 	public void setUsers(Set<User> users) {
 		this.users = users;

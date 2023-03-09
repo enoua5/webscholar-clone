@@ -29,4 +29,7 @@ spring:
         client-secret: super-secret
 
 server:
-  port: 6006
+  port: 8888
+  error:
+    include-message: always
+

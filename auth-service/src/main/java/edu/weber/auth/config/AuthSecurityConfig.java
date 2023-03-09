@@ -74,27 +74,4 @@ public class AuthSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().disable();
     }
 
-    @Bean
-    public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
-    }
-
-    @Bean
-    @Autowired
-    public TokenStoreUserApprovalHandler userApprovalHandler(TokenStore tokenStore) {
-        TokenStoreUserApprovalHandler handler = new TokenStoreUserApprovalHandler();
-        handler.setTokenStore(tokenStore);
-        handler.setRequestFactory(new DefaultOAuth2RequestFactory(clientDetailsService));
-        handler.setClientDetailsService(clientDetailsService);
-        return handler;
-    }
-
-    @Bean
-    @Autowired
-    public ApprovalStore approvalStore(TokenStore tokenStore) throws Exception {
-        TokenApprovalStore store = new TokenApprovalStore();
-        store.setTokenStore(tokenStore);
-        return store;
-    }
-
 }

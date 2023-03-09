@@ -4,6 +4,7 @@ import { Header } from '../elements/Header';
 import { userState } from '../../state/reducers/userSlice';
 import { useAppSelector } from '../../hooks';
 import CreateScholashipForm from '../forms/CreateScholarshipForm'
+import AdministratorScholarshipsStatus from './AdministratorScholarshipsStatus'
 
 
 export default function AdministratorHomePage() {
@@ -15,9 +16,9 @@ export default function AdministratorHomePage() {
             tabPosition='left'
             items={[
                 {
-                    label: "Active Scholarships",
-                    key: "activeScholarship",
-                    // children: <CreateScholashipForm />,
+                    label: "Scholarships Status",
+                    key: "scholarshipsStatus",
+                    children: <AdministratorScholarshipsStatus />,
                     disabled: false
                 },
                 {

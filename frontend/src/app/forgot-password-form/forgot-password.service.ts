@@ -18,14 +18,15 @@ export class ForgotPasswordService{
   }
 
   public forgotPassword(data){
-    console.log("Entered forgotPassword");
+    // TODO: This gets logged in the browser, but then nothing else happens
+    console.log("Entered forgotPassword with data:" + data);
     let header = new HttpHeaders({  'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Access-Control-Allow-Headers': 'Content-Type',
     });
 
-    return this.http.post<any>('http://localhost:6001/account/forgotPassword', data, { headers: header, observe: 'response', params: data, responseType: 'json'}).pipe();
-    // return this.http.post<any>('http://localhost:6001/account/forgotPassword', data).pipe();
+    // TODO: This call is not going through.
+    return this.http.post<any>('http://localhost:6001/account/forgotPassword', data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
   }
 
   /*

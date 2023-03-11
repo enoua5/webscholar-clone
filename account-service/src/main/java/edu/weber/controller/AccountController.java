@@ -186,13 +186,14 @@ public class AccountController {
     }
 
     @RequestMapping(path = "/forgotPassword", method = RequestMethod.POST)
-    public String forgotPassword(@RequestBody String accountEmail){
+    public String forgotPassword(@RequestParam String accountEmail){
         log.info("Entering forgotPassword");
 
 //        Account found = accountService.accountRepository.findAccountByAccountKey(accountKey);
         Account found = accountService.accountRepository.findAccountByEmail(accountEmail);
         if(found == null){
             accountNotFound();
+            log.error("Could not find the account");
             return "Could not find the account via accountKey.";
         }
         if(!accountService.sendForgotPassword(accountEmail)){

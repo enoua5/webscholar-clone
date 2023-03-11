@@ -194,19 +194,21 @@ public class AccountService {
 
     /**
      * This method sends an email to the user who requested their password be reset.
-     * @param accountKey
+     * @param accountEmail
      * @return
      */
-    public boolean sendForgotPassword(int accountKey){
+    public boolean sendForgotPassword(String accountEmail){
+        log.debug("Sending Forgotten Password");
 
         //Get the forgetter's account
-        Account account = accountRepository.findAccountByAccountKey(accountKey);
+//        Account account = accountRepository.findAccountByAccountKey(accountKey);
+        Account account = accountRepository.findAccountByEmail(accountEmail);
 
         //Verify the forgetter's account exists
         if(account == null){
 
             // Log Error
-            log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: generateForgotPasswordLink()");
+            log.error("ERROR: Account Number " + accountEmail + " not found -- SOURCE: generateForgotPasswordLink()");
 
             return false;
         }

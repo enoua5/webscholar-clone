@@ -3,17 +3,18 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 // TODO: Replace the below URL with the one created by the backend team for role requests.
-const INSERT_URL = 'http://localhost:6001/account/test_me';
+const INSERT_URL = 'http://localhost:6001/account/create';
 
 // Declare our RequestList type so we don't have to copy it over and over.
-type RequestList =  
+type Request = 
 {
-    id: number,
-    first_name: string,
-    last_name: string,
-    email: string,
-    role: string,
-}[];
+  id: number,
+  first_name: string,
+  last_name: string,
+  email: string,
+  role: string,
+}
+type RequestList = Request[];
 
 @Injectable({
   providedIn: 'root',
@@ -98,12 +99,10 @@ export class PendingRoleRequestsService
    */
   public approveRequests(requestList: RequestList): string[] | undefined
   {
-    let returnSuccess: boolean = true;
     let errorQueue: string[] = [];
 
     requestList.forEach((request) => {
-      // TODO: Send API call and remove from our requestList if successful.
-      let success = this.approveRequest(request['id']);
+      let success = this.approveRequest(request);
 
       if (!success)
       {
@@ -117,15 +116,25 @@ export class PendingRoleRequestsService
   /**
    * Sends a request to the backend to approve a single role request.
    * 
-   * @param requestID The ID of the request to approve.
+   * @param requestID The request to approve.
    * @returns True if the request was succesfully approved on the backend; false otherwise.
    */
-  private approveRequest(requestID: number): boolean
+  private approveRequest(request: Request): boolean
   {
-    let httpRequestBody = JSON.stringify({id: requestID, approved: true});
-    // this.http.post(INSERT_URL, httpRequestBody, {responseType: 'text'}).subscribe((response) => this.processResponse(response));
+    let success = true;
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    });
+    let body = JSON.stringify({id: request.id, approved: true});
+    
+    this.http.post(INSERT_URL, body, { headers: header, observe: 'response', responseType: 'json'}).subscribe((response) => 
+    {
+      success = this.processResponse(response)
+    });
 
-    return true;
+    return success;
   }
 
   /**
@@ -136,12 +145,11 @@ export class PendingRoleRequestsService
    */
   public denyRequests(requestList: RequestList): string[] | undefined
   {
-    let returnSuccess: boolean = true;
     let errorQueue: string[] = [];
 
     requestList.forEach((request) => {
       // TODO: Send API call and remove from our requestList if successful.
-      let success = this.denyRequest(request['id']);
+      let success = this.denyRequest(request);
 
       if (!success)
       {
@@ -155,19 +163,40 @@ export class PendingRoleRequestsService
   /**
    * Sends a request to the backend to deny a single role request.
    * 
-   * @param requestID The ID of the request to deny.
+   * @param requestID The request to deny.
    * @returns True if the request was succesfully denied on the backend; false otherwise.
    */
-  private denyRequest(requestID: number): boolean
+  private denyRequest(request: Request): boolean
   {
-    let httpRequestBody = JSON.stringify({id: requestID, approved: false});
-    // this.http.post(INSERT_URL, httpRequestBody, {responseType: 'text'}).subscribe((response) => this.processResponse(response));
+    let success = true;
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    });
+    let body = JSON.stringify({id: request.id, approved: false});
+    
+    this.http.post(INSERT_URL, body, { headers: header, observe: 'response', responseType: 'json'}).subscribe((response) => 
+    {
+      success = this.processResponse(response)
+    });
 
-    return false;
+    return success;
   }
 
-  private processResponse(response)
+  /**
+   * Processes the HTTP response from the backend and determines if it contains any errors.
+   * 
+   * @param response The response from the backend to our API call.
+   * @returns True if the response indicates success; false otherwise.
+   */
+  private processResponse(response): boolean
   {
-    console.log(response);
+    if (response.status != 200)
+    {
+      console.log(response)
+      return false;
+    }
+    return true;
   }
 }

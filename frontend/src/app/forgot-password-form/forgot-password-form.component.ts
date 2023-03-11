@@ -17,8 +17,8 @@ export class ForgotPasswordFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
-    private service: ForgotPasswordService)
-  {
+    private service: ForgotPasswordService
+  ) {
     this.form = this.formBuilder.group({
       username: ['', {
         validators: [
@@ -44,14 +44,13 @@ export class ForgotPasswordFormComponent implements OnInit {
 
   onSubmit(): void {
     // Set json object to username
-    const jsonObj = JSON.stringify({email: this.username.value});
+    const jsonObj = JSON.stringify({accountEmail: this.username.value});
 
    // Check validity of form, before sending email
     if (this.form.valid)
     {
-        alert('Sending Forgot Password Email to:' + jsonObj);
-
         this.service.forgotPassword(jsonObj);
+        alert('Sending Forgot Password Email to:' + jsonObj);
     }
     // else log an error message
   }

@@ -150,6 +150,7 @@ public class AccountController {
     @RequestMapping(value = "/emailExists", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Boolean emailExists(@RequestParam String email) {
+        log.info("Entering emailExists");
         return accountService.accountRepository.findAccountByEmail(email) != null;
     }
 
@@ -185,7 +186,8 @@ public class AccountController {
     }
 
     @RequestMapping(path = "/forgotPassword", method = RequestMethod.POST)
-    public String forgotPassword(@RequestParam String accountEmail){
+    public String forgotPassword(@RequestBody String accountEmail){
+        log.info("Entering forgotPassword");
 
 //        Account found = accountService.accountRepository.findAccountByAccountKey(accountKey);
         Account found = accountService.accountRepository.findAccountByEmail(accountEmail);

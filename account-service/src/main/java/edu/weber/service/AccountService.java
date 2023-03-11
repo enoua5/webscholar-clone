@@ -198,7 +198,7 @@ public class AccountService {
      * @return
      */
     public boolean sendForgotPassword(String accountEmail){
-        log.debug("Sending Forgotten Password");
+        log.info("Sending Forgotten Password");
 
         //Get the forgetter's account
 //        Account account = accountRepository.findAccountByAccountKey(accountKey);
@@ -235,8 +235,6 @@ public class AccountService {
 
         //Build the final url
         webUrl += hashedLink;
-
-
 
         //Send the email
         String senderName = account.getFirstName() + " " + account.getLastName();

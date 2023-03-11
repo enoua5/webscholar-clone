@@ -213,8 +213,8 @@ public class AccountService {
             return false;
         }
 
-        //Hold the link to the delete page
-        String webUrl = "http://localhost:4200/forgot_password/";
+        //Hold the link to the new password page
+        String webUrl = "http://localhost:4200/new_password/";
 
 
         //Create the unique hash
@@ -234,7 +234,8 @@ public class AccountService {
         accountRepository.save(account);
 
         //Build the final url
-        webUrl += hashedLink;
+        //TODO: Uncomment this line to add the unique hash to the link
+//        webUrl += hashedLink;
 
         //Send the email
         String senderName = account.getFirstName() + " " + account.getLastName();

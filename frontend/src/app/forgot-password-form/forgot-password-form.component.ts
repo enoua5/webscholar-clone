@@ -43,15 +43,17 @@ export class ForgotPasswordFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    let email = "jon.ramanujam@gmail.com";
-
+    // Set json object to username
     const jsonObj = JSON.stringify({email: this.username.value});
 
-    // if (this.form.valid)
-    // {
-    //
-    // }
-    alert('Sending Forgot Password Email to:' + jsonObj);
+   // Check validity of form, before sending email
+    if (this.form.valid)
+    {
+        alert('Sending Forgot Password Email to:' + jsonObj);
+
+        // Call this.service.forgotPassword
+    }
+    // else log an error message
   }
 
 }

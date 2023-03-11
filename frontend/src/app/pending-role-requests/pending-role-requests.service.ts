@@ -31,7 +31,7 @@ export class PendingRoleRequestsService
    * 
    * @returns A list of all of the current role requests.
    */
-  public getRequests(): any
+  public getRequests(): RequestList
   {
     // These requests will likely be returned as JSON strings, so we're going to mock the
     // receipt and parsing of these JSON strings into arrays.
@@ -94,7 +94,7 @@ export class PendingRoleRequestsService
   /**
    * Approves the given requests and removes them from our request list, if successful.
    * 
-   * @param requestID A list of the requests that we're approving.
+   * @param requestList A list of the requests that we're approving.
    * @returns A list of error messages on failure, or nothing on success. 
    */
   public approveRequests(requestList: RequestList): string[] | undefined
@@ -116,7 +116,7 @@ export class PendingRoleRequestsService
   /**
    * Sends a request to the backend to approve a single role request.
    * 
-   * @param requestID The request to approve.
+   * @param request The request to approve.
    * @returns True if the request was succesfully approved on the backend; false otherwise.
    */
   private approveRequest(request: Request): boolean
@@ -129,9 +129,8 @@ export class PendingRoleRequestsService
     });
     let body = JSON.stringify({id: request.id, approved: true});
     
-    this.http.post(INSERT_URL, body, { headers: header, observe: 'response', responseType: 'json'}).subscribe((response) => 
-    {
-      success = this.processResponse(response)
+    this.http.post<any>(INSERT_URL, body, { headers: header, observe: 'response', responseType: 'json'}).subscribe((response) => {
+      success = this.processResponse(response);
     });
 
     return success;

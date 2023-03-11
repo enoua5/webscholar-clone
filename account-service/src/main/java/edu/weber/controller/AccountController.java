@@ -184,7 +184,7 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(path = "/forgot/password", method = RequestMethod.POST)
+    @RequestMapping(path = "/forgotPassword", method = RequestMethod.POST)
     public String forgotPassword(@RequestParam String accountEmail){
 
 //        Account found = accountService.accountRepository.findAccountByAccountKey(accountKey);
@@ -197,6 +197,7 @@ public class AccountController {
             log.error("Failed to send forgotten password.");
         }
 
+        log.info("Successfully sent forgot password email");
         return "done";
     }
 

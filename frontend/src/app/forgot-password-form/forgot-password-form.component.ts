@@ -51,7 +51,7 @@ export class ForgotPasswordFormComponent implements OnInit {
     {
         alert('Sending Forgot Password Email to:' + jsonObj);
 
-        this.service.forgotPassword(jsonObj)
+        this.service.forgotPassword(jsonObj);
     }
     // else log an error message
   }

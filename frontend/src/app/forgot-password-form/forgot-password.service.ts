@@ -20,7 +20,7 @@ export class ForgotPasswordService{
       'Access-Control-Allow-Headers': 'Content-Type',
     });
 
-    return this.http.post<any>('http://localhost:6001/account/forgot/password', data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
+    return this.http.post<any>('http://localhost:6001/account/forgotPassword', data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
   }
 
   /*

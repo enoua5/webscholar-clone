@@ -101,7 +101,6 @@ export class PendingRoleRequestsComponent implements OnInit
      */
     async denyRequests(): Promise<void>
     {
-        console.log(this.requestForm)
         this.errorList = null;
 
         let selectedRequests: RequestList = this.getSelectedRequests();

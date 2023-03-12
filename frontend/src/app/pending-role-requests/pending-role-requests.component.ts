@@ -4,14 +4,15 @@ import { requireSelectionValidator } from './pending-role-requests-validators';
 import { PendingRoleRequestsService } from './pending-role-requests.service';
 
 // Declare our RequestList type so we don't have to copy it over and over.
-type RequestList =  
+type Request = 
 {
     id: number,
     first_name: string,
     last_name: string,
     email: string,
     role: string,
-}[];
+};
+type RequestList = Request[];
 
 // Component Metadata
 @Component({
@@ -82,14 +83,15 @@ export class PendingRoleRequestsComponent implements OnInit
     /**
      * Called when the user clicks "approve" after having selected at least one request.
      */
-    onSubmit(): void
+    async onSubmit(): Promise<void>
     {
-        // TODO: Submit fake API call to backend.
-        console.log(this.requestForm)
         this.errorList = null;
 
         let selectedRequests: RequestList = this.getSelectedRequests();
-        this.errorList = this.service.approveRequests(selectedRequests);
+        await this.service.approveRequests(selectedRequests).then((errorList) => 
+        {
+            this.errorList = errorList;
+        });
 
         this.populateRequestTable();
     }
@@ -97,13 +99,16 @@ export class PendingRoleRequestsComponent implements OnInit
     /**
      * Called when the user clicks "deny" after having selected at least one request.
      */
-    denyRequests(): void
+    async denyRequests(): Promise<void>
     {
         console.log(this.requestForm)
         this.errorList = null;
 
         let selectedRequests: RequestList = this.getSelectedRequests();
-        this.errorList = this.service.denyRequests(selectedRequests);
+        await this.service.denyRequests(selectedRequests).then((errorList) => 
+        {
+            this.errorList = errorList;
+        });
 
         this.populateRequestTable();
     }

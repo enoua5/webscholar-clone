@@ -5,7 +5,7 @@ import {Observable} from "rxjs";
 // TODO: Replace the below URL with the one created by the backend team for role requests.
 const INSERT_URL = 'http://localhost:6001/account/create';
 
-// Declare our RequestList type so we don't have to copy it over and over.
+// Declare our Request and RequestList types so we don't have to copy them over and over.
 type Request = 
 {
   id: number,
@@ -13,7 +13,7 @@ type Request =
   last_name: string,
   email: string,
   role: string,
-}
+};
 type RequestList = Request[];
 
 @Injectable({
@@ -97,18 +97,19 @@ export class PendingRoleRequestsService
    * @param requestList A list of the requests that we're approving.
    * @returns A list of error messages on failure, or nothing on success. 
    */
-  public approveRequests(requestList: RequestList): string[] | undefined
+  public async approveRequests(requestList: RequestList): Promise<string[] | undefined>
   {
     let errorQueue: string[] = [];
 
-    requestList.forEach((request) => {
-      let success = this.approveRequest(request);
+    for await (const request of requestList)
+    {
+      let success = await this.approveRequest(request);
 
       if (!success)
       {
         errorQueue.push("Failed to approve request for: " + request['last_name'] + ", " + request['first_name'] + ".")
       }
-    });
+    }
 
     return (errorQueue.length > 0 ? errorQueue : undefined);
   }
@@ -119,7 +120,7 @@ export class PendingRoleRequestsService
    * @param request The request to approve.
    * @returns True if the request was succesfully approved on the backend; false otherwise.
    */
-  private approveRequest(request: Request): boolean
+  private async approveRequest(request: Request): Promise<boolean>
   {
     let success = true;
     let header = new HttpHeaders({
@@ -129,9 +130,8 @@ export class PendingRoleRequestsService
     });
     let body = JSON.stringify({id: request.id, approved: true});
     
-    this.http.post<any>(INSERT_URL, body, { headers: header, observe: 'response', responseType: 'json'}).subscribe((response) => {
-      success = this.processResponse(response);
-    });
+    const response = await this.http.post<any>(INSERT_URL, body, { headers: header, observe: 'response', responseType: 'json'}).toPromise();
+    success = this.processResponse(response);
 
     return success;
   }
@@ -142,19 +142,19 @@ export class PendingRoleRequestsService
    * @param requestID A list of the requests that we're denying.
    * @returns A list of error messages on failure, or nothing on success. 
    */
-  public denyRequests(requestList: RequestList): string[] | undefined
+  public async denyRequests(requestList: RequestList): Promise<string[] | undefined>
   {
     let errorQueue: string[] = [];
 
-    requestList.forEach((request) => {
-      // TODO: Send API call and remove from our requestList if successful.
-      let success = this.denyRequest(request);
+    for await (const request of requestList)
+    {
+      let success = await this.denyRequest(request);
 
       if (!success)
       {
         errorQueue.push("Failed to deny request for: " + request['last_name'] + ", " + request['first_name'] + ".")
       }
-    });
+    }
 
     return (errorQueue.length > 0 ? errorQueue : undefined);
   }
@@ -165,7 +165,7 @@ export class PendingRoleRequestsService
    * @param requestID The request to deny.
    * @returns True if the request was succesfully denied on the backend; false otherwise.
    */
-  private denyRequest(request: Request): boolean
+  private async denyRequest(request: Request): Promise<boolean>
   {
     let success = true;
     let header = new HttpHeaders({
@@ -175,10 +175,8 @@ export class PendingRoleRequestsService
     });
     let body = JSON.stringify({id: request.id, approved: false});
     
-    this.http.post(INSERT_URL, body, { headers: header, observe: 'response', responseType: 'json'}).subscribe((response) => 
-    {
-      success = this.processResponse(response)
-    });
+    const response = await this.http.post<any>(INSERT_URL, body, { headers: header, observe: 'response', responseType: 'json'}).toPromise();
+    success = this.processResponse(response);
 
     return success;
   }

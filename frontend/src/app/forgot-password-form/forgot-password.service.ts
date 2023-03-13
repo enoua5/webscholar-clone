@@ -25,8 +25,9 @@ export class ForgotPasswordService{
       'Access-Control-Allow-Headers': 'Content-Type',
     });
 
-    // TODO: This call is not going through.
-    return this.http.post<any>('http://localhost:6001/account/forgotPassword', data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
+    let endpointURL = new URL('http://localhost:6001/account/forgotPassword');
+    endpointURL.searchParams.append("accountEmail", data);
+    return this.http.post<any>(endpointURL.toString(), {}, { headers: header, observe: 'response', responseType: 'json'}).pipe();
   }
 
   /*

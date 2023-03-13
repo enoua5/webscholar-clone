@@ -66,7 +66,7 @@ This section details how a developer can generate the documentation pages for th
 ```
 npm run doc
 ```
-> This command "hosts" the documentation on your local machine at `http://localhost:8080`, but you can also kill the terminal and open the documentation via opening `documentation/index.html` in a web browser.
+> This command "hosts" the documentation on your local machine at `http://localhost:48620`, but you can also kill the terminal and open the documentation via opening `documentation/index.html` in a web browser.
 
 ----
 © 2023 - WebScholar

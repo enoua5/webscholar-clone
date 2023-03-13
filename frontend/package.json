@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "doc": "npx compodoc -p tsconfig.doc.json -n 'WebScholar Frontend' --serve --open"
+    "doc": "npx compodoc -p tsconfig.doc.json -n 'WebScholar Frontend' --serve --port 48620 --open"
   },
   "private": true,
   "dependencies": {

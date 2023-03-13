@@ -36,11 +36,13 @@ export class ForgotPasswordFormComponent implements OnInit {
 
   onSubmit(): void {
     this.checkErrors();
+
+    // TODO: connect to backend
+    // TEMPORARY CODE
     if(this.error == ""){
       alert("no errors detected")
     }else{
       alert("errors detected")
     }
   }
-
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -207,6 +209,24 @@ public class AccountController {
     // TODO: GET method for forgotPassHashExists(String forgotPassHash)
     //  Call accountRepository.findAccountByForgotPassHash(String forgotPassHash)
     //  Return the true if found
+    @RequestMapping(path = "/forgotPassHashExists", method = RequestMethod.POST)
+    public String forgotPassHashExists(@RequestParam String forgotPassHash)
+    {
+        Account found = accountService.accountRepository.findAccountByForgotPassHash(forgotPassHash);
+        if (found == null){
+            accountNotFound();
+            log.error("No account exists with that forgot password hash.");
+            return "No account exists with that forgot password hash.";
+        }
+        //TODO: Ensure that the forgot password hash was created within 24hours
+        if (LocalDateTime.now().isAfter(found.getForgotPassDate().plusDays(1)))
+        {
+            accountNotFound();
+            log.error("This forgot password hash has expired.");
+            return "This hash was issued more than 24 hours ago";
+        }
+        return "This forgot pass hash is valid.";
+    }
 
     // Frontend: after hash is verified, and the user has typed and submitted a new password, call:
     // TODO: POST method for setNewPassword(String forgotPassHash, String newPassword)

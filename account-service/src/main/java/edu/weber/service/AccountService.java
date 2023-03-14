@@ -18,6 +18,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -222,7 +223,7 @@ public class AccountService {
         String hashedLink = String.valueOf(hash);
 
         //Get the time the link was created
-        LocalDate timeCreated = LocalDate.now();
+        LocalDateTime timeCreated = LocalDateTime.now();
 
         //Save the hash to the users account
         account.setForgotPassHash(hashedLink);

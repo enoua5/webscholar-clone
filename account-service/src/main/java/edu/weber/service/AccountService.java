@@ -251,8 +251,10 @@ public class AccountService {
         return true;
     }
 
-    //TODO: setNewPassword(String newPassword)
-    // hash the password as done during registration, then call account.setPassword
+    //TODO: setNewPassword(String forgotPassHash, String newPassword)
+    // Call account = accountRepository.findAccountByForgotPassHash(String forgotPassHash)
+    // hash the password as done during registration
+    // call account.setPassword(String newPassword)
     // Make sure to call accountRepository.save()
     // Return true if successful
 

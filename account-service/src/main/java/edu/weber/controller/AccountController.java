@@ -204,14 +204,13 @@ public class AccountController {
     }
 
     // Frontend: get the hashed value from the webURL. account/new_password/<HASH VALUE>. Then call:
-    // TODO: Create a GET method for forgotPassHashExists(String forgotPassHash)
+    // TODO: GET method for forgotPassHashExists(String forgotPassHash)
     //  Call accountRepository.findAccountByForgotPassHash(String forgotPassHash)
     //  Return the true if found
 
     // Frontend: after hash is verified, and the user has typed and submitted a new password, call:
-    // TODO: Create a POST method for setNewPassword(String forgotPassHash, String newPassword)
-    //  Call accountRepository.findAccountByForgotPassHash(String forgotPassHash)
-    //  On submit, have it call accountService.setNewPassword(String newPassword)
+    // TODO: POST method for setNewPassword(String forgotPassHash, String newPassword)
+    //  accountService.setNewPassword(String forgotPassHash, String newPassword)
     //  return "done" if successful
 
     @RequestMapping(path = "/forgot/account", method = RequestMethod.POST)

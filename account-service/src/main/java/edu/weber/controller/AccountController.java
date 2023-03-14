@@ -189,7 +189,6 @@ public class AccountController {
     public String forgotPassword(@RequestParam String accountEmail){
         log.info("Entering forgotPassword");
 
-//        Account found = accountService.accountRepository.findAccountByAccountKey(accountKey);
         Account found = accountService.accountRepository.findAccountByEmail(accountEmail);
         if(found == null){
             accountNotFound();
@@ -203,6 +202,17 @@ public class AccountController {
         log.info("Successfully sent forgot password email");
         return "done";
     }
+
+    // Frontend: get the hashed value from the webURL. account/new_password/<HASH VALUE>. Then call:
+    // TODO: Create a GET method for getAccountByForgotPassHash(String forgotPassHash)
+    //  Call accountRepository.findAccountByForgotPassHash(String forgotPassHash)
+    //  Return the account
+        // Frontend: Save account in session if not null, and then load the page. Otherwise, throw error
+
+    // Frontend: after hash is verified, and the user has typed and submitted a new password, call:
+    // TODO: Create a POST method for setNewPassword(String newPassword).
+    //  On submit, have it call accountService.setNewPassword(String newPassword).
+    //  return "done" if successful
 
     @RequestMapping(path = "/forgot/account", method = RequestMethod.POST)
     public String forgotAccount(@RequestParam String accountEmail){

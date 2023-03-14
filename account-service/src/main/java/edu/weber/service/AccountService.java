@@ -251,6 +251,11 @@ public class AccountService {
         return true;
     }
 
+    //TODO: setNewPassword(String newPassword)
+    // hash the password as done during registration, then call account.setPassword
+    // Make sure to call accountRepository.save()
+    // Return true if successful
+
     /**
      * This method sends an email to the account associated with the given account key.
      * @param accountEmail

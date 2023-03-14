@@ -219,7 +219,7 @@ public class AccountController {
             return "No account exists with that forgot password hash.";
         }
         //TODO: Ensure that the forgot password hash was created within 24hours
-        if (LocalDateTime.now().isAfter(found.getForgotPassDate().plusDays(1)))
+        if (LocalDateTime.now().isAfter(found.getForgotPassDate().plusHours(24)))
         {
             accountNotFound();
             log.error("This forgot password hash has expired.");

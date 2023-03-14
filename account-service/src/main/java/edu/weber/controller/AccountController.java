@@ -205,13 +205,15 @@ public class AccountController {
         return "done";
     }
 
-    // TODO: Frontend - get the hashed value from the webURL. account/new_password/<HASH VALUE>. Then call:
-    //  This method could instead return a boolean, if that is easier to work with.
+    // TODO: Frontend
+    //  Get the hashed value from the webURL: account/new_password/<HASH VALUE>.
+    //  Then call forgotPassHashExists()
+    //  This method could instead return a boolean, if desired.
 
     /**
      * Checks validity of the provided forgotPassHash.
      * Must exist in the database and must have been created within 24 hours.     *
-     * @param forgotPassHash: The hashed value that is attached to the webURL link in the forgot password email
+     * @param forgotPassHash: The hashed value that is related to this request
      * @return: An error message in String format, or "True"
      */
     @RequestMapping(path = "/forgotPassHashExists", method = RequestMethod.POST)
@@ -231,14 +233,21 @@ public class AccountController {
         return "True";
     }
 
-    // Frontend: after hash is verified, and the user has typed and submitted a new password, call:
-    // TODO: POST method for setNewPassword(String forgotPassHash, String newPassword)
-    //  accountService.setNewPassword(String forgotPassHash, String newPassword)
-    //  return "done" if successful
+    // TODO: Frontend
+    //  Call setNewPassword once the user has hit submit on the new-password-form
 
+    /**
+     * Sets a new password for the associated account and saves it to the database.
+     * @param forgotPassHash: The forgotPassHash related to this request
+     * @param newPassword: The updated password the user would like to set
+     * @return: "done" if password was correctly set.
+     */
     @RequestMapping(path = "/setNewPassword", method = RequestMethod.POST)
     public String setNewPassword(String forgotPassHash, String newPassword){
-        return "done";
+        if (accountService.setNewPassword(forgotPassHash, newPassword)){
+            return "done";
+        }
+        return "Error setting the new password. Password was not saved.";
     }
 
     @RequestMapping(path = "/forgot/account", method = RequestMethod.POST)

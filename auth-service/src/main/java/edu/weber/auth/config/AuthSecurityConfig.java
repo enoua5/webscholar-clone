@@ -22,7 +22,6 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @Configuration
 @EnableWebSecurity
 public class AuthSecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private ClientDetailsService clientDetailsService;
 

@@ -1,16 +1,17 @@
 package edu.weber.auth.controller;
 
 import edu.weber.auth.service.UserService;
+import edu.weber.auth.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.userdetails.User;
-
+//import org.springframework.security.core.userdetails.User;
 
 /**
  * This class is a Spring MVC controller that handles HTTP requests related to user authorization
@@ -19,7 +20,7 @@ import org.springframework.security.core.userdetails.User;
  * base URI path is /users
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/auth")
 public class UserController {
 
 	@Autowired
@@ -43,9 +44,25 @@ public class UserController {
 	 * @param user the user to create
 	 * @throws AccessDeniedException if the OAuth2 access token does not have the required "server" scope
 	 */
-	@PreAuthorize("#oauth2.hasScope('server')")
+
 	@RequestMapping(method = RequestMethod.POST)
 	public void createUser(@RequestBody edu.weber.auth.model.User user) throws AccessDeniedException {
 		userService.create(user);
+	}
+
+	/**
+	 * Creates a test user
+	 *
+	 * @throws AccessDeniedException if the OAuth2 access token does not have the required "server" scope
+	 */
+
+	@RequestMapping(value="/create_test", method = RequestMethod.POST)
+	public String createTestUser() throws AccessDeniedException {
+
+		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		String password = bCryptPasswordEncoder.encode("password");
+		User test_user = new User(123, "Test", "N/A", password);
+		userService.create(test_user);
+		return "Test User created!\n";
 	}
 }

@@ -26,7 +26,7 @@ import java.util.List;
  * Provides Basic CRUD functionality, everything is pretty simple
  */
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/auth/resource")
 public class UserResourceController {
 
 	@Autowired

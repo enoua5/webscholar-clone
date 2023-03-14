@@ -234,8 +234,7 @@ public class AccountService {
         accountRepository.save(account);
 
         //Build the final url
-        //TODO: Uncomment this line to add the unique hash to the link
-//        webUrl += hashedLink;
+        webUrl += hashedLink;
 
         //Send the email
         String senderName = account.getFirstName() + " " + account.getLastName();

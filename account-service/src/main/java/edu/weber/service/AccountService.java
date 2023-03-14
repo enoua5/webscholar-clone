@@ -251,13 +251,33 @@ public class AccountService {
         log.debug("Send email to " + account.getEmail() + "with link: " + webUrl);
         return true;
     }
+    
+    /**
+     * Sets a new password for the related account
+     * @param forgotPassHash: The forgotPassHash value that was tied to this request
+     * @param newPassword: The updated password
+     * @return: true, if saving the new password was successful
+     */
+    public boolean setNewPassword(String forgotPassHash, String newPassword){
+        // Find the account with the associated forgotPassHash
+        Account account = accountRepository.findAccountByForgotPassHash(forgotPassHash);
 
-    //TODO: setNewPassword(String forgotPassHash, String newPassword)
-    // Call account = accountRepository.findAccountByForgotPassHash(String forgotPassHash)
-    // hash the password as done during registration
-    // call account.setPassword(String newPassword)
-    // Make sure to call accountRepository.save()
-    // Return true if successful
+        if (account == null){
+            log.error("Account not found.");
+            return false;
+        }
+
+        // Hash the new password and update the database as such
+        account.setPassword(passwordEncoder.encode(newPassword));
+
+        // Save the changes
+        accountRepository.save(account);
+
+        // Send a confirmation email
+        sendEmail(account.getEmail(), "Password Updated", "The password for the account linked to this email address has been updated.");
+
+        return true;
+    }
 
     /**
      * This method sends an email to the account associated with the given account key.

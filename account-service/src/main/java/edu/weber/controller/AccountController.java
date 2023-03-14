@@ -215,15 +215,14 @@ public class AccountController {
      * @return: An error message in String format, or "True"
      */
     @RequestMapping(path = "/forgotPassHashExists", method = RequestMethod.POST)
-    public String forgotPassHashExists(@RequestParam String forgotPassHash)
-    {
-        Account found = accountService.accountRepository.findAccountByForgotPassHash(forgotPassHash);
-        if (found == null){
+    public String forgotPassHashExists(@RequestParam String forgotPassHash){
+        Account account = accountService.accountRepository.findAccountByForgotPassHash(forgotPassHash);
+        if (account == null){
             accountNotFound();
             log.error("No account exists with that forgot password hash.");
             return "No account exists with that forgot password hash.";
         }
-        if (LocalDateTime.now().isAfter(found.getForgotPassDate().plusHours(24)))
+        if (LocalDateTime.now().isAfter(account.getForgotPassDate().plusHours(24)))
         {
             accountNotFound();
             log.error("This forgot password hash has expired.");
@@ -236,6 +235,11 @@ public class AccountController {
     // TODO: POST method for setNewPassword(String forgotPassHash, String newPassword)
     //  accountService.setNewPassword(String forgotPassHash, String newPassword)
     //  return "done" if successful
+
+    @RequestMapping(path = "/setNewPassword", method = RequestMethod.POST)
+    public String setNewPassword(String forgotPassHash, String newPassword){
+        return "done";
+    }
 
     @RequestMapping(path = "/forgot/account", method = RequestMethod.POST)
     public String forgotAccount(@RequestParam String accountEmail){

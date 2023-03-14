@@ -205,10 +205,15 @@ public class AccountController {
         return "done";
     }
 
-    // Frontend: get the hashed value from the webURL. account/new_password/<HASH VALUE>. Then call:
-    // TODO: GET method for forgotPassHashExists(String forgotPassHash)
-    //  Call accountRepository.findAccountByForgotPassHash(String forgotPassHash)
-    //  Return the true if found
+    // TODO: Frontend - get the hashed value from the webURL. account/new_password/<HASH VALUE>. Then call:
+    //  This method could instead return a boolean, if that is easier to work with.
+
+    /**
+     * Checks validity of the provided forgotPassHash.
+     * Must exist in the database and must have been created within 24 hours.     *
+     * @param forgotPassHash: The hashed value that is attached to the webURL link in the forgot password email
+     * @return: An error message in String format, or "True"
+     */
     @RequestMapping(path = "/forgotPassHashExists", method = RequestMethod.POST)
     public String forgotPassHashExists(@RequestParam String forgotPassHash)
     {
@@ -218,14 +223,13 @@ public class AccountController {
             log.error("No account exists with that forgot password hash.");
             return "No account exists with that forgot password hash.";
         }
-        //TODO: Ensure that the forgot password hash was created within 24hours
         if (LocalDateTime.now().isAfter(found.getForgotPassDate().plusHours(24)))
         {
             accountNotFound();
             log.error("This forgot password hash has expired.");
             return "This hash was issued more than 24 hours ago";
         }
-        return "This forgot pass hash is valid.";
+        return "True";
     }
 
     // Frontend: after hash is verified, and the user has typed and submitted a new password, call:

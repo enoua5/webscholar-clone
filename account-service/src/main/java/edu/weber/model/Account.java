@@ -195,11 +195,11 @@ public class Account {
     }
 
     @Column
-    private LocalDate deleteLinkDate;
-    public LocalDate getDeleteLinkDate(){
+    private LocalDateTime deleteLinkDate;
+    public LocalDateTime getDeleteLinkDate(){
         return deleteLinkDate;
     }
-    public void setDeleteLinkDate(LocalDate deleteLinkDate){
+    public void setDeleteLinkDate(LocalDateTime deleteLinkDate){
         this.deleteLinkDate = deleteLinkDate;
     }
 

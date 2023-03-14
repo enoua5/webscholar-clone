@@ -322,7 +322,7 @@ public class AccountService {
         String hashedLink = String.valueOf(hash);
 
         //Get the time the link was created
-        LocalDate timeCreated = LocalDate.now();
+        LocalDateTime timeCreated = LocalDateTime.now();
 
         //Save the hash to the users account
         account.setDeleteLinkHash(hashedLink);
@@ -423,7 +423,7 @@ public class AccountService {
 
 
         //Verify the hash has not expired
-        if(account.getDeleteLinkDate().plusDays(1).isBefore(LocalDate.now())){ //If it is past the 'link day +1 day', then 24 hours have passed
+        if(account.getDeleteLinkDate().plusDays(1).isBefore(LocalDateTime.now())){ //If it is past the 'link day +1 day', then 24 hours have passed
 
             //Remove the existing hash data, as it's too late to delete the account
 

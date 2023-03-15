@@ -48,10 +48,19 @@ export class RegistrationInvitationFormComponent implements OnInit {
     // }
   }
 
+  /**
+   * A helper method
+   * Grabs emails fron an input box and converts them into an array format
+   */
   private createEmailArray(): void {
     const stringList = this.form.get('emails').value;
     this.emails = stringList.split(',');
   }
+
+  /**
+   * Executes when 
+   * 
+   */
 
   onSubmit(): void {
     this.createEmailArray()
@@ -61,7 +70,12 @@ export class RegistrationInvitationFormComponent implements OnInit {
       if(this.type){
         this.fullPath += "chair";
       } else this.fullPath += "committeeMember"
-      this.fullPath += "/?recipientEmails=";
+
+      // Get the ID of a currently logged in user.
+      this.fullPath += "/?accountKey=";
+      this.fullPath += sessionStorage.getItem('accountKey');
+
+      this.fullPath += "&recipientEmails=";
       for(let i = 0; i < this.emails.length; i++){
         this.fullPath += this.separator + this.emails[i];
         this.separator = ",";
@@ -73,10 +87,12 @@ export class RegistrationInvitationFormComponent implements OnInit {
 
   private processResponse(data) {
     console.log("Success")
-    if (data.success == true) {
-      this.router.navigate(['../dashboard']);
-      this.errors.clear();
-    }
+
+    // Condition is based on what kind of response backend provides
+    if (data === "Email sending successful.") {
+       this.router.navigate(['../dashboard']);
+       this.errors.clear();
+     }
     else {
       console.warn('Else Statement executed');
       this.error = data.error;

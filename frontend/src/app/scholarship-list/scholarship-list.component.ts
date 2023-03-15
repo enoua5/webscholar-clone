@@ -41,6 +41,6 @@ export class ScholarshipListComponent implements OnInit {
   }
 
   getUserType() {
-    return "committeeMember"//sessionStorage.getItem("userType");
+    return "committeeMember"; // sessionStorage.getItem("userType");
   }
 }

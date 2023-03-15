@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-committee',
@@ -8,8 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class CommitteeComponent implements OnInit {
   public applicants: any[];
   public scholarshipTitle: any;
+  public scholarId: any;
 
-  constructor() {
+  constructor(private _Activedroute:ActivatedRoute) {    
     this.applicants = [
       {
         name: "John Smith",
@@ -33,7 +35,9 @@ export class CommitteeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.scholarshipTitle = "Scholarship 1";
+    this.scholarId = this._Activedroute.snapshot.paramMap.get("id");
+    this.scholarId = this.scholarId as number;
+    this.scholarshipTitle = "Scholarship " + this.scholarId;
 
     // first use the passed scholarshipId to get the scholarship information from the db.
     // next use the scholarshipID as a means of pulling a list of all applications for the scholarship

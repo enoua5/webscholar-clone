@@ -9,6 +9,6 @@
     "\\src\\app\\scholarship-list",
     "\\src\\app\\view-issue"
   ],
-  "SelectedNode": "\\src\\app\\view-issue\\view-issue.component.html",
+  "SelectedNode": "\\src\\app\\scholarship-list\\scholarship-list.component.ts",
   "PreviewInSolutionExplorer": false
 }

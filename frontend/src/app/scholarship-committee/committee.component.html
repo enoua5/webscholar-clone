@@ -5,11 +5,11 @@
   <div class="table-responsive">
     <table class="table table-bordered w-100 table-hover accordion">
       <thead>
-        <th scope="col">Applicant Name</th>
-        <th scope="col">Application ID</th>
-        <th scope="col">School ID</th>
-        <th scope="col">Application Score</th>
-        <th scope="col"></th>
+      <th scope="col">Applicant Name</th>
+      <th scope="col">Application ID</th>
+      <th scope="col">School ID</th>
+      <th scope="col">Application Score</th>
+      <th scope="col"></th>
       </thead>
 
       <tbody>
@@ -25,15 +25,18 @@
               <td>No Score</td>
             </ng-container>
             <td>
-              <a routerLink="/scoring/{{ applicant.applicationId}}" class="btn btn-success m-2 text-white" role="button">
+              <a routerLink="/scoring/{{ scholarId }}/{{ applicant.applicationId }}/{{ applicant.applicationScore }}" class="btn btn-success m-2 text-white" role="button">
                 <i class="fas fa-edit"></i>
-                Score Application
+                Score
               </a>
             </td>
-          </tr>    
+          </tr>
         </ng-container>
       </tbody>
     </table>
+    <div class="form-group">
+      <a class="login-links-1" routerLink="/scholarship">Go Back</a>
+    </div>
   </div>
 </section>
 

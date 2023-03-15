@@ -24,6 +24,7 @@ import { StudentViewScholarshipFormComponent } from './student-view-scholarship-
 import { RegistrationInvitationFormComponent } from './registration-invitation-form/registration-invitation-form.component';
 import {RouterModule} from "@angular/router";
 import { CommitteeComponent } from './scholarship-committee/committee.component';
+import { ScoringComponent } from './Committee-Scoring/scoring.component'
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { CommitteeComponent } from './scholarship-committee/committee.component'
     NavbarComponent,
     StudentViewScholarshipFormComponent,
     RegistrationInvitationFormComponent,
-    CommitteeComponent
+    CommitteeComponent,
+    ScoringComponent
   ],
   imports: [
     BrowserModule,

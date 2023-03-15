@@ -242,7 +242,7 @@ public class AccountService {
 
         String messageSubject = "Forgot password";
         String messageBody = "The account for: '" + senderName + "' has requested to reset their forgotten password.\n" +
-                "To delete your account, please go to:\n" +
+                "To reset your forgotten password, please go to:\n" +
                 webUrl +
                 " \nThis link will expire in 24 hours.";
 
@@ -251,7 +251,7 @@ public class AccountService {
         log.debug("Send email to " + account.getEmail() + "with link: " + webUrl);
         return true;
     }
-    
+
     /**
      * Sets a new password for the related account
      * @param forgotPassHash: The forgotPassHash value that was tied to this request

@@ -62,15 +62,14 @@ public class Account {
         this.schoolId = schoolId;
     }
 
-    //TODO: This needs to be changed to 'isLoggedIn' for authentication purposes
     @Column
     @NotNull
-    private Boolean active;
-    public Boolean getActive(){
-        return active;
+    private Boolean isLoggedIn;
+    public Boolean getIsLoggedIn(){
+        return isLoggedIn;
     }
-    public void setActive(boolean active){
-        this.active = active;
+    public void setIsLoggedIn(boolean isLoggedIn){
+        this.isLoggedIn = isLoggedIn;
     }
 
     @Column
@@ -91,15 +90,6 @@ public class Account {
     }
     public void setFirstName(String firstName){
         this.firstName = firstName;
-    }
-
-    @Column
-    private String middleName;
-    public String getMiddleName(){
-        return middleName;
-    }
-    public void setMiddleName(String middleName){
-        this.middleName = middleName;
     }
 
     @Column(nullable = false)
@@ -167,6 +157,11 @@ public class Account {
     }
 
     @Column
+    private String major;
+    public String getMajor() {return major; }
+    public void setMajor(String major) {this.major = major; }
+
+    @Column
     private String sex;
     public String getSex(){
         return sex;
@@ -219,7 +214,6 @@ public class Account {
         this.forgotPassDate = forgotPassDate;
     }
 
-
     //TODO: Add array variable that holds keywords
     //The tags are used to help recommend scholarship to the user.
     //These tags are categories the user is interested in and should correspond to scholarship tags.
@@ -237,7 +231,7 @@ public class Account {
         this.email = "";
         this.password = "";
         this.schoolId = "";
-        this.active = false;
+        this.isLoggedIn = false;
         this.userType = "student";
         this.firstName = "";
         this.lastName = "";
@@ -249,17 +243,17 @@ public class Account {
      * @param email The email associated with the user. Used for logging in and sending emails.
      * @param password The login value set by the user.
      * @param schoolId The students W number given by weber state.
-     * @param active
+     * @param isLoggedIn
      * @param userType The role access level for this account.
      * @param firstName The users first name.
      * @param lastName The users last name.
      */
-    public Account(String email, String password, String schoolId, Boolean active, String userType, String firstName, String lastName){
+    public Account(String email, String password, String schoolId, Boolean isLoggedIn, String userType, String firstName, String lastName){
 
         this.email = email;
         this.password = password;
         this.schoolId = schoolId;
-        this.active = active;
+        this.isLoggedIn = isLoggedIn;
         this.userType = userType;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -278,10 +272,9 @@ public class Account {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", schoolId='" + schoolId + '\'' +
-                ", active=" + active +
+                ", active=" + isLoggedIn +
                 ", userType='" + userType + '\'' +
                 ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address1='" + address1 + '\'' +
                 ", address2='" + address2 + '\'' +

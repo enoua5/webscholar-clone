@@ -45,14 +45,4 @@ export class RegisterService{
   public emailExists(email: string) {
     return this.http.get('http://localhost:6001/account/emailExists', {params: {email: email}}).pipe();
   }
-
-  // This method is used to retreive accountID. In a perfect world, auth service should be used instead.
-  public login(data){
-    let header = new HttpHeaders({  'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    });
-
-    return this.http.post<any>('http://localhost:6001/account/login', data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
-  }
 }

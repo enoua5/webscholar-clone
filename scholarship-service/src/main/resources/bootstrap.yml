@@ -12,7 +12,7 @@ spring:
       username: user
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://account-db:6002/webscholar-db?useSSL=false
+    url: jdbc:mysql://scholarship-db:6010/scholarship-db?useSSL=false
     username: root
     password: password
     # TODO: Make sure this does not have issues with the 'account-service' bootstrap.yml

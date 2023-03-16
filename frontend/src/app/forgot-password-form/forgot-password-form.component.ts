@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {Form, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from "@angular/router";
+import {ForgotPasswordService} from './forgot-password.service';
+import {emailExistsValidator} from "./validators";
 
 @Component({
   selector: 'app-forgot-password-form',
@@ -7,14 +11,56 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ForgotPasswordFormComponent implements OnInit {
 
-  constructor() { }
+  form: FormGroup;
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private service: ForgotPasswordService
+  ) {
+    this.form = this.formBuilder.group({
+      username: ['', {
+        validators: [
+          Validators.required,
+          Validators.email
+        ],
+        asyncValidators: [
+          emailExistsValidator(service)
+        ],
+      }],
+    }, {
+        updateOn: 'blur'
+      });
+  }
 
   ngOnInit(): void {
   }
 
-  onFPassword(): void {
+  get username()
+  {
+    return this.form.get('username');
+  }
 
-    alert('button pressed');
+  onSubmit(): void {
+    // Set json object to username
+    // const jsonObj = JSON.stringify({accountEmail: this.username.value});
+    const data = this.username.value
+ 
+  // Check validity of form, before sending email
+    if (this.form.valid)
+    {
+        this.service.forgotPassword(data).subscribe(
+            res => {
+                console.log(res);
+            },
+            err => {
+                console.error(err);
+            }
+        );
+        alert('Sending Forgot Password Email to:' + data);
+    }
+    // else log an error message
   }
 
 }

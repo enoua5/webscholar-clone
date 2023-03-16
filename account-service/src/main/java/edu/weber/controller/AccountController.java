@@ -150,6 +150,7 @@ public class AccountController {
     @RequestMapping(value = "/emailExists", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Boolean emailExists(@RequestParam String email) {
+        log.info("Entering emailExists");
         return accountService.accountRepository.findAccountByEmail(email) != null;
     }
 
@@ -184,18 +185,22 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(path = "/forgot/password", method = RequestMethod.POST)
-    public String forgotPassword(@RequestParam int accountKey){
+    @RequestMapping(path = "/forgotPassword", method = RequestMethod.POST)
+    public String forgotPassword(@RequestParam String accountEmail){
+        log.info("Entering forgotPassword");
 
-        Account found = accountService.accountRepository.findAccountByAccountKey(accountKey);
+//        Account found = accountService.accountRepository.findAccountByAccountKey(accountKey);
+        Account found = accountService.accountRepository.findAccountByEmail(accountEmail);
         if(found == null){
             accountNotFound();
+            log.error("Could not find the account");
             return "Could not find the account via accountKey.";
         }
-        if(!accountService.sendForgotPassword(accountKey)){
+        if(!accountService.sendForgotPassword(accountEmail)){
             log.error("Failed to send forgotten password.");
         }
 
+        log.info("Successfully sent forgot password email");
         return "done";
     }
 

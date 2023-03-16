@@ -225,25 +225,27 @@ public class AccountService {
 
     /**
      * This method sends an email to the user who requested their password be reset.
-     * @param accountKey
+     * @param accountEmail
      * @return
      */
-    public boolean sendForgotPassword(int accountKey){
+    public boolean sendForgotPassword(String accountEmail){
+        log.info("Sending Forgotten Password");
 
         //Get the forgetter's account
-        Account account = accountRepository.findAccountByAccountKey(accountKey);
+//        Account account = accountRepository.findAccountByAccountKey(accountKey);
+        Account account = accountRepository.findAccountByEmail(accountEmail);
 
         //Verify the forgetter's account exists
         if(account == null){
 
             // Log Error
-            log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: generateForgotPasswordLink()");
+            log.error("ERROR: Account Number " + accountEmail + " not found -- SOURCE: generateForgotPasswordLink()");
 
             return false;
         }
 
-        //Hold the link to the delete page
-        String webUrl = "http://localhost:4200/forgot_password/";
+        //Hold the link to the new password page
+        String webUrl = "http://localhost:4200/new_password/";
 
 
         //Create the unique hash
@@ -263,9 +265,8 @@ public class AccountService {
         accountRepository.save(account);
 
         //Build the final url
-        webUrl += hashedLink;
-
-
+        //TODO: Uncomment this line to add the unique hash to the link
+//        webUrl += hashedLink;
 
         //Send the email
         String senderName = account.getFirstName() + " " + account.getLastName();

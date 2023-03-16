@@ -151,3 +151,4 @@ gradle-app.setting
 
 # Remove lock file
 package-lock.json
+node_modules

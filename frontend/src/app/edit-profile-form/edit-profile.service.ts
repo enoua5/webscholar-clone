@@ -22,4 +22,16 @@ export class EditProfileService{
     let urlString : string = 'http://localhost:6001/account/update/' + sessionStorage.getItem('accountKey');
     return this.http.post<any>(urlString, data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
   }
+
+  public deleteAccount(id : string)
+  {
+    let header = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    });
+
+    let urlString : string = 'http://localhost:6001/account/request_account_deletion/'+id;
+    return this.http.get<any>(urlString, {headers: header, observe: 'response', responseType: 'json'}).pipe();
+  }
 }

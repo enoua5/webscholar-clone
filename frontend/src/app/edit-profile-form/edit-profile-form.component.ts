@@ -158,6 +158,26 @@ export class EditProfileFormComponent implements OnInit {
     }
   }
 
+  requestAccountDeletion(): void {
+    if(confirm("Are you sure you want to request deletion of your account?"))
+    {
+      let id = sessionStorage.getItem("accountKey");
+      console.log("Requesting deletion of account with id "+id);
+      this.service.deleteAccount(id).subscribe(
+        res => {
+          console.log(res);
+          alert("Account deletion has been requested. Please check your email to complete the process.");
+        },
+        err => {
+          console.error(err);
+          alert("Something went wrong trying to delete your account");
+        }
+      );
+    }
+
+    
+  }
+
   // private processResponse(data) {
   //   console.log(data);
   //   if (data.success == true) {

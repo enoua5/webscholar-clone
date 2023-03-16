@@ -114,7 +114,7 @@ export class EditProfileFormComponent implements OnInit {
   }
 
   /**
-   * Handle's submitting the profile update
+   * Handles submitting the profile update
    */
   onSubmit(): void {
     console.log(this.form.value);

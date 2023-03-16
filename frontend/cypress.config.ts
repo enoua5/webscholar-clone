@@ -12,7 +12,6 @@ export default defineConfig({
       framework: "angular",
       bundler: "webpack",
     },
-    specPattern: "**/*.cy.ts",
-    video: false
+    specPattern: "**/*.cy.ts"
   },
 });

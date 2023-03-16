@@ -1,13 +1,19 @@
-import { Select } from 'antd';
+import { Form, Select } from 'antd';
 
 export default function FiftyStatesDropdown(props: any) {
-  const { width } = props;
+  const { width, label, name, rules } = props;
   return <>
-    <Select style={{width: width ? width : ''}}> 
-      {FiftyStates.map(state => {
-        return <Select.Option key={state.value} value={state.value}>{state.label}</Select.Option>
-      })}
-    </Select>
+    <Form.Item 
+      label={label}
+      name={name}
+      rules={rules}
+    >
+      <Select style={{width: width ? width : ''}}> 
+        {FiftyStates.map(state => {
+          return <Select.Option key={state.value} value={state.value}>{state.label}</Select.Option>
+        })}
+      </Select>
+    </Form.Item>
   </>
 }
 

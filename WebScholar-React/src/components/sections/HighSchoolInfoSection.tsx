@@ -24,13 +24,12 @@ export default function HighSchoolInfoSection(props: any) {
       <StyledInput/>
     </Form.Item>
 
-    <Form.Item
-      label='What state is your high school located in?'
-      name='highSchoolState'
-      rules={[{required: true, message: 'Please select a state'}]}
-    >
-      <FiftyStatesDropdown width={"35%"}/>
-    </Form.Item>
+    <FiftyStatesDropdown 
+      width={"35%"} 
+      label={"What state is your high school located in?"} 
+      name={"highSchoolState"} 
+      rules={[{required: true, message: "Please select a state"}]}
+    />
 
     <Form.Item
       label='High School graduation date'
@@ -42,6 +41,7 @@ export default function HighSchoolInfoSection(props: any) {
         style={{width: "35%"}}
         allowClear={false}
         placeholder="YYYY-MM-DD"
+        format='YYYY-MM-DD'
       />
     </Form.Item>
 

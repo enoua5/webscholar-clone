@@ -8,13 +8,13 @@ import { EditButton } from '../sections/PersonalInfoSection';
 import { useAppDispatch } from '../../hooks';
 import { setUserForm } from '../../state/reducers/userSlice';
 
-export default function ExtracurricularActivityForm() {
+export default function AwardsForm() {
   const dispatch = useAppDispatch();
   const [submitted, setSubmitted] = useState(false);
 
-    // TODO: call API to save form
+    // should update values in redux and call API to save form
     const handleSubmitSuccess = (values: any) => {
-      dispatch(setUserForm({name: 'extracurricular', form: values}))
+      dispatch(setUserForm({name: 'awards', form: values}))
       setSubmitted(true);
     };
   
@@ -26,7 +26,7 @@ export default function ExtracurricularActivityForm() {
   return <>
     <FormContainer>
       <Form
-        name="extracurricular"
+        name="awards"
         onFinish={handleSubmitSuccess}
         onFinishFailed={handleSubmitFailure}
         style={{width: "100%"}}
@@ -37,17 +37,16 @@ export default function ExtracurricularActivityForm() {
       >
 
         <FormHeader>
-          <div>
-            Extracurricular Activies
-            <Tooltip title="Any school related activites, clubs, or sports may be added here.">
+        <div>
+            Awards and Accomplishments
+            <Tooltip title="Please list out any awards, certifications or other major accomplishments, school related or not.">
               <Info style={{height: "20px", width: "20px", margin: "10px 0 0 10px"}}/>
             </Tooltip>
           </div>
-          
           {submitted && <EditButton onClick={e => setSubmitted(false)}>Edit</EditButton>}
         </FormHeader>
 
-        <Form.List name="activities">
+        <Form.List name="awards">
           {(fields, { add, remove }, { errors }) => (
             <>
             {fields.length === 0 && <EmptyMessage submitted={submitted} />}
@@ -65,7 +64,7 @@ export default function ExtracurricularActivityForm() {
                         name={[field.name, 'name']}
                         key={`${field.key}-name`}
                         validateTrigger={['onChange', 'onBlur']}
-                        rules={[{required: true, whitespace: true, message: "Please enter a name or remove this activity",  }]}
+                        rules={[{required: true, whitespace: true, message: "Please enter a name or remove this award/accomplishment",  }]}
                       >
                         <Input 
                           placeholder='Name' 
@@ -120,7 +119,7 @@ export default function ExtracurricularActivityForm() {
 
 function EmptyMessage(props: {submitted: boolean}){
   if(props.submitted) return <StyledText>
-    No extracurricular activities.
+    No awards or accomplishments.
   </StyledText>
 
   return <StyledText>

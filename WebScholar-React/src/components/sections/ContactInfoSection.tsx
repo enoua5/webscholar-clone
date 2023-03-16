@@ -51,13 +51,13 @@ export default function ContactInfoSection(props: any) {
           <Input style={{width: "35%"}} placeholder='ex: Detroit'/>
         </Form.Item>
 
-        <Form.Item 
-          label='State'
-          name='state'
-          rules={[{ required: true, message: 'Please select your state' }]}
-        >
-          <FiftyStatesDropdown width={"35%"}/>
-        </Form.Item>
+
+        <FiftyStatesDropdown 
+          width={"35%"}
+          name={"state"}
+          label={"State"}
+          rules={[{required: true, message: "Please select a state"}]}
+        />
 
         <Form.Item 
           label='Zip'

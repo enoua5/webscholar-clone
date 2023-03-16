@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from '../reducers/userSlice';
 import navigationReducer from '../reducers/navigationSlice';
+import scholarshipReducer from '../reducers/scholarshipSlice';
 
 export const store =  configureStore({
   reducer: {
     user: userReducer,
     navigation: navigationReducer,
+    scholarships: scholarshipReducer,
   },
 })
 

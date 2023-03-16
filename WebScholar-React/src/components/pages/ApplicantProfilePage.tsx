@@ -1,11 +1,20 @@
 import { Tabs } from 'antd';
 import styled from 'styled-components';
 import { Header } from '../elements/Header';
+import AwardsForm from '../forms/AwardsForm';
+import { useAppSelector } from '../../hooks';
+import AboutYouForm from '../forms/AboutYouForm';
 import PersonalInfoForm from '../forms/PersonalInfoForm';
 import AcademicHistoryForm from '../forms/AcademicHistoryForm';
 import ExtracurricularActivityForm from '../forms/ExtracurricularActivityForm';
+import { userAcademicInfo, userAwardsInfo, userExtracurricularInfo, userPersonalInfo } from '../../state/reducers/userSlice';
 
 export default function ApplicantProfilePage() {
+  const _userPersonalInfoNotComplete = useAppSelector(userPersonalInfo) === undefined;
+  const _userAcademicInfoNotComplete = useAppSelector(userAcademicInfo) === undefined;
+  const _userExtracurricularInfoNotComplete = useAppSelector(userExtracurricularInfo) === undefined;
+  const _userAwardsInfoNotComplete = useAppSelector(userAwardsInfo) === undefined;
+
   return <>
   <Header style={{paddingBottom: "20px", marginTop: "-20px"}}>Application Profile</Header>
     <StyledTabs
@@ -21,29 +30,28 @@ export default function ApplicantProfilePage() {
           label: "Academic History",
           key: "academic",
           children: <AcademicHistoryForm />,
-          disabled: false
+          disabled: _userPersonalInfoNotComplete,
         },
         { 
           label: "Extracurricular Activities",
           key: "extracurricular",
           children: <ExtracurricularActivityForm />,
-          disabled: false
+          disabled: _userAcademicInfoNotComplete
         },
         { 
           label: "Awards and Accomplishments",
           key: "awards",
-          children: <></>,
-          disabled: true
+          children: <AwardsForm />,
+          disabled: _userExtracurricularInfoNotComplete
         },
         { 
           label: "About You",
           key: "about",
-          children: <></>,
-          disabled: true
+          children: <AboutYouForm />,
+          disabled: _userAwardsInfoNotComplete
         }
       ]}
     >
-      
     </StyledTabs>
   </>
 }

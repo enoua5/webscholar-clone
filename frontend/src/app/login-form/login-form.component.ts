@@ -64,6 +64,7 @@ export class LoginFormComponent implements OnInit {
         sessionStorage.setItem('name', `${ res.body.firstName } ${ res.body.lastName }`);
         sessionStorage.setItem('accountKey', res.body.accountKey);
         sessionStorage.setItem('userType', res.body.userType);
+        sessionStorage.setItem('accountKey', res.body.accountKey);
 
         this.router.navigate(['/dashboard']).then(() => {
           console.log(sessionStorage.getItem('name'));

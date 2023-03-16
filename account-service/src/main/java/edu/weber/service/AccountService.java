@@ -97,11 +97,42 @@ public class AccountService {
         //Encrypt the password
         update.setPassword(passwordEncoder.encode(update.getPassword()));
 
-        //Update the account's data
-        account.setEmail(update.getEmail());
-        account.setPassword(update.getPassword());
-        account.setSchoolId(update.getSchoolId());
-        account.setActive(update.getActive());
+        //Update the account's data. "Not null" members can't be blank.
+        if(Objects.nonNull(update.getEmail()) && !"".equalsIgnoreCase(update.getEmail())) {
+            account.setEmail(update.getEmail());
+        }
+        if(Objects.nonNull(update.getPassword()) && !"".equalsIgnoreCase(update.getPassword())) {
+            account.setPassword(update.getPassword());
+        }
+        if(Objects.nonNull(update.getSchoolId()) && !"".equalsIgnoreCase(update.getSchoolId())) {
+            account.setSchoolId(update.getSchoolId());
+        }
+        if(Objects.nonNull(update.getActive())) {
+            account.setActive(update.getActive());
+        }
+        if(Objects.nonNull(update.getUserType()) && !"".equalsIgnoreCase(update.getUserType())) {
+            account.setUserType(update.getUserType());
+        }
+        //First name...
+        if(Objects.nonNull(update.getFirstName()) && !"".equalsIgnoreCase(update.getFirstName())) {
+            account.setFirstName(update.getFirstName());
+        }
+        //Middle name can be blank or null.
+        account.setMiddleName(update.getMiddleName());
+        //Last name.
+        if(Objects.nonNull(update.getLastName()) && !"".equalsIgnoreCase(update.getLastName())) {
+            account.setLastName(update.getLastName());
+        }
+        //For now, everything else can be null.
+        account.setAddress1(update.getAddress1());
+        account.setAddress2(update.getAddress2());
+        account.setCity(update.getCity());
+        account.setState(update.getState());
+        account.setZipCode(update.getZipCode());
+        account.setSchool(update.getSchool());
+        account.setSex(update.getSex());
+        //Unlikely to change?
+        account.setRace(update.getRace());
 
         //Save the updated account
         accountRepository.save(account);

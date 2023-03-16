@@ -23,6 +23,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 import { RegistrationInvitationFormComponent } from './registration-invitation-form/registration-invitation-form.component';
 import {RouterModule} from "@angular/router";
+import {StudentViewScholarshipApplicationComponent} from './student-view-scholarship-application/student-view-scholarship-application.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import {RouterModule} from "@angular/router";
     ScholarshipListComponent,
     NavbarComponent,
     StudentViewScholarshipFormComponent,
-    RegistrationInvitationFormComponent
+    RegistrationInvitationFormComponent,
+    StudentViewScholarshipApplicationComponent
   ],
   imports: [
     BrowserModule,

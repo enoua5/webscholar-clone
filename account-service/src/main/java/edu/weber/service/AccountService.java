@@ -115,15 +115,9 @@ public class AccountService {
             account.setFirstName(update.getFirstName());
         }
         //For now, everything else can be null.
-        account.setAddress1(update.getAddress1());
-        account.setAddress2(update.getAddress2());
         account.setCity(update.getCity());
         account.setState(update.getState());
         account.setZipCode(update.getZipCode());
-        account.setSchool(update.getSchool());
-        account.setSex(update.getSex());
-        //Unlikely to change?
-        account.setRace(update.getRace());
 
         //Save the updated account
         accountRepository.save(account);

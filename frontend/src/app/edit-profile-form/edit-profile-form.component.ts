@@ -20,17 +20,24 @@ export class EditProfileFormComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private service: EditProfileService)
-{ this.form = this.fb.group({
-    fist_name: [''],
-    last_name: [''],
-    email: [''],
-    phone_number: [''],
-    city: [''],
-    state: [''],
-    zip: [''],
-    student_number: [''],
-    major: ['']
-  });
+  {
+    this.form = this.fb.group({
+      first_name: [''],
+      last_name: [''],
+      email: [''],
+
+      // currently, there is no provision to store the user's phone number in the database
+      // the form contained it, however, so I'll leave it in
+      phone_number: [''],
+      city: [''],
+      state: [''],
+      zip: [''],
+      student_number: [''],
+
+      // currently, there is no provision to store the user's major in the database
+      // the form contained it, however, so I'll leave it in
+      major: ['']
+    });
   }
 
   ngOnInit(): void {
@@ -40,73 +47,127 @@ export class EditProfileFormComponent implements OnInit {
   private checkErrors(): void {
     this.errors.clear();
 
-    //first and last name verification
-    if (this.form.get('first_name').value.length == 0) {
-      this.errors.set('first_name', 'Invalid First Name');
-    }
-    if (this.form.get('last_name').value.length == 0) {
-      this.errors.set('last_name', 'Invalid Last Name');
-    }
-    //todo check if username already taken in database
+    //TODO: check if username (email?) already taken in database
 
-
+    // all these fields are ok to be null, they just won't get set in the db by the backend
     //Email verification
     const validEmail = RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$');
-    if (!validEmail.test(this.form.get('email').value) || this.form.get('email').value.length == 0) {
+    if (!validEmail.test(this.email.value) && this.email.value != '') {
       this.errors.set('email', 'Invalid email format');
     }
 
     //Phone Number verification
     const validPhone = RegExp('^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$');
-    if(!validPhone.test(this.form.get('phone_number').value) || this.form.get('phone_number').value.length == 0){
+    if(!validPhone.test(this.phone_number.value) && this.phone_number.value != ''){
       this.errors.set('phone_number', 'Invalid phone number format');
-    }
-
-    //city, state, and zip verification
-    if (this.form.get('city').value.length == 0) {
-      this.errors.set('city', 'Invalid city');
-    }
-
-    if (this.form.get('state').value.length == 0) {
-      this.errors.set('state', 'Invalid state');
-    }
-
-    if (this.form.get('zip').value.length == 0) {
-      this.errors.set('zip', 'Invalid zip');
     }
 
     //User Id verification
     const regex = RegExp('^[0-9]{8}$');
-    if (!regex.test(this.form.get('student_number').value) || this.form.get('student_number').value.length == 0) {
-      this.errors.set('student_number', 'Invalid student number');
+    if(!regex.test(this.student_number.value) && this.student_number.value != ''){
+      this.errors.set('student_number', 'Invalid student ID');
     }
+  }
 
-    //major verification
-    if (this.form.get('major').value.length == 0) {
-      this.errors.set('major', 'Invalid major');
-    }
+  // getters for form controls
+  get first_name(){
+    return this.form.get('first_name');
+  }
 
+  get last_name(){
+    return this.form.get('last_name');
+  }
+
+  get email(){
+    return this.form.get('email');
+  }
+
+  // currently, there is no provision to store the user's phone number in the database
+  // the form contained it, however, so I'll leave it in
+  get phone_number(){
+    return this.form.get('phone_number');
+  }
+
+  get city(){
+    return this.form.get('city');
+  }
+
+  get state(){
+    return this.form.get('state');
+  }
+
+  get zip(){
+    return this.form.get('zip');
+  }
+
+  get student_number(){
+    return this.form.get('student_number');
+  }
+
+  // currently, there is no provision to store the user's major in the database
+  // the form contained it, however, so I'll leave it in
+  get major(){
+    return this.form.get('major');
   }
 
   onSubmit(): void {
     console.log(this.form.value);
     this.checkErrors();
+
     if(this.errors.size == 0){
-      this.service.insert(this.form.value)
-        .subscribe((data) => this.processResponse(data));
+      // create JSON object
+      const email = this.email.value;
+      const schoolId = this.student_number.value;
+      const firstName = this.first_name.value;
+      const lastName = this.last_name.value;
+      const city = this.city.value;
+      const state = this.state.value;
+      const zipCode = this.zip.value;
+
+      const jsonObj = JSON.stringify({
+        email: email,
+        schoolId: schoolId,
+        firstName: firstName,
+        lastName: lastName,
+        city: city,
+        state: state,
+        zipCode: zipCode
+      });
+
+      this.service.updateAccount(jsonObj).subscribe(
+        res => {
+          // change name in session storage if needed
+          if(this.first_name.value != '' && this.last_name.value != ''){
+            sessionStorage.setItem('name', `${ this.first_name.value } ${ this.last_name.value }`);
+          }else if(this.first_name.value != ''){ // only first name changed
+            let oldLastName: string = sessionStorage.getItem('name').split(" ")[1];
+            sessionStorage.setItem('name', `${ this.first_name.value } ${ oldLastName }`);
+          }else if(this.last_name.value != ''){ // only last name changed
+            let oldFirstName: string = sessionStorage.getItem('name').split(" ")[0];
+            sessionStorage.setItem('name', `${ oldFirstName } ${ this.last_name.value }`);
+          }
+
+          alert("Your information has been updated!");
+        },
+        err => {
+          console.log(err);
+          // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
+          alert(err.error.message);
+        }
+      );
     }
   }
 
-  private processResponse(data) {
-    console.log(data);
-    if (data.success == true) {
-      this.router.navigate(['../dashboard']);
-    }
-    else {
-      console.warn('Else Statement executed');
-      this.error = data.error;
-      this.errors = new Map(Object.entries(data.errors));
-    }
-  }
+  // private processResponse(data) {
+  //   console.log(data);
+  //   if (data.success == true) {
+  //     this.router.navigate(['../dashboard']);
+  //   }
+  //   else {
+  //     console.warn('Else Statement executed');
+  //     this.error = data.error;
+  //     this.errors = new Map(Object.entries(data.errors));
+  //   }
+  // }
 
 }

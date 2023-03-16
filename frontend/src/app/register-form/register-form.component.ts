@@ -176,6 +176,7 @@ export class RegisterFormComponent implements OnInit {
       console.log(jsonObj);
       this.service.createAccount(jsonObj).subscribe(
         res => {
+          console.log(res.body);
           // Put whatever needs to be executed *after* the routing is done in the .then()
           sessionStorage.setItem('name', `${ firstName } ${ lastName }`);
           sessionStorage.setItem('accountKey', res.body.accountKey);

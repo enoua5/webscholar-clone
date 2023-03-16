@@ -114,7 +114,7 @@ public class AccountController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public void createNewAccount(@Valid @RequestBody Account account, BindingResult result) {
+    public Account createNewAccount(@Valid @RequestBody Account account, BindingResult result) {
 
 
         log.info(account.toString());
@@ -139,7 +139,10 @@ public class AccountController {
 
             //Create an account in the database
             accountService.accountRepository.save(account);
+
+            return account;
         }
+        return null;
     }
 
     /**

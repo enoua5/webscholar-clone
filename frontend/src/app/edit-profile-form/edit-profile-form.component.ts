@@ -10,6 +10,9 @@ import { BrowserModule } from '@angular/platform-browser';
   styleUrls: ['./edit-profile-form.component.less']
 })
 
+/**
+ * Class handling data and functionality of the edit_profile page
+ */
 export class EditProfileFormComponent implements OnInit {
   form: FormGroup;
   error: string = null;
@@ -110,6 +113,9 @@ export class EditProfileFormComponent implements OnInit {
     return this.form.get('major');
   }
 
+  /**
+   * Handle's submitting the profile update
+   */
   onSubmit(): void {
     console.log(this.form.value);
     this.checkErrors();
@@ -158,6 +164,9 @@ export class EditProfileFormComponent implements OnInit {
     }
   }
 
+  /**
+   * Requests the deletion of the account of the logged in user, after confirmation 
+   */
   requestAccountDeletion(): void {
     if(confirm("Are you sure you want to request deletion of your account?"))
     {

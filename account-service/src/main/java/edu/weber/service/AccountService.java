@@ -97,11 +97,42 @@ public class AccountService {
         //Encrypt the password
         update.setPassword(passwordEncoder.encode(update.getPassword()));
 
-        //Update the account's data
-        account.setEmail(update.getEmail());
-        account.setPassword(update.getPassword());
-        account.setSchoolId(update.getSchoolId());
-        account.setActive(update.getActive());
+        //Update the account's data. "Not null" members can't be blank.
+        if(Objects.nonNull(update.getEmail()) && !"".equalsIgnoreCase(update.getEmail())) {
+            account.setEmail(update.getEmail());
+        }
+        if(Objects.nonNull(update.getPassword()) && !"".equalsIgnoreCase(update.getPassword())) {
+            account.setPassword(update.getPassword());
+        }
+        if(Objects.nonNull(update.getSchoolId()) && !"".equalsIgnoreCase(update.getSchoolId())) {
+            account.setSchoolId(update.getSchoolId());
+        }
+        if(Objects.nonNull(update.getActive())) {
+            account.setActive(update.getActive());
+        }
+        if(Objects.nonNull(update.getUserType()) && !"".equalsIgnoreCase(update.getUserType())) {
+            account.setUserType(update.getUserType());
+        }
+        //First name...
+        if(Objects.nonNull(update.getFirstName()) && !"".equalsIgnoreCase(update.getFirstName())) {
+            account.setFirstName(update.getFirstName());
+        }
+        //Middle name can be blank or null.
+        account.setMiddleName(update.getMiddleName());
+        //Last name.
+        if(Objects.nonNull(update.getLastName()) && !"".equalsIgnoreCase(update.getLastName())) {
+            account.setLastName(update.getLastName());
+        }
+        //For now, everything else can be null.
+        account.setAddress1(update.getAddress1());
+        account.setAddress2(update.getAddress2());
+        account.setCity(update.getCity());
+        account.setState(update.getState());
+        account.setZipCode(update.getZipCode());
+        account.setSchool(update.getSchool());
+        account.setSex(update.getSex());
+        //Unlikely to change?
+        account.setRace(update.getRace());
 
         //Save the updated account
         accountRepository.save(account);
@@ -194,25 +225,27 @@ public class AccountService {
 
     /**
      * This method sends an email to the user who requested their password be reset.
-     * @param accountKey
+     * @param accountEmail
      * @return
      */
-    public boolean sendForgotPassword(int accountKey){
+    public boolean sendForgotPassword(String accountEmail){
+        log.info("Sending Forgotten Password");
 
         //Get the forgetter's account
-        Account account = accountRepository.findAccountByAccountKey(accountKey);
+//        Account account = accountRepository.findAccountByAccountKey(accountKey);
+        Account account = accountRepository.findAccountByEmail(accountEmail);
 
         //Verify the forgetter's account exists
         if(account == null){
 
             // Log Error
-            log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: generateForgotPasswordLink()");
+            log.error("ERROR: Account Number " + accountEmail + " not found -- SOURCE: generateForgotPasswordLink()");
 
             return false;
         }
 
-        //Hold the link to the delete page
-        String webUrl = "http://localhost:4200/forgot_password/";
+        //Hold the link to the new password page
+        String webUrl = "http://localhost:4200/new_password/";
 
 
         //Create the unique hash
@@ -232,9 +265,8 @@ public class AccountService {
         accountRepository.save(account);
 
         //Build the final url
-        webUrl += hashedLink;
-
-
+        //TODO: Uncomment this line to add the unique hash to the link
+//        webUrl += hashedLink;
 
         //Send the email
         String senderName = account.getFirstName() + " " + account.getLastName();

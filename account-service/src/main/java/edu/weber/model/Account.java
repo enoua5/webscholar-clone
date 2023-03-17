@@ -183,7 +183,6 @@ public class Account {
     public void setRace(String race){
         this.race = race;
     }
-
     @Column
     private String deleteLinkHash;
     public String getDeleteLinkHash(){

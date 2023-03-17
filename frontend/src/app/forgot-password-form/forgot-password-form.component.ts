@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Form, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from "@angular/router";
-import {ForgotPasswordService} from './forgot-password.service';
-import {emailExistsValidator} from "./validators";
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-forgot-password-form',
@@ -10,57 +7,42 @@ import {emailExistsValidator} from "./validators";
   styleUrls: ['./forgot-password-form.component.less']
 })
 export class ForgotPasswordFormComponent implements OnInit {
-
   form: FormGroup;
+  error: string;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private formBuilder: FormBuilder,
-    private service: ForgotPasswordService
-  ) {
-    this.form = this.formBuilder.group({
-      username: ['', {
-        validators: [
-          Validators.required,
-          Validators.email
-        ],
-        asyncValidators: [
-          emailExistsValidator(service)
-        ],
-      }],
-    }, {
-        updateOn: 'blur'
-      });
+  constructor(private fb: FormBuilder) {
+    this.form = this.fb.group({
+      email: ['']
+    })
+
+    this.error = "";
   }
 
   ngOnInit(): void {
   }
 
-  get username()
-  {
-    return this.form.get('username');
+  private checkErrors(): void {
+    this.error = "";
+
+    //Email verification
+    const validEmail = RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$');
+    if (this.form.get('email').value.length == 0){
+      this.error = "Email required, please enter a valid email";
+    }
+    else if (!validEmail.test(this.form.get('email').value)) {
+      this.error = "Email invalid, please enter a valid email";
+    }
   }
 
   onSubmit(): void {
-    // Set json object to username
-    // const jsonObj = JSON.stringify({accountEmail: this.username.value});
-    const data = this.username.value
- 
-  // Check validity of form, before sending email
-    if (this.form.valid)
-    {
-        this.service.forgotPassword(data).subscribe(
-            res => {
-                console.log(res);
-            },
-            err => {
-                console.error(err);
-            }
-        );
-        alert('Sending Forgot Password Email to:' + data);
-    }
-    // else log an error message
-  }
+    this.checkErrors();
 
+    // TODO: connect to backend
+    // TEMPORARY CODE
+    if(this.error == ""){
+      alert("no errors detected")
+    }else{
+      alert("errors detected")
+    }
+  }
 }

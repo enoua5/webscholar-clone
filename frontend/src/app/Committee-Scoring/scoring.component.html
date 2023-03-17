@@ -1,4 +1,4 @@
-<section class="container p-3">
+<section class="container p-3" *ngIf="authService.isAuthenticated()">
   <h2>Score Applicant</h2>
   <ng-container>
     <div class="button" (click)="scoreApp(0)">
@@ -26,5 +26,5 @@
       <label class="btn btn-default" for="2">5</label>
     </div>
   </ng-container>
-      <br>
+  <br>
 </section>

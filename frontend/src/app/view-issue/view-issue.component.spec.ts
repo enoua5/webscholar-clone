@@ -1,6 +1,7 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-
-import {ViewIssueComponent} from './view-issue.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ViewIssueComponent} from './view-issue.component';
 
 describe('ViewIssueComponent', () => {
   let component: ViewIssueComponent;
@@ -8,7 +9,8 @@ describe('ViewIssueComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ViewIssueComponent]
+      imports: [ HttpClientTestingModule, RouterTestingModule ],
+      declarations: [ ViewIssueComponent ]
     })
       .compileComponents();
   });

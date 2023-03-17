@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { TermsConditionsComponent } from './terms-conditions.component';
 
 describe('TermsConditionsComponent', () => {
@@ -7,6 +8,7 @@ describe('TermsConditionsComponent', () => {
   
     beforeEach(async () => {
       await TestBed.configureTestingModule({
+        imports: [ HttpClientTestingModule ],
         declarations: [ TermsConditionsComponent ]
       })
       .compileComponents();

@@ -18,7 +18,6 @@ export class ForgotPasswordService{
   }
 
   public forgotPassword(data){
-    // TODO: This gets logged in the browser, but then nothing else happens
     console.log("Entered forgotPassword with data:" + data);
     let header = new HttpHeaders({  'Content-Type': 'application/json',
       'Accept': 'application/json',

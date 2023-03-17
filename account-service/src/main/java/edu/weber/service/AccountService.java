@@ -18,6 +18,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -253,7 +254,7 @@ public class AccountService {
         String hashedLink = String.valueOf(hash);
 
         //Get the time the link was created
-        LocalDate timeCreated = LocalDate.now();
+        LocalDateTime timeCreated = LocalDateTime.now();
 
         //Save the hash to the users account
         account.setForgotPassHash(hashedLink);
@@ -265,21 +266,47 @@ public class AccountService {
         accountRepository.save(account);
 
         //Build the final url
-        //TODO: Uncomment this line to add the unique hash to the link
-//        webUrl += hashedLink;
+        webUrl += hashedLink;
 
         //Send the email
         String senderName = account.getFirstName() + " " + account.getLastName();
 
         String messageSubject = "Forgot password";
         String messageBody = "The account for: '" + senderName + "' has requested to reset their forgotten password.\n" +
-                "To delete your account, please go to:\n" +
+                "To reset your forgotten password, please go to:\n" +
                 webUrl +
                 " \nThis link will expire in 24 hours.";
 
         //Send out email
         sendEmail(account.getEmail(), messageSubject, messageBody);
         log.debug("Send email to " + account.getEmail() + "with link: " + webUrl);
+        return true;
+    }
+
+    /**
+     * Sets a new password for the related account
+     * @param forgotPassHash: The forgotPassHash value that was tied to this request
+     * @param newPassword: The updated password
+     * @return: true, if saving the new password was successful
+     */
+    public boolean setNewPassword(String forgotPassHash, String newPassword){
+        // Find the account with the associated forgotPassHash
+        Account account = accountRepository.findAccountByForgotPassHash(forgotPassHash);
+
+        if (account == null){
+            log.error("Account not found.");
+            return false;
+        }
+
+        // Hash the new password and update the database as such
+        account.setPassword(passwordEncoder.encode(newPassword));
+
+        // Save the changes
+        accountRepository.save(account);
+
+        // Send a confirmation email
+        sendEmail(account.getEmail(), "Password Updated", "The password for the account linked to this email address has been updated.");
+
         return true;
     }
 
@@ -346,7 +373,7 @@ public class AccountService {
         String hashedLink = String.valueOf(hash);
 
         //Get the time the link was created
-        LocalDate timeCreated = LocalDate.now();
+        LocalDateTime timeCreated = LocalDateTime.now();
 
         //Save the hash to the users account
         account.setDeleteLinkHash(hashedLink);
@@ -447,7 +474,7 @@ public class AccountService {
 
 
         //Verify the hash has not expired
-        if(account.getDeleteLinkDate().plusDays(1).isBefore(LocalDate.now())){ //If it is past the 'link day +1 day', then 24 hours have passed
+        if(account.getDeleteLinkDate().plusDays(1).isBefore(LocalDateTime.now())){ //If it is past the 'link day +1 day', then 24 hours have passed
 
             //Remove the existing hash data, as it's too late to delete the account
 

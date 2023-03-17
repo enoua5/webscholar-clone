@@ -7,6 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * This is a data model. It helps us put data into the backend and send data
@@ -193,11 +194,11 @@ public class Account {
     }
 
     @Column
-    private LocalDate deleteLinkDate;
-    public LocalDate getDeleteLinkDate(){
+    private LocalDateTime deleteLinkDate;
+    public LocalDateTime getDeleteLinkDate(){
         return deleteLinkDate;
     }
-    public void setDeleteLinkDate(LocalDate deleteLinkDate){
+    public void setDeleteLinkDate(LocalDateTime deleteLinkDate){
         this.deleteLinkDate = deleteLinkDate;
     }
 
@@ -211,11 +212,11 @@ public class Account {
     }
 
     @Column
-    private LocalDate forgotPassDate;
-    public LocalDate getForgotPassDate(){
+    private LocalDateTime forgotPassDate;
+    public LocalDateTime getForgotPassDate(){
         return forgotPassDate;
     }
-    public void setForgotPassDate(LocalDate forgotPassDate){
+    public void setForgotPassDate(LocalDateTime forgotPassDate){
         this.forgotPassDate = forgotPassDate;
     }
 

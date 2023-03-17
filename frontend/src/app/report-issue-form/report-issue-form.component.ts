@@ -31,17 +31,17 @@ export class ReportIssueFormComponent implements OnInit {
       summary: ['', {
         validators: [
           Validators.required,
-          Validators.pattern('^.{15,}$')
+          Validators.minLength(15)
         ]}],
       description: ['', {
         validators: [
           Validators.required,
-          Validators.pattern('^.{50,}$')
+          Validators.minLength(50)
         ]}],
       recreate: ['', {
         validators: [
           Validators.required,
-          Validators.pattern('^.{15,}$')
+          Validators.minLength(15)
         ]}],
       severity: ['', {validators: [Validators.required]}],
       priority: ['', {validators: [Validators.required]}],
@@ -95,6 +95,7 @@ export class ReportIssueFormComponent implements OnInit {
         }
       )
     } else {
+      console.error(this.reportIssueForm);
       this.validMessage = "";
       this.errorMessage = "Please fill out the form before submitting!";
     }

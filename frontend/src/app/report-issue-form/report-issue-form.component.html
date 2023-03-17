@@ -20,7 +20,7 @@
       <label for="username">Reported by</label>
       <div class="input-group">
         <span class="input-group-text"><i class="fas fa-user"></i></span>
-        <input id="username" class="form-control" type="text" formControlName="username" placeholder="{Username Placeholder}" disabled />
+        <input id="username" class="form-control" type="text" formControlName="username" placeholder="Username" />
       </div>
       <div class="error" *ngIf="username.invalid && username.touched">
         <div *ngIf="username.errors.required">
@@ -42,7 +42,7 @@
           Summary is required.
         </div>
 
-        <div *ngIf="summary.errors.pattern">
+        <div *ngIf="summary.errors.minlength">
           Summary must be at least 15 characters long.
         </div>
 
@@ -62,7 +62,7 @@
           Description is required.
         </div>
 
-        <div *ngIf="description.errors.pattern">
+        <div *ngIf="description.errors.minlength">
           Description must be at least 50 characters long.
         </div>
 
@@ -74,7 +74,7 @@
       <label for="recreate">Steps to recreate issue</label>
       <div class="input-group">
         <span class="input-group-text"><i class="fas fa-list-ol"></i></span>
-        <textarea id="recreate" class="form-control" formControlName="description" rows="5"></textarea>
+        <textarea id="recreate" class="form-control" formControlName="recreate" rows="5"></textarea>
       </div>
       <div class="error" *ngIf="recreate.invalid && recreate.touched">
 
@@ -82,7 +82,7 @@
           Description is required.
         </div>
 
-        <div *ngIf="recreate.errors.pattern">
+        <div *ngIf="recreate.errors.minlength">
           Steps to recreate must be at least 15 characters long.
         </div>
 

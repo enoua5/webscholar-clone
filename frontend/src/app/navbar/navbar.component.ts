@@ -17,6 +17,11 @@ export class NavbarComponent implements OnInit {
     return sessionStorage.getItem('name');
   }
 
+  getRole()
+  {
+    return sessionStorage.getItem('role');
+  }
+
   logout() {
     // Alternatively use sessionStorage.clear() to remove all keys
     sessionStorage.removeItem('name');

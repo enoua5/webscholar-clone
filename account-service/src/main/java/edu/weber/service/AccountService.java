@@ -7,10 +7,7 @@ import edu.weber.repository.TokenRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -108,8 +105,8 @@ public class AccountService {
         if(Objects.nonNull(update.getSchoolId()) && !"".equalsIgnoreCase(update.getSchoolId())) {
             account.setSchoolId(update.getSchoolId());
         }
-        if(Objects.nonNull(update.getActive())) {
-            account.setActive(update.getActive());
+        if(Objects.nonNull(update.getIsLoggedIn())) {
+            account.setIsLoggedIn(update.getIsLoggedIn());
         }
         if(Objects.nonNull(update.getUserType()) && !"".equalsIgnoreCase(update.getUserType())) {
             account.setUserType(update.getUserType());
@@ -118,22 +115,10 @@ public class AccountService {
         if(Objects.nonNull(update.getFirstName()) && !"".equalsIgnoreCase(update.getFirstName())) {
             account.setFirstName(update.getFirstName());
         }
-        //Middle name can be blank or null.
-        account.setMiddleName(update.getMiddleName());
-        //Last name.
-        if(Objects.nonNull(update.getLastName()) && !"".equalsIgnoreCase(update.getLastName())) {
-            account.setLastName(update.getLastName());
-        }
         //For now, everything else can be null.
-        account.setAddress1(update.getAddress1());
-        account.setAddress2(update.getAddress2());
         account.setCity(update.getCity());
         account.setState(update.getState());
         account.setZipCode(update.getZipCode());
-        account.setSchool(update.getSchool());
-        account.setSex(update.getSex());
-        //Unlikely to change?
-        account.setRace(update.getRace());
 
         //Save the updated account
         accountRepository.save(account);

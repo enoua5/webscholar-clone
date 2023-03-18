@@ -36,7 +36,7 @@ public class AccountAppTest
         account.setEmail("test@test.com");
         account.setPassword("TestPassword");
         account.setSchoolId("W12345670");
-        account.setActive(true);
+        account.setIsLoggedIn(true);
         account.setUserType("student");
         account.setFirstName("TestFirstName");
         account.setMiddleName("TestMiddleName");
@@ -54,7 +54,7 @@ public class AccountAppTest
         Assert.assertEquals("Email not equal","test@test.com", account.getEmail());
         Assert.assertEquals("Password not equal","TestPassword", account.getPassword());
         Assert.assertEquals("School Id not equal","W12345670", account.getSchoolId());
-        Assert.assertTrue("Account not active", account.getActive());
+        Assert.assertTrue("Account not active", account.getIsLoggedIn());
         Assert.assertEquals("Usertype not equal","student", account.getUserType());
         Assert.assertEquals("First name not equal","TestFirstName", account.getFirstName());
         Assert.assertEquals("Middle name not equal","TestMiddleName", account.getMiddleName());
@@ -121,7 +121,7 @@ public class AccountAppTest
         Assert.assertEquals("Email not equal","test@testUpdate.com", account.getEmail());
         Assert.assertEquals("Password not equal","Password", account.getPassword());
         Assert.assertEquals("School Id not equal","W12345678", account.getSchoolId());
-        Assert.assertTrue("Account not active", account.getActive());
+        Assert.assertTrue("Account not active", account.getIsLoggedIn());
         Assert.assertEquals("Usertype not equal","student", account.getUserType());
         Assert.assertEquals("First name not equal","FirstName", account.getFirstName());
         Assert.assertEquals("Middle name not equal","MiddleName", account.getMiddleName());

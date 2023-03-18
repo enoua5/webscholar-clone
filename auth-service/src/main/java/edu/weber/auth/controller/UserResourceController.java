@@ -20,21 +20,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 // TODO
+
+/**
+ * This class is a Spring MVC REST controller that handles HTTP requests related to the User.
+ * Provides Basic CRUD functionality, everything is pretty simple
+ */
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/auth/resource")
 public class UserResourceController {
 
 	@Autowired
 	private UserService userService;
 
 	@PostMapping(value="/users")
-	public ResponseEntity<String> saveuser(@RequestBody User user ) {
+	public ResponseEntity<String> saveUser(@RequestBody User user ) {
 		userService.save(user);
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 		
 	}
 	@PutMapping(value="/users/{userId}", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> updateuser(@RequestBody User user ,@PathVariable ("userId") int userId) {
+	public ResponseEntity<User> updateUser(@RequestBody User user ,@PathVariable ("userId") int userId) {
 		
 		User s = userService.update(userId,user).get();
 		HttpHeaders headers=new HttpHeaders();
@@ -44,7 +49,7 @@ public class UserResourceController {
 	}
 	
 	@DeleteMapping(value="/users/{userId}")
-	public ResponseEntity<User> deleteuser(@PathVariable ("userId") int userId) {
+	public ResponseEntity<User> deleteUser(@PathVariable ("userId") int userId) {
 		
 		userService.delete(userId);
 		
@@ -53,14 +58,14 @@ public class UserResourceController {
 	}
 	
 	@GetMapping(value="/users", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<User>> getAllusers() {
+	public ResponseEntity<List<User>> getAllUsers() {
 		
 		return new ResponseEntity<List<User>>(userService.getUsers(), HttpStatus.FOUND);
 		
 	}
 	
 	@GetMapping(value="/users/{userId}")
-	public User getuserById(@PathVariable ("userId") int userId) {
+	public User getUserById(@PathVariable ("userId") int userId) {
 		
 		User user=userService.getUserById(userId).get();
 		if(user==null) {
@@ -71,7 +76,7 @@ public class UserResourceController {
 	}
 	
 	@GetMapping(value="/users/search/me",produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> getuserByIds() {
+	public ResponseEntity<User> getUserByIds() {
 		
 		UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
@@ -84,7 +89,7 @@ public class UserResourceController {
 	}
 	
 	@GetMapping(value="/users/search/{userName}")
-	public ResponseEntity<User> getuserByUserName(@PathVariable ("userName") String userName) {
+	public ResponseEntity<User> getUserByUserName(@PathVariable ("userName") String userName) {
 		
 		User user=userService.getUserByUserName(userName);
 		if(user == null) {
@@ -92,8 +97,5 @@ public class UserResourceController {
 		}
 		return new ResponseEntity<User>(user,HttpStatus.OK);
 	}
-	
-	
-	
 	
 }

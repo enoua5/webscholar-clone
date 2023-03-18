@@ -45,10 +45,4 @@ export class RegisterService{
   public emailExists(email: string) {
     return this.http.get('http://localhost:6001/account/emailExists', {params: {email: email}}).pipe();
   }
-
-  //Not sure what this method was doing with the old INSERT_URL
-  // public insert(data): Observable<any> {
-  //   return this.http.post(INSERT_URL, data);
-  //}
-
 }

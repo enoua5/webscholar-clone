@@ -8,6 +8,15 @@ import {AccountService} from "./registration-invitation.service";
   templateUrl: './registration-invitation-form.component.html',
   styleUrls: ['./registration-invitation-form.component.less']
 })
+
+/**
+ * Interacts with the invitation form on the page
+ * @param emails array of emails to send invites to
+ * @param fullPath a string grabbed from the input 
+ * @param separator needed to put together an API call URL
+ * @param error will contain any error messages 
+ * @param type determines what page it is - for Chair or Faculty invites
+ */
 export class RegistrationInvitationFormComponent implements OnInit {
   form: FormGroup;
   emails: string[];
@@ -26,6 +35,10 @@ export class RegistrationInvitationFormComponent implements OnInit {
     });
   }
 
+  /**
+   * Runs when page is loaded, determines what form needs to be displayed -
+   * one for Chair invites and one for Faculty invites
+   */
   ngOnInit(): void {
     const uriParam = this.route.snapshot.paramMap.get('type');
     if(uriParam == "chairInvitation"){
@@ -33,6 +46,9 @@ export class RegistrationInvitationFormComponent implements OnInit {
     } else this.type = false;
   }
 
+  /**
+   * Valudates if the emails provided are valid or not
+   */
   private checkErrors(): void {
     this.errors.clear();
 
@@ -48,10 +64,19 @@ export class RegistrationInvitationFormComponent implements OnInit {
     // }
   }
 
+  /**
+   * A helper method
+   * Grabs emails fron an input box and converts them into an array format
+   */
   private createEmailArray(): void {
     const stringList = this.form.get('emails').value;
     this.emails = stringList.split(',');
   }
+
+  /**
+   * Executes when send button is pressed
+   * Assembles the api call with all the emails provided
+   */
 
   onSubmit(): void {
     this.createEmailArray()
@@ -61,7 +86,12 @@ export class RegistrationInvitationFormComponent implements OnInit {
       if(this.type){
         this.fullPath += "chair";
       } else this.fullPath += "committeeMember"
-      this.fullPath += "/?recipientEmails=";
+
+      // Get the ID of a currently logged in user.
+      this.fullPath += "/?accountKey=";
+      this.fullPath += sessionStorage.getItem('accountKey');
+
+      this.fullPath += "&recipientEmails=";
       for(let i = 0; i < this.emails.length; i++){
         this.fullPath += this.separator + this.emails[i];
         this.separator = ",";
@@ -71,12 +101,18 @@ export class RegistrationInvitationFormComponent implements OnInit {
     }
   }
 
+  /**
+   * Runs after the response is received. Displays error if backend returns errors
+   * @param data the response backend sends
+   */
   private processResponse(data) {
     console.log("Success")
-    if (data.success == true) {
-      this.router.navigate(['../dashboard']);
-      this.errors.clear();
-    }
+
+    // Condition is based on what kind of response backend provides
+    if (data === "Email sending successful.") {
+       this.router.navigate(['../dashboard']);
+       this.errors.clear();
+     }
     else {
       console.warn('Else Statement executed');
       this.error = data.error;

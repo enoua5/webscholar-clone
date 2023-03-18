@@ -27,8 +27,12 @@ public class ScholarshipService {
     /**
      * This object handles queries to the database.
      */
-    @Autowired
     public ScholarshipRepository scholarshipRepository;
+
+    @Autowired
+    private void setScholarshipRepository(ScholarshipRepository scholarshipRepository) {
+        this.scholarshipRepository = scholarshipRepository;
+    }
 
     /**
      * This method updates the data associated for an existing scholarship.

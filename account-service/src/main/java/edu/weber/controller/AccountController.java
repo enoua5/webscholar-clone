@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -114,7 +116,7 @@ public class AccountController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public void createNewAccount(@Valid @RequestBody Account account, BindingResult result) {
+    public Account createNewAccount(@Valid @RequestBody Account account, BindingResult result) {
 
 
         log.info(account.toString());
@@ -131,6 +133,7 @@ public class AccountController {
             //TODO: Send a confirmation email (not necessary for weber state oauth2 login)
             //Presently, outlook blocks api calls if it thinks you're 'spamming' from too many tests
             //We should probably setup something a little more permanent. But services like outlook, gmail require 2FA (IE a phone number) to use a api-key right now.
+
             accountService.sendEmail(account.getEmail(), "Registration email", "Thank you for registering!");
 
             //Encrypt the password
@@ -138,7 +141,10 @@ public class AccountController {
 
             //Create an account in the database
             accountService.accountRepository.save(account);
+
+            return account;
         }
+        return null;
     }
 
     /**
@@ -149,6 +155,7 @@ public class AccountController {
     @RequestMapping(value = "/emailExists", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Boolean emailExists(@RequestParam String email) {
+        log.info("Entering emailExists");
         return accountService.accountRepository.findAccountByEmail(email) != null;
     }
 
@@ -159,7 +166,7 @@ public class AccountController {
      * @param updateAccount The form object sent from the frontend that is converted into an account model object.
      */
     @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST,
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public void saveChanges(@PathVariable int accountKey, @RequestBody Account updateAccount, BindingResult result) {
 
         //Validate input
@@ -183,19 +190,67 @@ public class AccountController {
         }
     }
 
-    @RequestMapping(path = "/forgot/password", method = RequestMethod.POST)
-    public String forgotPassword(@RequestParam int accountKey){
+    @RequestMapping(path = "/forgotPassword", method = RequestMethod.POST)
+    public String forgotPassword(@RequestParam String accountEmail){
+        log.info("Entering forgotPassword");
 
-        Account found = accountService.accountRepository.findAccountByAccountKey(accountKey);
+        Account found = accountService.accountRepository.findAccountByEmail(accountEmail);
         if(found == null){
             accountNotFound();
+            log.error("Could not find the account");
             return "Could not find the account via accountKey.";
         }
-        if(!accountService.sendForgotPassword(accountKey)){
+        if(!accountService.sendForgotPassword(accountEmail)){
             log.error("Failed to send forgotten password.");
         }
 
+        log.info("Successfully sent forgot password email");
         return "done";
+    }
+
+    // TODO: Frontend
+    //  Get the hashed value from the webURL: account/new_password/<HASH VALUE>.
+    //  Then call forgotPassHashExists()
+    //  This method could instead return a boolean, if desired.
+
+    /**
+     * Checks validity of the provided forgotPassHash.
+     * Must exist in the database and must have been created within 24 hours.     *
+     * @param forgotPassHash: The hashed value that is related to this request
+     * @return: An error message in String format, or "True"
+     */
+    @RequestMapping(path = "/forgotPassHashExists", method = RequestMethod.POST)
+    public String forgotPassHashExists(@RequestParam String forgotPassHash){
+        Account account = accountService.accountRepository.findAccountByForgotPassHash(forgotPassHash);
+        if (account == null){
+            accountNotFound();
+            log.error("No account exists with that forgot password hash.");
+            return "No account exists with that forgot password hash.";
+        }
+        if (LocalDateTime.now().isAfter(account.getForgotPassDate().plusHours(24)))
+        {
+            accountNotFound();
+            log.error("This forgot password hash has expired.");
+            return "This hash was issued more than 24 hours ago";
+        }
+        return "True";
+    }
+
+    // TODO: Frontend
+    //  Call setNewPassword once the user has hit submit on the new-password-form
+
+    /**
+     * Sets a new password for the associated account and saves it to the database.
+     * @param forgotPassHash: The forgotPassHash related to this request
+     * @param newPassword: The updated password the user would like to set
+     * @return: "done" if password was correctly set.
+     */
+    @RequestMapping(path = "/setNewPassword", method = RequestMethod.POST)
+    public String setNewPassword(String forgotPassHash, String newPassword){
+        if (accountService.setNewPassword(forgotPassHash, newPassword)){
+            return "done";
+        }
+        return "Error setting the new password. Password was not saved.";
     }
 
     @RequestMapping(path = "/forgot/account", method = RequestMethod.POST)
@@ -440,6 +495,9 @@ public class AccountController {
 
         //Create the account
         Account account = new Account(email, password, schoolId, isActive, userType, firstName, lastName);
+
+        //Encrypt the password
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
 
         //Save the account to the database
         accountService.accountRepository.save(account);

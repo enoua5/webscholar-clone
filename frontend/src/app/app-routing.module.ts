@@ -16,6 +16,7 @@ import { ViewIssueComponent } from "./view-issue/view-issue.component";
 import { ScholarshipListComponent } from "./scholarship-list/scholarship-list.component";
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 import { RegistrationInvitationFormComponent } from "./registration-invitation-form/registration-invitation-form.component";
+import { TermsConditionsComponent } from "./terms-conditions/terms-conditions.component";
 import { CommitteeComponent } from "./scholarship-committee/committee.component";
 import { ScoringComponent } from "./Committee-Scoring/scoring.component"
 import { AuthGuard } from './auth/auth.guard';
@@ -37,6 +38,7 @@ const routes: Routes = [
   { path: 'scholarship', component: ScholarshipListComponent },
   { path: 'studentviewscholarship', component: StudentViewScholarshipFormComponent },
   { path: 'registration_invitation_form', component: RegistrationInvitationFormComponent },
+  { path: 'terms_conditions', component: TermsConditionsComponent },
   { path: 'committee/:id', component: CommitteeComponent },
   { path: 'scoring/:scholarId/:appId/:score', component: ScoringComponent, canActivate: [AuthGuard] },
   { path: 'scoring/:scholarId/:appId', component: ScoringComponent, canActivate: [AuthGuard] }

@@ -22,7 +22,8 @@ import {ScholarshipListComponent} from './scholarship-list/scholarship-list.comp
 import { NavbarComponent } from './navbar/navbar.component';
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 import { RegistrationInvitationFormComponent } from './registration-invitation-form/registration-invitation-form.component';
-import {RouterModule} from "@angular/router";
+import { RouterModule } from "@angular/router";
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { CommitteeComponent } from './scholarship-committee/committee.component';
 import { ScoringComponent } from './Committee-Scoring/scoring.component'
 
@@ -46,6 +47,7 @@ import { ScoringComponent } from './Committee-Scoring/scoring.component'
     NavbarComponent,
     StudentViewScholarshipFormComponent,
     RegistrationInvitationFormComponent,
+    TermsConditionsComponent,
     CommitteeComponent,
     ScoringComponent
   ],

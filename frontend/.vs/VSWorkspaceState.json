@@ -3,12 +3,13 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\app\\Committee-Scoring",
     "\\src\\app\\dashboard",
     "\\src\\app\\issues",
     "\\src\\app\\scholarship-committee",
     "\\src\\app\\scholarship-list",
     "\\src\\app\\view-issue"
   ],
-  "SelectedNode": "\\src\\app\\scholarship-list\\scholarship-list.component.ts",
+  "SelectedNode": "\\src\\app\\Committee-Scoring\\scoring.component.html",
   "PreviewInSolutionExplorer": false
 }

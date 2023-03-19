@@ -17,6 +17,7 @@ import {ScholarshipListComponent} from "./scholarship-list/scholarship-list.comp
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 import {RegistrationInvitationFormComponent} from "./registration-invitation-form/registration-invitation-form.component";
 import {StudentViewScholarshipApplicationComponent} from "./student-view-scholarship-application/student-view-scholarship-application.component";
+import {TermsConditionsComponent} from "./terms-conditions/terms-conditions.component";
 
 const routes: Routes = [
   { path: '', component: LoginFormComponent },
@@ -35,7 +36,8 @@ const routes: Routes = [
   { path: 'scholarship', component: ScholarshipListComponent },
   { path: 'studentviewscholarship', component: StudentViewScholarshipFormComponent },
   { path: 'registration_invitation_form', component: RegistrationInvitationFormComponent},
-  { path: 'scholarship/apply/:id', component: StudentViewScholarshipApplicationComponent}
+  { path: 'scholarship/apply/:id', component: StudentViewScholarshipApplicationComponent},
+  { path: 'terms_conditions', component: TermsConditionsComponent}
 ];
 
 @NgModule({

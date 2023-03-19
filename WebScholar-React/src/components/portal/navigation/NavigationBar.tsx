@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import WebScholarLogo from '../../../assets/logo.png';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { setDefaultUser, userState } from '../../../state/reducers/userSlice';
+import { userState } from '../../../state/reducers/userSlice';
 import { navPopoutOpen, setNavigationState } from '../../../state/reducers/navigationSlice';
 import ProfileButton from '../../elements/ProfileButton';
 import ProfileDropdown from './ProfileDropdown';
@@ -19,8 +19,8 @@ function NavigationBar() {
 
   const handleClick = (menu: string, submenu: string, popoutOpen: boolean) => {
     dispatch(setNavigationState({
-      menu: menu, 
-      submenu: submenu, 
+      menu: menu,
+      submenu: submenu,
       popoutOpen: popoutOpen,
       profileDropdownOpen: false
     }))
@@ -52,7 +52,7 @@ function NavigationBar() {
 
   let studentNavigation: React.ReactElement[] = [
     <NavButton
-      key="Profile" 
+      key="Profile"
       label="Profile"
       type="underline"
       onClick={() => {
@@ -61,7 +61,7 @@ function NavigationBar() {
       }}
     />,
     <NavButton
-      key="Scholarships" 
+      key="Scholarships"
       label="Scholarships"
       type="underline"
       onClick={() => {
@@ -70,23 +70,33 @@ function NavigationBar() {
     />
   ];
 
-  let staffNavigation: React.ReactElement[] = [
+  let administratorNavigation: React.ReactElement[] = [
     <NavButton
-      key="Review" 
+      key="Review"
       label="Review"
       type="underline"
       onClick={() => {
         handleClick("Review", "", false);
         navigate("/dummy");
       }}
+    />,
+
+    <NavButton
+      key="scholarshipsAdministrator"
+      label="Scholarships"
+      type="underline"
+      onClick={() => {
+        handleClick("Scholarships", "", false);
+        navigate("/scholarshipsAdministrator");
+      }}
     />
   ];
 
   const Login_Register_Buttons: React.ReactElement[] = [
     <NavButton
-      key="Log in" 
+      key="Log in"
       label="Log in"
-      type="underline" 
+      type="underline"
       onClick={() => {
         handleClick("Log in", "", false);
         navigate("/login");
@@ -95,7 +105,7 @@ function NavigationBar() {
     <NavButton
       key="Get Started"
       label="Get Started"
-      type="box" 
+      type="box"
       onClick={() => {
         handleClick("Get Started", "", false);
         navigate("/register");
@@ -104,37 +114,37 @@ function NavigationBar() {
   ];
 
   const Profile_Buttons: React.ReactElement[] = [
-    <ProfileButton key="profile button"/>,
-    <ProfileDropdown key="profile dropdown"/>
+    <ProfileButton key="profile button" />,
+    <ProfileDropdown key="profile dropdown" />
   ]
 
-  if(user.email === ""){
+  if (user.email === "") {
     noActiveUserNavigation.forEach(button => NavButtons.push(button));
   }
 
-  if(user.role === 'student'){
+  if (user.role === 'student') {
     studentNavigation.forEach(button => NavButtons.push(button));
   }
 
-  if(user.role === 'staff'){
-    staffNavigation.forEach(button => NavButtons.push(button));
+  if (user.role === 'administrator') {
+    administratorNavigation.forEach(button => NavButtons.push(button));
   }
 
   return (
-  <>
-    <NavigationBarContainer id="navbarContainer">
-      <Section>
-        <Avatar src={WebScholarLogo} style={{height: "65px", width: "65px"}}/>
-        <WebScholarButton onClick={() => navigate("/")}>WebScholar</WebScholarButton>
-        {NavButtons}
-      </Section>
-      <Section>
-       {user.active ? Profile_Buttons : Login_Register_Buttons}
-      </Section>
-    </NavigationBarContainer>
+    <>
+      <NavigationBarContainer id="navbarContainer">
+        <Section>
+          <Avatar src={WebScholarLogo} style={{ height: "65px", width: "65px" }} />
+          <WebScholarButton onClick={() => navigate("/")}>WebScholar</WebScholarButton>
+          {NavButtons}
+        </Section>
+        <Section>
+          {user.active ? Profile_Buttons : Login_Register_Buttons}
+        </Section>
+      </NavigationBarContainer>
 
-    <NavPopout />
-  </>
+      <NavPopout />
+    </>
   )
 }
 

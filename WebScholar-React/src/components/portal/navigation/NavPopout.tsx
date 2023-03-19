@@ -11,7 +11,7 @@ export default function NavPopout() {
   const {menu, submenu, popoutOpen} = useAppSelector(navigationState);
 
   const handleOutsideClick = (e: any) => {
-    if (!e.target.closest("#popoutContainer") && !e.target.closest("#navbarContainer")) {
+    if (popoutOpen && !e.target.closest("#popoutContainer") && !e.target.closest("#navbarContainer")) {
       dispatch(setNavPopout({open: false}));
     }
   }
@@ -53,7 +53,7 @@ const HelpItems = [
 ]
 
 const ScholarshipItems = [
-  {label: "Search All Scholarships", path: "/dummy"},
+  {label: "Search Scholarships", path: "/scholarships"},
 ]
 
 const Container = styled.div<{open: boolean}>`

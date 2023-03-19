@@ -2,18 +2,19 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { Form, Input, Row } from 'antd';
 import { CheckCircle } from 'react-feather';
-import { useAppSelector } from '../../hooks';
-import { userState } from '../../state/reducers/userSlice';
 import { EditButton } from '../sections/PersonalInfoSection';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setUserForm, userState } from '../../state/reducers/userSlice';
 import { FormContainer, FormHeader, SaveButton, SavedText } from './PersonalInfoForm';
 
 export default function AboutYouForm() {
+  const dispatch = useAppDispatch();
   const user = useAppSelector(userState);
   const [submitted, setSubmitted] = useState(false);
 
   // should update values in redux and call API to save form
   const handleSubmitSuccess = (values: any) => {
-      console.log("FORM SUBMITTED SUCCESSFULLY: ", values);
+      dispatch(setUserForm({name: 'about', form: values}));
       setSubmitted(true);
   };
 
@@ -21,6 +22,7 @@ export default function AboutYouForm() {
   const handleSubmitFailure = (values: any) => {
     console.log("FORM SUBMISSION FAILED", values)
   };
+  
   return <FormContainer>
     <Form
       name="aboutForm"
@@ -53,7 +55,7 @@ export default function AboutYouForm() {
 
       <ItalicizedText><sup>*</sup>This information will not be used for all scholarship applications.</ItalicizedText>
       <Form.Item
-        name='about'
+        name='text'
       >
         <Input.TextArea
           autoSize={{minRows: 10, maxRows: 20}}

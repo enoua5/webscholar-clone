@@ -12,6 +12,8 @@ import { useAppSelector } from '../../../hooks';
 import { userState } from '../../../state/reducers/userSlice';
 import DummyPage from '../../pages/DummyPage';
 import ApplicantProfilePage from '../../pages/ApplicantProfilePage';
+import AdministratorScholarshipPage from '../../pages/AdministratorScholarshipsPage'
+import ScholarshipSearchPage from '../../pages/ScholarshipSearchPage';
 
 function Main() {
   const user = useAppSelector(userState);
@@ -36,38 +38,39 @@ function Main() {
 
   // paths available to Student users
   const studentMenu: React.ReactElement[] = [
-    <Route key='/scholarships' path='/dummy' element={<DummyPage />} />,
+    <Route key='/scholarships' path='/scholarships' element={<ScholarshipSearchPage />} />,
     <Route key='/profile' path='/profile' element={<ApplicantProfilePage />} />,
   ];
 
   // paths available to Administrator users
   const administratorMenu: React.ReactElement[] = [
     <Route key='/review-applicants' path="/dummy" element={<DummyPage />} />,
+    <Route key='/scholarshipsAdministrator' path="/scholarshipsAdministrator" element={<AdministratorScholarshipPage />} />,
   ]
 
   // add routes based on active user
-  if(user.email === ""){
+  if (user.email === "") {
     noActiveUserMenu.forEach(route => menu.push(route));
   } else {
     activeUserMenu.forEach(route => menu.push(route));
   }
 
   // add student roles if student
-  if(user?.role === 'student'){
+  if (user?.role === 'student') {
     studentMenu.forEach(route => menu.push(route));
   }
 
   // add administrator paths if administrator
-  if(user?.role === 'staff'){
+  if (user?.role === 'administrator') {
     administratorMenu.forEach(route => menu.push(route));
   }
 
   return (
     <MainContainer>
       <Routes>
-       {menu}
+        {menu}
       </Routes>
-      <Footer/>
+      <Footer />
     </MainContainer>
   );
 }
@@ -77,7 +80,7 @@ export default Main
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 138px);
+  height: calc(100vh - 155px);
   width: 94%;
   min-width: 1000px;
   position: absolute;

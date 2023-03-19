@@ -12,7 +12,8 @@ export default function LoginPage() {
     dispatch(setNavigationState({
       menu: "Log in",
       submenu: "",
-      popoutOpen: false
+      popoutOpen: false,
+      profileDropdownOpen: false
     }))
   })
 

@@ -8,12 +8,61 @@ import ProgressReportForm from '../forms/ProgressReportForm';
 
 const ProgressPage = () => {
 
+    interface DataType {
+        key: string;
+        date: string;
+        subject: string;
+        scholarship: string;
+    }    
+
+    interface Values {
+        date: Date;
+        subject: string;
+        report: string;
+        scholarship: string;
+    }    
+
     const [openReportModal, setOpenReportModal] = useState(false);
 
-    const onCreate = (values: any) => {
-        console.log('Received values of form: ', values);
+    const [dataSource, setDataSource] = useState<DataType[]>([
+        {
+            key: '1',
+            scholarship: 'Scholarship',
+            subject: 'Monkey',
+            date: '4/20/2069'
+        },
+        {
+            key: '2',
+            scholarship: 'Scholarship2',
+            subject: 'Thanos Was Right',
+            date: '4/26/2019'
+        },
+        {
+            key: '3',
+            scholarship: 'Scholarship3',
+            subject: 'New Phone, Who Dis?',
+            date: '2/20/2020'
+        },
+    ])
+
+    const handleCreateReport = (values: Values) => {
+        const newDataSource = [
+            ...dataSource,
+            {
+                key: (dataSource.length + 1).toString(),
+                scholarship: values.scholarship,
+                subject: values.subject,
+                date: values.date.toISOString(),
+            },
+        ];
+        setDataSource(newDataSource);
         setOpenReportModal(false);
-    };
+    };    
+
+    // const onCreate = (values: any) => {
+    //     console.log('Received values of form: ', values);
+    //     setOpenReportModal(false);
+    // };
 
     return (
         <>
@@ -23,7 +72,7 @@ const ProgressPage = () => {
                     <h5>Report History</h5>
                 </ReportHistoryHeader>
                 <div>
-                    <ReportHistoryTable />
+                    <ReportHistoryTable dataSource={dataSource}/>
                 </div>
                 <div>
                     <Button
@@ -36,7 +85,7 @@ const ProgressPage = () => {
                     </Button>
                     <ProgressReportForm
                         open={openReportModal}
-                        onCreate={onCreate}
+                        onCreate={handleCreateReport}
                         onCancel={() => {
                             setOpenReportModal(false);
                         }}

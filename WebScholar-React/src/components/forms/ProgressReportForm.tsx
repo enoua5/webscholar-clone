@@ -7,6 +7,7 @@ import { useAppSelector } from '../../hooks';
 import { PageContainer } from '../elements/PageContainer';
 import { userState } from '../../state/reducers/userSlice';
 import { FormContainer } from './PersonalInfoForm';
+import ScholarshipSelect from '../elements/ScholarshipSelect';
 
 interface Values {
     date: Date;
@@ -32,6 +33,7 @@ const ProgressReportForm: React.FC<ReportCreateFormProps> = ({
     const [form] = useForm();
     const user = useAppSelector(userState);
     const [submitted, setSubmitted] = useState(false);
+    // const [selectedScholarship, setSelectedScholarship] = useState(null)
     const formProps = { form, user, submitted, setSubmitted };
 
     const onChange: DatePickerProps['onChange'] = (date, dateString) => {
@@ -60,8 +62,9 @@ const ProgressReportForm: React.FC<ReportCreateFormProps> = ({
                     form={form}
                     layout="vertical"
                     name='progressReportForm'
-                    // initialValues={{ date: new Date().toLocaleDateString() }}
+                // initialValues={{ date: new Date().toLocaleDateString() }}
                 >
+                    <ScholarshipSelect />
                     <Form.Item
                         name="date"
                         label="Date"
@@ -81,10 +84,10 @@ const ProgressReportForm: React.FC<ReportCreateFormProps> = ({
                         label="Report Body"
                         rules={[{ required: true }]}
                     >
-                        <TextArea 
-                        showCount
-                        maxLength={1500}
-                        style={{ height: 300, resize: 'none' }}
+                        <TextArea
+                            showCount
+                            maxLength={1500}
+                            style={{ height: 300, resize: 'none' }}
                         />
                     </Form.Item>
                 </Form>

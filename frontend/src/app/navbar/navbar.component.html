@@ -13,7 +13,7 @@
           <a class="nav-link text-dark" routerLink="/">Home</a>
         </li>
 
-        <ng-container *ngIf="getName() == null">
+        <ng-container *ngIf="getName() != null">
           <li class="nav-item">
             <a class="nav-link text-dark" routerLink="/edit_profile">Profile</a>
           </li>

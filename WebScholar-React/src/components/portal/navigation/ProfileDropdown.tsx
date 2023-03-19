@@ -1,10 +1,10 @@
 import { Button } from 'antd';
-import { LogOut, Settings } from 'react-feather';
+import { LogOut, Settings, User } from 'react-feather';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { profileDropdownOpen } from '../../../state/reducers/navigationSlice';
-import { setDefaultUser } from '../../../state/reducers/userSlice';
+import { setDefaultUser, setUserState, userState } from '../../../state/reducers/userSlice';
 
 export default function ProfileDropdown() {
   const dispatch = useAppDispatch();

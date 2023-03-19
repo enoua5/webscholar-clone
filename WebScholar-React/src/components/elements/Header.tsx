@@ -4,4 +4,5 @@ export const Header = styled.div`
   font-size: 36px;
   font-weight: 200;
   font-family: sans-serif;
+  color: #2C9EB5;
 `;

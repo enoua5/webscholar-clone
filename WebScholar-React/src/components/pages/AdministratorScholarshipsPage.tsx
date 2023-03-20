@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Header } from '../elements/Header';
 import { userState } from '../../state/reducers/userSlice';
 import { useAppSelector } from '../../hooks';
-import CreateScholashipForm from '../forms/CreateScholarshipForm'
+import CreateScholarshipForm from '../forms/CreateScholarshipForm'
 import AdministratorScholarshipsStatus from './AdministratorScholarshipsStatus'
 
 
@@ -24,7 +24,7 @@ export default function AdministratorHomePage() {
                 {
                     label: "Create A Scholarship",
                     key: "createScholarship",
-                    children: <CreateScholashipForm />,
+                    children: <CreateScholarshipForm />,
                     disabled: false
                 },
                 {

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import WebScholarLogo from '../../../assets/logo.png';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { userState } from '../../../state/reducers/userSlice';
+import { setDefaultUser, userState } from '../../../state/reducers/userSlice';
 import { navPopoutOpen, setNavigationState } from '../../../state/reducers/navigationSlice';
 import ProfileButton from '../../elements/ProfileButton';
 import ProfileDropdown from './ProfileDropdown';
@@ -67,10 +67,19 @@ function NavigationBar() {
       onClick={() => {
         handleClick("Scholarships", "", !_navPopoutOpen);
       }}
+    />,
+    <NavButton
+      key="Progress"
+      label="Progress"
+      type="underline"
+      onClick={() => {
+        handleClick("Progress", "", !_navPopoutOpen);
+        navigate("/progress")
+      }}
     />
   ];
 
-  let administratorNavigation: React.ReactElement[] = [
+  let staffNavigation: React.ReactElement[] = [
     <NavButton
       key="Review"
       label="Review"
@@ -78,16 +87,6 @@ function NavigationBar() {
       onClick={() => {
         handleClick("Review", "", false);
         navigate("/dummy");
-      }}
-    />,
-
-    <NavButton
-      key="scholarshipsAdministrator"
-      label="Scholarships"
-      type="underline"
-      onClick={() => {
-        handleClick("Scholarships", "", false);
-        navigate("/scholarshipsAdministrator");
       }}
     />
   ];
@@ -126,8 +125,8 @@ function NavigationBar() {
     studentNavigation.forEach(button => NavButtons.push(button));
   }
 
-  if (user.role === 'administrator') {
-    administratorNavigation.forEach(button => NavButtons.push(button));
+  if (user.role === 'staff') {
+    staffNavigation.forEach(button => NavButtons.push(button));
   }
 
   return (

@@ -6,6 +6,7 @@ import AccountRecoveryPage from '../../pages/AccountRecoveryPage';
 import WelcomePage from '../../pages/WelcomePage';
 import LoginPage from '../../pages/LoginPage';
 import RegistrationPage from '../../pages/RegistrationPage';
+import ProgressPage from '../../pages/ProgressPage';
 import Footer from '../footer';
 import HomePage from '../../pages/HomePage';
 import { useAppSelector } from '../../../hooks';
@@ -40,6 +41,7 @@ function Main() {
   const studentMenu: React.ReactElement[] = [
     <Route key='/scholarships' path='/scholarships' element={<ScholarshipSearchPage />} />,
     <Route key='/profile' path='/profile' element={<ApplicantProfilePage />} />,
+    <Route key='/progress' path='/progress' element={<ProgressPage />} />,
   ];
 
   // paths available to Administrator users

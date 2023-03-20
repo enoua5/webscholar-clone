@@ -183,7 +183,7 @@ export class EditProfileFormComponent implements OnInit {
           console.error(err);
           alert("Something went wrong trying to delete your account");
           }
-      });
+        });
     }
 
     

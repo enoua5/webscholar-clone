@@ -18,7 +18,9 @@
     ],
     "useDefineForClassFields": false
   },
-  "files": ["./cypress.config.ts"],
+  "include": [
+    "src/**/*"
+  ],
   "exclude":[
     "./cypress.config.ts"
   ]

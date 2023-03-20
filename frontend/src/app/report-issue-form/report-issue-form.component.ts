@@ -84,15 +84,17 @@ export class ReportIssueFormComponent implements OnInit {
       this.errorMessage = "";
       this.validMessage = "";
       this.reportIssueFormService.createIssue(this.reportIssueForm.value).subscribe(
-        data => {
-          this.reportIssueForm.reset();
-          this.validMessage = "Your issue has been reported. Thank you!";
-          return true;
-        },
-        error => {
-          console.log(error)
-          this.errorMessage = error.error.message || error.error.error;
-        }
+        {
+          next: data => {
+            this.reportIssueForm.reset();
+            this.validMessage = "Your issue has been reported. Thank you!";
+            return true;
+          },
+          error: (err) => {
+            console.log(err)
+            this.errorMessage = err.error.message || err.error.error;
+          }
+        } 
       )
     } else {
       console.error(this.reportIssueForm);

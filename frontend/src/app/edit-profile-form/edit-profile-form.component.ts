@@ -141,26 +141,27 @@ export class EditProfileFormComponent implements OnInit {
       });
 
       this.service.updateAccount(jsonObj).subscribe(
-        res => {
-          // change name in session storage if needed
-          if(this.first_name.value != '' && this.last_name.value != ''){
-            sessionStorage.setItem('name', `${ this.first_name.value } ${ this.last_name.value }`);
-          }else if(this.first_name.value != ''){ // only first name changed
-            let oldLastName: string = sessionStorage.getItem('name').split(" ")[1];
-            sessionStorage.setItem('name', `${ this.first_name.value } ${ oldLastName }`);
-          }else if(this.last_name.value != ''){ // only last name changed
-            let oldFirstName: string = sessionStorage.getItem('name').split(" ")[0];
-            sessionStorage.setItem('name', `${ oldFirstName } ${ this.last_name.value }`);
-          }
-
-          alert("Your information has been updated!");
-        },
-        err => {
-          console.log(err);
-          // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
-          alert(err.error.message);
-        }
-      );
+        {
+          next: (res) => {
+            // change name in session storage if needed
+            if(this.first_name.value != '' && this.last_name.value != ''){
+              sessionStorage.setItem('name', `${ this.first_name.value } ${ this.last_name.value }`);
+            }else if(this.first_name.value != ''){ // only first name changed
+              let oldLastName: string = sessionStorage.getItem('name').split(" ")[1];
+              sessionStorage.setItem('name', `${ this.first_name.value } ${ oldLastName }`);
+            }else if(this.last_name.value != ''){ // only last name changed
+              let oldFirstName: string = sessionStorage.getItem('name').split(" ")[0];
+              sessionStorage.setItem('name', `${ oldFirstName } ${ this.last_name.value }`);
+            }
+  
+            alert("Your information has been updated!");
+          },
+          error: (err) => {
+            console.log(err);
+            // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
+            alert(err.error.message);
+          } 
+        });
     }
   }
 
@@ -173,15 +174,16 @@ export class EditProfileFormComponent implements OnInit {
       let id = sessionStorage.getItem("accountKey");
       console.log("Requesting deletion of account with id "+id);
       this.service.deleteAccount(id).subscribe(
-        res => {
-          console.log(res);
-          alert("Account deletion has been requested. Please check your email to complete the process.");
-        },
-        err => {
+        {
+          next: (res) => {
+            console.log(res);
+            alert("Account deletion has been requested. Please check your email to complete the process.");
+          },
+          error: (err) => {
           console.error(err);
           alert("Something went wrong trying to delete your account");
-        }
-      );
+          }
+      });
     }
 
     

@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+// Component-Specific Imports
+import { ViewIssueComponent} from './view-issue.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ViewIssueComponent} from './view-issue.component';
 
 describe('ViewIssueComponent', () => {
   let component: ViewIssueComponent;

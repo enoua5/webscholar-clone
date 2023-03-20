@@ -1,7 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+// Component-Specific Imports
+import { EditProfileFormComponent } from './edit-profile-form.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { EditProfileFormComponent } from './edit-profile-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 describe('EditProfileFormComponent', () => {
   let component: EditProfileFormComponent;
@@ -9,7 +13,7 @@ describe('EditProfileFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, HttpClientTestingModule ],
+      imports: [ RouterTestingModule, HttpClientTestingModule, ReactiveFormsModule ],
       declarations: [ EditProfileFormComponent ]
     })
     .compileComponents();

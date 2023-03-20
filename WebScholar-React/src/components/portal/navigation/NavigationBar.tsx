@@ -79,14 +79,14 @@ function NavigationBar() {
     />
   ];
 
-  let staffNavigation: React.ReactElement[] = [
+  let administratorNavigation: React.ReactElement[] = [
     <NavButton
-      key="Review"
-      label="Review"
+      key="scholarshipsAdministrator"
+      label="Scholarships"
       type="underline"
       onClick={() => {
-        handleClick("Review", "", false);
-        navigate("/dummy");
+        handleClick("Scholarships", "", false);
+        navigate("/scholarshipsAdministrator");
       }}
     />
   ];
@@ -125,8 +125,8 @@ function NavigationBar() {
     studentNavigation.forEach(button => NavButtons.push(button));
   }
 
-  if (user.role === 'staff') {
-    staffNavigation.forEach(button => NavButtons.push(button));
+  if (user.role === 'administrator') {
+    administratorNavigation.forEach(button => NavButtons.push(button));
   }
 
   return (

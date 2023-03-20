@@ -34,7 +34,7 @@ function Main() {
   // paths available to logged/active users
   const activeUserMenu: React.ReactElement[] = [
     <Route key='/account-recovery' path='/account-recovery' element={<AccountRecoveryPage />} />,
-    <Route key='/account-settings' path='/account-settings' element={user.role === 'student' ? <></> : <></>} />,
+    <Route key='/account-settings' path='/account-settings' element={user.role === 'administrator' ? <></> : <></>} />,
   ]
 
   // paths available to Student users
@@ -46,7 +46,6 @@ function Main() {
 
   // paths available to Administrator users
   const administratorMenu: React.ReactElement[] = [
-    <Route key='/review-applicants' path="/dummy" element={<DummyPage />} />,
     <Route key='/scholarshipsAdministrator' path="/scholarshipsAdministrator" element={<AdministratorScholarshipPage />} />,
   ]
 

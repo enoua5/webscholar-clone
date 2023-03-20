@@ -17,7 +17,7 @@ import {emailExistsValidator} from "./validators";
  */
 export class LoginFormComponent implements OnInit {
   /**
-   * FormGroup object, contains username (email) and password
+   * FormGroup object that contains username (email) and password
    */
   form: FormGroup;
 
@@ -79,8 +79,8 @@ export class LoginFormComponent implements OnInit {
    * Handles login of the user.
    * Called when the form is submitted.
    *
-   * Wraps the user input from the form in a JSON object, and then utilizes {@link LoginService#login} to send the REST
-   * API request.
+   * Converts the user input from the form into a JSON object, and then utilizes {@link LoginService#login} to send the
+   * REST API request.
    * After the request, the email, user type, and account key are all saved in session storage.
    *
    * @todo Display possible errors returned from the backend in a better way, instead of through an alert

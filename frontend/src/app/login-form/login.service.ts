@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 // There is a login.php, but not sure how that's associated with port 8000
-const LOGIN_URL = 'http://localhost:8000/login.php';
+//const LOGIN_URL = 'http://localhost:8000/login.php';
 
 /**
  * Login Service

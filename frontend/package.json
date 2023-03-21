@@ -5,9 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test && npx cypress run",
+    "unit-test": "ng test --code-coverage true",
     "lint": "ng lint",
-    "cypress": "npx cypress open"
+    "cypress": "npx cypress open",
+    "ui-test": "npx cypress run"
   },
   "private": true,
   "dependencies": {

@@ -35,7 +35,6 @@ speed-measure-plugin*.json
 /.angular/cache
 /.sass-cache
 /connect.lock
-/coverage
 /libpeerconnection.log
 npm-debug.log
 yarn-error.log
@@ -48,3 +47,6 @@ Thumbs.db
 
 # Cypress generated files
 cypress/videos
+
+# Generated Coverage Reports
+**/coverage

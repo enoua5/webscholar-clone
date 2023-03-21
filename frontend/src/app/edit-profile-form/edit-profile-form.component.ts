@@ -21,7 +21,7 @@ export class EditProfileFormComponent implements OnInit {
               private router: Router,
               private service: EditProfileService)
 { this.form = this.fb.group({
-    fist_name: [''],
+    first_name: [''],
     last_name: [''],
     email: [''],
     phone_number: [''],

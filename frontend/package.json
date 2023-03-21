@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --open",
     "build": "ng build",
     "unit-test": "ng test --code-coverage true",
     "lint": "ng lint",
     "cypress": "npx cypress open",
-    "ui-test": "npx cypress run"
+    "ui-test": "npx cypress run",
+    "doc": "npx compodoc -p tsconfig.doc.json -n \"WebScholar Frontend\" --serve --port 48620 --open"
   },
   "private": true,
   "dependencies": {

@@ -28,4 +28,6 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     //lookup spring boot repository methods? Forget email spring boot service
     Account findAccountByDeleteLinkHash(String generatedHash);
+
+    Account findAccountByForgotPassHash(String forgotPassHash);
 }

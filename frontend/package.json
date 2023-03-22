@@ -8,7 +8,7 @@
     "unit-test": "ng test --code-coverage true",
     "lint": "ng lint",
     "cypress": "npx cypress open",
-    "ui-test": "npx cypress run",
+    "ui-test": "npx cypress run --e2e && npx cypress run --component",
     "doc": "npx compodoc -p tsconfig.doc.json -n \"WebScholar Frontend\" --serve --port 48620 --open"
   },
   "private": true,

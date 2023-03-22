@@ -29,8 +29,11 @@ public class AuthResourceConfig extends ResourceServerConfigurerAdapter {
     /**
      * Gives us our custom access token converter that can get our custom claims info out of the token
      */
-    @Autowired
-    private CustomAccessTokenConverter customAccessTokenConverter;
+    // Commented out for now because it was causing circular dependency problems
+    // inside accessTokenConverter() method now it creates a new CustomAccessTokenConverter instance
+    // This might cause problems? I will have to do some testing
+    //@Autowired
+    //private CustomAccessTokenConverter customAccessTokenConverter;
 
     /**
      * Makes ResourceServerSecurityConfigurer use the bean in this class
@@ -54,7 +57,7 @@ public class AuthResourceConfig extends ResourceServerConfigurerAdapter {
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setAccessTokenConverter(customAccessTokenConverter);
+        converter.setAccessTokenConverter(new CustomAccessTokenConverter());
         converter.setSigningKey("123");
         return converter;
     }
@@ -72,7 +75,7 @@ public class AuthResourceConfig extends ResourceServerConfigurerAdapter {
     }
 
     /**
-     * Allows us to extract our custom claims from the JWT token
+     * A customized Access Token converter that allows us to extract our custom claims from the token
      */
     @Component
     public class CustomAccessTokenConverter extends DefaultAccessTokenConverter {

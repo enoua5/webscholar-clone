@@ -167,7 +167,7 @@ public class AccountController {
      */
     @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void updateAccount(@PathVariable int accountKey, @RequestBody Account updateAccount, BindingResult result) {
+    public String updateAccount(@PathVariable int accountKey, @RequestBody Account updateAccount, BindingResult result) {
 
         //Validate input
         if (result.hasErrors()) {
@@ -188,6 +188,8 @@ public class AccountController {
             //Throw http error if account could not be saved
             accountNotFound();
         }
+
+        return "done";
     }
 
     @RequestMapping(path = "/forgotPassword", method = RequestMethod.POST)

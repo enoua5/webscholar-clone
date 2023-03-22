@@ -138,6 +138,11 @@ public class Account {
         this.zipCode = zipCode;
     }
 
+    @Column
+    private String phoneNumber;
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
     //********** ACCOUNT UPDATE / DELETE **********
     @Column
     private String deleteLinkHash;
@@ -243,6 +248,7 @@ public class Account {
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
                 ", zipCode='" + zipCode + '\'' +
+                ", phoneNumber" + phoneNumber + '\'' +
                 '}';
     }
 

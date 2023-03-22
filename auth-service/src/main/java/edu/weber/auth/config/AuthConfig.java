@@ -15,8 +15,10 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
-
 import javax.sql.DataSource;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class sets up the Authorization Server using Spring Security
@@ -26,15 +28,21 @@ import javax.sql.DataSource;
 @EnableAuthorizationServer
 public class AuthConfig extends AuthorizationServerConfigurerAdapter {
 
-    // JDBC data to configure the client access
+    /**
+     * JDBC data to configure the client access
+     */
     @Autowired
     private DataSource dataSource;
 
-    // Store and manage tokens used by auth-service
+    /**
+     * Store and manage tokens used by auth-service
+     */
     @Autowired
     private TokenStore tokenStore;
 
-    // Converts tokens to JWT
+    /**
+     * Converts tokens to JWT
+     */
     @Autowired
     private JwtAccessTokenConverter accessTokenConverter;
 
@@ -47,7 +55,12 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore).accessTokenConverter(accessTokenConverter);
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(), accessTokenConverter));
+
+        endpoints
+                .tokenStore(tokenStore)
+                .accessTokenConverter(accessTokenConverter);
     }
 
     /**
@@ -61,5 +74,28 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
                 .jdbc(dataSource);
+    }
+
+    /**
+     * Set up a bean to return our custom JWT token enhancer class
+     *
+     * @return
+     */
+    @Bean
+    public TokenEnhancer tokenEnhancer() {
+        return new CustomTokenEnhancer();
+    }
+
+    /**
+     * This class allows us to add custom claims to our JWT tokens
+     */
+    public class CustomTokenEnhancer implements TokenEnhancer {
+        @Override
+        public OAuth2AccessToken enhance(OAuth2AccessToken oAuth2AccessToken, OAuth2Authentication oAuth2Authentication) {
+            Map<String, Object> additionalInfo = new HashMap<>();   // Map of additional info to put on the JWT token
+            additionalInfo.put("user_role", "student"); // Hard-coded as student for testing purposes
+            ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(additionalInfo);
+            return oAuth2AccessToken;
+        }
     }
 }

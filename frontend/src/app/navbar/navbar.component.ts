@@ -23,10 +23,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    // Alternatively use sessionStorage.clear() to remove all keys
-    sessionStorage.removeItem('name');
-    sessionStorage.removeItem('userType');
-
+    sessionStorage.clear()
     this.router.navigate(['/']).then(res => true);
   }
 }

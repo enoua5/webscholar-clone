@@ -18,6 +18,8 @@ import { StudentViewScholarshipFormComponent } from './student-view-scholarship-
 import {RegistrationInvitationFormComponent} from "./registration-invitation-form/registration-invitation-form.component";
 import { RequestRoleFormComponent } from './request-role-form/request-role-form.component';
 import { PendingRoleRequestsComponent } from './pending-role-requests/pending-role-requests.component';
+import {TermsConditionsComponent} from "./terms-conditions/terms-conditions.component";
+
 
 const routes: Routes = [
   { path: '', component: LoginFormComponent },
@@ -37,7 +39,8 @@ const routes: Routes = [
   { path: 'studentviewscholarship', component: StudentViewScholarshipFormComponent },
   { path: 'registration_invitation_form', component: RegistrationInvitationFormComponent},
   { path: 'roles/request', component : RequestRoleFormComponent},
-  { path: 'roles/pending_requests', component: PendingRoleRequestsComponent}
+  { path: 'roles/pending_requests', component: PendingRoleRequestsComponent},
+  { path: 'terms_conditions', component: TermsConditionsComponent}
 ];
 
 @NgModule({

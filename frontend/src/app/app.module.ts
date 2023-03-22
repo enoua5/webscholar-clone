@@ -24,6 +24,7 @@ import { RegistrationInvitationFormComponent } from './registration-invitation-f
 import { RequestRoleFormComponent } from './request-role-form/request-role-form.component';
 import { RouterModule } from "@angular/router";
 import { PendingRoleRequestsComponent } from './pending-role-requests/pending-role-requests.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { PendingRoleRequestsComponent } from './pending-role-requests/pending-ro
     StudentViewScholarshipFormComponent,
     RegistrationInvitationFormComponent,
     RequestRoleFormComponent,
-    PendingRoleRequestsComponent
+    PendingRoleRequestsComponent,
+    TermsConditionsComponent,
   ],
   imports: [
     BrowserModule,

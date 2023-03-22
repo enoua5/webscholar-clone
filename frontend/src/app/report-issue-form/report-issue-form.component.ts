@@ -27,7 +27,6 @@ export class ReportIssueFormComponent implements OnInit {
     private issueService: IssueService,
     private formBuilder: FormBuilder) {
     this.reportIssueForm = this.formBuilder.group({
-      username: ['', {validators: [Validators.required]}],
       summary: ['', {
         validators: [
           Validators.required,
@@ -91,7 +90,8 @@ export class ReportIssueFormComponent implements OnInit {
           return true;
         },
         error => {
-          this.errorMessage = error;
+          console.log(error)
+          this.errorMessage = error.error.message || error.error.error;
         }
       )
     } else {

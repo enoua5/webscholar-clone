@@ -7,10 +7,7 @@ import edu.weber.repository.TokenRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,6 +15,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -97,11 +95,30 @@ public class AccountService {
         //Encrypt the password
         update.setPassword(passwordEncoder.encode(update.getPassword()));
 
-        //Update the account's data
-        account.setEmail(update.getEmail());
-        account.setPassword(update.getPassword());
-        account.setSchoolId(update.getSchoolId());
-        account.setActive(update.getActive());
+        //Update the account's data. "Not null" members can't be blank.
+        if(Objects.nonNull(update.getEmail()) && !"".equalsIgnoreCase(update.getEmail())) {
+            account.setEmail(update.getEmail());
+        }
+        if(Objects.nonNull(update.getPassword()) && !"".equalsIgnoreCase(update.getPassword())) {
+            account.setPassword(update.getPassword());
+        }
+        if(Objects.nonNull(update.getSchoolId()) && !"".equalsIgnoreCase(update.getSchoolId())) {
+            account.setSchoolId(update.getSchoolId());
+        }
+        if(Objects.nonNull(update.getIsLoggedIn())) {
+            account.setIsLoggedIn(update.getIsLoggedIn());
+        }
+        if(Objects.nonNull(update.getUserType()) && !"".equalsIgnoreCase(update.getUserType())) {
+            account.setUserType(update.getUserType());
+        }
+        //First name...
+        if(Objects.nonNull(update.getFirstName()) && !"".equalsIgnoreCase(update.getFirstName())) {
+            account.setFirstName(update.getFirstName());
+        }
+        //For now, everything else can be null.
+        account.setCity(update.getCity());
+        account.setState(update.getState());
+        account.setZipCode(update.getZipCode());
 
         //Save the updated account
         accountRepository.save(account);
@@ -194,25 +211,27 @@ public class AccountService {
 
     /**
      * This method sends an email to the user who requested their password be reset.
-     * @param accountKey
+     * @param accountEmail
      * @return
      */
-    public boolean sendForgotPassword(int accountKey){
+    public boolean sendForgotPassword(String accountEmail){
+        log.info("Sending Forgotten Password");
 
         //Get the forgetter's account
-        Account account = accountRepository.findAccountByAccountKey(accountKey);
+//        Account account = accountRepository.findAccountByAccountKey(accountKey);
+        Account account = accountRepository.findAccountByEmail(accountEmail);
 
         //Verify the forgetter's account exists
         if(account == null){
 
             // Log Error
-            log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: generateForgotPasswordLink()");
+            log.error("ERROR: Account Number " + accountEmail + " not found -- SOURCE: generateForgotPasswordLink()");
 
             return false;
         }
 
-        //Hold the link to the delete page
-        String webUrl = "http://localhost:4200/forgot_password/";
+        //Hold the link to the new password page
+        String webUrl = "http://localhost:4200/new_password/";
 
 
         //Create the unique hash
@@ -220,7 +239,7 @@ public class AccountService {
         String hashedLink = String.valueOf(hash);
 
         //Get the time the link was created
-        LocalDate timeCreated = LocalDate.now();
+        LocalDateTime timeCreated = LocalDateTime.now();
 
         //Save the hash to the users account
         account.setForgotPassHash(hashedLink);
@@ -234,20 +253,45 @@ public class AccountService {
         //Build the final url
         webUrl += hashedLink;
 
-
-
         //Send the email
         String senderName = account.getFirstName() + " " + account.getLastName();
 
         String messageSubject = "Forgot password";
         String messageBody = "The account for: '" + senderName + "' has requested to reset their forgotten password.\n" +
-                "To delete your account, please go to:\n" +
+                "To reset your forgotten password, please go to:\n" +
                 webUrl +
                 " \nThis link will expire in 24 hours.";
 
         //Send out email
         sendEmail(account.getEmail(), messageSubject, messageBody);
         log.debug("Send email to " + account.getEmail() + "with link: " + webUrl);
+        return true;
+    }
+
+    /**
+     * Sets a new password for the related account
+     * @param forgotPassHash: The forgotPassHash value that was tied to this request
+     * @param newPassword: The updated password
+     * @return: true, if saving the new password was successful
+     */
+    public boolean setNewPassword(String forgotPassHash, String newPassword){
+        // Find the account with the associated forgotPassHash
+        Account account = accountRepository.findAccountByForgotPassHash(forgotPassHash);
+
+        if (account == null){
+            log.error("Account not found.");
+            return false;
+        }
+
+        // Hash the new password and update the database as such
+        account.setPassword(passwordEncoder.encode(newPassword));
+
+        // Save the changes
+        accountRepository.save(account);
+
+        // Send a confirmation email
+        sendEmail(account.getEmail(), "Password Updated", "The password for the account linked to this email address has been updated.");
+
         return true;
     }
 
@@ -314,7 +358,7 @@ public class AccountService {
         String hashedLink = String.valueOf(hash);
 
         //Get the time the link was created
-        LocalDate timeCreated = LocalDate.now();
+        LocalDateTime timeCreated = LocalDateTime.now();
 
         //Save the hash to the users account
         account.setDeleteLinkHash(hashedLink);
@@ -415,7 +459,7 @@ public class AccountService {
 
 
         //Verify the hash has not expired
-        if(account.getDeleteLinkDate().plusDays(1).isBefore(LocalDate.now())){ //If it is past the 'link day +1 day', then 24 hours have passed
+        if(account.getDeleteLinkDate().plusDays(1).isBefore(LocalDateTime.now())){ //If it is past the 'link day +1 day', then 24 hours have passed
 
             //Remove the existing hash data, as it's too late to delete the account
 

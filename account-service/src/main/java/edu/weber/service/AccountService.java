@@ -75,7 +75,7 @@ public class AccountService {
      * @param update The new account data being used for updating.
      * @return Returns a success or fail flag depending on if the account can be found.
      */
-    public boolean saveChanges(int accountKey, Account update) {
+    public boolean updateAccount(int accountKey, Account update) {
 
         //Get the current account
         Account account = accountRepository.findAccountByAccountKey(accountKey);
@@ -111,14 +111,18 @@ public class AccountService {
         if(Objects.nonNull(update.getUserType()) && !"".equalsIgnoreCase(update.getUserType())) {
             account.setUserType(update.getUserType());
         }
-        //First name...
         if(Objects.nonNull(update.getFirstName()) && !"".equalsIgnoreCase(update.getFirstName())) {
             account.setFirstName(update.getFirstName());
+        }
+        if(Objects.nonNull(update.getLastName()) && !"".equalsIgnoreCase(update.getLastName())) {
+            account.setLastName(update.getLastName());
         }
         //For now, everything else can be null.
         account.setCity(update.getCity());
         account.setState(update.getState());
         account.setZipCode(update.getZipCode());
+        account.setPhoneNumber(update.getPhoneNumber());
+        account.setMajor(update.getMajor());
 
         //Save the updated account
         accountRepository.save(account);

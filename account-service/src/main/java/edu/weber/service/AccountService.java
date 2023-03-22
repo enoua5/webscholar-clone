@@ -75,7 +75,7 @@ public class AccountService {
      * @param update The new account data being used for updating.
      * @return Returns a success or fail flag depending on if the account can be found.
      */
-    public boolean updateProfile(int accountKey, Account update) {
+    public Account updateProfile(int accountKey, Account update) {
 
         //Get the current account
         Account account = accountRepository.findAccountByAccountKey(accountKey);
@@ -86,7 +86,7 @@ public class AccountService {
             // Log Error
             log.error("ERROR: Account does not exist -- SOURCE: saveChanges()");
 
-            return false;
+            return null;
         }
 
 
@@ -121,7 +121,7 @@ public class AccountService {
         //Save the updated account
         accountRepository.save(account);
 
-        return true;
+        return account;
     }
 
 

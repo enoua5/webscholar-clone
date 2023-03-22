@@ -75,7 +75,7 @@ public class AccountService {
      * @param update The new account data being used for updating.
      * @return Returns a success or fail flag depending on if the account can be found.
      */
-    public boolean updateAccount(int accountKey, Account update) {
+    public boolean updateProfile(int accountKey, Account update) {
 
         //Get the current account
         Account account = accountRepository.findAccountByAccountKey(accountKey);
@@ -92,15 +92,9 @@ public class AccountService {
 
         Assert.notNull(account, "can't find account with name " + accountKey);
 
-        //Encrypt the password
-        update.setPassword(passwordEncoder.encode(update.getPassword()));
-
         //Update the account's data. "Not null" members can't be blank.
         if(Objects.nonNull(update.getEmail()) && !"".equalsIgnoreCase(update.getEmail())) {
             account.setEmail(update.getEmail());
-        }
-        if(Objects.nonNull(update.getPassword()) && !"".equalsIgnoreCase(update.getPassword())) {
-            account.setPassword(update.getPassword());
         }
         if(Objects.nonNull(update.getSchoolId()) && !"".equalsIgnoreCase(update.getSchoolId())) {
             account.setSchoolId(update.getSchoolId());

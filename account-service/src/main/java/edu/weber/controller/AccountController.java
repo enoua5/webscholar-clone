@@ -167,7 +167,7 @@ public class AccountController {
      */
     @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String updateAccount(@PathVariable int accountKey, @RequestBody Account updateAccount, BindingResult result) {
+    public String updateProfile(@PathVariable int accountKey, @RequestBody Account updateAccount, BindingResult result) {
 
         //Validate input
         if (result.hasErrors()) {
@@ -180,7 +180,7 @@ public class AccountController {
         }
 
         //Overwrite the existing account data with the new account data
-        if (!accountService.updateAccount(accountKey, updateAccount)) {
+        if (!accountService.updateProfile(accountKey, updateAccount)) {
 
             // Log error
             log.error("ERROR: Account could not be saved -- SOURCE: saveChanges()");

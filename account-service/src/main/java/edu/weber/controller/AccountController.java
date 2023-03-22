@@ -165,7 +165,7 @@ public class AccountController {
      * @param accountKey    The key used to find the users account from the database.
      * @param updateAccount The form object sent from the frontend that is converted into an account model object.
      */
-    @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST,
+    @RequestMapping(path = "/update_profile/{accountKey}", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public String updateProfile(@PathVariable int accountKey, @RequestBody Account updateAccount, BindingResult result) {
 

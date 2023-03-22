@@ -175,27 +175,28 @@ export class RegisterFormComponent implements OnInit {
 
       //console.log(jsonObj);
       this.service.createAccount(jsonObj).subscribe(
-        res => {
-          console.log(res.body);
-          // Put whatever needs to be executed *after* the routing is done in the .then()
-          sessionStorage.setItem('name', `${ res.body.firstName } ${ res.body.lastName }`);
-          sessionStorage.setItem('email', `${ res.body.email }`);
-          sessionStorage.setItem('userType', res.body.userType);
-          sessionStorage.setItem('accountKey', res.body.accountKey);
-        
-          this.router.navigate(['/dashboard']).then(() => {
-            console.log(sessionStorage.getItem('name'));
-            console.log(sessionStorage.getItem('email'));
-            console.log(sessionStorage.getItem('userType'));
-            console.log(sessionStorage.getItem('accountKey'));
-          });
-        },
-        err => {
-          console.log(err);
-          // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
-          alert(err.error.message);
-        }
-      );
+        {
+          next: (res) => {
+            console.log(res.body);
+            // Put whatever needs to be executed *after* the routing is done in the .then()
+            sessionStorage.setItem('name', `${ res.body.firstName } ${ res.body.lastName }`);
+            sessionStorage.setItem('email', `${ res.body.email }`);
+            sessionStorage.setItem('userType', res.body.userType);
+            sessionStorage.setItem('accountKey', res.body.accountKey);
+          
+            this.router.navigate(['/dashboard']).then(() => {
+              console.log(sessionStorage.getItem('name'));
+              console.log(sessionStorage.getItem('email'));
+              console.log(sessionStorage.getItem('userType'));
+              console.log(sessionStorage.getItem('accountKey'));
+            });
+          },
+          error: (err) => {
+            console.log(err);
+            // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
+            alert(err.error.message);
+          }
+        });
       // Test create account
       //this.service.testAccountCreation();
     }

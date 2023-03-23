@@ -269,7 +269,7 @@ public class AccountService {
     }
 
     /**
-     * Sets a new password for the related account
+     * Sets a new password from a forgot password link
      * @param forgotPassHash: The forgotPassHash value that was tied to this request
      * @param newPassword: The updated password
      * @return: true, if saving the new password was successful
@@ -280,6 +280,42 @@ public class AccountService {
 
         if (account == null){
             log.error("Account not found.");
+            return false;
+        }
+
+        // Hash the new password and update the database as such
+        account.setPassword(passwordEncoder.encode(newPassword));
+
+        // Save the changes
+        accountRepository.save(account);
+
+        // Send a confirmation email
+        sendEmail(account.getEmail(), "Password Updated", "The password for the account linked to this email address has been updated.");
+
+        return true;
+    }
+
+    public boolean changePassword(int accountKey, String currentPassword, String newPassword){
+        //Find the account based on the account key
+        Account account = accountRepository.findAccountByAccountKey(accountKey);
+
+        log.info("accountKey: " + accountKey);
+        log.info("currentPassword: " + currentPassword);
+        log.info("newPassword: " + newPassword);
+
+        if (account == null){
+            log.error("Account not found.");
+            return false;
+        }
+
+        //TODO: Is this parsing correctly?
+        // Verify that the old password is correct
+        if (!passwordEncoder.matches(currentPassword, account.getPassword())){
+            log.info("current Password: " + currentPassword);
+            log.info("current Password encoded: " + passwordEncoder.encode(currentPassword));
+            log.info("account.getPassword: " + account.getPassword());
+            log.info("Password1! encoded: " + passwordEncoder.encode("Password1!"));
+            log.error("Incorrect Password.");
             return false;
         }
 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import javax.ws.rs.core.Application;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -248,6 +249,23 @@ public class AccountController {
     @RequestMapping(path = "/setNewPassword", method = RequestMethod.POST)
     public String setNewPassword(String forgotPassHash, String newPassword){
         if (accountService.setNewPassword(forgotPassHash, newPassword)){
+            return "done";
+        }
+        return "Error setting the new password. Password was not saved.";
+    }
+
+    /**
+     * Changes the password of the logged in user
+     * @param accountKey: The account key of the logged in user
+     * @param currentPassword: The current password as input by the user
+     * @param newPassword: The new password as set by the user
+     * @return: "done" if password was correctly set
+     */
+    @RequestMapping(path = "/change_password/{accountKey}", method = RequestMethod.POST,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
+    //TODO: @RequestBody only works with a single value. Typically, a bound model. Consider making a PasswordDto?
+    public String changePassword(@PathVariable int accountKey, @RequestBody String currentPassword, String newPassword){
+        if (accountService.changePassword(accountKey, currentPassword, newPassword)){
             return "done";
         }
         return "Error setting the new password. Password was not saved.";

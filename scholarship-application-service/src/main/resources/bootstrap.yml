@@ -1,8 +1,8 @@
 spring:
   application:
-    # Name cannot begin with "application-" so I changed it to "app-"
-    # Waiting for Dr Zhang to provide an alternative name
-    name: app-service
+    # Original name application-service was invalid because names cannot begin with 'application-'
+    # Name changed to scholarship-application-service as requested by Dr Zhang
+    name: scholarship-application-service
   cloud:
     config:
       uri: http://config-service:8888

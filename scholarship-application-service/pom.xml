@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>application-service</artifactId>
+    <artifactId>scholarship-application-service</artifactId>
 
     <dependencies>
 <!--  BASIC SPRING DEPENDENCIES  -->
@@ -49,6 +49,7 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
         <!-- Required by Eureka for health checking -->
+        <!-- TODO: I believe Netflix-Hystrix may end up replacing this dependency, we'll see -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>

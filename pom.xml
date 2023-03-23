@@ -54,7 +54,7 @@
         <module>gateway</module>
         <module>auth-service</module>
         <module>monitoring</module>
-        <module>application-service</module>
+        <module>scholarship-application-service</module>
 
         <!--        <module>frontend</module>-->
     </modules>

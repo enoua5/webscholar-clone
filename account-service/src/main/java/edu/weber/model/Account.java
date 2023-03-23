@@ -73,6 +73,14 @@ public class Account {
         this.userType = userType;
     }
 
+    //Each user can request one role at a time, stored in the below column
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AccountRoles requestedRole;
+    public AccountRoles getRequestedRole() { return requestedRole; }
+    public void setRequestedRole(AccountRoles requestedRole) { this.requestedRole = requestedRole; }
+
+
     //********** SCHOOL INFO **********
 
     @Column(nullable = false)

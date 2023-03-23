@@ -64,11 +64,12 @@ public class Account {
 
     @Column
     @NotNull
-    private String userType;
-    public String getUserType(){
+    @Enumerated(EnumType.STRING)
+    private AccountRoles userType;
+    public AccountRoles getUserType(){
         return userType;
     }
-    public void setUserType(String userType){
+    public void setUserType(AccountRoles userType){
         this.userType = userType;
     }
 
@@ -196,7 +197,7 @@ public class Account {
         this.password = "";
         this.schoolId = "";
         this.isLoggedIn = false;
-        this.userType = "student";
+        this.userType = AccountRoles.student;
         this.firstName = "";
         this.lastName = "";
     }
@@ -212,7 +213,7 @@ public class Account {
      * @param firstName The users first name.
      * @param lastName The users last name.
      */
-    public Account(String email, String password, String schoolId, Boolean isLoggedIn, String userType, String firstName, String lastName){
+    public Account(String email, String password, String schoolId, Boolean isLoggedIn, AccountRoles userType, String firstName, String lastName){
 
         this.email = email;
         this.password = password;

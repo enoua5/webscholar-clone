@@ -108,7 +108,7 @@ public class AccountService {
         if(Objects.nonNull(update.getIsLoggedIn())) {
             account.setIsLoggedIn(update.getIsLoggedIn());
         }
-        if(Objects.nonNull(update.getUserType()) && !"".equalsIgnoreCase(update.getUserType())) {
+        if(Objects.nonNull(update.getUserType())) {
             account.setUserType(update.getUserType());
         }
         //First name...

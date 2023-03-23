@@ -489,7 +489,7 @@ public class AccountController {
         String password = "myPassword";
         String schoolId = "W012345678";
         Boolean isActive = true;
-        String userType = "student";
+        AccountRoles userType = AccountRoles.student;
         String firstName = "Bobby";
         String lastName = "Joe";
 
@@ -547,7 +547,7 @@ public class AccountController {
         password = bCryptPasswordEncoder.encode(password);
 
         //Create the account
-        Account account = new Account(email, password, schoolId, isActive, "student", firstName, lastName);
+        Account account = new Account(email, password, schoolId, isActive, AccountRoles.student, firstName, lastName);
 
         //Save the account to the database
         accountService.accountRepository.save(account);

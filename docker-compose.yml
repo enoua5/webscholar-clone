@@ -188,6 +188,24 @@ services:
       - front-end
       - back-end
 
+  #Spring scholarship-application-service microservice container settings
+  scholarship-application-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      EUREKA_SERVICE_USERNAME: $EUREKA_SERVICE_USERNAME
+      EUREKA_SERVICE_PASSWORD: $EUREKA_SERVICE_PASSWORD
+    build: scholarship-service
+    depends_on:
+      config-service:
+        condition: service_healthy
+    ports:
+      - 6007:6007
+    expose:
+      - 6007
+    networks:
+      - front-end
+      - back-end
+
   #Spring auth-service micro-service container settings
 #  TODO It seems like the depends on should be updated for each container to depend on the security service?
   auth-service:

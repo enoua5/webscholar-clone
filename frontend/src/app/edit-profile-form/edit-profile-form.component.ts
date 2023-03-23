@@ -25,8 +25,8 @@ export class EditProfileFormComponent implements OnInit {
               private service: EditProfileService)
   {
     this.form = this.fb.group({
-      first_name: [''],
-      last_name: [''],
+      first_name: [sessionStorage.getItem("firstName")],
+      last_name: [sessionStorage.getItem("lastName")],
       email: [''],
       phone_number: [''],
       city: [''],

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
-import {AccountService} from "./registration-invitation.service";
+import {RegistrationInvitationService} from "./registration-invitation.service";
 
+/**
+ * Registration Invitations Component
+ */
 @Component({
   selector: 'app-registration-invitation-form',
   templateUrl: './registration-invitation-form.component.html',
@@ -11,34 +14,63 @@ import {AccountService} from "./registration-invitation.service";
 
 /**
  * Interacts with the invitation form on the page
- * @param emails array of emails to send invites to
- * @param fullPath a string grabbed from the input 
- * @param separator needed to put together an API call URL
- * @param error will contain any error messages 
- * @param type determines what page it is - for Chair or Faculty invites
  */
 export class RegistrationInvitationFormComponent implements OnInit {
-  form: FormGroup;
-  emails: string[];
-  fullPath: string = "";
-  separator: string = "";
-  error: string = null;
-  type: boolean;
-  errors: Map<string, string> = new Map();
-
-  constructor(private fb: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private service: AccountService) {
-    this.form = this.fb.group({
-      emails: [''],
-    });
-  }
-
-  /**
-   * Runs when page is loaded, determines what form needs to be displayed -
-   * one for Chair invites and one for Faculty invites
+ /**
+   * Form group object
    */
+ form: FormGroup;
+
+ /**
+  * Array of emails to send invites to
+  */
+ emails: string[];
+
+ /**
+  * String grabbed from the input 
+  */
+ fullPath: string = "";
+
+ /**
+  * Needed to put together an API call URL
+  */
+ separator: string = "";
+
+ /**
+  * Will contain any error messages 
+  */
+ error: string = null;
+
+ /**
+  * Type determines what page it is - for Chair or Faculty invites
+  */
+ type: boolean;
+
+ /**
+  *  Map used for storing errors returned from backend
+  */
+ errors: Map<string, string> = new Map();
+
+ /**
+  * Builds the form and sets up the validators for each field
+  * @param fb fb ForbBuilder dependency
+  * @param route Route dependency
+  * @param router Router dependency
+  * @param service RegistrationInvitationService dependency
+  */
+ constructor(private fb: FormBuilder,
+             private route: ActivatedRoute,
+             private router: Router,
+             private service: RegistrationInvitationService) {
+   this.form = this.fb.group({
+     emails: [''],
+   });
+ }
+
+ /**
+  * Runs when page is loaded, determines what form needs to be displayed -
+  * one for Chair invites and one for Faculty invites
+  */
   ngOnInit(): void {
     const uriParam = this.route.snapshot.paramMap.get('type');
     if(uriParam == "chairInvitation"){
@@ -77,7 +109,6 @@ export class RegistrationInvitationFormComponent implements OnInit {
    * Executes when send button is pressed
    * Assembles the api call with all the emails provided
    */
-
   onSubmit(): void {
     this.createEmailArray()
     console.log(this.emails);

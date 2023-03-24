@@ -10,14 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
+
 import org.springframework.security.access.AccessDeniedException;
-//import org.springframework.security.core.userdetails.User;
 
 /**
  * This class is a Spring MVC controller that handles HTTP requests related to user authorization
- * It has one endpoint at "/users/current", which returns the authenticated user's Principal object
+ * It has an endpoint at "/auth/current", which returns the authenticated user's Principal object
+ * It has a POST mapping which creates a new User in the system
+ * It has endpoints to create a test User, currently does not assign it a role
  * RESTful web service controller
- * base URI path is /users
+ * base URI path is /auth
  */
 @RestController
 @RequestMapping("/auth")
@@ -44,18 +46,16 @@ public class UserController {
 	 * @param user the user to create
 	 * @throws AccessDeniedException if the OAuth2 access token does not have the required "server" scope
 	 */
-
 	@RequestMapping(method = RequestMethod.POST)
-	public void createUser(@RequestBody edu.weber.auth.model.User user) throws AccessDeniedException {
+	public void createUser(@RequestBody User user) throws AccessDeniedException {
 		userService.create(user);
 	}
 
 	/**
-	 * Creates a test user
+	 * Creates a test User
 	 *
 	 * @throws AccessDeniedException if the OAuth2 access token does not have the required "server" scope
 	 */
-
 	@RequestMapping(value="/create_test", method = RequestMethod.POST)
 	public String createTestUser() throws AccessDeniedException {
 

@@ -24,8 +24,8 @@ public class UserDetailsImpl implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> ga=new ArrayList<GrantedAuthority>();
 		//ga.add(new SimpleGrantedAuthority("ROLE_"+this.user.getRoles().getRoleName().toUpperCase()));
-		ga.add(new SimpleGrantedAuthority(this.user.getRoles().getRoleName().toUpperCase()));
-		this.user.getRoles().getPermissions().forEach(permission->{
+		ga.add(new SimpleGrantedAuthority(this.user.getUser_role().getRoleName().toUpperCase()));
+		this.user.getUser_role().getPermissions().forEach(permission->{
 				ga.add(new SimpleGrantedAuthority(permission.getPermissionName().toUpperCase()));
 			});
 		ga.forEach(	a->System.out.println(a.getAuthority()));

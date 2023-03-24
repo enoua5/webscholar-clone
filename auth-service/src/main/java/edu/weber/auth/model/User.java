@@ -3,8 +3,7 @@ package edu.weber.auth.model;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
+
 // TODO
 @Entity
 @Table(name="user")
@@ -33,8 +32,12 @@ public class User implements Serializable {
 	@Column(name="user_type")
 	private String userType;
 
-	@ManyToOne
-	private Role role;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "user_role",
+			joinColumns = {@JoinColumn(name = "role_id")}
+	)
+	private Role user_role;
 	
 //	@ManyToMany(mappedBy = "consumers", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 //	private Set<Utility> utilitites;
@@ -48,22 +51,23 @@ public class User implements Serializable {
 	public User(int userId, String userName, String userType, String password) {
 		this.userId = userId;
 		this.userName = userName;
-		this.password=password;
+		this.userType = userType;
+		this.password = password;
 	}
 	
 	public User(String userName, String userType, String password) {
 		
 		this.userName = userName;
-		this.password=password;
+		this.password = password;
 	}
 
 	public User (User user) {
 		super();
 		this.userId = user.getUserId();
 		this.userName = user.getUserName();
-		this.password=user.getPassword();
+		this.password = user.getPassword();
 		this.userType = user.getUserType();
-		this.role=user.getRoles();
+		this.user_role = user.getUser_role();
 	}
 
 	public int getUserId() {
@@ -98,12 +102,12 @@ public class User implements Serializable {
 		this.password = password;
 	}
 	
-	public Role getRoles() {
-		return role;
+	public Role getUser_role() {
+		return user_role;
 	}
 
-	public void setRole(Role roles) {
-		this.role = roles;
+	public void setUser_role(Role role) {
+		this.user_role = role;
 	}
 	
 }

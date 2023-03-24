@@ -38,13 +38,12 @@ public class Role implements  Serializable{
 	/**
 	 * The set of permissions granted by this role.
 	 */
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "role_permission",
             joinColumns = {@JoinColumn(name = "role_id")},
             inverseJoinColumns = {@JoinColumn(name = "permission_id")}
     )
-
 	private Set<Permission> permissions;
 
 	/**

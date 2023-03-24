@@ -3,7 +3,6 @@ package edu.weber.auth.model;
 import java.io.Serializable;
 import java.util.Set;
 import java.io.Serial;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -38,7 +36,7 @@ public class Permission implements  Serializable{
 	private String permissionName;
 	
 	@JsonIgnore
-	@ManyToMany(mappedBy = "permissions", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "permissions", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Set<Role> roles;
 
 	public Permission() {
@@ -47,6 +45,9 @@ public class Permission implements  Serializable{
 
 	public Permission(String permissionName) {
 		super();
+		if (permissionName == null || permissionName.trim().isEmpty()) {
+			throw new IllegalArgumentException("Client ID cannot be empty");
+		}
 		this.permissionName = permissionName;
 	}
 

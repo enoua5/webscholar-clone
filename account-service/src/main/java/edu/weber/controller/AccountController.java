@@ -255,6 +255,7 @@ public class AccountController {
         if (accountService.setNewPassword(forgotPassHash, newPassword)){
             return "done";
         }
+        errorChangingPassword();
         return "Error setting the new password. Password was not saved.";
     }
 
@@ -265,14 +266,11 @@ public class AccountController {
      */
     @RequestMapping(path = "/change_password/{accountKey}", method = RequestMethod.POST,
         consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String changePassword(@PathVariable int accountKey, @RequestBody ChangePasswordDto changePasswordDto, BindingResult result){
+    public void changePassword(@PathVariable int accountKey, @RequestBody ChangePasswordDto changePasswordDto, BindingResult result){
         String currentPassword = changePasswordDto.getCurrentPassword();
         String newPassword = changePasswordDto.getNewPassword();
 
-        if (accountService.changePassword(accountKey, currentPassword, newPassword)){
-            return "done";
-        }
-        return "Error setting the new password. Password was not saved.";
+        accountService.changePassword(accountKey, currentPassword, newPassword);
     }
 
     @RequestMapping(path = "/forgot/account", method = RequestMethod.POST)
@@ -464,6 +462,13 @@ public class AccountController {
     public void accountNotFound() {
 
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account could not be found!");
+    }
+
+    /**
+     * Send an http response error if the specified account could not be found.
+     */
+    public void errorChangingPassword(){
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error setting the new password. Password was not saved.");
     }
 
 

@@ -1,5 +1,7 @@
 package edu.weber.service;
 
+import edu.weber.controller.AccountController;
+import edu.weber.controller.ErrorHandler;
 import edu.weber.model.Account;
 import edu.weber.model.VerificationToken;
 import edu.weber.repository.AccountRepository;
@@ -306,12 +308,12 @@ public class AccountService {
         Account account = accountRepository.findAccountByAccountKey(accountKey);
 
         if (account == null){
-            log.error("Account not found.");
+            ErrorHandler.accountNotFound();
             return false;
         }
 
         if (!passwordEncoder.matches(currentPassword, account.getPassword())){
-            log.error("Incorrect Password.");
+            ErrorHandler.incorrectPassword();
             return false;
         }
 

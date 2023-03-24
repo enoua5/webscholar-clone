@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 
 /**
- * This class Manages Authentication requests from the Auth Service
+ * This class manages Authentication requests from the Auth Service
  */
 @RestController
 @RequestMapping("/auth")

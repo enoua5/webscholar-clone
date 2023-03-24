@@ -3,6 +3,7 @@ package edu.weber.controller;
 import edu.weber.model.Account;
 import edu.weber.model.AccountRoles;
 import edu.weber.model.LoginDto;
+import edu.weber.model.ChangePasswordDto;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import javax.ws.rs.core.Application;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -256,6 +258,20 @@ public class AccountController {
         return "Error setting the new password. Password was not saved.";
     }
 
+    /**
+     * Changes the password of the logged in user
+     * @param accountKey: The account key of the logged in user
+     * @return: "done" if password was correctly set
+     */
+    @RequestMapping(path = "/change_password/{accountKey}", method = RequestMethod.POST,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean changePassword(@PathVariable int accountKey, @RequestBody ChangePasswordDto changePasswordDto, BindingResult result){
+        String currentPassword = changePasswordDto.getCurrentPassword();
+        String newPassword = changePasswordDto.getNewPassword();
+
+        return accountService.changePassword(accountKey, currentPassword, newPassword);
+    }
+
     @RequestMapping(path = "/forgot/account", method = RequestMethod.POST)
     public String forgotAccount(@RequestParam String accountEmail){
         Account found = accountService.accountRepository.findAccountByEmail(accountEmail);
@@ -439,6 +455,11 @@ public class AccountController {
         throw new ResponseStatusException(HttpStatus.PARTIAL_CONTENT, "The data sent was incomplete or invalid!");
     }
 
+    //TODO: This error message has been moved to the ErrorHandler class.
+    //  This method is still being referenced in this Controller class,
+    //  and each use will instead need to point to ErrorHandler.accountNotFound()
+    //  For the record, the ErrorHandler class can be accessed from AccountService too, which may be ideal.
+    //  Look to the changePassword methods in Controller and Service for an example.
     /**
      * Send an http response error if the specified account could not be found.
      */
@@ -446,7 +467,6 @@ public class AccountController {
 
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account could not be found!");
     }
-
 
     /*
     ----------------------------------------------------------------

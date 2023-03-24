@@ -45,17 +45,11 @@ export class EditProfileFormComponent implements OnInit {
       first_name: [''],
       last_name: [''],
       email: [''],
-
-      // currently, there is no provision to store the user's phone number in the database
-      // the form contained it, however, so I'll leave it in
       phone_number: [''],
       city: [''],
       state: [''],
       zip: [''],
       student_number: [''],
-
-      // currently, there is no provision to store the user's major in the database
-      // the form contained it, however, so I'll leave it in
       major: ['']
     });
   }
@@ -104,8 +98,6 @@ export class EditProfileFormComponent implements OnInit {
     return this.form.get('email');
   }
 
-  // currently, there is no provision to store the user's phone number in the database
-  // the form contained it, however, so I'll leave it in
   get phone_number(){
     return this.form.get('phone_number');
   }
@@ -126,8 +118,6 @@ export class EditProfileFormComponent implements OnInit {
     return this.form.get('student_number');
   }
 
-  // currently, there is no provision to store the user's major in the database
-  // the form contained it, however, so I'll leave it in
   get major(){
     return this.form.get('major');
   }
@@ -147,8 +137,10 @@ export class EditProfileFormComponent implements OnInit {
       // create JSON object
       const email = this.email.value;
       const schoolId = this.student_number.value;
+      const major = this.major.value;
       const firstName = this.first_name.value;
       const lastName = this.last_name.value;
+      const phoneNumber = this.phone_number.value;
       const city = this.city.value;
       const state = this.state.value;
       const zipCode = this.zip.value;
@@ -156,8 +148,10 @@ export class EditProfileFormComponent implements OnInit {
       const jsonObj = JSON.stringify({
         email: email,
         schoolId: schoolId,
+        major: major,
         firstName: firstName,
         lastName: lastName,
+        phoneNumber: phoneNumber,
         city: city,
         state: state,
         zipCode: zipCode
@@ -211,7 +205,7 @@ export class EditProfileFormComponent implements OnInit {
       );
     }
 
-    
+
   }
 
   // private processResponse(data) {

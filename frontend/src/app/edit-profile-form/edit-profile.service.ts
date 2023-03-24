@@ -32,7 +32,7 @@ export class EditProfileService{
     console.log(data);
 
     // get user account key from storage to call api
-    let urlString : string = 'http://localhost:6001/account/update/' + sessionStorage.getItem('accountKey');
+    let urlString : string = 'http://localhost:6001/account/update_profile/' + sessionStorage.getItem('accountKey');
     return this.http.post<any>(urlString, data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
   }
 

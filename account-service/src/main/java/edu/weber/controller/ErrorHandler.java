@@ -2,9 +2,6 @@ package edu.weber.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
-
 //TODO: This is a class for custom http error handling
 public class ErrorHandler {
     /**

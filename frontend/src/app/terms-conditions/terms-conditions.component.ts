@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {TermsConditionsService} from './terms-conditions.service';
+import { Component, OnInit } from '@angular/core';
+import { TermsConditionsService } from './terms-conditions.service';
 
 /**
  * Terms Conditions Component

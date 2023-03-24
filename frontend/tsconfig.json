@@ -2,7 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -10,12 +10,16 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "ES2020",
+    "target": "es2020",
     "module": "es2020",
     "lib": [
       "es2018",
       "dom"
     ],
-    "useDefineForClassFields": false
-  }
+    "useDefineForClassFields": false,
+  },
+  "include": [
+    "src/**/*",
+    "cypress"
+  ]
 }

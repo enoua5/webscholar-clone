@@ -40,8 +40,8 @@ const routes: Routes = [
   { path: 'registration_invitation_form', component: RegistrationInvitationFormComponent },
   { path: 'terms_conditions', component: TermsConditionsComponent },
   { path: 'committee/:id', component: CommitteeComponent },
-  { path: 'scoring/:scholarId/:appId/:score', component: ScoringComponent, canActivate: [AuthGuard] },
-  { path: 'scoring/:scholarId/:appId', component: ScoringComponent, canActivate: [AuthGuard] }
+  { path: 'scoring/:scholarId/:appId/:score', component: ScoringComponent },
+  { path: 'scoring/:scholarId/:appId', component: ScoringComponent }
 ];
 
 @NgModule({

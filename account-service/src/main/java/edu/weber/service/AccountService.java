@@ -1,5 +1,7 @@
 package edu.weber.service;
 
+import edu.weber.controller.AccountController;
+import edu.weber.controller.ErrorHandler;
 import edu.weber.model.Account;
 import edu.weber.model.AccountRoles;
 import edu.weber.model.VerificationToken;
@@ -268,7 +270,7 @@ public class AccountService {
     }
 
     /**
-     * Sets a new password for the related account
+     * Sets a new password from a forgot password link
      * @param forgotPassHash: The forgotPassHash value that was tied to this request
      * @param newPassword: The updated password
      * @return: true, if saving the new password was successful
@@ -278,7 +280,41 @@ public class AccountService {
         Account account = accountRepository.findAccountByForgotPassHash(forgotPassHash);
 
         if (account == null){
-            log.error("Account not found.");
+            ErrorHandler.accountNotFound();
+            return false;
+        }
+
+        // Hash the new password and update the database as such
+        account.setPassword(passwordEncoder.encode(newPassword));
+
+        // Save the changes
+        accountRepository.save(account);
+
+        // Send a confirmation email
+        sendEmail(account.getEmail(), "Password Updated", "The password for the account linked to this email address has been updated.");
+
+        return true;
+    }
+
+    /**
+     * Validates the current password for security,
+     * and changes the user's password to the supplied input
+     * @param accountKey: The account key for the current user
+     * @param currentPassword: The user's current password
+     * @param newPassword: The user's new password to be set
+     * @return: True if successful
+     */
+    public boolean changePassword(int accountKey, String currentPassword, String newPassword){
+        //Find the account based on the account key
+        Account account = accountRepository.findAccountByAccountKey(accountKey);
+
+        if (account == null){
+            ErrorHandler.accountNotFound();
+            return false;
+        }
+
+        if (!passwordEncoder.matches(currentPassword, account.getPassword())){
+            ErrorHandler.incorrectPassword();
             return false;
         }
 

@@ -11,21 +11,30 @@
       </thead>
 
       <tbody>
-      <ng-container *ngFor="let scholarship of scholarships">
-        <tr role="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#accordion'+scholarship.scholarshipId">
-          <td>{{ scholarship.title }}</td>
-          <td>{{ scholarship.organization }}</td>
-          <td>{{ scholarship.amount | currency: 'USD' : 'symbol' : '1.2-2' }}</td>
-          <td>
-            <div class="text-center">
-              <!-- TODO: EITHER create page for viewing specific scholarship OR hook this up to backend to apply -->
-              <a routerLink="/scholarship/apply/{{ scholarship.scholarshipId }}" class="btn btn-success m-2"
-                 role="button">
-                <i class="fas fa-edit"></i>
-                Apply
-              </a>
-            </div>
-          </td>
+        <ng-container *ngFor="let scholarship of scholarships">
+          <tr role="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#accordion'+scholarship.scholarshipId">
+            <td>{{ scholarship.title }}</td>
+            <td>{{ scholarship.organization }}</td>
+            <td>{{ scholarship.amount | currency: 'USD' : 'symbol' : '1.2-2' }}</td>
+            <td>
+              <ng-container *ngIf="getUserType() == 'student'">
+                <div class="text-center">
+                  <!-- TODO: EITHER create page for viewing specific scholarship OR hook this up to backend to apply -->
+                  <a routerLink="/scholarship/apply/{{ scholarship.scholarshipId }}" class="btn btn-success m-2" role="button">
+                    <i class="fas fa-edit"></i>
+                    Apply
+                  </a>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="getUserType() == 'committeeMember'">
+                <div class="text-center">
+                  <a routerLink="/committee/{{ scholarship.scholarshipId }}" class="btn btn-success m-2" role="button">
+                    <i class="fas fa-edit"></i>
+                    Score Applicants
+                  </a>
+                </div>
+              </ng-container>
+            </td>
         </tr>
 
         <tr>
@@ -42,7 +51,7 @@
             </div>
           </td>
         </tr>
-      </ng-container>
+        </ng-container>
       </tbody>
 
       <tfoot>

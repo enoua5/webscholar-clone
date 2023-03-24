@@ -27,21 +27,20 @@ export class ReportIssueFormComponent implements OnInit {
     private issueService: IssueService,
     private formBuilder: FormBuilder) {
     this.reportIssueForm = this.formBuilder.group({
-      username: ['', {validators: [Validators.required]}],
       summary: ['', {
         validators: [
           Validators.required,
-          Validators.pattern('^.{15,}$')
+          Validators.minLength(15)
         ]}],
       description: ['', {
         validators: [
           Validators.required,
-          Validators.pattern('^.{50,}$')
+          Validators.minLength(50)
         ]}],
       recreate: ['', {
         validators: [
           Validators.required,
-          Validators.pattern('^.{15,}$')
+          Validators.minLength(15)
         ]}],
       severity: ['', {validators: [Validators.required]}],
       priority: ['', {validators: [Validators.required]}],
@@ -85,16 +84,20 @@ export class ReportIssueFormComponent implements OnInit {
       this.errorMessage = "";
       this.validMessage = "";
       this.reportIssueFormService.createIssue(this.reportIssueForm.value).subscribe(
-        data => {
-          this.reportIssueForm.reset();
-          this.validMessage = "Your issue has been reported. Thank you!";
-          return true;
-        },
-        error => {
-          this.errorMessage = error;
-        }
+        {
+          next: data => {
+            this.reportIssueForm.reset();
+            this.validMessage = "Your issue has been reported. Thank you!";
+            return true;
+          },
+          error: (err) => {
+            console.log(err)
+            this.errorMessage = err.error.message || err.error.error;
+          }
+        } 
       )
     } else {
+      console.error(this.reportIssueForm);
       this.validMessage = "";
       this.errorMessage = "Please fill out the form before submitting!";
     }

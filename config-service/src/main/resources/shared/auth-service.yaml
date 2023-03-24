@@ -1,0 +1,6 @@
+spring:
+
+server:
+  servlet:
+    context-path: /account
+  port: 6006

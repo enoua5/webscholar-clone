@@ -13,7 +13,7 @@
           <a class="nav-link text-dark" routerLink="/">Home</a>
         </li>
 
-        <ng-container *ngIf="getName() != null">
+        <ng-container *ngIf="getName() == null">
           <li class="nav-item">
             <a class="nav-link text-dark" routerLink="/edit_profile">Profile</a>
           </li>
@@ -48,6 +48,10 @@
               </li>
             </ul>
           </li>
+
+          <li class="nav-item" *ngIf="getName() != null && getRole() == 'chair'">
+            <a class="nav-link text-dark" routerLink="/roles/pending_requests">Role Requests</a>
+          </li>
         </ng-container>
 
         <li class="nav-item">
@@ -63,6 +67,9 @@
             <li>
               <!-- TODO: create contact page -->
               <a class="dropdown-item" routerLink="/contact">Contact</a>
+            </li>
+            <li *ngIf="getRole() == 'student'">
+              <a class="dropdown-item" routerLink="/roles/request">Request Role</a>
             </li>
             <div class="dropdown-divider"></div>
             <li>

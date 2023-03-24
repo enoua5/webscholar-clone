@@ -17,11 +17,13 @@ export class NavbarComponent implements OnInit {
     return sessionStorage.getItem('name');
   }
 
-  logout() {
-    // Alternatively use sessionStorage.clear() to remove all keys
-    sessionStorage.removeItem('name');
-    sessionStorage.removeItem('userType');
+  getRole()
+  {
+    return sessionStorage.getItem('role');
+  }
 
+  logout() {
+    sessionStorage.clear()
     this.router.navigate(['/']).then(res => true);
   }
 }

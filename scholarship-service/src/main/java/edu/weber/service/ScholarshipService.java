@@ -27,8 +27,12 @@ public class ScholarshipService {
     /**
      * This object handles queries to the database.
      */
-    @Autowired
     public ScholarshipRepository scholarshipRepository;
+
+    @Autowired
+    private void setScholarshipRepository(ScholarshipRepository scholarshipRepository) {
+        this.scholarshipRepository = scholarshipRepository;
+    }
 
     /**
      * This method updates the data associated for an existing scholarship.
@@ -63,20 +67,13 @@ public class ScholarshipService {
         return true;
     }
 
-    /**
-     * TODO figure out how to make this delete account-scholarships with the same id
-     * This method deletes a scholarship using it's given id.
-     *
-     * @param scholarshipId The id of the scholarship to be deleted.
-     * @return Returns a success or fail flag depending on if the scholarship can be found.
-     */
     public boolean deleteScholarship(int scholarshipId){
 
         //Make sure the record exists
         Scholarship scholarship = scholarshipRepository.findScholarshipByScholarshipId(scholarshipId);
 
         if(scholarship == null){
-            log.error("ERROR: Scholarship does not exist -- SOURCE: saveChanges()");
+            log.error("ERROR: Scholarship does not exist -- SOURCE: deleteScholarship()");
 
             //Return failure
             return false;
@@ -86,6 +83,32 @@ public class ScholarshipService {
         scholarshipRepository.deleteScholarshipByScholarshipId(scholarshipId);
 
         //Return success
+        return true;
+    }
+
+    public boolean getScholarshipById(int scholarshipId){
+        Scholarship scholarship = scholarshipRepository.findScholarshipByScholarshipId(scholarshipId);
+
+        if(scholarship == null){
+            log.error("ERROR: A scholarship with that ID does not exist -- SOURCE: getScholarshipById()");
+
+            //Return failure
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean getScholarshipByTitle(String scholarshipTitle) {
+        Scholarship scholarship = scholarshipRepository.findScholarshipByTitle(scholarshipTitle);
+
+        if (scholarship == null) {
+            log.error("ERROR: A scholarship with that title does not exist -- SOURCE: getScholarshipByTitle()");
+
+            //Return failure
+            return false;
+        }
+
         return true;
     }
 }

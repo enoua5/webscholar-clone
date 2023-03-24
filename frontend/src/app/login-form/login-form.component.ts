@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router } from "@angular/router";
 import {LoginService} from "./login.service";
 import {emailExistsValidator} from "./validators";
 

@@ -1,6 +1,11 @@
+// Unit Testing Imports/Declarations
+/// <reference types="jasmine" />
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+// Component-Specific Imports
 import { ScholarshipListComponent } from './scholarship-list.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ScholarshipListComponent', () => {
   let component: ScholarshipListComponent;
@@ -8,6 +13,7 @@ describe('ScholarshipListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [ ReactiveFormsModule, RouterTestingModule ],
       declarations: [ ScholarshipListComponent ]
     })
     .compileComponents();

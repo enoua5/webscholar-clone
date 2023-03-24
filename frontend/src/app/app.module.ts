@@ -23,6 +23,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 import { RegistrationInvitationFormComponent } from './registration-invitation-form/registration-invitation-form.component';
 import { RouterModule } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { CommitteeComponent } from './scholarship-committee/committee.component';
 import { ScoringComponent } from './Committee-Scoring/scoring.component'
@@ -59,7 +61,9 @@ import { ScoringComponent } from './Committee-Scoring/scoring.component'
     FormsModule,
     RouterModule.forRoot([
       {path: 'registration_invitation_form/:type', component: RegistrationInvitationFormComponent }
-    ])
+    ]),
+    RouterTestingModule,
+    HttpClientTestingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

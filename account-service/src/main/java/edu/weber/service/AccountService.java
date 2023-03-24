@@ -279,7 +279,7 @@ public class AccountService {
         Account account = accountRepository.findAccountByForgotPassHash(forgotPassHash);
 
         if (account == null){
-            log.error("Account not found.");
+            ErrorHandler.accountNotFound();
             return false;
         }
 

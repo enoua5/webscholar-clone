@@ -255,7 +255,6 @@ public class AccountController {
         if (accountService.setNewPassword(forgotPassHash, newPassword)){
             return "done";
         }
-        errorChangingPassword();
         return "Error setting the new password. Password was not saved.";
     }
 

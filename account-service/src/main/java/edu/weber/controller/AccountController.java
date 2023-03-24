@@ -265,7 +265,6 @@ public class AccountController {
      */
     @RequestMapping(path = "/change_password/{accountKey}", method = RequestMethod.POST,
         consumes = MediaType.APPLICATION_JSON_VALUE)
-    //TODO: @RequestBody only works with a single value. Typically, a bound model. Consider making a PasswordDto?
     public String changePassword(@PathVariable int accountKey, @RequestBody ChangePasswordDto changePasswordDto, BindingResult result){
         String currentPassword = changePasswordDto.getCurrentPassword();
         String newPassword = changePasswordDto.getNewPassword();

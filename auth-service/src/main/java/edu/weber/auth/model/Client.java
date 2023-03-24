@@ -67,6 +67,18 @@ public class Client {
 	public Client(String clientId, String clientSecret, int accessTokenValidity, String scope, String authorities,
 				  String authorizedGrantTypes, int refreshTokenValidity, String resourceIds) {
 		super();
+		if (clientId == null || clientId.trim().isEmpty()) {
+			throw new IllegalArgumentException("Client ID cannot be empty");
+		}
+		if (clientSecret == null || clientSecret.trim().isEmpty()) {
+			throw new IllegalArgumentException("Client secret cannot be empty");
+		}
+		if (accessTokenValidity < 0) {
+			throw new IllegalArgumentException("Access token validity must be greater than or equal to 0");
+		}
+		if (refreshTokenValidity < 0) {
+			throw new IllegalArgumentException("Refresh token validity must be greater than or equal to 0");
+		}
 		this.clientId = clientId;
 		this.clientSecret = clientSecret;
 		this.accessTokenValidity = accessTokenValidity;
@@ -74,13 +86,25 @@ public class Client {
 		this.authorities = authorities;
 		this.authorizedGrantTypes = authorizedGrantTypes;
 		this.refreshTokenValidity = refreshTokenValidity;
-		this.resourceIds=resourceIds;
+		this.resourceIds = resourceIds;
 	}
 
 	// constructor with optional redirect URI
 	public Client(String clientId, String clientSecret, int accessTokenValidity, String scope, String authorities,
 				  String authorizedGrantTypes, int refreshTokenValidity, String resourceIds, String redirectUri) {
 		super();
+		if (clientId == null || clientId.trim().isEmpty()) {
+			throw new IllegalArgumentException("Client ID cannot be empty");
+		}
+		if (clientSecret == null || clientSecret.trim().isEmpty()) {
+			throw new IllegalArgumentException("Client secret cannot be empty");
+		}
+		if (accessTokenValidity < 0) {
+			throw new IllegalArgumentException("Access token validity must be greater than or equal to 0");
+		}
+		if (refreshTokenValidity < 0) {
+			throw new IllegalArgumentException("Refresh token validity must be greater than or equal to 0");
+		}
 		this.clientId = clientId;
 		this.clientSecret = clientSecret;
 		this.accessTokenValidity = accessTokenValidity;
@@ -88,11 +112,11 @@ public class Client {
 		this.authorities = authorities;
 		this.authorizedGrantTypes = authorizedGrantTypes;
 		this.refreshTokenValidity = refreshTokenValidity;
-		this.resourceIds=resourceIds;
-		this.webServerRedirectUri=redirectUri;
+		this.resourceIds = resourceIds;
+		this.webServerRedirectUri = redirectUri;
 	}
 
-	// CRUD:
+	// All the methods below implement CRUD functionality.
 
 	public long getId() {
 		return id;
@@ -134,10 +158,12 @@ public class Client {
 		this.scope = scope;
 	}
 
+	//TODO Needs to be changed to a list
 	public String getAuthorities() {
 		return authorities;
 	}
 
+	//TODO Needs to be changed to a list
 	public void setAuthorities(String authorities) {
 		this.authorities = authorities;
 	}

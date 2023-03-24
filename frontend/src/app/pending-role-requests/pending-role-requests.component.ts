@@ -50,7 +50,7 @@ export class PendingRoleRequestsComponent implements OnInit
      * Title 
      */
     pageTitle: string = "Role Requests";
-    
+
     /**
      * List of requests to send
      */
@@ -243,5 +243,31 @@ export class PendingRoleRequestsComponent implements OnInit
         });
 
         this.populateRequestTable();
+    }
+
+    /**
+     * Method used for searching a table
+     * @param event 
+     */
+    search(): void {
+      console.log('!!')
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("search-input");            
+      filter = input.value.toUpperCase(); 
+      table = document.getElementById("myTable");
+
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1 && filter != "") {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }   
+      }
     }
 }

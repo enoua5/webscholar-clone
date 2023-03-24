@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { requireSelectionValidator } from './pending-role-requests-validators';
 import { PendingRoleRequestsService } from './pending-role-requests.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
-// Declare our RequestList type so we don't have to copy it over and over.
+
+/**
+ * Declare our RequestList type so we don't have to copy it over and over.
+ */
 type Request = 
 {
     id: number,
@@ -12,58 +16,111 @@ type Request =
     email: string,
     role: string,
 };
+
+/**
+ * Just a list of our requests to send.
+ */
 type RequestList = Request[];
 
-// Component Metadata
+/**
+ * Component metadata
+ */
 @Component({
     selector: 'pending-role-requests',
     templateUrl: './pending-role-requests.component.html',
-    styleUrls: ['./pending-role-requests.component.less']
+    styleUrls: ['./pending-role-requests.component.less'],
+    animations: [
+      /**
+       * Each unique animation requires its own trigger.
+       */ 
+      trigger('rotatedState', [
+        state('default', style({ transform: 'rotate(0deg)' })),
+        state('rotated', style({ transform: 'rotate(180deg)' })),
+        transition('rotated <=> default', animate('400ms ease-in')),
+      ])
+    ]
 })
 
+/**
+ * A component of a page.
+ */
 export class PendingRoleRequestsComponent implements OnInit
 {
-    // Component Attributes
+    /**
+     * Title 
+     */
     pageTitle: string = "Role Requests";
+    
+    /**
+     * List of requests to send
+     */
     requestList: RequestList;
+
+    /**
+     * Form on a page
+     */
     requestForm = new FormGroup({}, requireSelectionValidator());
+
+    /**
+     * List of errors
+     */
     errorList: string[];
 
-    // Constructor
+    /**
+     * Used for an animation.
+     * An array of states for each of the columns.
+     */
+    states: string[] = ['default','default','default','default'];
+
+    /**
+     * A helper function for an animation.
+     * @param n a number for a column. Starts with 1, so has to be decremented.
+     */
+    rotate(n): void {
+        n=n-1
+        this.states[n] = (this.states[n] === 'default' ? 'rotated' : 'default');
+    }
+
+    /**
+     * Empty constructor 
+     * @param service in the service.ts file
+     */
     constructor(private service: PendingRoleRequestsService) {}
 
     /**
-     * 
-     * @param n 
+     * Function used for sorting table by column
+     * @param n column number to sort by. Starts at 1
      */
     sortData(n): void {
-      var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+      var table, rows, switching, i, x, y, shouldSwitch, dir;
       table = document.getElementById("myTable");
       switching = true;
 
-      //
+      // Loops over all the columns and resets their style
       for(i = 1; i <= 4; i++)
       {
         if(i!=n)
         {
-          document.getElementById("col" + i).classList.replace('fa-angle-down','fa-angle-up');
+          // Rotate all the arrows back into original position
+          if(this.states[i-1] == 'rotated')
+          {
+            this.rotate(i)
+          } 
           document.getElementById("col" + i).style.color = "#cccccc";
         }
       }
 
-      // Set the sorting direction to ascending or descending:
-      if(document.getElementById("col" + n).classList.contains('fa-angle-up'))
+      // Set the sorting direction to ascending or descending
+      // based on the value of the arrow
+      if(this.states[n-1] === 'default')
       {
         dir = "asc";
-        document.getElementById("col" + n).classList.replace('fa-angle-up','fa-angle-down');
       }
       else
       {
         dir = "desc";
-        document.getElementById("col" + n).classList.replace('fa-angle-down','fa-angle-up');
       }
 
-      console.log(dir)
       document.getElementById("col" + n).style.color = "#000000"
 
       /* Make a loop that will continue until
@@ -104,10 +161,10 @@ export class PendingRoleRequestsComponent implements OnInit
           rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
           switching = true;
           // Each time a switch is done, increase this count by 1:
-          switchcount ++;
         }
       }
     }
+
     /**
      * Queries the backend for all of the current role requests and then populates
      * our FormGroup with the appropriate number of controls.
@@ -132,14 +189,6 @@ export class PendingRoleRequestsComponent implements OnInit
     ngOnInit(): void 
     {
         this.populateRequestTable();
-    }
-
-    /**
-     * Automatically sorts the table by first name on load.
-     */
-    ngAfterViewInit(): void
-    {
-      this.sortData(1);
     }
 
     /**

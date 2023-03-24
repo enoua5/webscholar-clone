@@ -23,10 +23,10 @@
             <thead>
                 <tr>
                   <th scope="col" id="useless"></th>
-                  <th scope="col" (click)="sortData(1)">First Name <i id="col1" class='fas fa-1x fa-angle-up'></i></th>
-                  <th scope="col" (click)="sortData(2)">Last Name <i id="col2" class='fas fa-1x fa-angle-up'></i></th>
-                  <th scope="col" (click)="sortData(3)">E-mail <i id="col3" class='fas fa-1x fa-angle-up'></i></th>
-                  <th scope="col" (click)="sortData(4)">Requested Role <i id="col4" class='fas fa-1x fa-angle-up'></i></th>
+                  <th scope="col" (click)="sortData(1); rotate(1)">First Name <i [@rotatedState]='states[0]' id="col1" class='fas fa-1x fa-angle-up'></i></th>
+                  <th scope="col" (click)="sortData(2); rotate(2)">Last Name <i [@rotatedState]='states[1]' id="col2" class='fas fa-1x fa-angle-up'></i></th>
+                  <th scope="col" (click)="sortData(3); rotate(3)">E-mail <i [@rotatedState]='states[2]' id="col3" class='fas fa-1x fa-angle-up'></i></th>
+                  <th scope="col" (click)="sortData(4); rotate(4)">Requested Role <i [@rotatedState]='states[3]' id="col4" class='fas fa-1x fa-angle-up'></i></th>
                 </tr>
             </thead>
             <tbody>

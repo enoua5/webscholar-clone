@@ -25,6 +25,7 @@ import { RequestRoleFormComponent } from './request-role-form/request-role-form.
 import { RouterModule } from "@angular/router";
 import { PendingRoleRequestsComponent } from './pending-role-requests/pending-role-requests.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,

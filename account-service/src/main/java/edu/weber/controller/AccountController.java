@@ -3,6 +3,7 @@ package edu.weber.controller;
 import edu.weber.model.Account;
 import edu.weber.model.AccountRoles;
 import edu.weber.model.LoginDto;
+import edu.weber.model.ChangePasswordDto;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -257,14 +258,15 @@ public class AccountController {
     /**
      * Changes the password of the logged in user
      * @param accountKey: The account key of the logged in user
-     * @param currentPassword: The current password as input by the user
-     * @param newPassword: The new password as set by the user
      * @return: "done" if password was correctly set
      */
     @RequestMapping(path = "/change_password/{accountKey}", method = RequestMethod.POST,
         consumes = MediaType.APPLICATION_JSON_VALUE)
     //TODO: @RequestBody only works with a single value. Typically, a bound model. Consider making a PasswordDto?
-    public String changePassword(@PathVariable int accountKey, @RequestBody String currentPassword, String newPassword){
+    public String changePassword(@PathVariable int accountKey, @RequestBody ChangePasswordDto changePasswordDto, BindingResult result){
+        String currentPassword = changePasswordDto.getCurrentPassword();
+        String newPassword = changePasswordDto.getNewPassword();
+
         if (accountService.changePassword(accountKey, currentPassword, newPassword)){
             return "done";
         }

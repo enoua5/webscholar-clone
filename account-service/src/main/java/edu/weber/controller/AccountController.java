@@ -456,6 +456,11 @@ public class AccountController {
         throw new ResponseStatusException(HttpStatus.PARTIAL_CONTENT, "The data sent was incomplete or invalid!");
     }
 
+    //TODO: This error message has been moved to the ErrorHandler class.
+    //  This method is still being referenced in this Controller class,
+    //  and each use will instead need to point to ErrorHandler.accountNotFound()
+    //  For the record, the ErrorHandler class can be accessed from AccountService too, which may be ideal.
+    //  Look to the changePassword methods in Controller and Service for an example.
     /**
      * Send an http response error if the specified account could not be found.
      */
@@ -463,14 +468,6 @@ public class AccountController {
 
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account could not be found!");
     }
-
-    /**
-     * Send an http response error if the specified account could not be found.
-     */
-    public void errorChangingPassword(){
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error setting the new password. Password was not saved.");
-    }
-
 
     /*
     ----------------------------------------------------------------

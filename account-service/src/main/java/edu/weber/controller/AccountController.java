@@ -204,11 +204,12 @@ public class AccountController {
         }
         else {
             log.error("Invalid role -- SOURCE: requestRole()");
+            return;
         }
 
         //Save the account with the new role request - if there isn't already one
         if(!accountService.requestRole(accountKey, eRole)) {
-            log.error("User already requested a role! -- SOURCE: requestRole()");
+            ErrorHandler.requestAlreadyExists();
         }
     }
 

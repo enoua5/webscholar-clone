@@ -190,6 +190,29 @@ public class AccountController {
         }
     }
 
+    @RequestMapping(path="/request_role/{accountKey}", method=RequestMethod.POST,
+    consumes=MediaType.APPLICATION_JSON_VALUE)
+    public void requestRole(@PathVariable int accountKey, @RequestBody String role)
+    {
+        AccountRoles eRole; //Enumerated role
+        //Set eRole based on the string role. If an incorrect string was passed, log an error.
+        if (role.equals("Committee Member")) {
+            eRole = AccountRoles.committeeMember;
+        }
+        else if (role.equals("Committee Chair")) {
+            eRole = AccountRoles.chair;
+        }
+        else {
+            log.error("Invalid role -- SOURCE: requestRole()");
+        }
+
+        //Save the account with the new role request - if there isn't already one
+        if(!accountService.requestRole(accountKey, eRole)) {
+            log.error("User already requested a role! -- SOURCE: requestRole()");
+        }
+    }
+
+
     @RequestMapping(path = "/forgotPassword", method = RequestMethod.POST)
     public String forgotPassword(@RequestParam String accountEmail){
         log.info("Entering forgotPassword");

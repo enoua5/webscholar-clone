@@ -24,7 +24,11 @@ import { RegistrationInvitationFormComponent } from './registration-invitation-f
 import { RequestRoleFormComponent } from './request-role-form/request-role-form.component';
 import { RouterModule } from "@angular/router";
 import { PendingRoleRequestsComponent } from './pending-role-requests/pending-role-requests.component';
+import { RouterTestingModule } from "@angular/router/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { CommitteeComponent } from './scholarship-committee/committee.component';
+import { ScoringComponent } from './Committee-Scoring/scoring.component'
 
 @NgModule({
   declarations: [
@@ -33,6 +37,7 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
     RegisterFormComponent,
     ForgotPasswordFormComponent,
     ForgotPasswordSubmissionComponent,
+    RegisterFormComponent,
     RegisterFormFacultyComponent,
     EditProfileFormComponent,
     ChangePasswordFormComponent,
@@ -48,7 +53,9 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
     RegistrationInvitationFormComponent,
     RequestRoleFormComponent,
     PendingRoleRequestsComponent,
-    TermsConditionsComponent
+    TermsConditionsComponent,
+    CommitteeComponent,
+    ScoringComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +65,9 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
     FormsModule,
     RouterModule.forRoot([
       {path: 'registration_invitation_form/:type', component: RegistrationInvitationFormComponent }
-    ])
+    ]),
+    RouterTestingModule,
+    HttpClientTestingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

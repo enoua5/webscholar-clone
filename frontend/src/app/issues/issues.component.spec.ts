@@ -1,6 +1,11 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+// Unit Testing Imports/Declarations
+/// <reference types="jasmine" />
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {IssuesComponent} from './issues.component';
+// Component-Specific Imports
+import { IssuesComponent } from './issues.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormsModule } from '@angular/forms';
 
 describe('IssuesComponent', () => {
   let component: IssuesComponent;
@@ -8,7 +13,8 @@ describe('IssuesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [IssuesComponent]
+      imports: [ HttpClientTestingModule, FormsModule ],
+      declarations: [ IssuesComponent ]
     })
       .compileComponents();
   });

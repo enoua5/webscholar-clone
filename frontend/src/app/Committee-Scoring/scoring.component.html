@@ -1,0 +1,30 @@
+<section class="container p-3" *ngIf="authService.isAuthenticated()">
+  <h2>Score Applicant</h2>
+  <ng-container>
+    <div class="button" (click)="scoreApp(0)">
+      <input type="radio" id="0" name="check-substitution-2" />
+      <label class="btn btn-default" for="1">0</label>
+    </div>
+    <div class="button" (click)="scoreApp(1)">
+      <input type="radio" id="1" name="check-substitution-2" />
+      <label class="btn btn-default" for="1">1</label>
+    </div>
+    <div class="button" (click)="scoreApp(2)">
+      <input type="radio" id="2" name="check-substitution-2" />
+      <label class="btn btn-default" for="2">2</label>
+    </div>
+    <div class="button" (click)="scoreApp(3)">
+      <input type="radio" id="2" name="check-substitution-2" />
+      <label class="btn btn-default" for="2">3</label>
+    </div>
+    <div class="button" (click)="scoreApp(4)">
+      <input type="radio" id="2" name="check-substitution-2" />
+      <label class="btn btn-default" for="2">4</label>
+    </div>
+    <div class="button" (click)="scoreApp(5)">
+      <input type="radio" id="2" name="check-substitution-2" />
+      <label class="btn btn-default" for="2">5</label>
+    </div>
+  </ng-container>
+  <br>
+</section>

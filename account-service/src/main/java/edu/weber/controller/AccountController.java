@@ -167,9 +167,9 @@ public class AccountController {
      * @param accountKey    The key used to find the users account from the database.
      * @param updateAccount The form object sent from the frontend that is converted into an account model object.
      */
-    @RequestMapping(path = "/update/{accountKey}", method = RequestMethod.POST,
+    @RequestMapping(path = "/update_profile/{accountKey}", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void saveChanges(@PathVariable int accountKey, @RequestBody Account updateAccount, BindingResult result) {
+    public Account updateProfile(@PathVariable int accountKey, @RequestBody Account updateAccount, BindingResult result) {
 
         //Validate input
         if (result.hasErrors()) {
@@ -182,7 +182,8 @@ public class AccountController {
         }
 
         //Overwrite the existing account data with the new account data
-        if (!accountService.saveChanges(accountKey, updateAccount)) {
+        Account updated = accountService.updateProfile(accountKey, updateAccount);
+        if (updated == null) {
 
             // Log error
             log.error("ERROR: Account could not be saved -- SOURCE: saveChanges()");
@@ -190,6 +191,8 @@ public class AccountController {
             //Throw http error if account could not be saved
             accountNotFound();
         }
+
+        return updated;
     }
 
     @RequestMapping(path = "/forgotPassword", method = RequestMethod.POST)

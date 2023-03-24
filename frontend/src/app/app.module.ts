@@ -25,6 +25,8 @@ import { RouterModule } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { CommitteeComponent } from './scholarship-committee/committee.component';
+import { ScoringComponent } from './Committee-Scoring/scoring.component'
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
     NavbarComponent,
     StudentViewScholarshipFormComponent,
     RegistrationInvitationFormComponent,
-    TermsConditionsComponent
+    TermsConditionsComponent,
+    CommitteeComponent,
+    ScoringComponent
   ],
   imports: [
     BrowserModule,

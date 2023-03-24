@@ -1,6 +1,11 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+// Unit Testing Imports/Declarations
+/// <reference types="jasmine" />
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {ViewIssueComponent} from './view-issue.component';
+// Component-Specific Imports
+import { ViewIssueComponent} from './view-issue.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ViewIssueComponent', () => {
   let component: ViewIssueComponent;
@@ -8,7 +13,8 @@ describe('ViewIssueComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ViewIssueComponent]
+      imports: [ HttpClientTestingModule, RouterTestingModule ],
+      declarations: [ ViewIssueComponent ]
     })
       .compileComponents();
   });

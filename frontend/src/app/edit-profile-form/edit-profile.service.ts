@@ -7,12 +7,19 @@ import {Observable} from "rxjs";
   providedIn: 'root',
 })
 export class EditProfileService{
+
+  /** Empty constructor */
   constructor(private http: HttpClient){
 
   }
 
   /**
-   * Send a request to update an account
+   * Sends a REST API request to update an account.
+   * 
+   * See edu.weber.controller.AccountController:saveChanges within the account-service microservice for implementation.
+   * 
+   * API endpoint is located at /account/update/{accountKey} and is accessed via POST
+   * 
    * @param {string} data Stringified JSON containing the new account data
    * @returns {Observable} an Observable of the HTTPResponse for the request, with a response body
    */
@@ -25,12 +32,17 @@ export class EditProfileService{
     console.log(data);
 
     // get user account key from storage to call api
-    let urlString : string = 'http://localhost:6001/account/update/' + sessionStorage.getItem('accountKey');
+    let urlString : string = 'http://localhost:6001/account/update_profile/' + sessionStorage.getItem('accountKey');
     return this.http.post<any>(urlString, data, { headers: header, observe: 'response', responseType: 'json'}).pipe();
   }
 
   /**
-   * Send a request to delete an account
+   * Sends a REST API request to delete an account.
+   * 
+   * See edu.weber.controller.AccountController:requestAccountRemoval within the account-service microservice for implementation.
+   * 
+   * API endpoint is located at /account/request_account_deletion/{accountKey} and is accessed via GET
+   * 
    * @param {string} id The ID of the account to be deleted 
    * @returns  {Observable} an Observable of the HTTPResponse for the request, with a response body
    */

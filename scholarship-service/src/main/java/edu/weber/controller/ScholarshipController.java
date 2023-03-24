@@ -127,6 +127,33 @@ public class ScholarshipController {
 
     }
 
+    public void getScholarshipById(@PathVariable int scholarshipId) {
+
+        //Attempts to delete the scholarship
+        if (!scholarshipService.getScholarshipById(scholarshipId)) {
+
+            // Log error
+            log.error("ERROR: A scholarship with this ID does not exist -- SOURCE: getScholarshipById()");
+
+            //Throw http error if scholarship could not be found
+            scholarshipNotFound();
+        }
+
+    }
+
+    public void getScholarshipByTitle(@PathVariable String scholarshipTitle) {
+
+        //Attempts to delete the scholarship
+        if (!scholarshipService.getScholarshipByTitle(scholarshipTitle)) {
+
+            // Log error
+            log.error("ERROR: A scholarship with this title does not exist -- SOURCE: getScholarshipByTitle()");
+
+            //Throw http error if scholarship could not be found
+            scholarshipNotFound();
+        }
+
+    }
 
     /**
      * Send an http response error if data sent did not follow model restrictions.

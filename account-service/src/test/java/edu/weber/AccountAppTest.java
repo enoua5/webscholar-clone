@@ -40,16 +40,10 @@ public class AccountAppTest
         account.setIsLoggedIn(true);
         account.setUserType(AccountRoles.student);
         account.setFirstName("TestFirstName");
-        account.setMiddleName("TestMiddleName");
         account.setLastName("TestLastName");
-        account.setAddress1("1234 Test ST");
-        account.setAddress2("Test Apartment");
         account.setCity("TestCity");
         account.setState("TestState");
         account.setZipCode("12345");
-        account.setSchool("Test School");
-        account.setSex("TestSex");
-        account.setRace("TestRace");
 
         //Tests accounts info
         Assert.assertEquals("Email not equal","test@test.com", account.getEmail());
@@ -58,16 +52,10 @@ public class AccountAppTest
         Assert.assertTrue("Account not active", account.getIsLoggedIn());
         Assert.assertEquals("Usertype not equal","student", account.getUserType());
         Assert.assertEquals("First name not equal","TestFirstName", account.getFirstName());
-        Assert.assertEquals("Middle name not equal","TestMiddleName", account.getMiddleName());
         Assert.assertEquals("Last name not equal","TestLastName", account.getLastName());
-        Assert.assertEquals("Address1 not equal","1234 Test ST", account.getAddress1());
-        Assert.assertEquals("Address2 not equal","Test Apartment", account.getAddress2());
         Assert.assertEquals("City not equal","TestCity", account.getCity());
         Assert.assertEquals("State not equal","TestState", account.getState());
         Assert.assertEquals("Zip not equal","12345", account.getZipCode());
-        Assert.assertEquals("School not equal","Test School", account.getSchool());
-        Assert.assertEquals("Sex not equal","TestSex", account.getSex());
-        Assert.assertEquals("Race not equal","TestRace", account.getRace());
     }
 
     /**
@@ -107,16 +95,10 @@ public class AccountAppTest
         account.setPassword("Password");
         account.setSchoolId("W12345678");
         account.setFirstName("FirstName");
-        account.setMiddleName("MiddleName");
         account.setLastName("LastName");
-        account.setAddress1("Test St");
-        account.setAddress2("Apartment");
         account.setCity("City");
         account.setState("State");
         account.setZipCode("12346");
-        account.setSchool("School");
-        account.setSex("Sex");
-        account.setRace("Race");
 
         //Tests accounts info
         Assert.assertEquals("Email not equal","test@testUpdate.com", account.getEmail());
@@ -125,16 +107,10 @@ public class AccountAppTest
         Assert.assertTrue("Account not active", account.getIsLoggedIn());
         Assert.assertEquals("Usertype not equal","student", account.getUserType());
         Assert.assertEquals("First name not equal","FirstName", account.getFirstName());
-        Assert.assertEquals("Middle name not equal","MiddleName", account.getMiddleName());
         Assert.assertEquals("Last name not equal","LastName", account.getLastName());
-        Assert.assertEquals("Address1 not equal","Test St", account.getAddress1());
-        Assert.assertEquals("Address2 not equal","Apartment", account.getAddress2());
         Assert.assertEquals("City not equal","City", account.getCity());
         Assert.assertEquals("State not equal","State", account.getState());
         Assert.assertEquals("Zip not equal","12346", account.getZipCode());
-        Assert.assertEquals("School not equal","School", account.getSchool());
-        Assert.assertEquals("Sex not equal","Sex", account.getSex());
-        Assert.assertEquals("Race not equal","Race", account.getRace());
 
         //TODO: Figure out how to get this working with the database
         //Updates account

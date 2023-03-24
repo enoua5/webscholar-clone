@@ -5,7 +5,7 @@
   <p class="mb-0">You must be signed in to edit issues. Please <a class="alert-link" routerLink="/">click here</a> to be redirected to the login screen.</p>
 </div>
 
-<section class="container p-3">
+<section *ngIf="issueInfo" class="container p-3">
   <h1>Issue # {{issueID}} </h1>
 
   <form [formGroup]="updateIssueForm" (ngSubmit)="SubmitUpdate()">

@@ -191,7 +191,7 @@ public class AccountController {
     }
 
     @RequestMapping(path="/request_role/{accountKey}", method=RequestMethod.POST,
-    consumes=MediaType.APPLICATION_JSON_VALUE)
+    consumes="text/plain")
     public void requestRole(@PathVariable int accountKey, @RequestBody String role)
     {
         AccountRoles eRole; //Enumerated role
@@ -203,7 +203,7 @@ public class AccountController {
             eRole = AccountRoles.chair;
         }
         else {
-            log.error("Invalid role -- SOURCE: requestRole()");
+            ErrorHandler.invalidRole(role);
             return;
         }
 

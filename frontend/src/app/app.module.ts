@@ -33,6 +33,7 @@ import { TermsConditionsComponent } from './terms-conditions/terms-conditions.co
     RegisterFormComponent,
     ForgotPasswordFormComponent,
     ForgotPasswordSubmissionComponent,
+    RegisterFormComponent,
     RegisterFormFacultyComponent,
     EditProfileFormComponent,
     ChangePasswordFormComponent,

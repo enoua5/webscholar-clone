@@ -36,7 +36,7 @@ public class Permission implements  Serializable{
 	private String permissionName;
 	
 	@JsonIgnore
-	@ManyToMany(mappedBy = "permissions", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "permissions", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Role> roles;
 
 	public Permission() {
@@ -46,7 +46,7 @@ public class Permission implements  Serializable{
 	public Permission(String permissionName) {
 		super();
 		if (permissionName == null || permissionName.trim().isEmpty()) {
-			throw new IllegalArgumentException("Client ID cannot be empty");
+			throw new IllegalArgumentException("Permission name cannot be empty");
 		}
 		this.permissionName = permissionName;
 	}

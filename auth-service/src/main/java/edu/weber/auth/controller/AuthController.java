@@ -1,5 +1,6 @@
 package edu.weber.auth.controller;
 
+import edu.weber.auth.repository.UserRepository;
 import edu.weber.auth.service.UserService;
 import edu.weber.auth.model.User;
 import edu.weber.auth.model.AuthResponse;
@@ -33,24 +34,33 @@ public class AuthController {
     @Autowired
     private JwtAccessTokenConverter accessTokenConverter;
 
+    @Autowired
+    private UserRepository userRepository;
+
     /**
      * Logs in via the auth service to retrieve a JWT token
      */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
 
-        // Create an Authentication object using the user's credentials
-        OAuth2Authentication authentication = (OAuth2Authentication) authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword())
-        );
+        // If the user attempting to login exists, generate and return an access token
+        if (userRepository.findByUserName(user.getUserName()) != null) {
+            // Create an Authentication object using the user's credentials
+            OAuth2Authentication authentication = (OAuth2Authentication) authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword())
+            );
 
-        // Generates an access token
-        OAuth2AccessToken accessToken = accessTokenConverter.enhance(
-                new DefaultOAuth2AccessToken(tokenStore.getAccessToken(authentication).getValue()),
-                authentication
-        );
+            // Generates an access token
+            OAuth2AccessToken accessToken = accessTokenConverter.enhance(
+                    new DefaultOAuth2AccessToken(tokenStore.getAccessToken(authentication).getValue()),
+                    authentication
+            );
 
-        // Return the access token
-        return ResponseEntity.ok(new AuthResponse(accessToken));
+            // Return the access token
+            return ResponseEntity.ok(new AuthResponse(accessToken));
+        }
+
+        // User was not found, return unprocessable entity response
+        return ResponseEntity.unprocessableEntity().body("User not found");
     }
 }

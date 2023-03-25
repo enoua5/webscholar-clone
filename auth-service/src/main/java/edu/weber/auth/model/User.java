@@ -37,7 +37,7 @@ public class User implements Serializable {
 			name = "user_role",
 			joinColumns = {@JoinColumn(name = "role_id")}
 	)
-	private Role user_role;
+	private Role userRole;
 	
 //	@ManyToMany(mappedBy = "consumers", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 //	private Set<Utility> utilitites;
@@ -67,7 +67,7 @@ public class User implements Serializable {
 		this.userName = user.getUserName();
 		this.password = user.getPassword();
 		this.userType = user.getUserType();
-		this.user_role = user.getUser_role();
+		this.userRole = user.getUserRole();
 	}
 
 	public int getUserId() {
@@ -102,12 +102,12 @@ public class User implements Serializable {
 		this.password = password;
 	}
 	
-	public Role getUser_role() {
-		return user_role;
+	public Role getUserRole() {
+		return userRole;
 	}
 
-	public void setUser_role(Role role) {
-		this.user_role = role;
+	public void setUserRole(Role role) {
+		this.userRole = role;
 	}
 	
 }

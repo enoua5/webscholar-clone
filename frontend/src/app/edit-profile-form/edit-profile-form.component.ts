@@ -25,14 +25,36 @@ export class EditProfileFormComponent implements OnInit {
               private service: EditProfileService)
   {
     this.form = this.fb.group({
-      first_name: [sessionStorage.getItem("firstName")],
-      last_name: [sessionStorage.getItem("lastName")],
-      email: [sessionStorage.getItem("email")],
-      phone_number: [''],
+      first_name: [sessionStorage.getItem("firstName"), {
+        validators: [
+          Validators.required
+        ]
+      }],
+      last_name: [sessionStorage.getItem("lastName"), {
+        validators: [
+          Validators.required
+        ]
+      }],
+      email: [sessionStorage.getItem("email"), {
+        validators: [
+          Validators.required,
+          Validators.email
+        ]
+      }],
+      phone_number: ['', {
+        validators: [
+          Validators.pattern('^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$')
+        ]
+      }],
       city: [''],
       state: [''],
       zip: [''],
-      student_number: [sessionStorage.getItem("schoolId")],
+      student_number: [sessionStorage.getItem("schoolId"), {
+        validators: [
+          Validators.required,
+          Validators.pattern('^[0-9]{8}$')
+        ]
+      }],
       major: ['']
     });
     if(sessionStorage.getItem("phoneNumber") != null){
@@ -60,7 +82,6 @@ export class EditProfileFormComponent implements OnInit {
     this.errors.clear();
 
     //TODO: check if username (email?) already taken in database
-
     //Email verification
     const validEmail = RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$');
     if (!validEmail.test(this.email.value) && this.email.value != '') {

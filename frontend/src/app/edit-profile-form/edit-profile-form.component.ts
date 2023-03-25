@@ -27,14 +27,29 @@ export class EditProfileFormComponent implements OnInit {
     this.form = this.fb.group({
       first_name: [sessionStorage.getItem("firstName")],
       last_name: [sessionStorage.getItem("lastName")],
-      email: [''],
+      email: [sessionStorage.getItem("email")],
       phone_number: [''],
       city: [''],
       state: [''],
       zip: [''],
-      student_number: [''],
+      student_number: [sessionStorage.getItem("schoolId")],
       major: ['']
     });
+    if(sessionStorage.getItem("phoneNumber") != null){
+      this.form.patchValue({phone_number: sessionStorage.getItem("phoneNumber")});
+    }
+    if(sessionStorage.getItem("city") != null){
+      this.form.patchValue({city: sessionStorage.getItem("city")});
+    }
+    if(sessionStorage.getItem("state") != null){
+      this.form.patchValue({state: sessionStorage.getItem("state")});
+    }
+    if(sessionStorage.getItem("zipCode") != null){
+      this.form.patchValue({zip: sessionStorage.getItem("zipCode")});
+    }
+    if(sessionStorage.getItem("major") != null){
+      this.form.patchValue({major: sessionStorage.getItem("major")});
+    }
   }
 
   ngOnInit(): void {
@@ -46,7 +61,6 @@ export class EditProfileFormComponent implements OnInit {
 
     //TODO: check if username (email?) already taken in database
 
-    // all these fields are ok to be null, they just won't get set in the db by the backend
     //Email verification
     const validEmail = RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$');
     if (!validEmail.test(this.email.value) && this.email.value != '') {
@@ -136,16 +150,18 @@ export class EditProfileFormComponent implements OnInit {
 
       this.service.updateAccount(jsonObj).subscribe(
         res => {
-          // change name in session storage if needed
-          if(this.first_name.value != '' && this.last_name.value != ''){
-            sessionStorage.setItem('name', `${ this.first_name.value } ${ this.last_name.value }`);
-          }else if(this.first_name.value != ''){ // only first name changed
-            let oldLastName: string = sessionStorage.getItem('name').split(" ")[1];
-            sessionStorage.setItem('name', `${ this.first_name.value } ${ oldLastName }`);
-          }else if(this.last_name.value != ''){ // only last name changed
-            let oldFirstName: string = sessionStorage.getItem('name').split(" ")[0];
-            sessionStorage.setItem('name', `${ oldFirstName } ${ this.last_name.value }`);
-          }
+          // store values in session storage
+          sessionStorage.setItem('firstName', `${ res.body.firstName }`);
+          sessionStorage.setItem('lastName', `${ res.body.lastName }`);
+          sessionStorage.setItem('email', `${ res.body.email }`);
+          sessionStorage.setItem('phoneNumber', `${ res.body.phoneNumber }`);
+          sessionStorage.setItem('city', `${ res.body.city }`);
+          sessionStorage.setItem('state', `${ res.body.state }`);
+          sessionStorage.setItem('zipCode', `${ res.body.zipCode }`);
+          sessionStorage.setItem('schoolId', `${ res.body.schoolId }`);
+          sessionStorage.setItem('major', `${ res.body.major }`);
+          sessionStorage.setItem('userType', res.body.userType);
+          sessionStorage.setItem('accountKey', res.body.accountKey);
 
           alert("Your information has been updated!");
         },

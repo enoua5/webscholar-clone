@@ -181,6 +181,7 @@ export class RegisterFormComponent implements OnInit {
           sessionStorage.setItem('firstName', `${ res.body.firstName }`);
           sessionStorage.setItem('lastName', `${ res.body.lastName }`);
           sessionStorage.setItem('email', `${ res.body.email }`);
+          sessionStorage.setItem('schoolId', `${ res.body.schoolId }`);
           sessionStorage.setItem('userType', res.body.userType);
           sessionStorage.setItem('accountKey', res.body.accountKey);
 

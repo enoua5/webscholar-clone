@@ -63,9 +63,18 @@ export class LoginFormComponent implements OnInit {
         alert(res.body.email);
 
         // Put whatever needs to be executed *after* the routing is done in the .then()
+
+        // TODO: provide for other account types besides student,
+        //  currently the following code assumes the user is a student
         sessionStorage.setItem('firstName', `${ res.body.firstName }`);
         sessionStorage.setItem('lastName', `${ res.body.lastName }`);
         sessionStorage.setItem('email', `${ res.body.email }`);
+        sessionStorage.setItem('phoneNumber', `${ res.body.phoneNumber }`);
+        sessionStorage.setItem('city', `${ res.body.city }`);
+        sessionStorage.setItem('state', `${ res.body.state }`);
+        sessionStorage.setItem('zipCode', `${ res.body.zipCode }`);
+        sessionStorage.setItem('schoolId', `${ res.body.schoolId }`);
+        sessionStorage.setItem('major', `${ res.body.major }`);
         sessionStorage.setItem('userType', res.body.userType);
         sessionStorage.setItem('accountKey', res.body.accountKey);
 

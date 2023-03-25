@@ -213,10 +213,12 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       EUREKA_SERVICE_USERNAME: $EUREKA_SERVICE_USERNAME
       EUREKA_SERVICE_PASSWORD: $EUREKA_SERVICE_PASSWORD
-    build: scholarship-service
+    build: scholarship-application-service
     depends_on:
       config-service:
         condition: service_healthy
+      registry:
+        condition: service_started
     ports:
       - 6007:6007
     expose:

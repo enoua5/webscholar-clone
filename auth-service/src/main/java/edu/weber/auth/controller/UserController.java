@@ -1,5 +1,7 @@
 package edu.weber.auth.controller;
 
+import edu.weber.auth.model.Permission;
+import edu.weber.auth.model.Role;
 import edu.weber.auth.service.UserService;
 import edu.weber.auth.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
+import java.util.HashSet;
 
 import org.springframework.security.access.AccessDeniedException;
 
@@ -27,6 +30,21 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	/**
+	 * Placeholder role for testing
+	 * This is probably not where we want to do this but for now
+	 * it allows us to create a Role and assign a User to it
+	 */
+	private static Role testRole;
+
+	/**
+	 * Constructor just so we can initialize our testing role
+	 * Testing Role has empty Set of Permissions for now
+	 */
+	public UserController() {
+		testRole = new Role("test role", new HashSet<Permission>());
+	}
 
 	/**
 	 * This method returns the authenticated user's Principal object.
@@ -52,7 +70,7 @@ public class UserController {
 	}
 
 	/**
-	 * Creates a test User
+	 * Creates a test User with a test Role
 	 *
 	 * @throws AccessDeniedException if the OAuth2 access token does not have the required "server" scope
 	 */
@@ -62,6 +80,7 @@ public class UserController {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		String password = bCryptPasswordEncoder.encode("password");
 		User test_user = new User(123, "Test", "N/A", password);
+		test_user.setUserRole(testRole);	// Here we set the User's Role. Running this multiple times creates duplicate Roles. Will have to fix.
 		userService.create(test_user);
 		return "Test User created!\n";
 	}

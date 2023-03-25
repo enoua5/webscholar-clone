@@ -32,11 +32,8 @@ public class User implements Serializable {
 	@Column(name="user_type")
 	private String userType;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "user_role",
-			joinColumns = {@JoinColumn(name = "role_id")}
-	)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "role_id")
 	private Role userRole;
 	
 //	@ManyToMany(mappedBy = "consumers", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)

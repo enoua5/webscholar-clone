@@ -79,7 +79,7 @@ public class UserController {
 
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		String password = bCryptPasswordEncoder.encode("password");
-		User test_user = new User(123, "Test", "N/A", password);
+		User test_user = new User("Test", "N/A", password);
 		test_user.setUserRole(testRole);	// Here we set the User's Role. Running this multiple times creates duplicate Roles. Will have to fix.
 		userService.create(test_user);
 		return "Test User created!\n";

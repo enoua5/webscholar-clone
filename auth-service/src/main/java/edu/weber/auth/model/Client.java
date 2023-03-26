@@ -13,6 +13,9 @@ import java.util.List;
  * validity, scope, authorized grant types, and refresh token validity. The class also includes getter and setter
  * methods to retrieve and update the attributes.
  * This is a JPA entity that maps to a database table called "oauth_client_details"
+ *
+ * This class is for someone using the system
+ * The "User" class is for accounts registered with the system
  */
 
 @Entity

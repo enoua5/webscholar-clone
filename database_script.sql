@@ -23,6 +23,10 @@ CREATE TABLE `account` (
                            `school` varchar(100) NOT NULL,
                            `sex` varchar(6) NOT NULL,
                            `race` varchar(100) NOT NULL,
+                           `deleteLinkHash` varchar(100) NOT NULL,
+                           `deleteLinkDate` datetime NOT NULL,
+                           `forgotPassHash` varchar(100) NOT NULL,
+                           `forgotPassDate` datetime NOT NULL,
                            PRIMARY KEY (`accountKey`)
 );
 

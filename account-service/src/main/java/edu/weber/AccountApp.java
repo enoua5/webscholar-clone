@@ -20,7 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableCircuitBreaker
 //@EnableJpaRepositories(basePackages = {"edu.weber.service"})
 //@ComponentScan(basePackages = {"edu.weber.service","edu.weber"})
-@EnableJpaRepositories("edu.weber.repository")
+//@EnableJpaRepositories("edu.weber.repository")
 @EntityScan(basePackages = "edu.weber.model")
 @SpringBootApplication
 public class AccountApp

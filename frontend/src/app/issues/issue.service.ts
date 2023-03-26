@@ -10,11 +10,11 @@ import {Icomment} from "./comment";
   providedIn: 'root'
 })
 export class IssueService {
-  // ToDo: Replace with working API Key
+  private issueBaseUrl = 'http://localhost:6005/issue'
   // ToDO: Delete assets/fakeIssues.json once we have a working API Key
-  private issueUrl = 'assets/fakeIssues.json';
+  private issueUrl = this.issueBaseUrl+'/get_all_issues';
   // ToDo: Replace with working API Key
-  private getUsersAPI = '/account/getUsers';
+  private getUsersAPI = 'http://localhost:6001/account/get_all_accounts';
   // ToDo: Replace with working API Key
   private getCommentsAPI = '/account/getComments';
   private _severityList: string[] = ['Critical', 'Major', 'Moderate', 'Minor', 'Cosmetic'];

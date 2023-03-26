@@ -72,7 +72,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <finalName>app-service</finalName>
+                    <finalName>scholarship-application-service</finalName>
                 </configuration>
             </plugin>
         </plugins>

@@ -1,17 +1,33 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router } from "@angular/router";
 import {LoginService} from "./login.service";
 import {emailExistsValidator} from "./validators";
 
+/**
+ * Login form Component
+ */
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.less']
 })
+/**
+ * Class handling data and functionality for the login page
+ */
 export class LoginFormComponent implements OnInit {
+  /**
+   * FormGroup object that contains username (email) and password
+   */
   form: FormGroup;
 
+  /**
+   * Builds the form and sets up the validators for each field
+   * @param fb FormBuilder dependency
+   * @param route ActivatedRoute dependency
+   * @param router Router dependency
+   * @param service LoginService dependency
+   */
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -39,17 +55,36 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
+  /**
+   * ngOnInit stub
+   */
   ngOnInit(): void {
   }
 
+  /**
+   * Returns the contents of the username form field
+   */
   get username() {
     return this.form.get('username');
   }
 
+  /**
+   * Returns the contents of the password form field
+   */
   get password() {
     return this.form.get('password');
   }
 
+  /**
+   * Handles login of the user.
+   * Called when the form is submitted.
+   *
+   * Converts the user input from the form into a JSON object, and then utilizes {@link LoginService#login} to send the
+   * REST API request.
+   * After the request, the email, user type, and account key are all saved in session storage.
+   *
+   * @todo Display possible errors returned from the backend in a better way, instead of through an alert
+   */
   onSubmit(): void {
     console.log(this.form.value);
 
@@ -59,21 +94,28 @@ export class LoginFormComponent implements OnInit {
     });
 
     this.service.login(jsonObj).subscribe(
-      res => {
-        // Put whatever needs to be executed *after* the routing is done in the .then()
-        sessionStorage.setItem('name', `${ res.body.firstName } ${ res.body.lastName }`);
-        sessionStorage.setItem('userType', res.body.userType);
+      {
+        next: (res) => {
+          alert(res.body.email);
 
-        this.router.navigate(['/dashboard']).then(() => {
-          console.log(sessionStorage.getItem('name'));
-          console.log(sessionStorage.getItem('userType'));
-        });
-      },
-      err => {
+          // Put whatever needs to be executed *after* the routing is done in the .then()
+          sessionStorage.setItem('name', `${ res.body.firstName } ${ res.body.lastName }`);
+          sessionStorage.setItem('email', `${ res.body.email }`);
+          sessionStorage.setItem('userType', res.body.userType);
+          sessionStorage.setItem('accountKey', res.body.accountKey);
+          
+          this.router.navigate(['/dashboard']).then(() => {
+            console.log(sessionStorage.getItem('name'));
+            console.log(sessionStorage.getItem('email'));
+            console.log(sessionStorage.getItem('userType'));
+            console.log(sessionStorage.getItem('accountKey'));
+          });
+        },
+        error: (err) => {
         console.log(err);
         // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
         alert(err.error.message);
-      }
-    );
+        }
+      });
   }
 }

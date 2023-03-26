@@ -1,3 +1,7 @@
+server:
+  error:
+    include-message: always
+
 spring:
   application:
     name: account-service
@@ -26,7 +30,7 @@ spring:
 
   # TODO: Establish a permanent smtp server account for sending emails.
   #
-  # IF USING A PERSONAL EMAIL ACCOUNT FOR TESTING PUPRPOSES, 
+  # IF USING A PERSONAL EMAIL ACCOUNT FOR TESTING PURPOSES,
   # REMEMBER TO DELETE YOUR CREDENTIALS BEFORE PUSHING ANY 
   # CHANGES IF YOU DO NOT WANT OTHER MEMBERS OF THE PROJECT 
   # TO SEE THEM!
@@ -42,8 +46,8 @@ spring:
   mail:
     host: smtp-mail.outlook.com
     port: 587
-    username: webscholar-test@outlook.com
-    password: MPvyNtmb5fF4RAx
+    username: webscholartest@outlook.com
+    password: Lw!QMgRaZ87Cm9i
     properties:
       mail:
         smtp:

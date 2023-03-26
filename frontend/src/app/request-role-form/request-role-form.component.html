@@ -1,0 +1,21 @@
+<section class="container p-3">
+  <div>
+    <h1>{{ pageTitle }}</h1>
+    <p>
+      If you created your account before receiving an invite link, you can upgrade your account 
+      to committee member or chair status by requesting a role below.
+    </p>
+  </div>
+  <div>
+    <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="role-selector" class="form-label">Role to Request:</label>
+        <select formControlName="roleControl" id="role-selector" class="form-select form-select-lg">
+          <option *ngFor="let role of roles" [ngValue]="role">{{ role }}</option>
+        </select>
+        <div class="form-text">All committee chairs will be able to see your request.</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</section>

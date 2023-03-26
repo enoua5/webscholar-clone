@@ -82,6 +82,16 @@ commit;
 #
 # commit;
 
+# DROP TABLE IF EXISTS scholarshipapplication;
+# CREATE TABLE `scholarshipapplication` (
+#   `scholarshipApplicationId` INT AUTO_INCREMENT NOT NULL,
+#   `accountKey` INT NOT NULL,
+#   `scholarshipId` INT NOT NULL,
+#   PRIMARY KEY (`comboId`)
+# );
+#
+# commit;
+
 # Select * from user;
 # Select * from account;
 # Select * from scholarship;

@@ -65,9 +65,7 @@ import { ScoringComponent } from './Committee-Scoring/scoring.component'
     FormsModule,
     RouterModule.forRoot([
       {path: 'registration_invitation_form/:type', component: RegistrationInvitationFormComponent }
-    ]),
-    RouterTestingModule,
-    HttpClientTestingModule
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

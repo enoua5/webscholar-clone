@@ -96,7 +96,7 @@ export class LoginFormComponent implements OnInit {
     this.service.login(jsonObj).subscribe(
       {
         next: (res) => {
-          alert(res.body.email);
+          console.log(res.body.email);
 
           // Put whatever needs to be executed *after* the routing is done in the .then()
           sessionStorage.setItem('name', `${ res.body.firstName } ${ res.body.lastName }`);

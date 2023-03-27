@@ -36,7 +36,7 @@ type RequestList = Request[];
       trigger('rotatedState', [
         state('default', style({ transform: 'rotate(0deg)' })),
         state('rotated', style({ transform: 'rotate(180deg)' })),
-        transition('rotated <=> default', animate('400ms ease-in')),
+        transition('rotated <=> default', animate('300ms ease-in')),
       ])
     ]
 })
@@ -72,6 +72,10 @@ export class PendingRoleRequestsComponent implements OnInit
      */
     states: string[] = ['default','default','default','default'];
 
+    /**
+     * A string used to search and filter the table
+     */
+    searchText: string = "";
     /**
      * A helper function for an animation.
      * @param n a number for a column. Starts with 1, so has to be decremented.
@@ -243,31 +247,5 @@ export class PendingRoleRequestsComponent implements OnInit
         });
 
         this.populateRequestTable();
-    }
-
-    /**
-     * Method used for searching a table
-     * @param event 
-     */
-    search(): void {
-      console.log('!!')
-      var input, filter, table, tr, td, i, txtValue;
-      input = document.getElementById("search-input");            
-      filter = input.value.toUpperCase(); 
-      table = document.getElementById("myTable");
-
-      tr = table.getElementsByTagName("tr");
-      for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        
-        if (td) {
-          txtValue = td.textContent || td.innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1 && filter != "") {
-            tr[i].style.display = "";
-          } else {
-            tr[i].style.display = "none";
-          }
-        }   
-      }
     }
 }

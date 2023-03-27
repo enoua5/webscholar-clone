@@ -35,6 +35,7 @@ export class PendingRoleRequestsService
   {
     // These requests will likely be returned as JSON strings, so we're going to mock the
     // receipt and parsing of these JSON strings into arrays.
+    let requestList = []
     let mock_json = `{
                         "requests": 
                         [
@@ -59,11 +60,14 @@ export class PendingRoleRequestsService
                             "email": "trainlady123@hotmail.com",
                             "role": "Chair"
                           }
-                        ]
+                        ] 
                       }`;
 
       // TODO: Get the actual JSON result from the backend API.
-      let requestList = this.parseRequestJSON(mock_json);
+      try{
+        requestList = this.parseRequestJSON(mock_json);
+      }catch(e){}
+      
       return requestList;
   }
 

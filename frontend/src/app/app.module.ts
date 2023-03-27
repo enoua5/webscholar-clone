@@ -26,6 +26,7 @@ import { RouterModule } from "@angular/router";
 import { PendingRoleRequestsComponent } from './pending-role-requests/pending-role-requests.component';
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GrdFilterPipe } from './pending-role-requests/search.pipe';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RequestRoleFormComponent,
     PendingRoleRequestsComponent,
     TermsConditionsComponent,
+    GrdFilterPipe,
   ],
   imports: [
     BrowserModule,

@@ -3,14 +3,27 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {passwordMatchValidator} from "./validators";
 import { ChangePasswordService } from './change-password-form.service';
 
+
+/**
+ * Class handling data and functionality for the `/change_password` page
+ */
 @Component({
   selector: 'app-change-password-form',
   templateUrl: './change-password-form.component.html',
   styleUrls: ['./change-password-form.component.less']
 })
 export class ChangePasswordFormComponent implements OnInit {
+  /**
+   * Reference to the form the user is entering into.
+   */
   form: FormGroup;
 
+  /**
+   * Constructor handles setting both properties, as well as defining the validators.
+   * 
+   * @param formBuilder Set to provide access to the data from the form
+   * @param service Set to provide access to API functionality
+   */
   constructor(
     private formBuilder: FormBuilder,
     private service: ChangePasswordService,
@@ -60,9 +73,20 @@ export class ChangePasswordFormComponent implements OnInit {
     return this.passwordFields.get('confirm_password');
   }
 
+  /**
+   * Stub.
+   * 
+   * Called by Angular upon page load, but we don't need anything to happen on that trigger.
+   */
   ngOnInit(): void {
   }
 
+  /**
+   * Called upon form submission.
+   * 
+   * Gathers the data from the form and submits it to the backend to be processed.
+   * Alerts the user of the result.
+   */
   onSubmit(): void {
     let body_data = JSON.stringify({
       newPassword: this.new_password.value,

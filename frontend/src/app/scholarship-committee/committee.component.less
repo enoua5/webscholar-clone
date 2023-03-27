@@ -12,3 +12,47 @@ a.button.is-primary {
 .navbar-link:not(.is-arrowless)::after {
   border-color: #740E0E;
 }
+
+.selected {
+  background-color: mediumpurple;
+  color: white;
+}
+
+.button {
+  float: left;
+  margin: 0 5px 0 0;
+  width: 100px;
+  height: 40px;
+  position: relative;
+  background: #e9e9e9;
+  border: solid;
+  border-radius: 10px;
+  border-width: 2px;
+}
+
+.button label,
+.button input {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.button input[type="radio"] {
+  opacity: 0.011;
+  z-index: 100;
+}
+
+.button input[type="radio"]:checked + label {
+  background: mediumpurple;
+  border-radius: 10px;
+}
+
+.button label {
+  cursor: pointer;
+  z-index: 90;
+  line-height: 1.8em;
+}
+

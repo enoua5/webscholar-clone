@@ -4,6 +4,11 @@ import {AbstractControl, AsyncValidatorFn, ValidationErrors} from "@angular/form
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 
+/**
+ * Validates the existence of an email by calling the {@link LoginService#emailExists} function inside the Login
+ * Service.
+ * @param service Login Service
+ */
 export function emailExistsValidator(service: LoginService): AsyncValidatorFn {
   return (control: AbstractControl): Observable<ValidationErrors> => {
     return service.emailExists(control.value).pipe(map(res =>

@@ -27,6 +27,10 @@ import { PendingRoleRequestsComponent } from './pending-role-requests/pending-ro
 import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GrdFilterPipe } from './pending-role-requests/search.pipe';
+import { RouterTestingModule } from "@angular/router/testing";
+import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { CommitteeComponent } from './scholarship-committee/committee.component';
+import { ScoringComponent } from './Committee-Scoring/scoring.component'
 
 @NgModule({
   declarations: [
@@ -35,6 +39,7 @@ import { GrdFilterPipe } from './pending-role-requests/search.pipe';
     RegisterFormComponent,
     ForgotPasswordFormComponent,
     ForgotPasswordSubmissionComponent,
+    RegisterFormComponent,
     RegisterFormFacultyComponent,
     EditProfileFormComponent,
     ChangePasswordFormComponent,
@@ -52,6 +57,8 @@ import { GrdFilterPipe } from './pending-role-requests/search.pipe';
     PendingRoleRequestsComponent,
     TermsConditionsComponent,
     GrdFilterPipe,
+    CommitteeComponent,
+    ScoringComponent
   ],
   imports: [
     BrowserModule,

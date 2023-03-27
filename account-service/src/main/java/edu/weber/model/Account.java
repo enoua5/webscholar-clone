@@ -64,13 +64,22 @@ public class Account {
 
     @Column
     @NotNull
-    private String userType;
-    public String getUserType(){
+    @Enumerated(EnumType.STRING)
+    private AccountRoles userType;
+    public AccountRoles getUserType(){
         return userType;
     }
-    public void setUserType(String userType){
+    public void setUserType(AccountRoles userType){
         this.userType = userType;
     }
+
+    //Each user can request one role at a time, stored in the below column
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AccountRoles requestedRole;
+    public AccountRoles getRequestedRole() { return requestedRole; }
+    public void setRequestedRole(AccountRoles requestedRole) { this.requestedRole = requestedRole; }
+
 
     //********** SCHOOL INFO **********
 
@@ -138,6 +147,11 @@ public class Account {
         this.zipCode = zipCode;
     }
 
+    @Column
+    private String phoneNumber;
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
     //********** ACCOUNT UPDATE / DELETE **********
     @Column
     private String deleteLinkHash;
@@ -196,7 +210,7 @@ public class Account {
         this.password = "";
         this.schoolId = "";
         this.isLoggedIn = false;
-        this.userType = "student";
+        this.userType = AccountRoles.student;
         this.firstName = "";
         this.lastName = "";
     }
@@ -212,7 +226,7 @@ public class Account {
      * @param firstName The users first name.
      * @param lastName The users last name.
      */
-    public Account(String email, String password, String schoolId, Boolean isLoggedIn, String userType, String firstName, String lastName){
+    public Account(String email, String password, String schoolId, Boolean isLoggedIn, AccountRoles userType, String firstName, String lastName){
 
         this.email = email;
         this.password = password;
@@ -243,6 +257,7 @@ public class Account {
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
                 ", zipCode='" + zipCode + '\'' +
+                ", phoneNumber" + phoneNumber + '\'' +
                 '}';
     }
 

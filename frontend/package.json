@@ -5,10 +5,12 @@
     "ng": "ng",
     "start": "ng serve --open",
     "build": "ng build",
-    "test": "ng test",
+    "unit-test": "ng test --code-coverage true",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "doc": "npx compodoc -p tsconfig.doc.json -n 'WebScholar Frontend' --serve --port 48620 --open"
+    "cypress": "npx cypress open",
+    "ui-test": "npx cypress run --e2e && npx cypress run --component",
+    "doc": "npx compodoc -p tsconfig.doc.json -n \"WebScholar Frontend\" --serve --port 48620 --open"
   },
   "private": true,
   "dependencies": {

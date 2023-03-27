@@ -1,17 +1,19 @@
 package edu.weber;
 
-import edu.weber.model.AwardType;
-import edu.weber.model.Level;
-import edu.weber.model.Scholarship;
+import edu.weber.model.*;
 import edu.weber.service.ScholarshipService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.sql.Array;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -30,18 +32,15 @@ public class ScholarshipAppTest
         String title = "Test";
         String organization = "Weber";
         String description = "Test";
-        String requirements = "Test";
+        List<Requirement> requirements = new ArrayList<Requirement>();
+        List<Level> levels = new ArrayList<Level>();
+        List<AwardType> awards = new ArrayList<AwardType>();
         BigDecimal amount = BigDecimal.valueOf(500);
 
 
         Timestamp deadline = Timestamp.valueOf(LocalDateTime.of(2023, Month.DECEMBER, 31,23,59));
-        Level[] levels = {Level.BACHELOR, Level.ASSOCIATE};
-        AwardType[] awardTypes = {AwardType.SCHOLARSHIP, AwardType.LOAN, AwardType.PRIZE};
-       /* ArrayList<Level> levels = new ArrayList<>();
-        levels.add(Level.BACHELOR);
-        levels.add(Level.ASSOCIATE);*/
 
-        TestScholarship = new Scholarship(title, organization, description, requirements, amount, deadline, levels, awardTypes);
+        TestScholarship = new Scholarship(title, organization, description, requirements, amount, deadline, levels, awards);
         Assert.assertEquals(title, TestScholarship.getTitle());
         Assert.assertEquals(organization, TestScholarship.getOrganization());
         Assert.assertEquals(description, TestScholarship.getDescription());
@@ -49,7 +48,7 @@ public class ScholarshipAppTest
         Assert.assertEquals(amount, TestScholarship.getAmount());
         Assert.assertEquals(deadline, TestScholarship.getApplyDeadline());
         Assert.assertEquals(levels, TestScholarship.getLevels());
-        Assert.assertEquals(awardTypes, TestScholarship.getAwardType());
+        Assert.assertEquals(awards, TestScholarship.getAwards());
     }
 
 

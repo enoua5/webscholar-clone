@@ -45,7 +45,7 @@ export class CommitteeComponent implements OnInit {
     this.scholarshipTitle = "Scholarship " + this.scholarId;
     this.displayedApplicants = Object.assign([], this.allApplicants);
     this.currentFilter = 0;
-
+    this.searchString = "";
 
     // first use the passed scholarshipId to get the scholarship information from the db.
     // next use the scholarshipID as a means of pulling a list of all applications for the scholarship
@@ -70,7 +70,7 @@ export class CommitteeComponent implements OnInit {
       this.displayedApplicants = this.displayedApplicants.filter((app) => app.applicationScore === null)
       this.currentFilter = 1;
     }
-    if (this.searchString.length !== 0) 
+    if (this.searchString.length != 0) 
       console.log(this.searchString);
 
     /* This function will be used to filter the list of applicants down for better scoring and visability for committee members.

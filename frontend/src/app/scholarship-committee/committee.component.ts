@@ -72,5 +72,21 @@ export class CommitteeComponent implements OnInit {
     }
     if (this.searchString.length !== 0) 
       console.log(this.searchString);
+
+    /* This function will be used to filter the list of applicants down for better scoring and visability for committee members.
+     * The first major part of this is the ability to filter based on all applications or only those that are unscored.
+     *   This would be done via API call. There would be 2 different calls used, or one call but with differing passed values.
+     *   The call would return a list of all applicable applicants and that will be assigned to the displayedApplicants array to
+     *   be displayed to the user.
+     *
+     * The second part of this will be the ability for the user to filter by the name, school id, or app id. The way this will work
+     *   is similar to the filtering above, mostly because it will likely be implementeed as an additional value passed to the backend
+     *   in the API call. This would likely be the easiest method of doing so. The only issue that might arrise from this would be due
+     *   to the current way that entering text into the field calls the filterApps function. It is currently called on key, meaning
+     *   any time a single character or button is pressed on the key board. If this turns out to be to much, and subsequently causes
+     *   slowdown for the page it could easily be adjusted to be called when a button is clicked by the user. This would cut back
+     *   on API calls, however would mean another button press for users and would not allow for the added visibility given by updating
+     *   the visible list of applicants by each seperate letter entered. Although, whether that would be a concern is unknown at this time.
+     * */
   }
 }

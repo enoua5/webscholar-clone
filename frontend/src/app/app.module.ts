@@ -21,6 +21,7 @@ import { ScholarshipListComponent } from './scholarship-list/scholarship-list.co
 import { NavbarComponent } from './navbar/navbar.component';
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 import { RegistrationInvitationFormComponent } from './registration-invitation-form/registration-invitation-form.component';
+import {StudentViewScholarshipApplicationComponent} from './student-view-scholarship-application/student-view-scholarship-application.component';
 import { RequestRoleFormComponent } from './request-role-form/request-role-form.component';
 import { RouterModule } from "@angular/router";
 import { PendingRoleRequestsComponent } from './pending-role-requests/pending-role-requests.component';
@@ -53,6 +54,7 @@ import { ScoringComponent } from './Committee-Scoring/scoring.component'
     NavbarComponent,
     StudentViewScholarshipFormComponent,
     RegistrationInvitationFormComponent,
+    StudentViewScholarshipApplicationComponent,
     RequestRoleFormComponent,
     PendingRoleRequestsComponent,
     TermsConditionsComponent,

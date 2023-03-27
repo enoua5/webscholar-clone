@@ -16,6 +16,7 @@ import { ViewIssueComponent } from "./view-issue/view-issue.component";
 import { ScholarshipListComponent } from "./scholarship-list/scholarship-list.component";
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 import {RegistrationInvitationFormComponent} from "./registration-invitation-form/registration-invitation-form.component";
+import {StudentViewScholarshipApplicationComponent} from "./student-view-scholarship-application/student-view-scholarship-application.component";
 import { RequestRoleFormComponent } from './request-role-form/request-role-form.component';
 import { PendingRoleRequestsComponent } from './pending-role-requests/pending-role-requests.component';
 import { TermsConditionsComponent } from "./terms-conditions/terms-conditions.component";
@@ -40,6 +41,7 @@ const routes: Routes = [
   { path: 'scholarship', component: ScholarshipListComponent },
   { path: 'studentviewscholarship', component: StudentViewScholarshipFormComponent },
   { path: 'registration_invitation_form', component: RegistrationInvitationFormComponent},
+  { path: 'scholarship/apply/:id', component: StudentViewScholarshipApplicationComponent},
   { path: 'roles/request', component : RequestRoleFormComponent},
   { path: 'roles/pending_requests', component: PendingRoleRequestsComponent},
   { path: 'terms_conditions', component: TermsConditionsComponent},

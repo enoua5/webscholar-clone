@@ -3,17 +3,12 @@
 #This is the base image
 FROM openjdk:17-oracle
 
-ENV EUREKA_SERVICE_USERNAME=user
-ENV EUREKA_SERVICE_PASSWORD=password
-
 #This adds the jar file built by maven into the images app folder
-ADD ./target/config-service.jar /app/
+ADD ./target/scholarship-application-service.jar /app/
 
 #This tells the container how to run the jar file we added
-CMD ["java", "-Xmx300m", "-jar", "/app/config-service.jar"]
+CMD ["java", "-Xmx300m", "-jar", "/app/scholarship-application-service.jar"]
 
-HEALTHCHECK --interval=30s --timeout=30s CMD curl -f http://localhost:8888/actuator/health || exit 1
-
-#This tells the container to open port 8888 to the docker host
+#This tells the container to open port 6007 to the docker host
 #The docker-compose.yml maps this port from the internal docker network to the localhost
-EXPOSE 8888
+EXPOSE 6007

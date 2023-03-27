@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {passwordMatchValidator} from "./validators";
+import { ChangePasswordService } from './change-password-form.service';
 
 @Component({
   selector: 'app-change-password-form',
@@ -11,7 +12,8 @@ export class ChangePasswordFormComponent implements OnInit {
   form: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private service: ChangePasswordService,
   ) {
     this.form = this.formBuilder.group({
         current_password: ['', {
@@ -62,6 +64,20 @@ export class ChangePasswordFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // Do something here
+    let body_data = JSON.stringify({
+      newPassword: this.new_password.value,
+      currentPassword: this.current_password.value
+    });
+
+    console.log(body_data);
+
+    this.service.changePassword(body_data).subscribe({
+      next: (res) => {
+        alert("Your password has been updated.");
+      },
+      error: (err) => {
+        alert(err.error.message || "An unknown error has occured.");
+      }
+    });
   }
 }

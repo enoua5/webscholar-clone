@@ -195,6 +195,30 @@ public class AccountController {
         return updated;
     }
 
+    @RequestMapping(path="/request_role/{accountKey}", method=RequestMethod.POST,
+    consumes="text/plain")
+    public void requestRole(@PathVariable int accountKey, @RequestBody String role)
+    {
+        AccountRoles eRole; //Enumerated role
+        //Set eRole based on the string role. If an incorrect string was passed, log an error.
+        if (role.equals("Committee Member")) {
+            eRole = AccountRoles.committeeMember;
+        }
+        else if (role.equals("Committee Chair")) {
+            eRole = AccountRoles.chair;
+        }
+        else {
+            ErrorHandler.invalidRole(role);
+            return;
+        }
+
+        //Save the account with the new role request - if there isn't already one
+        if(!accountService.requestRole(accountKey, eRole)) {
+            ErrorHandler.requestAlreadyExists();
+        }
+    }
+
+
     @RequestMapping(path = "/forgotPassword", method = RequestMethod.POST)
     public String forgotPassword(@RequestParam String accountEmail){
         log.info("Entering forgotPassword");
@@ -512,7 +536,7 @@ public class AccountController {
         String password = "myPassword";
         String schoolId = "W012345678";
         Boolean isActive = true;
-        String userType = "student";
+        AccountRoles userType = AccountRoles.student;
         String firstName = "Bobby";
         String lastName = "Joe";
 
@@ -570,7 +594,7 @@ public class AccountController {
         password = bCryptPasswordEncoder.encode(password);
 
         //Create the account
-        Account account = new Account(email, password, schoolId, isActive, "student", firstName, lastName);
+        Account account = new Account(email, password, schoolId, isActive, AccountRoles.student, firstName, lastName);
 
         //Save the account to the database
         accountService.accountRepository.save(account);

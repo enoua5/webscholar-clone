@@ -3,6 +3,7 @@ package edu.weber.service;
 import edu.weber.controller.AccountController;
 import edu.weber.controller.ErrorHandler;
 import edu.weber.model.Account;
+import edu.weber.model.AccountRoles;
 import edu.weber.model.VerificationToken;
 import edu.weber.repository.AccountRepository;
 import edu.weber.repository.TokenRepository;
@@ -104,7 +105,7 @@ public class AccountService {
         if(Objects.nonNull(update.getIsLoggedIn())) {
             account.setIsLoggedIn(update.getIsLoggedIn());
         }
-        if(Objects.nonNull(update.getUserType()) && !"".equalsIgnoreCase(update.getUserType())) {
+        if(Objects.nonNull(update.getUserType())) {
             account.setUserType(update.getUserType());
         }
         if(Objects.nonNull(update.getFirstName()) && !"".equalsIgnoreCase(update.getFirstName())) {
@@ -446,6 +447,24 @@ public class AccountService {
 
         //Return success
         return true;
+    }
+
+    /**Checks if an Account already has a value in requestedRole.
+       If they do, return false - users can only request one role at a time.
+       Otherwise, set requestedRole and return true.
+     */
+    public boolean requestRole(int accountKey, AccountRoles role) {
+        Account account = accountRepository.findAccountByAccountKey(accountKey);
+        // Check if an account role request already exists.
+        // This value will be reset to null once the request is either accepted or denied.
+        if (account.getRequestedRole() != null) {
+            return false;
+        }
+        else {
+            account.setRequestedRole(role);
+            accountRepository.save(account);
+            return true;
+        }
     }
 
 

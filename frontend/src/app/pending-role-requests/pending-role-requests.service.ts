@@ -3,9 +3,14 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 // TODO: Replace the below URL with the one created by the backend team for role requests.
+/**
+ * URL used to sned an API call
+ */
 const INSERT_URL = 'http://localhost:6001/account/create';
 
-// Declare our Request and RequestList types so we don't have to copy them over and over.
+/**
+ * Declare our Request and RequestList types so we don't have to copy them over and over.
+*/
 type Request = 
 {
   id: number,
@@ -14,17 +19,29 @@ type Request =
   email: string,
   role: string,
 };
+
+/**
+ * List of requests to send
+ */
 type RequestList = Request[];
 
+/**
+ * Indicates that this service should be provided in the root injector
+ */
 @Injectable({
   providedIn: 'root',
 })
+
+/**
+ * Class containing functions responsible for connecting frontend with backend
+ */
 export class PendingRoleRequestsService
 {
-  constructor(private http: HttpClient)
-  {
-    // Empty constructor; no body needed yet.
-  }
+  /**
+   * Empty constructor
+   * @param http HttpClient
+   */
+  constructor(private http: HttpClient){}
 
   /**
    * Queries the account services API to get all of the current role requests.
@@ -35,6 +52,7 @@ export class PendingRoleRequestsService
   {
     // These requests will likely be returned as JSON strings, so we're going to mock the
     // receipt and parsing of these JSON strings into arrays.
+    let requestList = []
     let mock_json = `{
                         "requests": 
                         [
@@ -59,11 +77,14 @@ export class PendingRoleRequestsService
                             "email": "trainlady123@hotmail.com",
                             "role": "Chair"
                           }
-                        ]
+                        ] 
                       }`;
 
       // TODO: Get the actual JSON result from the backend API.
-      let requestList = this.parseRequestJSON(mock_json);
+      try{
+        requestList = this.parseRequestJSON(mock_json);
+      }catch(e){}
+
       return requestList;
   }
 

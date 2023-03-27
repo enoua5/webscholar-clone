@@ -24,9 +24,11 @@ import { RegistrationInvitationFormComponent } from './registration-invitation-f
 import { RequestRoleFormComponent } from './request-role-form/request-role-form.component';
 import { RouterModule } from "@angular/router";
 import { PendingRoleRequestsComponent } from './pending-role-requests/pending-role-requests.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GrdFilterPipe } from './pending-role-requests/search.pipe';
 import { RouterTestingModule } from "@angular/router/testing";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { CommitteeComponent } from './scholarship-committee/committee.component';
 import { ScoringComponent } from './Committee-Scoring/scoring.component'
 
@@ -54,11 +56,13 @@ import { ScoringComponent } from './Committee-Scoring/scoring.component'
     RequestRoleFormComponent,
     PendingRoleRequestsComponent,
     TermsConditionsComponent,
+    GrdFilterPipe,
     CommitteeComponent,
     ScoringComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,

@@ -17,6 +17,11 @@ export class NavbarComponent implements OnInit {
     return sessionStorage.getItem('name');
   }
 
+  getRole()
+  {
+    return sessionStorage.getItem('role');
+  }
+
   logout() {
     sessionStorage.clear()
     this.router.navigate(['/']).then(res => true);

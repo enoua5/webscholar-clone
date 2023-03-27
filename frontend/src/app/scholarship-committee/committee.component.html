@@ -3,7 +3,9 @@
   <br/>
   <div class="d-flex justify-content-between">
     <div>
-      test
+      <label class="">Search</label>
+      <input id="searchString" [(ngModel)]="searchString" #box placeholder="Enter name or app id" type="text" (keyup)="filterApps(currentFilter)">
+      
     </div>
     <div>
       <div class="button" (click)="filterApps(0)">

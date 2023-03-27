@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forEach } from 'cypress/types/lodash';
+import { isEmpty } from 'rxjs';
 
 @Component({
   selector: 'app-committee',
@@ -12,6 +13,8 @@ export class CommitteeComponent implements OnInit {
   public displayedApplicants: any[];
   public scholarshipTitle: any;
   public scholarId: any;
+  public searchString: string;
+  public currentFilter: any;
 
   constructor(private _Activedroute:ActivatedRoute) {    
     this.allApplicants = [
@@ -40,7 +43,8 @@ export class CommitteeComponent implements OnInit {
     this.scholarId = this._Activedroute.snapshot.paramMap.get("id");
     this.scholarId = this.scholarId as number;
     this.scholarshipTitle = "Scholarship " + this.scholarId;
-    this.displayedApplicants = Object.assign([], this.allApplicants)
+    this.displayedApplicants = Object.assign([], this.allApplicants);
+    this.currentFilter = 0;
 
 
     // first use the passed scholarshipId to get the scholarship information from the db.
@@ -59,12 +63,14 @@ export class CommitteeComponent implements OnInit {
   filterApps(filter): void {
     if (filter == 0) {
       this.displayedApplicants.splice(0);
-      this.displayedApplicants = Object.assign([], this.allApplicants)
+      this.displayedApplicants = Object.assign([], this.allApplicants);
+      this.currentFilter = 0;
     }
     else if (filter == 1) {
       this.displayedApplicants = this.displayedApplicants.filter((app) => app.applicationScore === null)
+      this.currentFilter = 1;
     }
+    if (this.searchString.length !== 0) 
+      console.log(this.searchString);
   }
-
-
 }

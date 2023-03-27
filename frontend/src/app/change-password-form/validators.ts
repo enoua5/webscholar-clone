@@ -1,6 +1,10 @@
 import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
 
-//Check if passwords match
+/**
+ * Factory method for creating a validator that checks if the `confirm_password` feild matches with `new_password`
+ * 
+ * @returns {ValidatorFn} Function for determining if the `new_password` and `confirm_password` fields match
+ */
 export function passwordMatchValidator(): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     let password = control.get('new_password'),

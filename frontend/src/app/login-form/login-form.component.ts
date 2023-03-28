@@ -94,8 +94,7 @@ export class LoginFormComponent implements OnInit {
     });
 
     this.service.login(jsonObj).subscribe(
-      {
-        next: (res) => {
+        res => {
           console.log(res.body.email);
 
         // Put whatever needs to be executed *after* the routing is done in the .then()
@@ -126,6 +125,6 @@ export class LoginFormComponent implements OnInit {
         // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
         alert(err.error.message);
         }
-      });
+      );
   }
 }

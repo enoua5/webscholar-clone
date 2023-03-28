@@ -59,6 +59,10 @@
                     I.e., email@example.com
                   </div>
                 </div>
+
+                <div class="error" *ngIf="email.hasError('err_email_taken') && email.touched">
+                  Email is already taken.
+                </div>
               </div>
             </div>
           </div>

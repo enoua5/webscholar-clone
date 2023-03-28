@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {EditProfileService} from './edit-profile.service';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import {emailExistsValidator} from "./validators";
 @Component({
   selector: 'app-edit-profile-form',
   templateUrl: './edit-profile-form.component.html',
@@ -41,6 +42,9 @@ export class EditProfileFormComponent implements OnInit {
         validators: [
           Validators.required,
           Validators.email
+        ],
+        asyncValidators: [
+          emailExistsValidator(service)
         ]
       }],
       phone_number: ['', {

@@ -24,6 +24,8 @@ export class EditProfileFormComponent implements OnInit {
               private router: Router,
               private service: EditProfileService)
   {
+    // first name, last name, email, and school id are all required and will never be null
+    // when we build the form, we can get the autofill values from session storage
     this.form = this.fb.group({
       first_name: [sessionStorage.getItem("firstName"), {
         validators: [
@@ -57,6 +59,7 @@ export class EditProfileFormComponent implements OnInit {
       }],
       major: ['']
     });
+    // all of these values could possibly be null, so we need to check before we add them into the form
     if(sessionStorage.getItem("phoneNumber") != null){
       this.form.patchValue({phone_number: sessionStorage.getItem("phoneNumber")});
     }
@@ -74,32 +77,7 @@ export class EditProfileFormComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-
-  }
-
-  private checkErrors(): void {
-    this.errors.clear();
-
-    //TODO: check if username (email?) already taken in database
-    //Email verification
-    const validEmail = RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$');
-    if (!validEmail.test(this.email.value) && this.email.value != '') {
-      this.errors.set('email', 'Invalid email format');
-    }
-
-    //Phone Number verification
-    const validPhone = RegExp('^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$');
-    if(!validPhone.test(this.phone_number.value) && this.phone_number.value != ''){
-      this.errors.set('phone_number', 'Invalid phone number format');
-    }
-
-    //User Id verification
-    const regex = RegExp('^[0-9]{8}$');
-    if(!regex.test(this.student_number.value) && this.student_number.value != ''){
-      this.errors.set('student_number', 'Invalid student ID');
-    }
-  }
+  ngOnInit(): void {}
 
   // getters for form controls
   get first_name(){
@@ -143,7 +121,6 @@ export class EditProfileFormComponent implements OnInit {
    */
   onSubmit(): void {
     console.log(this.form.value);
-    this.checkErrors();
 
     if(this.errors.size == 0){
       // create JSON object

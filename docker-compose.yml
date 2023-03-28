@@ -4,7 +4,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - front-end
       - back-end
@@ -202,6 +203,26 @@ services:
       - 6004:6004
     expose:
       - 6004
+    networks:
+      - front-end
+      - back-end
+
+  #Spring scholarship-application-service microservice container settings
+  scholarship-application-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      EUREKA_SERVICE_USERNAME: $EUREKA_SERVICE_USERNAME
+      EUREKA_SERVICE_PASSWORD: $EUREKA_SERVICE_PASSWORD
+    build: scholarship-application-service
+    depends_on:
+      config-service:
+        condition: service_healthy
+      registry:
+        condition: service_started
+    ports:
+      - 6007:6007
+    expose:
+      - 6007
     networks:
       - front-end
       - back-end

@@ -49,6 +49,12 @@ cmake-build-*/
 # File-based project format
 *.iws
 
+#VSCode
+.vs/
+
+# Nano
+*.swp
+
 # IntelliJ
 out/
 
@@ -151,3 +157,5 @@ gradle-app.setting
 
 # Remove lock file
 package-lock.json
+node_modules
+.DS_Store

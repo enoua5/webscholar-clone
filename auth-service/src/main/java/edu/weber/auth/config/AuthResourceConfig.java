@@ -1,15 +1,23 @@
 package edu.weber.auth.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
+import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.stereotype.Component;
+
+import java.util.Map;
 
 /**
  * Defines the Beans required for JWT token authentication
@@ -17,6 +25,15 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 @EnableResourceServer
 public class AuthResourceConfig extends ResourceServerConfigurerAdapter {
+
+    /**
+     * Gives us our custom access token converter that can get our custom claims info out of the token
+     */
+    // Commented out for now because it was causing circular dependency problems
+    // inside accessTokenConverter() method now it creates a new CustomAccessTokenConverter instance
+    // This might cause problems? I will have to do some testing
+    //@Autowired
+    //private CustomAccessTokenConverter customAccessTokenConverter;
 
     /**
      * Makes ResourceServerSecurityConfigurer use the bean in this class
@@ -40,6 +57,7 @@ public class AuthResourceConfig extends ResourceServerConfigurerAdapter {
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        converter.setAccessTokenConverter(new CustomAccessTokenConverter());
         converter.setSigningKey("123");
         return converter;
     }
@@ -54,6 +72,32 @@ public class AuthResourceConfig extends ResourceServerConfigurerAdapter {
         DefaultTokenServices defaultTokenServices = new DefaultTokenServices();
         defaultTokenServices.setTokenStore(tokenStore());
         return defaultTokenServices;
+    }
+
+    /**
+     * A customized Access Token converter that allows us to extract our custom claims from the token
+     */
+    @Component
+    public class CustomAccessTokenConverter extends DefaultAccessTokenConverter {
+
+        @Override
+        public OAuth2Authentication extractAuthentication(Map<String, ?> claims) {
+            OAuth2Authentication authentication = super.extractAuthentication(claims);
+            authentication.setDetails(claims);
+            return authentication;
+        }
+    }
+
+    /**
+     * Method to retrieve our custom claims from the JWT token
+     *
+     * @param auth OAuth2Authentication object
+     * @return the additional information from the access token
+     */
+    public Map<String, Object> getExtraInfo(OAuth2Authentication auth) {
+        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) auth.getDetails();
+        OAuth2AccessToken accessToken = tokenStore().readAccessToken(details.getTokenValue());
+        return accessToken.getAdditionalInformation();
     }
 
 }

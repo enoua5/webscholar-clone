@@ -157,7 +157,10 @@
 
       <details>
         <summary>Danger Zone</summary>
-        <button (click)="requestAccountDeletion()" class="btn btn-danger">Delete my account</button>
+        <ul id="danger-list">
+          <li><a href="change_password">Change password</a></li>
+          <li><a (click)="requestAccountDeletion()" style="cursor:pointer" class="link-danger">Delete my account</a></li>
+        </ul>
       </details>
     </div>
 </section>

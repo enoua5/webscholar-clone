@@ -3,6 +3,7 @@ package edu.weber.controller;
 import edu.weber.model.Account;
 import edu.weber.model.AccountRoles;
 import edu.weber.model.LoginDto;
+import edu.weber.model.ChangePasswordDto;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import javax.ws.rs.core.Application;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -193,6 +195,30 @@ public class AccountController {
         return updated;
     }
 
+    @RequestMapping(path="/request_role/{accountKey}", method=RequestMethod.POST,
+    consumes="text/plain")
+    public void requestRole(@PathVariable int accountKey, @RequestBody String role)
+    {
+        AccountRoles eRole; //Enumerated role
+        //Set eRole based on the string role. If an incorrect string was passed, log an error.
+        if (role.equals("Committee Member")) {
+            eRole = AccountRoles.committeeMember;
+        }
+        else if (role.equals("Committee Chair")) {
+            eRole = AccountRoles.chair;
+        }
+        else {
+            ErrorHandler.invalidRole(role);
+            return;
+        }
+
+        //Save the account with the new role request - if there isn't already one
+        if(!accountService.requestRole(accountKey, eRole)) {
+            ErrorHandler.requestAlreadyExists();
+        }
+    }
+
+
     @RequestMapping(path = "/forgotPassword", method = RequestMethod.POST)
     public String forgotPassword(@RequestParam String accountEmail){
         log.info("Entering forgotPassword");
@@ -254,6 +280,20 @@ public class AccountController {
             return "done";
         }
         return "Error setting the new password. Password was not saved.";
+    }
+
+    /**
+     * Changes the password of the logged in user
+     * @param accountKey: The account key of the logged in user
+     * @return: "done" if password was correctly set
+     */
+    @RequestMapping(path = "/change_password/{accountKey}", method = RequestMethod.POST,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean changePassword(@PathVariable int accountKey, @RequestBody ChangePasswordDto changePasswordDto, BindingResult result){
+        String currentPassword = changePasswordDto.getCurrentPassword();
+        String newPassword = changePasswordDto.getNewPassword();
+
+        return accountService.changePassword(accountKey, currentPassword, newPassword);
     }
 
     @RequestMapping(path = "/forgot/account", method = RequestMethod.POST)
@@ -439,6 +479,11 @@ public class AccountController {
         throw new ResponseStatusException(HttpStatus.PARTIAL_CONTENT, "The data sent was incomplete or invalid!");
     }
 
+    //TODO: This error message has been moved to the ErrorHandler class.
+    //  This method is still being referenced in this Controller class,
+    //  and each use will instead need to point to ErrorHandler.accountNotFound()
+    //  For the record, the ErrorHandler class can be accessed from AccountService too, which may be ideal.
+    //  Look to the changePassword methods in Controller and Service for an example.
     /**
      * Send an http response error if the specified account could not be found.
      */
@@ -446,7 +491,6 @@ public class AccountController {
 
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account could not be found!");
     }
-
 
     /*
     ----------------------------------------------------------------
@@ -492,7 +536,7 @@ public class AccountController {
         String password = "myPassword";
         String schoolId = "W012345678";
         Boolean isActive = true;
-        String userType = "student";
+        AccountRoles userType = AccountRoles.student;
         String firstName = "Bobby";
         String lastName = "Joe";
 
@@ -550,7 +594,7 @@ public class AccountController {
         password = bCryptPasswordEncoder.encode(password);
 
         //Create the account
-        Account account = new Account(email, password, schoolId, isActive, "student", firstName, lastName);
+        Account account = new Account(email, password, schoolId, isActive, AccountRoles.student, firstName, lastName);
 
         //Save the account to the database
         accountService.accountRepository.save(account);

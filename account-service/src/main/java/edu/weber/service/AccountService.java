@@ -1,6 +1,9 @@
 package edu.weber.service;
 
+import edu.weber.controller.AccountController;
+import edu.weber.controller.ErrorHandler;
 import edu.weber.model.Account;
+import edu.weber.model.AccountRoles;
 import edu.weber.model.VerificationToken;
 import edu.weber.repository.AccountRepository;
 import edu.weber.repository.TokenRepository;
@@ -102,7 +105,7 @@ public class AccountService {
         if(Objects.nonNull(update.getIsLoggedIn())) {
             account.setIsLoggedIn(update.getIsLoggedIn());
         }
-        if(Objects.nonNull(update.getUserType()) && !"".equalsIgnoreCase(update.getUserType())) {
+        if(Objects.nonNull(update.getUserType())) {
             account.setUserType(update.getUserType());
         }
         if(Objects.nonNull(update.getFirstName()) && !"".equalsIgnoreCase(update.getFirstName())) {
@@ -267,7 +270,7 @@ public class AccountService {
     }
 
     /**
-     * Sets a new password for the related account
+     * Sets a new password from a forgot password link
      * @param forgotPassHash: The forgotPassHash value that was tied to this request
      * @param newPassword: The updated password
      * @return: true, if saving the new password was successful
@@ -277,7 +280,41 @@ public class AccountService {
         Account account = accountRepository.findAccountByForgotPassHash(forgotPassHash);
 
         if (account == null){
-            log.error("Account not found.");
+            ErrorHandler.accountNotFound();
+            return false;
+        }
+
+        // Hash the new password and update the database as such
+        account.setPassword(passwordEncoder.encode(newPassword));
+
+        // Save the changes
+        accountRepository.save(account);
+
+        // Send a confirmation email
+        sendEmail(account.getEmail(), "Password Updated", "The password for the account linked to this email address has been updated.");
+
+        return true;
+    }
+
+    /**
+     * Validates the current password for security,
+     * and changes the user's password to the supplied input
+     * @param accountKey: The account key for the current user
+     * @param currentPassword: The user's current password
+     * @param newPassword: The user's new password to be set
+     * @return: True if successful
+     */
+    public boolean changePassword(int accountKey, String currentPassword, String newPassword){
+        //Find the account based on the account key
+        Account account = accountRepository.findAccountByAccountKey(accountKey);
+
+        if (account == null){
+            ErrorHandler.accountNotFound();
+            return false;
+        }
+
+        if (!passwordEncoder.matches(currentPassword, account.getPassword())){
+            ErrorHandler.incorrectPassword();
             return false;
         }
 
@@ -410,6 +447,24 @@ public class AccountService {
 
         //Return success
         return true;
+    }
+
+    /**Checks if an Account already has a value in requestedRole.
+       If they do, return false - users can only request one role at a time.
+       Otherwise, set requestedRole and return true.
+     */
+    public boolean requestRole(int accountKey, AccountRoles role) {
+        Account account = accountRepository.findAccountByAccountKey(accountKey);
+        // Check if an account role request already exists.
+        // This value will be reset to null once the request is either accepted or denied.
+        if (account.getRequestedRole() != null) {
+            return false;
+        }
+        else {
+            account.setRequestedRole(role);
+            accountRepository.save(account);
+            return true;
+        }
     }
 
 

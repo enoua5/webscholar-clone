@@ -1,6 +1,7 @@
 package edu.weber;
 
 import edu.weber.model.Account;
+import edu.weber.model.AccountRoles;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +38,7 @@ public class AccountAppTest
         account.setPassword("TestPassword");
         account.setSchoolId("W12345670");
         account.setIsLoggedIn(true);
-        account.setUserType("student");
+        account.setUserType(AccountRoles.student);
         account.setFirstName("TestFirstName");
         account.setLastName("TestLastName");
         account.setCity("TestCity");

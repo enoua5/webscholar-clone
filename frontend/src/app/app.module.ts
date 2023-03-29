@@ -21,10 +21,15 @@ import { ScholarshipListComponent } from './scholarship-list/scholarship-list.co
 import { NavbarComponent } from './navbar/navbar.component';
 import { StudentViewScholarshipFormComponent } from './student-view-scholarship-form/student-view-scholarship-form.component';
 import { RegistrationInvitationFormComponent } from './registration-invitation-form/registration-invitation-form.component';
+import {StudentViewScholarshipApplicationComponent} from './student-view-scholarship-application/student-view-scholarship-application.component';
+import { RequestRoleFormComponent } from './request-role-form/request-role-form.component';
 import { RouterModule } from "@angular/router";
+import { PendingRoleRequestsComponent } from './pending-role-requests/pending-role-requests.component';
+import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GrdFilterPipe } from './pending-role-requests/search.pipe';
 import { RouterTestingModule } from "@angular/router/testing";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
-import { TermsConditionsComponent } from './terms-conditions/terms-conditions.component';
 import { CommitteeComponent } from './scholarship-committee/committee.component';
 import { ScoringComponent } from './Committee-Scoring/scoring.component'
 
@@ -49,21 +54,24 @@ import { ScoringComponent } from './Committee-Scoring/scoring.component'
     NavbarComponent,
     StudentViewScholarshipFormComponent,
     RegistrationInvitationFormComponent,
+    StudentViewScholarshipApplicationComponent,
+    RequestRoleFormComponent,
+    PendingRoleRequestsComponent,
     TermsConditionsComponent,
+    GrdFilterPipe,
     CommitteeComponent,
     ScoringComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
     FormsModule,
     RouterModule.forRoot([
       {path: 'registration_invitation_form/:type', component: RegistrationInvitationFormComponent }
-    ]),
-    RouterTestingModule,
-    HttpClientTestingModule
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -23,7 +23,6 @@ import java.util.Map;
 /**
  * This class sets up the Authorization Server using Spring Security
  */
-
 @Configuration
 @EnableAuthorizationServer
 public class AuthConfig extends AuthorizationServerConfigurerAdapter {
@@ -79,7 +78,7 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
     /**
      * Set up a bean to return our custom JWT token enhancer class
      *
-     * @return
+     * @return A new instance of CustomTokenEnhancer
      */
     @Bean
     public TokenEnhancer tokenEnhancer() {

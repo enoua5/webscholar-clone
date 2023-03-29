@@ -71,6 +71,23 @@ public class AccountService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    public Account createNewAccount(Account account)
+    {
+        //Encrypt the password
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+
+        //Create a new account in the database
+        account = accountRepository.save(account);
+
+        if (account == null) {
+            ErrorHandler.accountNotCreated();
+        }
+
+        sendEmail(account.getEmail(), "Registration email", "Thank you for registering!");
+
+        return account;
+    }
+
     /**
      * This method updates the data associated for an existing account.
      *

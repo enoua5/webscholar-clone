@@ -119,32 +119,12 @@ public class AccountController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public Account createNewAccount(@Valid @RequestBody Account account, BindingResult result) {
-
-
-        log.info(account.toString());
-        //Validate account information (input validation)
         if (result.hasErrors()) {
-
-            //Log Error
-            log.error("ERROR: Invalid Data -- SOURCE: createNewAccount()");
-
-            //Throw error
+            //TODO: Refactor invalidData to the ErrorHandler class
             invalidData();
-        } else {
-
-            //TODO: Send a confirmation email (not necessary for weber state oauth2 login)
-            //Presently, outlook blocks api calls if it thinks you're 'spamming' from too many tests
-            //We should probably setup something a little more permanent. But services like outlook, gmail require 2FA (IE a phone number) to use a api-key right now.
-
-            accountService.sendEmail(account.getEmail(), "Registration email", "Thank you for registering!");
-
-            //Encrypt the password
-            account.setPassword(passwordEncoder.encode(account.getPassword()));
-
-            //Create an account in the database
-            accountService.accountRepository.save(account);
-
-            return account;
+        }
+        else {
+            return accountService.createNewAccount(account);
         }
         return null;
     }

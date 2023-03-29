@@ -255,5 +255,5 @@ public class Account {
                 '}';
     }
 //endregion
-    
+
 }

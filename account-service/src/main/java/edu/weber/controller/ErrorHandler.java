@@ -39,5 +39,20 @@ public class ErrorHandler {
         throw new ResponseStatusException(HttpStatus.PARTIAL_CONTENT, "The data sent was incomplete or invalid!");
     }
 
+    /**
+     * Send an http response error if the specified email could not be found
+     */
+    public static void emailNotFound() {
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The email could not be found!");
+    }
+
+    /**
+     * Send an http response error if the specified account ID could not be found
+     */
+    public static void accountIDNotFound() {
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account ID could not be found!");
+    }
+
+
     //TODO: Add any new custom error handling methods here. Ensure methods are static so the AccountController can call them.
 }

@@ -1,7 +1,22 @@
 <section class="container p-3">
   <h1>{{scholarshipTitle}}</h1>
-  <br/>
-
+  <br />
+  <div class="d-flex justify-content-between pb-3">
+    <div>
+      <label class="">Search</label>
+      <input style="width:100%" [(ngModel)]="searchString" placeholder="Enter name, school id, or app id" type="text" (keyup)="filterApps(currentFilter)">
+    </div>
+    <div>
+      <div class="button"  (click)="filterApps(0)">
+        <input type="radio" id="0" name="check-substitution-2" [checked]="true" />
+        <label class="btn btn-default" for="0">All</label>
+      </div>
+      <div class="button" (click)="filterApps(1)">
+        <input type="radio" id="1" name="check-substitution-2" />
+        <label class="btn btn-default" for="1">No Score</label>
+      </div>
+    </div>
+  </div>
   <div class="table-responsive">
     <table class="table table-bordered w-100 table-hover accordion">
       <thead>
@@ -10,10 +25,10 @@
       <th scope="col">School ID</th>
       <th scope="col">Application Score</th>
       <th scope="col"></th>
-      </thead>
+    </thead>
 
       <tbody>
-        <ng-container *ngFor="let applicant of applicants">
+        <ng-container *ngFor="let applicant of displayedApplicants">
           <tr role="button" data-bs-toggle="collapse">
             <td>{{ applicant.name }}</td>
             <td>{{ applicant.applicationId }}</td>

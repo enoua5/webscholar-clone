@@ -15,7 +15,7 @@ import { RequestRoleService } from './request-role.service';
  * 
  * @details This component allows users to request a new role.
  */
-export class RequestRoleFormComponent implements OnInit 
+export class RequestRoleFormComponent 
 {
   /**
    * The title to display on the page tied to this component.
@@ -50,12 +50,6 @@ export class RequestRoleFormComponent implements OnInit
    * @param service The RequestRoleService object to use for this component.
    */
   constructor(private service: RequestRoleService) {}
-
-  // Component Methods
-  ngOnInit(): void 
-  {
-    // TODO: get currently logged-in user's email to send to backend with request.
-  }
 
   /**
    * Called when the user submits the form. Sends their role request to the backend.

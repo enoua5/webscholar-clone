@@ -71,6 +71,11 @@ public class AccountService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    /**
+     * Hashes the password for the new account, and then saves account object to the database
+     * @param account: The account object to be created
+     * @return: The newly created account object
+     */
     public Account createNewAccount(Account account)
     {
         //Encrypt the password

@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
 
   getRole()
   {
-    return sessionStorage.getItem('role');
+    return sessionStorage.getItem('userType');
   }
 
   logout() {

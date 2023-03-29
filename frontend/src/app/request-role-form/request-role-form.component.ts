@@ -28,8 +28,7 @@ export class RequestRoleFormComponent implements OnInit
 
   onSubmit(): void
   {
-    console.log(this.roleForm.get('roleControl').value);
-    this.service.insert(this.roleForm.value).subscribe((data) => this.processResponse(data));
+    this.service.sendRequest(this.roleForm.value).subscribe((data) => this.processResponse(data));
   }
 
   private processResponse(data)

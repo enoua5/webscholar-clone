@@ -2,8 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
-// TODO: Replace the below URL with the one created by the backend team for role requests.
-const INSERT_URL = 'http://localhost:6001/account/test_me';
+const URL = 'http://localhost:6001/account/request_role/';
 
 @Injectable({
   providedIn: 'root',
@@ -15,12 +14,17 @@ export class RequestRoleService
     // Empty constructor; no body needed yet.
   }
 
-  public insert(data): Observable<any> 
+  public sendRequest(data): Observable<any> 
   {
-    // TODO: Formally call the account service and send it our request with:
-    // return this.http.post(INSERT_URL, data);
+    const header = new HttpHeaders({
+      'Content-Type': 'text/plain',
+      'Accept': '*/*',
+      'Access-Control-Allow-Headers': 'Access-Control-Allow-Origin, Content-Type, Accept, Accept-Language, Origin, User-Agent'
+    });
+    const body = data;
 
-    // For now, this is just mocked to demonstrate that a request might actually be sent.
-    return this.http.get(INSERT_URL, {responseType: 'text'});
+    const FULL_URL = URL + sessionStorage.getItem("accountKey");
+    return this.http.post(FULL_URL, body, {headers: header, observe: 'response'}).pipe();
   }
+
 }

@@ -1,9 +1,6 @@
 package edu.weber.controller;
 
-import edu.weber.model.Account;
-import edu.weber.model.AccountRoles;
-import edu.weber.model.LoginDto;
-import edu.weber.model.ChangePasswordDto;
+import edu.weber.model.*;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +16,7 @@ import javax.validation.Valid;
 import javax.ws.rs.core.Application;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -218,6 +216,10 @@ public class AccountController {
         }
     }
 
+    @RequestMapping(path="/get-all-role-requests", method=RequestMethod.GET)
+    public ArrayList<RoleRequest> getAllRoleRequests() {
+        return accountService.getAllRoleRequests();
+    }
 
     @RequestMapping(path = "/forgotPassword", method = RequestMethod.POST)
     public String forgotPassword(@RequestParam String accountEmail){

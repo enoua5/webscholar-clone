@@ -45,14 +45,6 @@ public class ErrorHandler {
     public static void emailNotFound() {
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The email could not be found!");
     }
-
-    /**
-     * Send an http response error if the specified account ID could not be found
-     */
-    public static void accountIDNotFound() {
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account ID could not be found!");
-    }
-
-
-    //TODO: Add any new custom error handling methods here. Ensure methods are static so the AccountController can call them.
+    
+    //TODO: Add any new custom error handling methods here. Ensure methods are static so other classes can call them.
 }

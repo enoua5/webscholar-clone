@@ -11,13 +11,13 @@ import org.springframework.stereotype.Repository;
  * eg. 'findAccountBy' followed by a variable name 'AccountKey', 'firstName', etc.
  * Note: intelliJ helps you build these methods when you start writing the method signature.
  * Note: You can also create complex queries using the @Query annotation and specifying the sql statement.
+ * See documentation here https://www.baeldung.com/spring-data-derived-queries for more info.
  */
 @Repository
 public interface ScholarshipRepository extends JpaRepository<Scholarship, String>{
 
-    //These are default database search functions
 
-    Scholarship findScholarshipByScholarshipId (int scholarshipKey);
+    Scholarship findScholarshipByScholarshipId(int id);
 
     Scholarship findScholarshipByTitle (String Title);
 

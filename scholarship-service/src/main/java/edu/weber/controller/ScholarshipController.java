@@ -67,7 +67,6 @@ public class ScholarshipController {
             invalidData();
 
         } else {
-
             //Save the new scholarship to the database
             scholarshipService.scholarshipRepository.save(scholarship);
         }
@@ -78,27 +77,27 @@ public class ScholarshipController {
      * This method updates the scholarship details by using the specified scholarship id.
      *
      * @param scholarshipId     The key used to find the scholarship from the database.
-     * @param updateScholarship The form object sent from the frontend that is converted into a scholarship model object.
+     * @param scholarship The form object sent from the frontend that is converted into a scholarship model object.
      */
     @RequestMapping(path = "/update/{scholarshipId}", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void saveChanges(@PathVariable int scholarshipId, @RequestBody Scholarship updateScholarship, BindingResult result) {
+    public void updateScholarship(@PathVariable int scholarshipId, @RequestBody Scholarship scholarship, BindingResult result) {
 
         //Validate input
         if (result.hasErrors()) {
 
             // Log error
-            log.error("ERROR: Invalid Data -- SOURCE: saveChanges()");
+            log.error("ERROR: Invalid Data -- SOURCE: updateScholarship()");
 
             //Throw http error
             invalidData();
         }
 
         //Overwrite the existing scholarship data with the new scholarship data
-        if (!scholarshipService.saveChanges(scholarshipId, updateScholarship)) {
+        if (!scholarshipService.updateScholarship(scholarshipId, scholarship)) {
 
             // Log error
-            log.error("ERROR: Scholarship could not be saved -- SOURCE: saveChanges()");
+            log.error("ERROR: Scholarship could not be saved -- SOURCE: updateScholarship()");
 
             //Throw http error if scholarship could not be saved
             scholarshipNotFound();
@@ -113,46 +112,41 @@ public class ScholarshipController {
      */
     @RequestMapping(path = "/delete/{scholarshipId}", method = RequestMethod.POST,
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public void deleteScholarship(@PathVariable int scholarshipId) {
+    public boolean deleteScholarship(@PathVariable int scholarshipId) {
+        Boolean deleted = scholarshipService.deleteScholarship(scholarshipId);
 
-        //Attempts to delete the scholarship
-        if (!scholarshipService.deleteScholarship(scholarshipId)) {
-
-            // Log error
-            log.error("ERROR: Scholarship could not be deleted -- SOURCE: deleteScholarship()");
-
-            //Throw http error if scholarship could not be deleted 
+        if (!deleted) {
+            log.error("ERROR: Scholarship cold not be deleted -- SOURCE: deleteScholarship()");
             scholarshipNotFound();
         }
 
+        return deleted;
     }
 
-    public void getScholarshipById(@PathVariable int scholarshipId) {
+    public Scholarship getScholarshipById(@PathVariable int scholarshipId) {
 
-        //Attempts to delete the scholarship
-        if (!scholarshipService.getScholarshipById(scholarshipId)) {
+        // Attempts to find the scholarship
+        Scholarship scholarship = scholarshipService.getScholarshipById(scholarshipId);
 
+        if (scholarship == null) {
             // Log error
             log.error("ERROR: A scholarship with this ID does not exist -- SOURCE: getScholarshipById()");
 
             //Throw http error if scholarship could not be found
             scholarshipNotFound();
         }
-
+        return scholarship;
     }
 
-    public void getScholarshipByTitle(@PathVariable String scholarshipTitle) {
+    public Scholarship getScholarshipByTitle(@PathVariable String scholarshipTitle) {
+        Scholarship scholarship = scholarshipService.getScholarshipByTitle(scholarshipTitle);
 
-        //Attempts to delete the scholarship
-        if (!scholarshipService.getScholarshipByTitle(scholarshipTitle)) {
-
-            // Log error
+        if (scholarship == null) {
             log.error("ERROR: A scholarship with this title does not exist -- SOURCE: getScholarshipByTitle()");
 
-            //Throw http error if scholarship could not be found
             scholarshipNotFound();
         }
-
+        return scholarship;
     }
 
     /**

@@ -18,7 +18,7 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account, String> {
 
     //These are default database search functions
-
+    List<Account> findByRequestedRoleIsNotNull();
     Account findAccountByAccountKey(int accountKey);
 
     Account findAccountByEmail(String email);

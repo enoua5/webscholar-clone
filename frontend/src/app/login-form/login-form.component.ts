@@ -94,28 +94,37 @@ export class LoginFormComponent implements OnInit {
     });
 
     this.service.login(jsonObj).subscribe(
-      {
-        next: (res) => {
+        res => {
           console.log(res.body.email);
 
-          // Put whatever needs to be executed *after* the routing is done in the .then()
-          sessionStorage.setItem('name', `${ res.body.firstName } ${ res.body.lastName }`);
-          sessionStorage.setItem('email', `${ res.body.email }`);
-          sessionStorage.setItem('userType', res.body.userType);
-          sessionStorage.setItem('accountKey', res.body.accountKey);
-          
-          this.router.navigate(['/dashboard']).then(() => {
-            console.log(sessionStorage.getItem('name'));
-            console.log(sessionStorage.getItem('email'));
-            console.log(sessionStorage.getItem('userType'));
-            console.log(sessionStorage.getItem('accountKey'));
-          });
-        },
-        error: (err) => {
+        // Put whatever needs to be executed *after* the routing is done in the .then()
+
+        // TODO: provide for other account types besides student,
+        //  currently the following code assumes the user is a student
+        sessionStorage.setItem('firstName', `${ res.body.firstName }`);
+        sessionStorage.setItem('lastName', `${ res.body.lastName }`);
+        sessionStorage.setItem('email', `${ res.body.email }`);
+        sessionStorage.setItem('phoneNumber', `${ res.body.phoneNumber }`);
+        sessionStorage.setItem('city', `${ res.body.city }`);
+        sessionStorage.setItem('state', `${ res.body.state }`);
+        sessionStorage.setItem('zipCode', `${ res.body.zipCode }`);
+        sessionStorage.setItem('schoolId', `${ res.body.schoolId }`);
+        sessionStorage.setItem('major', `${ res.body.major }`);
+        sessionStorage.setItem('userType', res.body.userType);
+        sessionStorage.setItem('accountKey', res.body.accountKey);
+
+        this.router.navigate(['/dashboard']).then(() => {
+          console.log(sessionStorage.getItem('name'));
+          console.log(sessionStorage.getItem('email'));
+          console.log(sessionStorage.getItem('userType'));
+          console.log(sessionStorage.getItem('accountKey'));
+        });
+      },
+      err => {
         console.log(err);
         // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
         alert(err.error.message);
         }
-      });
+      );
   }
 }

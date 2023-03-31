@@ -1,8 +1,11 @@
 package edu.weber.repository;
 
 import edu.weber.model.Scholarship;
+import java.sql.Timestamp;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Collection;
 
 /**
  * This class connects to the database.
@@ -19,7 +22,13 @@ public interface ScholarshipRepository extends JpaRepository<Scholarship, String
 
     Scholarship findScholarshipByScholarshipId (int scholarshipKey);
 
-    Scholarship findScholarshipByTitle (String Title);
+    Scholarship findScholarshipByTitle (String title);
+
+    Collection<Scholarship> findScholarshipByLevels(String level);
+
+    Collection<Scholarship> findScholarshipByOrganization(String organization);
+
+    Collection<Scholarship> findScholarshipByApplyDeadline(Timestamp applyDeadline);
 
     void deleteScholarshipByScholarshipId(int id);
 }

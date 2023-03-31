@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
 
 /**
  * Note: This class does not have '@RestController("scholarship")' API path specified here.
@@ -127,9 +128,16 @@ public class ScholarshipController {
 
     }
 
+    /**
+     * This method finds the scholarship by using the specified scholarship id.
+     *
+     * @param scholarshipId -- The ID used to find the scholarship from the database.
+     */
+    @RequestMapping(path = "/searchById/{scholarshipId}", method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void getScholarshipById(@PathVariable int scholarshipId) {
 
-        //Attempts to delete the scholarship
+        //Attempts to find the scholarship
         if (!scholarshipService.getScholarshipById(scholarshipId)) {
 
             // Log error
@@ -141,13 +149,85 @@ public class ScholarshipController {
 
     }
 
+
+    /**
+     * This method finds the scholarship by using the scholarship title.
+     *
+     * @param scholarshipTitle -- The title used to find the scholarship from the database.
+     */
+    @RequestMapping(path = "/searchByTitle/{scholarshipTitle}", method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void getScholarshipByTitle(@PathVariable String scholarshipTitle) {
 
-        //Attempts to delete the scholarship
+        //Attempts to find the scholarship
         if (!scholarshipService.getScholarshipByTitle(scholarshipTitle)) {
 
             // Log error
             log.error("ERROR: A scholarship with this title does not exist -- SOURCE: getScholarshipByTitle()");
+
+            //Throw http error if scholarship could not be found
+            scholarshipNotFound();
+        }
+
+    }
+
+    /**
+     * This method finds the scholarship by using the specified scholarship level.
+     *
+     * @param scholarshipLevel -- The level used to find the scholarship from the database.
+     */
+    @RequestMapping(path = "/searchByLevel/{scholarshipLevel}", method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void getScholarshipByLevel(@PathVariable String scholarshipLevel) {
+
+        //Attempts to find scholarships with specified level
+        if (scholarshipService.getScholarshipsByLevel(scholarshipLevel).isEmpty()) {
+
+            // Log error
+            log.error("ERROR: A scholarship for this Level does not exist -- SOURCE: getScholarshipByLevel()");
+
+            //Throw http error if scholarship could not be found
+            scholarshipNotFound();
+        }
+
+    }
+
+    /**
+     * This method finds the scholarship by using the specified scholarship organization.
+     *
+     * @param scholarshipOrganization -- The organization used to find the scholarship from the database.
+     */
+    @RequestMapping(path = "/searchByOrganization/{scholarshipOrganization}", method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void getScholarshipByOrganization(@PathVariable String scholarshipOrganization) {
+
+        //Attempts to find scholarships with specified organization
+        if (scholarshipService.getScholarshipsByLevel(scholarshipOrganization).isEmpty()) {
+
+            // Log error
+            log.error("ERROR: A scholarship for this organization does not exist -- SOURCE: getScholarshipByOrganization()");
+
+            //Throw http error if scholarship could not be found
+            scholarshipNotFound();
+        }
+
+    }
+
+
+    /**
+     * This method finds the scholarship by using the specified scholarship application deadline.
+     *
+     * @param scholarshipApplyDeadline -- The application deadline date used to find the scholarship from the database.
+     */
+    @RequestMapping(path = "/searchByApplyDeadline/{scholarshipApplyDeadline}", method = RequestMethod.POST,
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void getScholarshipByApplyDeadline(@PathVariable Timestamp scholarshipApplyDeadline) {
+        //TODO This should probably be revised to get the scholarships with an application date >= the scholarshipApplyDeadline
+        //Attempts to find scholarships with specified application deadline
+        if (scholarshipService.getScholarshipsByApplyDeadline(scholarshipApplyDeadline).isEmpty()) {
+
+            // Log error
+            log.error("ERROR: A scholarship with this application deadline does not exist -- SOURCE: getScholarshipByApplyDeadline()");
 
             //Throw http error if scholarship could not be found
             scholarshipNotFound();

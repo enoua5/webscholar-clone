@@ -1,17 +1,17 @@
+// Unit Testing Imports/Declarations
+/// <reference types="jasmine" />
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, convertToParamMap, RouterModule } from '@angular/router';
 import { CommitteeComponent } from './committee.component';
 
-describe('CommitteeComponent', () => {
+describe('ScholarshipCommitteeComponent', () => {
   let component: CommitteeComponent;
   let fixture: ComponentFixture<CommitteeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ ReactiveFormsModule, RouterTestingModule ],
+      imports: [ ReactiveFormsModule, FormsModule, RouterModule,  ],
       declarations: [ CommitteeComponent ],
       providers: [
         {

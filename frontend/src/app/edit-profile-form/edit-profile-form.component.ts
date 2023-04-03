@@ -157,6 +157,7 @@ export class EditProfileFormComponent implements OnInit {
         zipCode: zipCode
       });
 
+      console.log(this.service)
       this.service.updateAccount(jsonObj).subscribe(
         {
           next: (res) => {

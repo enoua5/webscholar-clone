@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../auth/auth.service';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-scoring',
@@ -13,7 +13,6 @@ export class ScoringComponent implements OnInit {
 
   constructor(
     private _Activatedroute: ActivatedRoute,
-    public authService: AuthService
   ) {
 
 

@@ -34,7 +34,9 @@
             "styles": [
               "src/styles.less"
             ],
-            "scripts": []
+            "scripts": [],
+            "sourceMap": true,
+            "optimization": false
           },
           "configurations": {
             "production": {

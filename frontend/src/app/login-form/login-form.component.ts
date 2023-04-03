@@ -76,6 +76,14 @@ export class LoginFormComponent implements OnInit {
   }
 
   /**
+   * For test bed, so we can inject a spy service
+   * @param handler
+   */
+  set service_handler(handler : LoginService){
+    this.service = handler;
+  }
+
+  /**
    * Handles login of the user.
    * Called when the form is submitted.
    *

@@ -14,12 +14,22 @@ export class NavbarComponent implements OnInit {
   }
 
   getName() {
-    return sessionStorage.getItem('name');
+    let firstName = sessionStorage.getItem('firstName');
+    let lastName = sessionStorage.getItem('lastName');
+    if(firstName == null && lastName == null){
+      return null;
+    }else if(firstName == null){
+      return firstName;
+    }else if(lastName == null){
+      return lastName;
+    }else{
+      return firstName + " " + lastName;
+    }
   }
 
   getRole()
   {
-    return sessionStorage.getItem('role');
+    return sessionStorage.getItem('userType');
   }
 
   logout() {

@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {EditProfileService} from './edit-profile.service';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import {emailExistsValidator} from "./validators";
 
 /**
  * Class handling data and functionality of the edit_profile page
@@ -41,49 +42,63 @@ export class EditProfileFormComponent implements OnInit {
               private router: Router,
               private service: EditProfileService)
   {
+    // first name, last name, email, and school id are all required and will never be null
+    // when we build the form, we can get the autofill values from session storage
     this.form = this.fb.group({
-      first_name: [''],
-      last_name: [''],
-      email: [''],
-      phone_number: [''],
+      first_name: [sessionStorage.getItem("firstName"), {
+        validators: [
+          Validators.required
+        ]
+      }],
+      last_name: [sessionStorage.getItem("lastName"), {
+        validators: [
+          Validators.required
+        ]
+      }],
+      email: [sessionStorage.getItem("email"), {
+        validators: [
+          Validators.required,
+          Validators.email
+        ],
+        asyncValidators: [
+          emailExistsValidator(service)
+        ]
+      }],
+      phone_number: ['', {
+        validators: [
+          Validators.pattern('^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$')
+        ]
+      }],
       city: [''],
       state: [''],
       zip: [''],
-      student_number: [''],
+      student_number: [sessionStorage.getItem("schoolId"), {
+        validators: [
+          Validators.required,
+          Validators.pattern('^[0-9]{8}$')
+        ]
+      }],
       major: ['']
     });
-  }
-
-  /** Stub. Called on page load, but we don't need anything to happen then as of now. */
-  ngOnInit(): void {
-
-  }
-
-  /** Checks if any errors are present in the form and, if so, sets the relevant fields of the [errors]{@link EditProfileFormComponent#errors} property */
-  private checkErrors(): void {
-    this.errors.clear();
-
-    //TODO: check if username (email?) already taken in database
-
-    // all these fields are ok to be null, they just won't get set in the db by the backend
-    //Email verification
-    const validEmail = RegExp('^[a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$');
-    if (!validEmail.test(this.email.value) && this.email.value != '') {
-      this.errors.set('email', 'Invalid email format');
+    // all of these values could possibly be null, so we need to check before we add them into the form
+    if(sessionStorage.getItem("phoneNumber") != null){
+      this.form.patchValue({phone_number: sessionStorage.getItem("phoneNumber")});
     }
-
-    //Phone Number verification
-    const validPhone = RegExp('^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$');
-    if(!validPhone.test(this.phone_number.value) && this.phone_number.value != ''){
-      this.errors.set('phone_number', 'Invalid phone number format');
+    if(sessionStorage.getItem("city") != null){
+      this.form.patchValue({city: sessionStorage.getItem("city")});
     }
-
-    //User Id verification
-    const regex = RegExp('^[0-9]{8}$');
-    if(!regex.test(this.student_number.value) && this.student_number.value != ''){
-      this.errors.set('student_number', 'Invalid student ID');
+    if(sessionStorage.getItem("state") != null){
+      this.form.patchValue({state: sessionStorage.getItem("state")});
+    }
+    if(sessionStorage.getItem("zipCode") != null){
+      this.form.patchValue({zip: sessionStorage.getItem("zipCode")});
+    }
+    if(sessionStorage.getItem("major") != null){
+      this.form.patchValue({major: sessionStorage.getItem("major")});
     }
   }
+
+  ngOnInit(): void {}
 
   // getters for form controls
   get first_name(){
@@ -131,7 +146,6 @@ export class EditProfileFormComponent implements OnInit {
    */
   onSubmit(): void {
     console.log(this.form.value);
-    this.checkErrors();
 
     if(this.errors.size == 0){
       // create JSON object
@@ -159,27 +173,28 @@ export class EditProfileFormComponent implements OnInit {
 
       console.log(this.service)
       this.service.updateAccount(jsonObj).subscribe(
-        {
-          next: (res) => {
-            // change name in session storage if needed
-            if(this.first_name.value != '' && this.last_name.value != ''){
-              sessionStorage.setItem('name', `${ this.first_name.value } ${ this.last_name.value }`);
-            }else if(this.first_name.value != ''){ // only first name changed
-              let oldLastName: string = sessionStorage.getItem('name').split(" ")[1];
-              sessionStorage.setItem('name', `${ this.first_name.value } ${ oldLastName }`);
-            }else if(this.last_name.value != ''){ // only last name changed
-              let oldFirstName: string = sessionStorage.getItem('name').split(" ")[0];
-              sessionStorage.setItem('name', `${ oldFirstName } ${ this.last_name.value }`);
-            }
-  
-            alert("Your information has been updated!");
-          },
-          error: (err) => {
-            console.log(err);
-            // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
-            alert(err.error.message);
-          } 
-        });
+        res => {
+          // store values in session storage
+          sessionStorage.setItem('firstName', `${ res.body.firstName }`);
+          sessionStorage.setItem('lastName', `${ res.body.lastName }`);
+          sessionStorage.setItem('email', `${ res.body.email }`);
+          sessionStorage.setItem('phoneNumber', `${ res.body.phoneNumber }`);
+          sessionStorage.setItem('city', `${ res.body.city }`);
+          sessionStorage.setItem('state', `${ res.body.state }`);
+          sessionStorage.setItem('zipCode', `${ res.body.zipCode }`);
+          sessionStorage.setItem('schoolId', `${ res.body.schoolId }`);
+          sessionStorage.setItem('major', `${ res.body.major }`);
+          sessionStorage.setItem('userType', res.body.userType);
+          sessionStorage.setItem('accountKey', res.body.accountKey);
+
+          alert("Your information has been updated!");
+        },
+        err => {
+          console.log(err);
+          // TODO: display error message in a better way (I.e., set an error variable & display with HTML)
+          alert(err.error.message);
+        }
+      );
     }
   }
 
@@ -207,8 +222,6 @@ export class EditProfileFormComponent implements OnInit {
           }
         });
     }
-
-
   }
 
   // private processResponse(data) {

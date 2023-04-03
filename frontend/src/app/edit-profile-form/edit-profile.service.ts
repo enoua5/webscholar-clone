@@ -57,4 +57,12 @@ export class EditProfileService{
     let urlString : string = 'http://localhost:6001/account/request_account_deletion/'+id;
     return this.http.get<any>(urlString, {headers: header, observe: 'response', responseType: 'json'}).pipe();
   }
+
+  /**
+   * Sends a request to check if an email already exists in the db
+   * @param email email to check
+   */
+  public emailExists(email: string) {
+    return this.http.get('http://localhost:6001/account/emailExists', {params: {email: email}}).pipe();
+  }
 }

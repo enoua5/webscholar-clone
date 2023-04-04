@@ -1,7 +1,5 @@
 package edu.weber.model;
 
-
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -12,8 +10,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Account {
 
-    //********** SQL KEYS **********
-
+//region SQL KEYS *********************
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
@@ -25,10 +22,9 @@ public class Account {
     public int getAccountKey(){
         return accountKey;
     }
+//endregion
 
-
-    //********** LOGIN / USER INFO **********
-
+//region LOGIN / USER INFO **************
     @Column(nullable = false)
     @Email
     private String email;
@@ -79,10 +75,9 @@ public class Account {
     private AccountRoles requestedRole;
     public AccountRoles getRequestedRole() { return requestedRole; }
     public void setRequestedRole(AccountRoles requestedRole) { this.requestedRole = requestedRole; }
+//endregion
 
-
-    //********** SCHOOL INFO **********
-
+//region SCHOOL INFO ************
     @Column(nullable = false)
     @NotBlank
     private String schoolId;
@@ -97,9 +92,9 @@ public class Account {
     private String major;
     public String getMajor() {return major; }
     public void setMajor(String major) {this.major = major; }
+//endregion
 
-    //********** PERSONAL INFO **********
-
+//region PERSONAL INFO *************
     @Column(nullable = false)
     @NotBlank
     private String firstName;
@@ -194,10 +189,9 @@ public class Account {
     //These tags are categories the user is interested in and should correspond to scholarship tags.
     //  This will probably need to be a separate table with a foreign key to the user. That, or do some janky String stuff with "Math,Science," ect and
     //          getting the string, then separating by , (but that is pretty janky)
+//endregion
 
-
-    //********** CONSTRUCTOR & TOSTRING **********
-
+//region CONSTRUCTOR & TOSTRING **************
     //TODO: Make this constructor protected.
     //This object should only be created with the constructor that requires non-blank values.
     //Making this constructor protected only allows child classes to call it.
@@ -260,5 +254,6 @@ public class Account {
                 ", phoneNumber" + phoneNumber + '\'' +
                 '}';
     }
+//endregion
 
 }

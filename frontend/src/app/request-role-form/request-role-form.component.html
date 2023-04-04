@@ -6,6 +6,19 @@
       to committee member or chair status by requesting a role below.
     </p>
   </div>
+
+  <!-- If any error messages are generated, they will be displayed below. -->
+  <div *ngIf="errorMessage" class="callout callout-danger">
+    <h4>Error</h4>
+    {{ errorMessage }}
+  </div>
+
+  <!-- If a request was successfully sent, displays the below. -->
+  <div *ngIf="success" class="callout callout-success">
+    <h4>Success</h4>
+    Your request was successfully sent.
+  </div>
+
   <div>
     <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
       <div class="mb-3">

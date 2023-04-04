@@ -1,5 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ScholarshipService } from './scholarship.service'; // Import the ScholarshipService
 
+/**
+ * ScholarshipListComponent is a component that displays a list of scholarships.
+ * It fetches the scholarship data from the ScholarshipService.
+ */
 @Component({
   selector: 'app-scholarship-list',
   templateUrl: './scholarship-list.component.html',
@@ -8,39 +13,31 @@ import {Component, OnInit} from '@angular/core';
 export class ScholarshipListComponent implements OnInit {
   public scholarships: any[];
 
-  constructor() {
-    this.scholarships = [
-      {
-        scholarshipId: 1,
-        title: 'Scholarship 1',
-        organization: 'Organization 1',
-        description: 'Description 1',
-        requirements: 'Requirements 1',
-        amount: '100'
-      },
-      {
-        scholarshipId: 2,
-        title: 'Scholarship 2',
-        organization: 'Organization 2',
-        description: 'Description 2',
-        requirements: 'Requirements 2',
-        amount: '200'
-      },
-      {
-        scholarshipId: 3,
-        title: 'Scholarship 3',
-        organization: 'Organization 3',
-        description: 'Description 3',
-        requirements: 'Requirements 3',
-        amount: '300'
-      },
-    ];
-  }
+  constructor(private scholarshipService: ScholarshipService) { }
 
+  /**
+   * Lifecycle hook called when the component initializes. Fetches the scholarship
+   * data by calling the getScholarships() method.
+   */
   ngOnInit(): void {
+    this.getScholarships(); // Fetch the scholarships data when the component initializes
   }
 
+  /**
+   * Fetches the scholarship data from the ScholarshipService and assigns them
+   * to the scholarships array.
+   */
+  getScholarships(): void {
+    this.scholarshipService.getScholarships().subscribe(scholarships => {
+      this.scholarships = scholarships;
+    });
+  }
+
+  /**
+   * Retrieves the user type from the ScholarshipService.
+   * @returns {string} The user type.
+   */
   getUserType() {
-    return "committeeMember"; // sessionStorage.getItem("userType");
+    return this.scholarshipService.getUserType();
   }
 }

@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class extends the functionality of 'ScholarshipRepository'. Instead of using the default
@@ -65,6 +68,33 @@ public class ScholarshipService {
         scholarshipRepository.save(scholarship);
 
         return true;
+    }
+
+    // fuzzy search endpoint for scholarships. Simple v1 iteration
+    public List<Scholarship> searchScholarships(String query) {
+        // get all scholarships
+        List<Scholarship> scholarships = scholarshipRepository.findAll();
+        List<Scholarship> results = new ArrayList<>();
+        for (Scholarship scholarship : scholarships) {
+            // check title
+            String title = scholarship.getTitle();
+            // check org
+            String org = scholarship.getOrganization();
+            // check desc
+            // evaluate if we are worried about including description
+            String desc = scholarship.getDescription();
+            // append all those fields together to feed into FuzzySearch function
+            String fields = title + " " + org  + " " + desc;
+
+            // TODO: configure this to levels, requirements,and awards.
+
+            int ratio = FuzzySearch.tokenSetRatio(fields, query);
+            // will include if it is at least a 80% match.
+            if (ratio >= 80) {
+                results.add(scholarship);
+            }
+        }
+        return results;
     }
 
     public boolean deleteScholarship(int scholarshipId){

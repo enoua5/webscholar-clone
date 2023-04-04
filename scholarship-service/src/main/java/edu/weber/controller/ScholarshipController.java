@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Note: This class does not have '@RestController("scholarship")' API path specified here.
@@ -103,6 +104,11 @@ public class ScholarshipController {
             //Throw http error if scholarship could not be saved
             scholarshipNotFound();
         }
+    }
+
+    @RequestMapping(path = "/search", method = RequestMethod.GET)
+    public List<Scholarship> searchScholarships(String query) {
+        return scholarshipService.searchScholarships(query);
     }
 
 

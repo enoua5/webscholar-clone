@@ -9,15 +9,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RegistrationInvitationService } from './registration-invitation.service';
-import { of, Observable } from 'rxjs';
-import { Router } from '@angular/router';
 
 describe('RegistrationInvitationFormComponent', () => {
   let component: RegistrationInvitationFormComponent;
   let fixture: ComponentFixture<RegistrationInvitationFormComponent>;
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
   let testService: RegistrationInvitationService;
-  let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -34,8 +31,6 @@ describe('RegistrationInvitationFormComponent', () => {
 
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
     testService = new RegistrationInvitationService(httpClientSpy as any);
-    router = TestBed.inject(Router); // inject the router
-
     sessionStorage.setItem('accountKey', '1')
   });
 

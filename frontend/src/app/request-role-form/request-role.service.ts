@@ -2,25 +2,50 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
-// TODO: Replace the below URL with the one created by the backend team for role requests.
-const INSERT_URL = 'http://localhost:6001/account/test_me';
+/**
+ * The API endpoint for the account service's role requests.
+ */
+const URL = 'http://localhost:6001/account/request_role/';
 
+/**
+ * Injects the HttpClient that this service will use.
+ */
 @Injectable({
   providedIn: 'root',
 })
+
+/**
+ * Definition for the RequestRoleService class.
+ * 
+ * @details This class facilitates the sending and receiving of role requests to and from the backend.
+ */
 export class RequestRoleService
 {
+  /**
+   * Constructor for the RequestRoleService.
+   * 
+   * @param http The HttpClient to use with this service.
+   */
   constructor(private http: HttpClient)
   {
     // Empty constructor; no body needed yet.
   }
 
-  public insert(data): Observable<any> 
+  /**
+   * Sends a role request for the currently logged-in user to the backend.
+   * 
+   * @param selectedRole The role that the user has selected on the Request Role form.
+   * @returns The HTTP response from the backend.
+   */
+  public sendRequest(selectedRole): Observable<any> 
   {
-    // TODO: Formally call the account service and send it our request with:
-    // return this.http.post(INSERT_URL, data);
+    const header = new HttpHeaders({
+      'Content-Type': 'text/plain'
+    });
+    const body = selectedRole;
 
-    // For now, this is just mocked to demonstrate that a request might actually be sent.
-    return this.http.get(INSERT_URL, {responseType: 'text'});
+    const FULL_URL = URL + sessionStorage.getItem("accountKey");
+    return this.http.post(FULL_URL, body, { headers: header });
   }
+
 }

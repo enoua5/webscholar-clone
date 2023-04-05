@@ -59,7 +59,7 @@ services:
       config-service:
         condition: service_healthy
     ports:
-      - 8080:8080
+      - 4000:4000
     networks:
       - front-end
       - back-end
@@ -158,6 +158,8 @@ services:
   scholarship-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      EUREKA_SERVICE_USERNAME: $EUREKA_SERVICE_USERNAME
+      EUREKA_SERVICE_PASSWORD: $EUREKA_SERVICE_PASSWORD
     build: scholarship-service
     depends_on:
       config-service:
@@ -195,6 +197,8 @@ services:
   account-scholarship-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      EUREKA_SERVICE_USERNAME: $EUREKA_SERVICE_USERNAME
+      EUREKA_SERVICE_PASSWORD: $EUREKA_SERVICE_PASSWORD
     build: account-scholarship-service
     depends_on:
       config-service:

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 public class ScholarshipApplicationEvaluation {

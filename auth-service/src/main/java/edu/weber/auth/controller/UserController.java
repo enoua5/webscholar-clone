@@ -7,6 +7,7 @@ import edu.weber.auth.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,6 +47,9 @@ public class UserController {
 		testRole = new Role("test role", new HashSet<Permission>());
 	}
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	/**
 	 * This method returns the authenticated user's Principal object.
 	 *
@@ -58,29 +62,14 @@ public class UserController {
 	}
 
 	/**
-	 * This method creates a new user in the system.
-	 * edu.weber.auth.model.User is clarified because there are multiple User types
-	 *
-	 * @param user the user to create
-	 * @throws AccessDeniedException if the OAuth2 access token does not have the required "server" scope
-	 */
-	@RequestMapping(method = RequestMethod.POST)
-	public void createUser(@RequestBody User user) throws AccessDeniedException {
-		userService.create(user);
-	}
-
-	/**
 	 * Creates a test User with a test Role
 	 *
 	 * @throws AccessDeniedException if the OAuth2 access token does not have the required "server" scope
 	 */
 	@RequestMapping(value="/create_test", method = RequestMethod.POST)
 	public String createTestUser() throws AccessDeniedException {
-
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		String password = bCryptPasswordEncoder.encode("password");
-		User test_user = new User("Test", "N/A", password);
-		test_user.setUserRole(testRole);	// Here we set the User's Role. Running this multiple times creates duplicate Roles. Will have to fix.
+		User test_user = new User("Test", "N/A", "password");
+		test_user.setUserRole(testRole);	// Here we set the User's Role. TODO: Running this multiple times creates duplicate Roles. Will have to fix.
 		userService.create(test_user);
 		return "Test User created!\n";
 	}

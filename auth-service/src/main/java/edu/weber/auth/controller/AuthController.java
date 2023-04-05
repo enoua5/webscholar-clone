@@ -23,9 +23,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-//import org.jsonwebtoken.JwtBuilder; //TODO: Add correct dependency?
-//import io.jsonwebtoken.Jwts;
-//import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
  * This class manages Authentication requests from the Auth Service

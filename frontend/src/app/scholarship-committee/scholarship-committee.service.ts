@@ -64,6 +64,20 @@ export class ScholarshipCommitteeService {
         return of(this.applicants);
     }
 
+    filterApplicants(allApplicants: any[], filter: number, searchString: string): any[] {
+        let filteredApplicants = allApplicants;
+
+        if (filter === 1) {
+            filteredApplicants = filteredApplicants.filter((app) => app.applicationScore === null);
+        }
+
+        if (searchString.length !== 0) {
+            // Implement your search logic here
+        }
+
+        return filteredApplicants;
+    }
+
     /**
      * Fetches the scholarship information using the scholarship ID.
      * @param scholarshipId - The ID of the scholarship.

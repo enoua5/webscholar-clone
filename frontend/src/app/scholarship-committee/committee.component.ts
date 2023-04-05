@@ -75,17 +75,17 @@ export class CommitteeComponent implements OnInit {
   * @param filter The filter value to determine the display of applicants.
   */
   filterApps(filter): void {
-    if (filter == 0) {
-      this.displayedApplicants.splice(0);
+    if (filter === 0) {
       this.displayedApplicants = Object.assign([], this.allApplicants);
       this.currentFilter = 0;
-    }
-    else if (filter == 1) {
-      this.displayedApplicants = this.displayedApplicants.filter((app) => app.applicationScore === null)
+    } else if (filter === 1) {
+      this.displayedApplicants = this.scholarshipCommitteeService.filterApplicants(this.allApplicants, filter, this.searchString);
       this.currentFilter = 1;
     }
-    if (this.searchString.length != 0)
+    if (this.searchString.length !== 0) {
       console.log(this.searchString);
+    }
   }
+
 
 }

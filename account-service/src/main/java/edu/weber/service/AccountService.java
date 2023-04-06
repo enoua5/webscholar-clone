@@ -4,6 +4,7 @@ import edu.weber.controller.AccountController;
 import edu.weber.controller.ErrorHandler;
 import edu.weber.model.Account;
 import edu.weber.model.AccountRoles;
+import edu.weber.model.RoleRequest;
 import edu.weber.model.VerificationToken;
 import edu.weber.repository.AccountRepository;
 import edu.weber.repository.TokenRepository;
@@ -19,6 +20,8 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -485,6 +488,32 @@ public class AccountService {
             accountRepository.save(account);
             return true;
         }
+    }
+
+    /**
+     * Returns a list of all role requests..
+     */
+    public ArrayList<RoleRequest> getAllRoleRequests(){
+        ArrayList<RoleRequest> allRoleRequests = new ArrayList<RoleRequest>();
+        ArrayList<Account> accountsWithRequests = accountRepository.findByRequestedRoleIsNotNull();
+        //Transfer necessary information to our list of roles.
+        for (Account a : accountsWithRequests) {
+            RoleRequest newRequest = new RoleRequest();
+            newRequest.setAccountId(a.getAccountKey());
+            newRequest.setFirstName(a.getFirstName());
+            newRequest.setLastName(a.getLastName());
+            newRequest.setEmail(a.getEmail());
+            //The requested role can only be committee chair or committee member.
+            if (a.getRequestedRole() == AccountRoles.chair) {
+                newRequest.setRole("Committee Chair");
+            }
+            else {
+                newRequest.setRole("Committee Member");
+            }
+            allRoleRequests.add(newRequest);
+        }
+
+        return allRoleRequests;
     }
 
 

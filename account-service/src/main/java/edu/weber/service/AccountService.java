@@ -75,6 +75,28 @@ public class AccountService {
 //endregion
 
     /**
+     * Hashes the password for the new account, and then saves account object to the database
+     * @param account: The account object to be created
+     * @return: The newly created account object
+     */
+    public Account createNewAccount(Account account)
+    {
+        //Encrypt the password
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+
+        //Create a new account in the database
+        account = accountRepository.save(account);
+
+        if (account == null) {
+            ErrorHandler.accountNotCreated();
+        }
+
+        sendEmail(account.getEmail(), "Registration email", "Thank you for registering!");
+
+        return account;
+    }
+
+    /**
      * This method updates the data associated for an existing account.
      *
      * @param accountKey The id for the account being updated.

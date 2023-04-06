@@ -1,0 +1,14 @@
+# This file allows services to override the Docker hostnames with localhost when running outside of Docker
+# To enable this functionality, simply add 'intellij' to the Active profile list on a service's run configuration
+# If a service is already using a profile, you'll need to include both profile names (e.g. 'native, intellij')
+# For reference:
+#   - https://docs.spring.io/spring-boot/docs/1.2.0.M1/reference/html/boot-features-profiles.html
+#   - https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.files.profile-specific
+
+eureka:
+  instance:
+    hostname: localhost
+
+spring:
+  rabbitmq:
+    host: localhost

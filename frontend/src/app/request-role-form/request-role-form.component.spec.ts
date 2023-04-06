@@ -1,5 +1,10 @@
+// Unit Testing Imports/Declarations
+/// <reference types="jasmine" />
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RequestRoleFormComponent } from './request-role-form.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('RequestRoleFormComponent', () => {
   let component: RequestRoleFormComponent;
@@ -7,6 +12,7 @@ describe('RequestRoleFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [ HttpClientTestingModule, ReactiveFormsModule ],
       declarations: [ RequestRoleFormComponent ]
     })
     .compileComponents();

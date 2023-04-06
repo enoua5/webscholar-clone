@@ -43,7 +43,6 @@ export class RequestRoleService
       'Content-Type': 'text/plain'
     });
     const body = selectedRole;
-
     const FULL_URL = URL + sessionStorage.getItem("accountKey");
     return this.http.post(FULL_URL, body, { headers: header });
   }

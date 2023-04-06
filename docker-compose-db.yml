@@ -4,8 +4,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - 15672:15672
-      - 5672:5672
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - front-end
       - back-end
@@ -44,6 +44,25 @@ services:
     # Data persistence
     volumes:
       - "./.data/db:/var/lib/mysql_scholarship_db"
+    networks:
+      - front-end
+      - back-end
+
+  # DB for the scholarship-application-service
+  scholarship-application-db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: scholarship-application-db
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_TCP_PORT: 6070
+    ports:
+      - "6070:6070"
+    expose:
+      - 6070
+    # Data persistence
+    volumes:
+      - "./.data/db:/var/lib/mysql_scholarship_application_db"
     networks:
       - front-end
       - back-end

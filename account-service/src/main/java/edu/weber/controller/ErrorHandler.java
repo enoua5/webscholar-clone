@@ -29,7 +29,14 @@ public class ErrorHandler {
      * Send an http response error if the user enters an incorrect password.
      */
     public static void incorrectPassword(){
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The password is incorrect");
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The password is incorrect.");
+    }
+
+    /**
+     * Send http response error if a new account was not created.
+     */
+    public static void accountNotCreated() {
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account could not be created.");
     }
 
     /**

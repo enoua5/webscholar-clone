@@ -37,8 +37,8 @@ public class User implements Serializable {
 
 	// All the methods below implement CRUD functionality.
 
-	public void setRole(String roll) {
-		this.role = roll;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getUserName() {

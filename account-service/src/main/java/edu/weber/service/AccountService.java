@@ -1,6 +1,5 @@
 package edu.weber.service;
 
-import edu.weber.controller.AccountController;
 import edu.weber.controller.ErrorHandler;
 import edu.weber.model.Account;
 import edu.weber.model.AccountRoles;
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.annotation.Value;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -152,8 +150,8 @@ public class AccountService {
         if(Objects.nonNull(update.getIsLoggedIn())) {
             account.setIsLoggedIn(update.getIsLoggedIn());
         }
-        if(Objects.nonNull(update.getUserType())) {
-            account.setUserType(update.getUserType());
+        if(Objects.nonNull(update.getRole())) {
+            account.setRole(update.getRole());
         }
         if(Objects.nonNull(update.getFirstName()) && !"".equalsIgnoreCase(update.getFirstName())) {
             account.setFirstName(update.getFirstName());

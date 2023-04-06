@@ -97,6 +97,12 @@ public class AccountService {
         return account;
     }
 
+    /**
+     * Validates the supplied account credentials and returns the matching account
+     * @param email: The email for the associated account
+     * @param password: The user submitted password
+     * @return Returns the matching account model if validated. Null, otherwise.
+     */
     public Account validateAccount(String email, String password) {
 
         //Find account by email

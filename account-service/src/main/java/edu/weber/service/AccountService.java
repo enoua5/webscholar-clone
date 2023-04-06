@@ -99,6 +99,27 @@ public class AccountService {
         return account;
     }
 
+    public Account validateAccount(String email, String password) {
+
+        //Find account by email
+        Account found = accountRepository.findAccountByEmail(email);
+
+        // Verify account was found
+        if(found == null) {
+            ErrorHandler.accountNotFound();
+            return null;
+        }
+
+        // Verify the password is correct
+        if (!passwordEncoder.matches(password, found.getPassword())) {
+            ErrorHandler.incorrectPassword();
+            return null;
+        }
+
+        // Return the account
+        return found;
+    }
+
     /**
      * This method updates the data associated for an existing account.
      *

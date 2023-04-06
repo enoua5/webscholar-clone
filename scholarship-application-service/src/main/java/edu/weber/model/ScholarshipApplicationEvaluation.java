@@ -5,8 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class ScholarshipApplicationEvaluation {
@@ -20,7 +21,7 @@ public class ScholarshipApplicationEvaluation {
     )
     private int evaluationId;
 
-    public int getEvaluationId() {return evaluationId}
+    public int getEvaluationId() {return evaluationId;}
 
     /**
      * Foreign Key
@@ -29,10 +30,10 @@ public class ScholarshipApplicationEvaluation {
     @Column(nullable = false)
     private int scholarshipApplicationId;
 
-    public int getScholarshipApplicationId(){return scholarshipApplicationId}
+    public int getScholarshipApplicationId(){return scholarshipApplicationId;}
 
-    public int setScholarshipApplicationId(int scholarshipApplicationId) {
-        this.scholarshipApplicationId = scholarshipApplicationId
+    public void setScholarshipApplicationId(int scholarshipApplicationId) {
+        this.scholarshipApplicationId = scholarshipApplicationId;
     }
 
     /**
@@ -99,7 +100,7 @@ public class ScholarshipApplicationEvaluation {
      *
      * @return Returns the 'ScholarshipApplicationEvaluation' data formatted as a string.
      */
-    @override
+    @Override
     public String toString(){
         return "Application Evaluation{ " +
                 "evaluationID=" + evaluationId + '\'' +

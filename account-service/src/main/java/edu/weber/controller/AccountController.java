@@ -113,8 +113,8 @@ public class AccountController {
      * @return Returns the matching account model if validated. Null, otherwise.
      */
     @RequestMapping(path = "/validate", method = RequestMethod.GET)
-    public Account validateAccount(@RequestBody String email, String password) {
-        return accountService.validateAccount(email, password);
+    public String validateAccount(@RequestParam("email") String email, @RequestParam("password") String password) {
+        return accountService.validateAccount(email, password).getRole().toString();
     }
 
 

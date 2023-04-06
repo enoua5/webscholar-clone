@@ -1,84 +1,94 @@
 package edu.weber.auth.controller;
 
-import edu.weber.auth.repository.UserRepository;
-import edu.weber.auth.model.User;
+import edu.weber.auth.config.AuthConfig;
 import edu.weber.auth.model.AuthResponse;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import edu.weber.auth.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.http.*;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
-import java.util.Date;
+import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.RestTemplate;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 /**
- * This class manages Authentication requests from the Auth Service
+ * This class manages token requests from the Auth Service
  */
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private TokenStore tokenStore;
-
-    @Autowired
-    private JwtAccessTokenConverter accessTokenConverter;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private AuthConfig.JwtAccessTokenGranter tokenGranter;
 
 
     /**
-     * Logs in via the auth service to retrieve a JWT token
+     * This is the main token endpoint. A client sends a request here to get a JWT token
+     * That token will be used at the authorization endpoint
+     *
+     * @param user class that holds username+password+role
+     * TODO: Figure out how to bypass authentication requirement for this endpoint
      **/
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user) {
+    @PostMapping("/token")
+    public ResponseEntity<?> token(@RequestBody User user) {
 
-        User dbUser = userRepository.findByUserName(user.getUserName());
-        if (dbUser != null) {
-            if (passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
-                OAuth2AccessToken accessToken = generateToken(dbUser);
-                // Return the access token
-                return ResponseEntity.ok(new AuthResponse(accessToken));
-            } else {
-                // password doesn't match, return unauthorized response
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
-            }
-        } else {
-            // user not found, return unprocessable entity response
-            return ResponseEntity.unprocessableEntity().body("User not found");
+        // Sends a validation request to the account-service to make sure username and password are good
+        String loginStatus =  login(user);
+
+        if (Objects.equals(loginStatus, "login failed")) {
+            // User was not found or password was wrong
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
         }
+        else if (Objects.equals(loginStatus, "unknown error")) {
+            // Unknown error. This code should never be reached unless account-service changes the endpoint
+            // and messes something up.
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unknown Error");
+        }
+        else {
+            // Log in request was successful
+            // JWT token will be generated (using method in class found in AuthConfig) and returned
+            // TODO: add role to user before passing it
+            OAuth2AccessToken accessToken = tokenGranter.generateToken(user);
+            return ResponseEntity.ok(new AuthResponse(accessToken));
+        }
+
     }
 
-    // The secret key used to sign the JWT token
-    private final String secret = "mweifafd65ewf68awe47f98w4f6a5hj6ty65j4u6gy3il7a92gr1aer98arge49afg12a3weg1aw9ge8ae4g65asdf4a3s2df1wqa69ef8a9sd7as6df521a3w2ef4fwe98f4as56df1aw321fw6115k5jh65gjk54r56Kadf5s2d1fa56we8e8ftt87df4aw2e2w56e6ad5f841n15i1ui5tyut5uty4r1a2a3fd2"; // TODO: Needs to be changed. Not Secure here
+    /**
+     * Sends a validation request to the account-service
+     *
+     * @param user class that holds username+password+role
+     * @return (1) reason why login failed or (2) string with role
+     * TODO: This should eventually be changed to return something other than a String
+     * TODO: Needs to implement functionality to tell the difference between login fail and account not found
+     **/
+    private String login(User user) {
+        String returnMessage;
 
-    // Define the expiration time of the JWT token
-    private final long expirationTime = 3600000; // 1 hour
+        //TODO: When deployed this URL will not work. Needs to automatically get the base account directory
+        String url = "http://localhost:6001/account/validate?email={email}&password={password}";
+        RestTemplate restTemplate = new RestTemplate();
 
-    // Generate a JWT token based on the user credentials
-    public OAuth2AccessToken generateToken(User user) {
-        Date expiration = new Date(System.currentTimeMillis() + expirationTime);
-        String encodedJwt = Jwts.builder()
-                .setSubject(String.valueOf(user.getUserId()))
-                .setExpiration(expiration)
-                .signWith(SignatureAlgorithm.HS512, secret)
-                .compact();
+        // Define the arguments for the /validate endpoint
+        Map<String, String> uriVariables = new HashMap<>();
+        uriVariables.put("email", user.getUserName());
+        uriVariables.put("password", user.getPassword());
 
-        // Create an instance of DefaultOAuth2AccessToken and set the JWT token as its value
-        DefaultOAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(encodedJwt);
-        return accessToken;
+        try {
+            // Send the GET request with the URI variables
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class, uriVariables);
+            returnMessage = responseEntity.getBody();
+        } catch (HttpServerErrorException e) {
+            if (e.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR) {
+                returnMessage = "login failed";
+            } else {
+                returnMessage = "unknown error";
+            }
+        }
+        return returnMessage;
     }
+
+
 }

@@ -98,7 +98,7 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
         @Override
         public OAuth2AccessToken enhance(OAuth2AccessToken oAuth2AccessToken, OAuth2Authentication oAuth2Authentication) {
             Map<String, Object> additionalInfo = new HashMap<>();   // Map of additional info to put on the JWT token
-            additionalInfo.put("user_role", "student"); // Hard-coded as student for testing purposes
+            additionalInfo.put("user_role", "student"); // TODO: Get the user's actual role rather than hard-coding student
             ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(additionalInfo);
             return oAuth2AccessToken;
         }
@@ -146,8 +146,11 @@ public class AuthConfig extends AuthorizationServerConfigurerAdapter {
 
             // Create an instance of DefaultOAuth2AccessToken and set the JWT token as its value
             DefaultOAuth2AccessToken accessToken = new DefaultOAuth2AccessToken(encodedJwt);
-            // TODO: Enhance with role
-            return accessToken;
+
+            // Use our token enhancer to add our custom claims to the token
+            return tokenEnhancer().enhance(accessToken, null);
+
+            //return accessToken;
         }
     }
 

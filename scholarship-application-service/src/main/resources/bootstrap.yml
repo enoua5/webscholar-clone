@@ -12,7 +12,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://account-db:6002/webscholar-db
+    url: jdbc:mysql://scholarship-application-db:6070/scholarship-application-db
     username: root
     password: password
   jpa:

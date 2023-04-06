@@ -42,4 +42,28 @@ public class ScholarshipApplication {
         this.accountKey = accountKey;
         this.scholarshipId = scholarshipId;
     }
+
+    public int getScholarshipApplicationId() {
+        return scholarshipApplicationId;
+    }
+
+    public void setScholarshipApplicationId(int scholarshipApplicationId) {
+        this.scholarshipApplicationId = scholarshipApplicationId;
+    }
+
+    public int getAccountKey() {
+        return accountKey;
+    }
+
+    public void setAccountKey(int accountKey) {
+        this.accountKey = accountKey;
+    }
+
+    public int getScholarshipId() {
+        return scholarshipId;
+    }
+
+    public void setScholarshipId(int scholarshipId) {
+        this.scholarshipId = scholarshipId;
+    }
 }

@@ -5,8 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Column;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 public class ScholarshipApplication {
@@ -19,6 +19,10 @@ public class ScholarshipApplication {
             strategy = GenerationType.IDENTITY
     )
     private int scholarshipApplicationId;
+
+    public int getScholarshipApplicationId() {
+        return scholarshipApplicationId;
+    }
 
     /**
      * Foreign Key
@@ -119,7 +123,7 @@ public class ScholarshipApplication {
      *
      * @return Returns the 'ScholarshipApplication' data formatted as a string.
      */
-    @override
+    @Override
     public String toString(){
         return "ScholarshipApplication{ " +
                 "scholarshipApplicationID=" + scholarshipApplicationId + '\'' +

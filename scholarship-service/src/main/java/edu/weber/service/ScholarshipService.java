@@ -38,16 +38,16 @@ public class ScholarshipService {
      * This method updates the data associated for an existing scholarship.
      *
      * @param scholarshipId The id associated with the scholarship being updated.
-     * @param update The new scholarship data being used for updating.
+     * @param updatedScholarship The new scholarship data being used for updating.
      * @return Returns a success or fail flag depending on if the scholarship can be found.
      */
-    public boolean saveChanges(int scholarshipId, Scholarship update){
+    public boolean updateScholarship(int scholarshipId, Scholarship updatedScholarship){
 
         //Get the current scholarship
         Scholarship scholarship = scholarshipRepository.findScholarshipByScholarshipId(scholarshipId);
 
         if (scholarship == null){
-            log.error("ERROR: Scholarship does not exist -- SOURCE: saveChanges()");
+            log.error("ERROR: Scholarship does not exist -- SOURCE: updateScholarship()");
 
             return false;
         }
@@ -55,11 +55,11 @@ public class ScholarshipService {
         Assert.notNull(scholarship, "can't find account with name " + scholarshipId);
 
         //Update the scholarship's data
-        scholarship.setTitle(update.getTitle());
-        scholarship.setOrganization(update.getOrganization());
-        scholarship.setDescription(update.getDescription());
-        scholarship.setRequirements(update.getRequirements());
-        scholarship.setAmount(update.getAmount());
+        scholarship.setTitle(updatedScholarship.getTitle());
+        scholarship.setOrganization(updatedScholarship.getOrganization());
+        scholarship.setDescription(updatedScholarship.getDescription());
+        scholarship.setRequirements(updatedScholarship.getRequirements());
+        scholarship.setAmount(updatedScholarship.getAmount());
 
         //Save the updated scholarship
         scholarshipRepository.save(scholarship);
@@ -86,29 +86,28 @@ public class ScholarshipService {
         return true;
     }
 
-    public boolean getScholarshipById(int scholarshipId){
+    public Scholarship getScholarshipById(int scholarshipId){
         Scholarship scholarship = scholarshipRepository.findScholarshipByScholarshipId(scholarshipId);
 
         if(scholarship == null){
             log.error("ERROR: A scholarship with that ID does not exist -- SOURCE: getScholarshipById()");
 
-            //Return failure
-            return false;
+            return null;
         }
 
-        return true;
+        return scholarship;
     }
 
-    public boolean getScholarshipByTitle(String scholarshipTitle) {
+    public Scholarship getScholarshipByTitle(String scholarshipTitle) {
         Scholarship scholarship = scholarshipRepository.findScholarshipByTitle(scholarshipTitle);
 
         if (scholarship == null) {
             log.error("ERROR: A scholarship with that title does not exist -- SOURCE: getScholarshipByTitle()");
 
             //Return failure
-            return false;
+            return null;
         }
 
-        return true;
+        return scholarship;
     }
 }

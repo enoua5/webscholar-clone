@@ -106,6 +106,17 @@ public class AccountController {
         }
     }
 
+    /**
+     * Allows for validation of account credentials for related services
+     * @param email The email for the associated account
+     * @param password The user submitted password
+     * @return Returns the matching account model if validated. Null, otherwise.
+     */
+    @RequestMapping(path = "/validate", method = RequestMethod.GET)
+    public Account validateAccount(@RequestBody String email, String password) {
+        return accountService.validateAccount(email, password);
+    }
+
 
     /**
      * This method creates a new account. First, json data from the frontend is converted to an 'Account' model

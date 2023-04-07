@@ -59,5 +59,30 @@ public class ScholarshipAppTest
         Assert.assertNotNull("To string returned a null", testForNull);
     }
 
+    @Test
+    public void testRequirement()
+    {
+        String description = "Test";
+        Requirement TestRequirement = new Requirement(TestScholarship, description);
+
+        Assert.assertNotNull(TestRequirement.getRequirementId());
+        Assert.assertNotNull(TestRequirement.getScholarship());
+        Assert.assertEquals(TestRequirement.getDescription(), description);
+    }
+
+    @Test
+    public void testLevel()
+    {
+        Level test;
+        for (LevelEnum e: LevelEnum.values()) {
+            test = new Level(TestScholarship, e);
+
+            Assert.assertEquals(test.getLevel(), e);
+            Assert.assertNotNull(test.getLevelId());
+            Assert.assertEquals(test.getScholarship(), TestScholarship);
+
+        }
+
+    }
 }
 

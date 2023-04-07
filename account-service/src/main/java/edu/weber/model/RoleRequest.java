@@ -30,7 +30,7 @@ public class RoleRequest {
     public void setRole(String role) {this.role = role;}
 
     private boolean isApproved;
-    public boolean getIsApproved() {return isApproved;}
+    public boolean isApproved() {return isApproved;}
     public void setIsApproved(boolean isApproved) {this.isApproved = isApproved;}
 
 

@@ -1,60 +1,63 @@
 <section class="container p-3">
-  <h1>Log In</h1>
+    <h1>Log In</h1>
 
-  <form (ngSubmit)="onSubmit()" [formGroup]="form">
-    <div class="mt-4">
-      <label for="username">Username</label>
-      <div class="input-group">
-        <span class="input-group-text"><i class="fas fa-user"></i></span>
-        <input id="username" class="form-control" type="text" formControlName="username" placeholder="email@example.com"
-               required>
-      </div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+        <div class="mt-4">
+            <label for="username">Username</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                <input
+                    id="username"
+                    class="form-control"
+                    type="text"
+                    formControlName="username"
+                    placeholder="email@example.com"
+                    required />
+            </div>
 
-      <div class="error" *ngIf="username.invalid && username.touched">
-        <div *ngIf="username.errors.required">
-          Username (email) is required.
+            <div class="error" *ngIf="username.invalid && username.touched">
+                <div *ngIf="username.errors.required">Username (email) is required.</div>
+
+                <div *ngIf="username.errors.email">
+                    Please enter a valid username (email).<br />
+                    I.e., email@example.com
+                </div>
+            </div>
+
+            <div class="error" *ngIf="username.hasError('err_email_not_exists') && username.touched">
+                Username does not exist.
+            </div>
         </div>
 
-        <div *ngIf="username.errors.email">
-          Please enter a valid username (email).<br>
-          I.e., email@example.com
+        <div class="mt-4">
+            <label for="password">Password</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                <input
+                    id="password"
+                    class="form-control"
+                    type="password"
+                    formControlName="password"
+                    placeholder="Password"
+                    required />
+            </div>
+
+            <div class="error" *ngIf="password.invalid && password.touched">
+                <div *ngIf="password.errors.required">Password is required.</div>
+            </div>
         </div>
-      </div>
 
-      <div class="error" *ngIf="username.hasError('err_email_not_exists') && username.touched">
-        Username does not exist.
-      </div>
-    </div>
-
-    <div class="mt-4">
-      <label for="password">Password</label>
-      <div class="input-group">
-        <span class="input-group-text"><i class="fas fa-lock"></i></span>
-        <input id="password" class="form-control" type="password" formControlName="password" placeholder="Password"
-               required>
-      </div>
-
-      <div class="error" *ngIf="password.invalid && password.touched">
-        <div *ngIf="password.errors.required">
-          Password is required.
+        <div class="mt-4">
+            <div class="login-btn-left">
+                <p class="control">
+                    <a class="login-links-1" routerLink="/register">Create an Account</a>
+                    <span class="has-dot-separator">&bull;</span>
+                    <a class="login-links-1" routerLink="/forgot_password">Forgot Password?</a>
+                    <span class="has-dot-separator">&bull;</span>
+                    <a class="login-links-2" routerLink="/dashboard">Bypass Login Here</a>
+                    <input [disabled]="!form.valid" type="submit" value="Log In" class="button is-success is-small" />
+                </p>
+            </div>
         </div>
-      </div>
-    </div>
-
-    <div class="mt-4">
-      <div class="login-btn-left">
-        <p class="control">
-          <a class="login-links-1" routerLink="/register">Create an Account</a>
-          <span class="has-dot-separator">&bull;</span>
-          <a class="login-links-1" routerLink="/forgot_password">Forgot Password?</a>
-          <span class="has-dot-separator">&bull;</span>
-          <a class="login-links-2" routerLink="/dashboard">Bypass Login Here</a>
-          <input [disabled]="!form.valid" type="submit" value="Log In" class="button is-success is-small">
-        </p>
-      </div>
-    </div>
-  </form>
+    </form>
 </section>
-
-
-

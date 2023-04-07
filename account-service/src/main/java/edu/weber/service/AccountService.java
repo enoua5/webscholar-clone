@@ -140,6 +140,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account does not exist -- SOURCE: saveChanges()");
+            ErrorHandler.accountNotFound();
             return null;
         }
 
@@ -199,6 +200,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: sendInvite()");
+            ErrorHandler.accountNotFound();
             return false;
         }
 
@@ -236,6 +238,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: sendInvite()");
+            ErrorHandler.accountNotFound();
             return false;
         }
 
@@ -278,6 +281,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account Number " + accountEmail + " not found -- SOURCE: generateForgotPasswordLink()");
+            ErrorHandler.accountNotFound();
             return false;
         }
 
@@ -397,6 +401,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account email " + accountEmail + " not found -- SOURCE: sendForgotAccount()");
+            ErrorHandler.emailNotFound();
             return false;
         }
 
@@ -430,6 +435,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: generateDeletionLink()");
+            ErrorHandler.accountNotFound();
             return "error";
         }
 
@@ -475,6 +481,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: sendInvite()");
+            ErrorHandler.accountNotFound();
             return false;
         }
 
@@ -603,6 +610,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account Number " + account.getAccountKey() + " not found -- SOURCE: sendInvite()");
+            ErrorHandler.accountNotFound();
             return false;
         }
 

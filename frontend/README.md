@@ -168,10 +168,11 @@ Ideally, a developer should have the Visual Studio Code plugin installed and con
 5. Press `CTRL-SHIFT-P`.
 6. In the search bar that pops up, type "Format Document".
 7. Press ENTER. This should allow you to select your default formatter as Prettier.
-8. Then, Press `CTRL-,` (CTRL-COMMA). This should open your VS Code settings.
-9. Search for "Format".
-10. Find the "Editor: Format on Save" setting. Check the box.
-11. At this point, restart VS Code.
+8. Then, navigate to a random `.html` file and repeat steps 5-7.
+9. Then, Press `CTRL-,` (CTRL-COMMA). This should open your VS Code settings.
+10. Search for "Format".
+11. Find the "Editor: Format on Save" setting. Check the box.
+12. At this point, restart VS Code.
 
 ### Running Prettier Manually
 

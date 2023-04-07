@@ -9,24 +9,27 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
 describe('RegistrationInvitationFormComponent', () => {
-  let component: RegistrationInvitationFormComponent;
-  let fixture: ComponentFixture<RegistrationInvitationFormComponent>;
+    let component: RegistrationInvitationFormComponent;
+    let fixture: ComponentFixture<RegistrationInvitationFormComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, HttpClientTestingModule, ReactiveFormsModule ],
-      declarations: [ RegistrationInvitationFormComponent ]
-    })
-    .compileComponents();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [
+                RouterTestingModule,
+                HttpClientTestingModule,
+                ReactiveFormsModule
+            ],
+            declarations: [RegistrationInvitationFormComponent]
+        }).compileComponents();
+    });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(RegistrationInvitationFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(RegistrationInvitationFormComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

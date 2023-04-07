@@ -1,57 +1,66 @@
 <section class="container p-3">
-  <h1>{{scholarshipTitle}}</h1>
-  <br />
-  <div class="d-flex justify-content-between pb-3">
-    <div>
-      <label class="">Search</label>
-      <input style="width:100%" [(ngModel)]="searchString" placeholder="Enter name, school id, or app id" type="text" (keyup)="filterApps(currentFilter)">
+    <h1>{{ scholarshipTitle }}</h1>
+    <br />
+    <div class="d-flex justify-content-between pb-3">
+        <div>
+            <label class="">Search</label>
+            <input
+                style="width: 100%"
+                [(ngModel)]="searchString"
+                placeholder="Enter name, school id, or app id"
+                type="text"
+                (keyup)="filterApps(currentFilter)" />
+        </div>
+        <div>
+            <div class="button" (click)="filterApps(0)">
+                <input type="radio" id="0" name="check-substitution-2" [checked]="true" />
+                <label class="btn btn-default" for="0">All</label>
+            </div>
+            <div class="button" (click)="filterApps(1)">
+                <input type="radio" id="1" name="check-substitution-2" />
+                <label class="btn btn-default" for="1">No Score</label>
+            </div>
+        </div>
     </div>
-    <div>
-      <div class="button"  (click)="filterApps(0)">
-        <input type="radio" id="0" name="check-substitution-2" [checked]="true" />
-        <label class="btn btn-default" for="0">All</label>
-      </div>
-      <div class="button" (click)="filterApps(1)">
-        <input type="radio" id="1" name="check-substitution-2" />
-        <label class="btn btn-default" for="1">No Score</label>
-      </div>
-    </div>
-  </div>
-  <div class="table-responsive">
-    <table class="table table-bordered w-100 table-hover accordion">
-      <thead>
-      <th scope="col">Applicant Name</th>
-      <th scope="col">Application ID</th>
-      <th scope="col">School ID</th>
-      <th scope="col">Application Score</th>
-      <th scope="col"></th>
-    </thead>
+    <div class="table-responsive">
+        <table class="table table-bordered w-100 table-hover accordion">
+            <thead>
+                <th scope="col">Applicant Name</th>
+                <th scope="col">Application ID</th>
+                <th scope="col">School ID</th>
+                <th scope="col">Application Score</th>
+                <th scope="col"></th>
+            </thead>
 
-      <tbody>
-        <ng-container *ngFor="let applicant of displayedApplicants">
-          <tr role="button" data-bs-toggle="collapse">
-            <td>{{ applicant.name }}</td>
-            <td>{{ applicant.applicationId }}</td>
-            <td>{{ applicant.schoolId }}</td>
-            <ng-container *ngIf="applicant.applicationScore != null">
-              <td>{{ applicant.applicationScore}}</td>
-            </ng-container>
-            <ng-container *ngIf="applicant.applicationScore == null">
-              <td>No Score</td>
-            </ng-container>
-            <td>
-              <a routerLink="/scoring/{{ scholarId }}/{{ applicant.applicationId }}/{{ applicant.applicationScore }}" class="btn btn-success m-2 text-white" role="button">
-                <i class="fas fa-edit"></i>
-                Score
-              </a>
-            </td>
-          </tr>
-        </ng-container>
-      </tbody>
-    </table>
-    <div class="form-group">
-      <a class="login-links-1" routerLink="/scholarship">Go Back</a>
+            <tbody>
+                <ng-container *ngFor="let applicant of displayedApplicants">
+                    <tr role="button" data-bs-toggle="collapse">
+                        <td>{{ applicant.name }}</td>
+                        <td>{{ applicant.applicationId }}</td>
+                        <td>{{ applicant.schoolId }}</td>
+                        <ng-container *ngIf="applicant.applicationScore != null">
+                            <td>{{ applicant.applicationScore }}</td>
+                        </ng-container>
+                        <ng-container *ngIf="applicant.applicationScore == null">
+                            <td>No Score</td>
+                        </ng-container>
+                        <td>
+                            <a
+                                routerLink="/scoring/{{ scholarId }}/{{ applicant.applicationId }}/{{
+                                    applicant.applicationScore
+                                }}"
+                                class="btn btn-success m-2 text-white"
+                                role="button">
+                                <i class="fas fa-edit"></i>
+                                Score
+                            </a>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+        <div class="form-group">
+            <a class="login-links-1" routerLink="/scholarship">Go Back</a>
+        </div>
     </div>
-  </div>
 </section>
-

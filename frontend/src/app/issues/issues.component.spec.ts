@@ -8,24 +8,23 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 
 describe('IssuesComponent', () => {
-  let component: IssuesComponent;
-  let fixture: ComponentFixture<IssuesComponent>;
+    let component: IssuesComponent;
+    let fixture: ComponentFixture<IssuesComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule, FormsModule ],
-      declarations: [ IssuesComponent ]
-    })
-      .compileComponents();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule, FormsModule],
+            declarations: [IssuesComponent]
+        }).compileComponents();
+    });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(IssuesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(IssuesComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

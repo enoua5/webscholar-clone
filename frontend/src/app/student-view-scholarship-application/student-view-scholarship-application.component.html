@@ -1,39 +1,72 @@
 <form>
-  <section>
-    <div class="container p2 mb-3">
-      <h5><b>Scholarship: </b>{{name}}</h5>
-      <h5><b>Organization: </b>{{organization}}</h5>
-      <h5><b>Amount: </b>{{amount}}</h5>
-      <h5><b>Description: </b>{{description}}</h5>
-      <h5><b>Requirements: </b>{{requirements}}</h5>
-    </div>
-    <div>
-      <h5><b>General Information:</b></h5>
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="firstName">First Name</span>
-        <input required ngModel name="firstName" #firstName="ngModel" type="text" class="form-control" aria-describedby="firstName">
-        <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">First name is a required field</div>
-      </div>
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="lastName">Last Name</span>
-        <input required ngModel name="lastName" #lastName="ngModel" type="text" class="form-control" aria-describedby="lastName">
-        <div class="alert alert-danger" *ngIf="lastName.touched && !lastName.valid">Last name is a required field</div>
-      </div>
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="major">Major</span>
-        <input required ngModel name="major" #major="ngModel" type="text" class="form-control" aria-describedby="major">
-        <div class="alert alert-danger" *ngIf="major.touched && !major.valid">Major is a required field</div>
-      </div>
-    </div>
-    <div>
-      <label for="essay" class="form-label">Essay: </label>
-      <textarea required ngModel name="essay" #essay="ngModel" type="text" class="form-control" id="essay" rows="8"></textarea>
-      <div class="alert alert-danger" *ngIf="essay.touched && !essay.valid">Essay is a required field</div>
-    </div>
-    <div class="mt-2">
-      <!-- For now th submit button does nothing -->
-      <button class="btn btn-primary me-3">Submit</button>
-      <a class="btn btn-primary" href="/scholarship/" role="button">Cancel</a>
-    </div>
-  </section>
+    <section>
+        <div class="container p2 mb-3">
+            <h5><b>Scholarship: </b>{{ name }}</h5>
+            <h5><b>Organization: </b>{{ organization }}</h5>
+            <h5><b>Amount: </b>{{ amount }}</h5>
+            <h5><b>Description: </b>{{ description }}</h5>
+            <h5><b>Requirements: </b>{{ requirements }}</h5>
+        </div>
+        <div>
+            <h5><b>General Information:</b></h5>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="firstName">First Name</span>
+                <input
+                    required
+                    ngModel
+                    name="firstName"
+                    #firstName="ngModel"
+                    type="text"
+                    class="form-control"
+                    aria-describedby="firstName" />
+                <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">
+                    First name is a required field
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="lastName">Last Name</span>
+                <input
+                    required
+                    ngModel
+                    name="lastName"
+                    #lastName="ngModel"
+                    type="text"
+                    class="form-control"
+                    aria-describedby="lastName" />
+                <div class="alert alert-danger" *ngIf="lastName.touched && !lastName.valid">
+                    Last name is a required field
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="major">Major</span>
+                <input
+                    required
+                    ngModel
+                    name="major"
+                    #major="ngModel"
+                    type="text"
+                    class="form-control"
+                    aria-describedby="major" />
+                <div class="alert alert-danger" *ngIf="major.touched && !major.valid">Major is a required field</div>
+            </div>
+        </div>
+        <div>
+            <label for="essay" class="form-label">Essay: </label>
+            <textarea
+                required
+                ngModel
+                name="essay"
+                #essay="ngModel"
+                type="text"
+                class="form-control"
+                id="essay"
+                rows="8"></textarea>
+            <div class="alert alert-danger" *ngIf="essay.touched && !essay.valid">Essay is a required field</div>
+        </div>
+        <div class="mt-2">
+            <!-- For now th submit button does nothing -->
+            <button class="btn btn-primary me-3">Submit</button>
+            <a class="btn btn-primary" href="/scholarship/" role="button">Cancel</a>
+        </div>
+    </section>
 </form>

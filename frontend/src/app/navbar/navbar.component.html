@@ -1,106 +1,141 @@
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-  <div class="container">
-    <!-- TODO: replace text in link with logo (optional) -->
-    <a class="navbar-brand temp-logo" routerLink="{{ getName() == null ? '/' : '/dashboard' }}">WebScholar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+    <div class="container">
+        <!-- TODO: replace text in link with logo (optional) -->
+        <a class="navbar-brand temp-logo" routerLink="{{ getName() == null ? '/' : '/dashboard' }}">WebScholar</a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target=".navbar-collapse"
             aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-      <ul class="navbar-nav flex-grow-1">
-        <li class="nav-item" *ngIf="getName() == null">
-          <a class="nav-link text-dark" routerLink="/">Home</a>
-        </li>
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item" *ngIf="getName() == null">
+                    <a class="nav-link text-dark" routerLink="/">Home</a>
+                </li>
 
-        <ng-container *ngIf="getName() != null">
-          <li class="nav-item">
-            <a class="nav-link text-dark" routerLink="/edit_profile">Profile</a>
-          </li>
+                <ng-container *ngIf="getName() != null">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" routerLink="/edit_profile">Profile</a>
+                    </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link text-dark dropdown-toggle" id="scholarship-dropdown" data-bs-toggle="dropdown" href="#"
-               role="button" aria-haspopup="true" aria-expanded="false">Scholarship</a>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link text-dark dropdown-toggle"
+                            id="scholarship-dropdown"
+                            data-bs-toggle="dropdown"
+                            href="#"
+                            role="button"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            >Scholarship</a
+                        >
 
-            <ul class="dropdown-menu" aria-labelledby="scholarship-dropdown">
-              <li>
-                <a class="dropdown-item" routerLink="/scholarship">Scholarship List</a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/scholarship/create">Create Scholarship</a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/studentviewscholarship">View Scholarship Status</a>
-              </li>
+                        <ul class="dropdown-menu" aria-labelledby="scholarship-dropdown">
+                            <li>
+                                <a class="dropdown-item" routerLink="/scholarship">Scholarship List</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" routerLink="/scholarship/create">Create Scholarship</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" routerLink="/studentviewscholarship"
+                                    >View Scholarship Status</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link text-dark dropdown-toggle"
+                            id="registration-dropdown"
+                            data-bs-toggle="dropdown"
+                            href="#"
+                            role="button"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            >Send Invitations</a
+                        >
+
+                        <ul class="dropdown-menu" aria-labelledby="registration-dropdown">
+                            <li>
+                                <a class="dropdown-item" routerLink="/registration_invitation_form"
+                                    >Send Faculty Invitation</a
+                                >
+                            </li>
+                            <li>
+                                <a class="dropdown-item" routerLink="/registration_invitation_form/chairInvitation"
+                                    >Send Chair Invitation</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item" *ngIf="getName() != null && getRole() === 'chair'">
+                        <a class="nav-link text-dark" routerLink="/roles/pending_requests">Role Requests</a>
+                    </li>
+                </ng-container>
+
+                <li class="nav-item">
+                    <!-- TODO: Create about page -->
+                    <a class="nav-link text-dark" routerLink="/about">About</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a
+                        class="nav-link text-dark dropdown-toggle"
+                        id="help-dropdown"
+                        data-bs-toggle="dropdown"
+                        href="#"
+                        role="button"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        >Help</a
+                    >
+
+                    <ul class="dropdown-menu" aria-labelledby="help-dropdown">
+                        <li>
+                            <!-- TODO: create contact page -->
+                            <a class="dropdown-item" routerLink="/contact">Contact</a>
+                        </li>
+                        <li *ngIf="getRole() === 'student'">
+                            <a class="dropdown-item" routerLink="/roles/request">Request Role</a>
+                        </li>
+                        <div class="dropdown-divider"></div>
+                        <li>
+                            <a class="dropdown-item" routerLink="/issues">Known Issues</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
-          </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link text-dark dropdown-toggle" id="registration-dropdown" data-bs-toggle="dropdown" href="#"
-               role="button" aria-haspopup="true" aria-expanded="false">Send Invitations</a>
+            <ul class="navbar-nav">
+                <!-- TODO: Hook this up to some login/register & logout functionality -->
+                <!-- TODO: Change which links are displayed depending on if user is authenticated instead of using URL -->
+                <ng-container *ngIf="getName() != null; else notLoggedIn">
+                    <li class="nav-item">
+                        <!-- TODO: Display name of logged in user -->
+                        <a class="nav-link text-dark" routerLink="/edit_profile">Welcome, {{ getName() }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" (click)="logout()" role="button">Logout</a>
+                    </li>
+                </ng-container>
 
-            <ul class="dropdown-menu" aria-labelledby="registration-dropdown">
-              <li>
-                <a class="dropdown-item" routerLink="/registration_invitation_form">Send Faculty Invitation</a>
-              </li>
-              <li>
-                <a class="dropdown-item" routerLink="/registration_invitation_form/chairInvitation">Send Chair Invitation</a>
-              </li>
+                <ng-template #notLoggedIn>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" routerLink="/">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" routerLink="/register">Register</a>
+                    </li>
+                </ng-template>
             </ul>
-          </li>
-
-          <li class="nav-item" *ngIf="getName() != null && getRole() == 'chair'">
-            <a class="nav-link text-dark" routerLink="/roles/pending_requests">Role Requests</a>
-          </li>
-        </ng-container>
-
-        <li class="nav-item">
-          <!-- TODO: Create about page -->
-          <a class="nav-link text-dark" routerLink="/about">About</a>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link text-dark dropdown-toggle" id="help-dropdown" data-bs-toggle="dropdown" href="#"
-             role="button" aria-haspopup="true" aria-expanded="false">Help</a>
-
-          <ul class="dropdown-menu" aria-labelledby="help-dropdown">
-            <li>
-              <!-- TODO: create contact page -->
-              <a class="dropdown-item" routerLink="/contact">Contact</a>
-            </li>
-            <li *ngIf="getRole() == 'student'">
-              <a class="dropdown-item" routerLink="/roles/request">Request Role</a>
-            </li>
-            <div class="dropdown-divider"></div>
-            <li>
-              <a class="dropdown-item" routerLink="/issues">Known Issues</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-
-      <ul class="navbar-nav">
-        <!-- TODO: Hook this up to some login/register & logout functionality -->
-        <!-- TODO: Change which links are displayed depending on if user is authenticated instead of using URL -->
-        <ng-container *ngIf="getName() != null; else notLoggedIn">
-          <li class="nav-item">
-            <!-- TODO: Display name of logged in user -->
-            <a class="nav-link text-dark" routerLink="/edit_profile">Welcome, {{ getName() }}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" (click)="logout()" role="button">Logout</a>
-          </li>
-        </ng-container>
-
-        <ng-template #notLoggedIn>
-          <li class="nav-item">
-            <a class="nav-link text-dark" routerLink="/">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" routerLink="/register">Register</a>
-          </li>
-        </ng-template>
-      </ul>
+        </div>
     </div>
-  </div>
 </nav>

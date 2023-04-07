@@ -1,9 +1,9 @@
 package edu.weber.service;
 
-import edu.weber.controller.AccountController;
 import edu.weber.controller.ErrorHandler;
 import edu.weber.model.Account;
 import edu.weber.model.AccountRoles;
+import edu.weber.model.RoleRequest;
 import edu.weber.model.VerificationToken;
 import edu.weber.repository.AccountRepository;
 import edu.weber.repository.TokenRepository;
@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -75,6 +76,55 @@ public class AccountService {
 //endregion
 
     /**
+     * Hashes the password for the new account, and then saves account object to the database
+     * @param account: The account object to be created
+     * @return: The newly created account object
+     */
+    public Account createNewAccount(Account account)
+    {
+        //Encrypt the password
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+
+        //Create a new account in the database
+        account = accountRepository.save(account);
+
+        if (account == null) {
+            ErrorHandler.accountNotCreated();
+        }
+
+        sendEmail(account.getEmail(), "Registration email", "Thank you for registering!");
+
+        return account;
+    }
+
+    /**
+     * Validates the supplied account credentials and returns the matching account
+     * @param email: The email for the associated account
+     * @param password: The user submitted password
+     * @return Returns the matching account model if validated. Null, otherwise.
+     */
+    public Account validateAccount(String email, String password) {
+
+        //Find account by email
+        Account found = accountRepository.findAccountByEmail(email);
+
+        // Verify account was found
+        if(found == null) {
+            ErrorHandler.accountNotFound();
+            return null;
+        }
+
+        // Verify the password is correct
+        if (!passwordEncoder.matches(password, found.getPassword())) {
+            ErrorHandler.incorrectPassword();
+            return null;
+        }
+
+        // Return the account
+        return found;
+    }
+
+    /**
      * This method updates the data associated for an existing account.
      *
      * @param accountKey The id for the account being updated.
@@ -90,6 +140,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account does not exist -- SOURCE: saveChanges()");
+            ErrorHandler.accountNotFound();
             return null;
         }
 
@@ -106,8 +157,8 @@ public class AccountService {
         if(Objects.nonNull(update.getIsLoggedIn())) {
             account.setIsLoggedIn(update.getIsLoggedIn());
         }
-        if(Objects.nonNull(update.getUserType())) {
-            account.setUserType(update.getUserType());
+        if(Objects.nonNull(update.getRole())) {
+            account.setRole(update.getRole());
         }
         if(Objects.nonNull(update.getFirstName()) && !"".equalsIgnoreCase(update.getFirstName())) {
             account.setFirstName(update.getFirstName());
@@ -149,6 +200,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: sendInvite()");
+            ErrorHandler.accountNotFound();
             return false;
         }
 
@@ -186,6 +238,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: sendInvite()");
+            ErrorHandler.accountNotFound();
             return false;
         }
 
@@ -228,6 +281,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account Number " + accountEmail + " not found -- SOURCE: generateForgotPasswordLink()");
+            ErrorHandler.accountNotFound();
             return false;
         }
 
@@ -347,6 +401,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account email " + accountEmail + " not found -- SOURCE: sendForgotAccount()");
+            ErrorHandler.emailNotFound();
             return false;
         }
 
@@ -380,6 +435,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: generateDeletionLink()");
+            ErrorHandler.accountNotFound();
             return "error";
         }
 
@@ -425,6 +481,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account Number " + accountKey + " not found -- SOURCE: sendInvite()");
+            ErrorHandler.accountNotFound();
             return false;
         }
 
@@ -465,6 +522,57 @@ public class AccountService {
         }
     }
 
+    /**
+     * Approve or deny a role request.
+     * @param request The request being processed.
+     */
+    public void processRoleRequest(RoleRequest request) {
+        Account account = accountRepository.findAccountByAccountKey(request.getAccountId());
+        AccountRoles role;
+        if (request.getRole().equals("Committee Chair")) {
+            role = AccountRoles.chair;
+        }
+        else {
+            role = AccountRoles.committeeMember;
+        }
+        if (request.isApproved()) {
+            account.setUserType(role);
+        }
+
+        /* Regardless of if the request was approved or denied, reset requestedRole
+        so the user can request new roles in the future.
+         */
+
+        account.setRequestedRole(null);
+        accountRepository.save(account);
+    }
+
+    /**
+     * Returns a list of all role requests..
+     */
+    public ArrayList<RoleRequest> getAllRoleRequests(){
+        ArrayList<RoleRequest> allRoleRequests = new ArrayList<RoleRequest>();
+        ArrayList<Account> accountsWithRequests = accountRepository.findByRequestedRoleIsNotNull();
+        //Transfer necessary information to our list of roles.
+        for (Account a : accountsWithRequests) {
+            RoleRequest newRequest = new RoleRequest();
+            newRequest.setAccountId(a.getAccountKey());
+            newRequest.setFirstName(a.getFirstName());
+            newRequest.setLastName(a.getLastName());
+            newRequest.setEmail(a.getEmail());
+            //The requested role can only be committee chair or committee member.
+            if (a.getRequestedRole() == AccountRoles.chair) {
+                newRequest.setRole("Committee Chair");
+            }
+            else {
+                newRequest.setRole("Committee Member");
+            }
+            allRoleRequests.add(newRequest);
+        }
+
+        return allRoleRequests;
+    }
+
 
     /**
      * Sends an email to the specified recipient.
@@ -502,6 +610,7 @@ public class AccountService {
             // Log Error
             // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account Number " + account.getAccountKey() + " not found -- SOURCE: sendInvite()");
+            ErrorHandler.accountNotFound();
             return false;
         }
 

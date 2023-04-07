@@ -5,9 +5,9 @@ import { forEach } from 'cypress/types/lodash';
 import { isEmpty } from 'rxjs';
 
 @Component({
-  selector: 'app-committee',
-  templateUrl: './committee.component.html',
-  styleUrls: ['./committee.component.less']
+    selector: 'app-committee',
+    templateUrl: './committee.component.html',
+    styleUrls: ['./committee.component.less']
 })
 
 /**
@@ -17,14 +17,14 @@ import { isEmpty } from 'rxjs';
  * status (scored/unscored) and search criteria (name, school id, or app id).
  */
 export class CommitteeComponent implements OnInit {
-  public allApplicants: any[];
-  public displayedApplicants: any[];
-  public scholarshipTitle: any;
-  public scholarId: any;
-  public searchString: string;
-  public currentFilter: any;
+    public allApplicants: any[];
+    public displayedApplicants: any[];
+    public scholarshipTitle: any;
+    public scholarId: any;
+    public searchString: string;
+    public currentFilter: any;
 
-  constructor(private _Activedroute: ActivatedRoute, private scholarshipCommitteeService: ScholarshipCommitteeService) { }
+    constructor(private _Activedroute: ActivatedRoute, private scholarshipCommitteeService: ScholarshipCommitteeService) { }
 
 
   /**
@@ -86,6 +86,7 @@ export class CommitteeComponent implements OnInit {
       console.log(this.searchString);
     }
   }
+
 
 
 }

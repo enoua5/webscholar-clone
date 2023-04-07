@@ -47,13 +47,6 @@ public class Role implements  Serializable{
 	private Set<Permission> permissions;
 
 	/**
-	 * The set of users assigned to this role.
-	 */
-	@OneToMany(cascade=CascadeType.ALL)
-    @JoinColumn(name="role_id")
-	private Set<User> users;
-
-	/**
 	 * Creates a new, empty role.
 	 */
 	public Role() {
@@ -103,14 +96,5 @@ public class Role implements  Serializable{
 	public void setPermissions(Set<Permission> permissions) {
 		this.permissions = permissions;
 	}
-
-	public Set<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-
 	
 }

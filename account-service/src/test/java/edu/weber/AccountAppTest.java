@@ -38,7 +38,7 @@ public class AccountAppTest
         account.setPassword("TestPassword");
         account.setSchoolId("W12345670");
         account.setIsLoggedIn(true);
-        account.setUserType(AccountRoles.student);
+        account.setRole(AccountRoles.student);
         account.setFirstName("TestFirstName");
         account.setLastName("TestLastName");
         account.setCity("TestCity");
@@ -50,7 +50,7 @@ public class AccountAppTest
         Assert.assertEquals("Password not equal","TestPassword", account.getPassword());
         Assert.assertEquals("School Id not equal","W12345670", account.getSchoolId());
         Assert.assertTrue("Account not active", account.getIsLoggedIn());
-        Assert.assertEquals("Usertype not equal", AccountRoles.student, account.getUserType());
+        Assert.assertEquals("Usertype not equal", AccountRoles.student, account.getRole());
         Assert.assertEquals("First name not equal","TestFirstName", account.getFirstName());
         Assert.assertEquals("Last name not equal","TestLastName", account.getLastName());
         Assert.assertEquals("City not equal","TestCity", account.getCity());
@@ -96,7 +96,7 @@ public class AccountAppTest
         account.setSchoolId("W12345678");
         account.setFirstName("FirstName");
         account.setLastName("LastName");
-        account.setUserType(AccountRoles.student);
+        account.setRole(AccountRoles.student);
         account.setCity("City");
         account.setState("State");
         account.setZipCode("12346");
@@ -106,7 +106,7 @@ public class AccountAppTest
         Assert.assertEquals("Password not equal","Password", account.getPassword());
         Assert.assertEquals("School Id not equal","W12345678", account.getSchoolId());
         Assert.assertTrue("Account not active", account.getIsLoggedIn());
-        Assert.assertEquals("Usertype not equal",AccountRoles.student, account.getUserType());
+        Assert.assertEquals("Usertype not equal",AccountRoles.student, account.getRole());
         Assert.assertEquals("First name not equal","FirstName", account.getFirstName());
         Assert.assertEquals("Last name not equal","LastName", account.getLastName());
         Assert.assertEquals("City not equal","City", account.getCity());

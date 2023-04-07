@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
-    providedIn: 'root',
+    providedIn: 'root'
 })
 export class AuthService {
     private currentUserSubject: BehaviorSubject<any>;
@@ -14,7 +14,9 @@ export class AuthService {
     private apiUrl: string = 'https://api.example.com/authenticate';
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser') || '{}'));
+        this.currentUserSubject = new BehaviorSubject<any>(
+            JSON.parse(localStorage.getItem('currentUser') || '{}')
+        );
         this.currentUser = this.currentUserSubject.asObservable();
     }
 

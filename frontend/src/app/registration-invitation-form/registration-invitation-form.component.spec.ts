@@ -17,13 +17,16 @@ describe('RegistrationInvitationFormComponent', () => {
   let httpClientSpy: jasmine.SpyObj<HttpClient>;
   let testService: RegistrationInvitationService;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ RouterTestingModule, HttpClientTestingModule, ReactiveFormsModule ],
-      declarations: [ RegistrationInvitationFormComponent ]
-    })
-    .compileComponents();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [
+                RouterTestingModule,
+                HttpClientTestingModule,
+                ReactiveFormsModule
+            ],
+            declarations: [RegistrationInvitationFormComponent]
+        }).compileComponents();
+    });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RegistrationInvitationFormComponent);

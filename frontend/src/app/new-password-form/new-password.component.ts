@@ -1,16 +1,13 @@
-import {Component} from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-new-password',
-  templateUrl: './new-password-form.component.html'
+    selector: 'app-new-password',
+    templateUrl: './new-password-form.component.html'
 })
+export class NewPasswordComponent {
+    pageTitle: string = 'New Password Form';
 
-
-export class NewPasswordComponent{
-  pageTitle: string = 'New Password Form';
-
-  onFPassword(): void {
-    alert('Password has been updated');
-  }
-
+    onFPassword(): void {
+        alert('Password has been updated');
+    }
 }

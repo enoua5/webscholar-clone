@@ -1,0 +1,17 @@
+{
+    "trailingComma": "none",
+    "tabWidth": 4,
+    "singleQuote": true,
+    "printWidth": 80,
+    "bracketSameLine": true,
+    "overrides": [
+        {
+            "files": "src/**/*.html",
+            "options": {
+                "tabWidth": 4,
+                "printWidth": 120,
+                "bracketSameLine": true
+            }
+        }
+    ]
+}

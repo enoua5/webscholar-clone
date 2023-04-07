@@ -22,8 +22,7 @@ public class ErrorHandler {
      * Send an http response error if the specified account could not be found.
      */
     public static void accountNotFound() {
-
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account could not be found.");
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account could not be found!");
     }
 
     /**
@@ -39,4 +38,20 @@ public class ErrorHandler {
     public static void accountNotCreated() {
         throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account could not be created.");
     }
+
+    /**
+     * Send an http response error if data sent did not follow model restrictions.
+     */
+    public static void invalidData() {
+        throw new ResponseStatusException(HttpStatus.PARTIAL_CONTENT, "The data sent was incomplete or invalid!");
+    }
+
+    /**
+     * Send an http response error if the specified email could not be found
+     */
+    public static void emailNotFound() {
+        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The email could not be found!");
+    }
+    
+    //TODO: Add any new custom error handling methods here. Ensure methods are static so other classes can call them.
 }

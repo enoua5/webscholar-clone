@@ -6,35 +6,33 @@ import { ActivatedRoute, convertToParamMap, RouterModule } from '@angular/router
 import { CommitteeComponent } from './committee.component';
 
 describe('ScholarshipCommitteeComponent', () => {
-  let component: CommitteeComponent;
-  let fixture: ComponentFixture<CommitteeComponent>;
+    let component: CommitteeComponent;
+    let fixture: ComponentFixture<CommitteeComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ ReactiveFormsModule, FormsModule, RouterModule,  ],
-      declarations: [ CommitteeComponent ],
-      providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              paramMap: convertToParamMap({id: '1'})
-            }
-          }
-        }
-      ]
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [ ReactiveFormsModule, FormsModule, RouterModule, RouterTestingModule],
+            declarations: [ CommitteeComponent],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useValue: {
+                        snapshot: {
+                            paramMap: convertToParamMap({ id: '1' })
+                        }
+                    }
+                }
+            ]
+        }).compileComponents();
+    });
 
-    })
-      .compileComponents();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CommitteeComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CommitteeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

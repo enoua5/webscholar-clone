@@ -10,8 +10,8 @@
     "cypress": "npx cypress open",
     "ui-test": "npx cypress run --e2e && npx cypress run --component",
     "doc": "npx compodoc -p tsconfig.doc.json -n \"WebScholar Frontend\" --serve --port 48620 --open",
-    "lint": "npx eslint 'src/**/*.{js,jsx,ts,tsx,html,css,scss}' --quiet --fix",
-    "format": "npx prettier 'src/**/*.{js,jsx,ts,tsx,html,css,scss}' --write"
+    "lint": "npx eslint \"src/**/*.{js,jsx,ts,tsx,html,css,scss}\" --quiet --fix",
+    "format": "npx prettier \"src/**/*.{js,jsx,ts,tsx,html,css,scss}\" --write"
   },
   "private": true,
   "dependencies": {

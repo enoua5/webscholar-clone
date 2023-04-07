@@ -3,6 +3,9 @@
   "ignorePatterns": [
     "projects/**/*"
   ],
+  "env": {
+    "jasmine": true
+  },
   "overrides": [
     {
       "files": [

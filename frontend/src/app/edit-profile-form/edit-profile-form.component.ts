@@ -108,7 +108,7 @@ export class EditProfileFormComponent implements OnInit {
         }
     }
 
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     // getters for form controls
     get first_name() {

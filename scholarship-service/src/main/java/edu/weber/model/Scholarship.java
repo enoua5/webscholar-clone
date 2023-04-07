@@ -1,26 +1,15 @@
 package edu.weber.model;
 
-//import lombok.AccessLevel;
-
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.IntFunction;
-
 
 /**
  * This is a data model. It helps us put data into the backend and send data
  * to the frontend in a standardized format. (Yes, I did just copy-pasta a comment XD)
  */
-
-/*
-@Getter //This uses javax validation to generate the getters and setters for all variables
-@Setter //This uses javax validation to generate the getters and setters for all variables
-*/
 @Entity
 public class Scholarship {
 

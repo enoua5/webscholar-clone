@@ -60,7 +60,7 @@ export class LoginFormComponent implements OnInit {
     /**
      * ngOnInit stub
      */
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 
     /**
      * Returns the contents of the username form field
@@ -74,6 +74,14 @@ export class LoginFormComponent implements OnInit {
      */
     get password() {
         return this.form.get('password');
+    }
+
+    /**
+     * For test bed, so we can inject a spy service
+     * @param handler
+     */
+    set service_handler(handler: LoginService) {
+        this.service = handler;
     }
 
     /**

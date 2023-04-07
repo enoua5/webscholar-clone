@@ -6,11 +6,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginFormComponent } from './login-form.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { LoginService } from './login.service';
-import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
-import { DashboardComponent } from '../dashboard/dashboard.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LoginService } from "./login.service";
+import { HttpClient } from "@angular/common/http";
+import { of } from "rxjs";
+import { DashboardComponent } from "../dashboard/dashboard.component";
 
 describe('LoginFormComponent', () => {
     let component: LoginFormComponent;

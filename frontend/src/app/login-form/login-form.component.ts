@@ -60,7 +60,7 @@ export class LoginFormComponent implements OnInit {
     /**
      * ngOnInit stub
      */
-    ngOnInit(): void { }
+    ngOnInit(): void {}
 
     /**
      * Returns the contents of the username form field

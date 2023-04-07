@@ -3,7 +3,7 @@
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RequestRoleFormComponent } from './request-role-form.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
 describe('RequestRoleFormComponent', () => {
@@ -14,8 +14,7 @@ describe('RequestRoleFormComponent', () => {
         await TestBed.configureTestingModule({
             imports: [HttpClientTestingModule, ReactiveFormsModule],
             declarations: [RequestRoleFormComponent]
-        })
-            .compileComponents();
+        }).compileComponents();
     });
 
     beforeEach(() => {

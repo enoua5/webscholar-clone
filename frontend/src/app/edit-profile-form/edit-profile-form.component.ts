@@ -147,6 +147,11 @@ export class EditProfileFormComponent implements OnInit {
         return this.form.get('major');
     }
 
+    // for test bed, so we can inject a spy service
+    set service_handler(handler: EditProfileService) {
+        this.service = handler;
+    }
+
     /**
      * Called when the form is submitted.
      *
@@ -181,6 +186,7 @@ export class EditProfileFormComponent implements OnInit {
                 zipCode: zipCode
             });
 
+            console.log(this.service);
             this.service.updateAccount(jsonObj).subscribe(
                 (res) => {
                     // store values in session storage

@@ -23,6 +23,10 @@ CREATE TABLE `account` (
                            `school` varchar(100) NOT NULL,
                            `sex` varchar(6) NOT NULL,
                            `race` varchar(100) NOT NULL,
+                           `deleteLinkHash` varchar(100) NOT NULL,
+                           `deleteLinkDate` datetime NOT NULL,
+                           `forgotPassHash` varchar(100) NOT NULL,
+                           `forgotPassDate` datetime NOT NULL,
                            PRIMARY KEY (`accountKey`)
 );
 
@@ -78,6 +82,16 @@ commit;
 #   PRIMARY KEY (`comboId`),
 #   FOREIGN KEY (accountKey) REFERENCES account(accountKey),
 #   FOREIGN KEY (scholarshipId) REFERENCES scholarship(scholarshipId)
+# );
+#
+# commit;
+
+# DROP TABLE IF EXISTS scholarshipapplication;
+# CREATE TABLE `scholarshipapplication` (
+#   `scholarshipApplicationId` INT AUTO_INCREMENT NOT NULL,
+#   `accountKey` INT NOT NULL,
+#   `scholarshipId` INT NOT NULL,
+#   PRIMARY KEY (`comboId`)
 # );
 #
 # commit;

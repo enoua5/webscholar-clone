@@ -8,14 +8,17 @@ hystrix:
 
 eureka:
   instance:
+    hostname: registry
     prefer-ip-address: true
   client:
     healthcheck:
       enabled: true
     serviceUrl:
-      defaultZone: http://${EUREKA_SERVICE_USERNAME}:${EUREKA_SERVICE_PASSWORD}@localhost:8765/eureka/
-      #defaultZone: http://registry:8765/eureka/
+      defaultZone: http://${EUREKA_SERVICE_USERNAME}:${EUREKA_SERVICE_PASSWORD}@${eureka.instance.hostname}:8765/eureka/
 
 spring:
   rabbitmq:
     host: rabbitmq
+    port: 5672
+    username: guest
+    password: guest

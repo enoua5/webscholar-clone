@@ -4,6 +4,7 @@ import edu.weber.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account, String> {
 
     //These are default database search functions
-
+    ArrayList<Account> findByRequestedRoleIsNotNull();
     Account findAccountByAccountKey(int accountKey);
 
     Account findAccountByEmail(String email);
@@ -28,4 +29,6 @@ public interface AccountRepository extends JpaRepository<Account, String> {
 
     //lookup spring boot repository methods? Forget email spring boot service
     Account findAccountByDeleteLinkHash(String generatedHash);
+
+    Account findAccountByForgotPassHash(String forgotPassHash);
 }

@@ -1,21 +1,15 @@
 package edu.weber.model;
 
-
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-
-/**
- * This is a data model. It helps us put data into the backend and send data
- * to the frontend in a standardized format.
- */
+import java.time.LocalDateTime;
 
 @Entity
 public class Account {
 
+//region SQL KEYS *********************
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
@@ -27,7 +21,9 @@ public class Account {
     public int getAccountKey(){
         return accountKey;
     }
+//endregion
 
+//region LOGIN / USER INFO **************
     @Column(nullable = false)
     @Email
     private String email;
@@ -40,7 +36,6 @@ public class Account {
         this.email = email;
     }
 
-
     @Column(nullable = false)
     @NotBlank
     private String password;
@@ -52,6 +47,36 @@ public class Account {
         this.password = password;
     }
 
+    @Column
+    @NotNull
+    private Boolean isLoggedIn;
+    public Boolean getIsLoggedIn(){
+        return isLoggedIn;
+    }
+    public void setIsLoggedIn(boolean isLoggedIn){
+        this.isLoggedIn = isLoggedIn;
+    }
+
+    @Column
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AccountRoles role;
+    public AccountRoles getRole(){
+        return role;
+    }
+    public void setRole(AccountRoles role){
+        this.role = role;
+    }
+
+    //Each user can request one role at a time, stored in the below column
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AccountRoles requestedRole;
+    public AccountRoles getRequestedRole() { return requestedRole; }
+    public void setRequestedRole(AccountRoles requestedRole) { this.requestedRole = requestedRole; }
+//endregion
+
+//region SCHOOL INFO ************
     @Column(nullable = false)
     @NotBlank
     private String schoolId;
@@ -62,27 +87,13 @@ public class Account {
         this.schoolId = schoolId;
     }
 
-    //TODO: This needs to be changed to 'isLoggedIn' for authentication purposes
     @Column
-    @NotNull
-    private Boolean active;
-    public Boolean getActive(){
-        return active;
-    }
-    public void setActive(boolean active){
-        this.active = active;
-    }
+    private String major;
+    public String getMajor() {return major; }
+    public void setMajor(String major) {this.major = major; }
+//endregion
 
-    @Column
-    @NotNull
-    private String userType;
-    public String getUserType(){
-        return userType;
-    }
-    public void setUserType(String userType){
-        this.userType = userType;
-    }
-
+//region PERSONAL INFO *************
     @Column(nullable = false)
     @NotBlank
     private String firstName;
@@ -93,15 +104,6 @@ public class Account {
         this.firstName = firstName;
     }
 
-    @Column
-    private String middleName;
-    public String getMiddleName(){
-        return middleName;
-    }
-    public void setMiddleName(String middleName){
-        this.middleName = middleName;
-    }
-
     @Column(nullable = false)
     @NotBlank
     private String lastName;
@@ -110,24 +112,6 @@ public class Account {
     }
     public void setLastName(String lastName){
         this.lastName = lastName;
-    }
-
-    @Column
-    private String address1;
-    public String getAddress1(){
-        return address1;
-    }
-    public void setAddress1(String address1){
-        this.address1 = address1;
-    }
-
-    @Column
-    private String address2;
-    public String getAddress2(){
-        return address2;
-    }
-    public void setAddress2(String address2){
-        this.address2 = address2;
     }
 
     @Column
@@ -158,32 +142,11 @@ public class Account {
     }
 
     @Column
-    private String school;
-    public String getSchool(){
-        return school;
-    }
-    public void setSchool(String school){
-        this.school = school;
-    }
+    private String phoneNumber;
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
-    @Column
-    private String sex;
-    public String getSex(){
-        return sex;
-    }
-    public void setSex(String sex){
-        this.sex = sex;
-    }
-
-    @Column
-    private String race;
-    public String getRace(){
-        return race;
-    }
-    public void setRace(String race){
-        this.race = race;
-    }
-
+    //********** ACCOUNT UPDATE / DELETE **********
     @Column
     private String deleteLinkHash;
     public String getDeleteLinkHash(){
@@ -194,11 +157,11 @@ public class Account {
     }
 
     @Column
-    private LocalDate deleteLinkDate;
-    public LocalDate getDeleteLinkDate(){
+    private LocalDateTime deleteLinkDate;
+    public LocalDateTime getDeleteLinkDate(){
         return deleteLinkDate;
     }
-    public void setDeleteLinkDate(LocalDate deleteLinkDate){
+    public void setDeleteLinkDate(LocalDateTime deleteLinkDate){
         this.deleteLinkDate = deleteLinkDate;
     }
 
@@ -212,21 +175,22 @@ public class Account {
     }
 
     @Column
-    private LocalDate forgotPassDate;
-    public LocalDate getForgotPassDate(){
+    private LocalDateTime forgotPassDate;
+    public LocalDateTime getForgotPassDate(){
         return forgotPassDate;
     }
-    public void setForgotPassDate(LocalDate forgotPassDate){
+    public void setForgotPassDate(LocalDateTime forgotPassDate){
         this.forgotPassDate = forgotPassDate;
     }
-
 
     //TODO: Add array variable that holds keywords
     //The tags are used to help recommend scholarship to the user.
     //These tags are categories the user is interested in and should correspond to scholarship tags.
     //  This will probably need to be a separate table with a foreign key to the user. That, or do some janky String stuff with "Math,Science," ect and
     //          getting the string, then separating by , (but that is pretty janky)
+//endregion
 
+//region CONSTRUCTOR & TOSTRING **************
     //TODO: Make this constructor protected.
     //This object should only be created with the constructor that requires non-blank values.
     //Making this constructor protected only allows child classes to call it.
@@ -238,8 +202,8 @@ public class Account {
         this.email = "";
         this.password = "";
         this.schoolId = "";
-        this.active = false;
-        this.userType = "student";
+        this.isLoggedIn = false;
+        this.role = AccountRoles.student;
         this.firstName = "";
         this.lastName = "";
     }
@@ -250,18 +214,18 @@ public class Account {
      * @param email The email associated with the user. Used for logging in and sending emails.
      * @param password The login value set by the user.
      * @param schoolId The students W number given by weber state.
-     * @param active
-     * @param userType The role access level for this account.
+     * @param isLoggedIn
+     * @param role The role access level for this account.
      * @param firstName The users first name.
      * @param lastName The users last name.
      */
-    public Account(String email, String password, String schoolId, Boolean active, String userType, String firstName, String lastName){
+    public Account(String email, String password, String schoolId, Boolean isLoggedIn, AccountRoles role, String firstName, String lastName){
 
         this.email = email;
         this.password = password;
         this.schoolId = schoolId;
-        this.active = active;
-        this.userType = userType;
+        this.isLoggedIn = isLoggedIn;
+        this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -279,20 +243,16 @@ public class Account {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", schoolId='" + schoolId + '\'' +
-                ", active=" + active +
-                ", userType='" + userType + '\'' +
+                ", active=" + isLoggedIn +
+                ", role='" + role + '\'' +
                 ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", address1='" + address1 + '\'' +
-                ", address2='" + address2 + '\'' +
                 ", city='" + city + '\'' +
                 ", state='" + state + '\'' +
                 ", zipCode='" + zipCode + '\'' +
-                ", school='" + school + '\'' +
-                ", sex='" + sex + '\'' +
-                ", race='" + race + '\'' +
+                ", phoneNumber" + phoneNumber + '\'' +
                 '}';
     }
+//endregion
 
 }

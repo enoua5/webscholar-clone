@@ -1,0 +1,24 @@
+spring:
+  application:
+    # Original name application-service was invalid because names cannot begin with 'application-'
+    # Name changed to scholarship-application-service as requested by Dr Zhang
+    name: scholarship-application-service
+  cloud:
+    config:
+      uri: http://config-service:8888
+      fail-fast: true
+      username: user
+      password: ${CONFIG-SERVICE-PASSWORD}
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://scholarship-application-db:6070/scholarship-application-db
+    username: root
+    password: password
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl

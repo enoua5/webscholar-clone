@@ -1,134 +1,168 @@
 <section class="section">
-  <div class="Edit_ProFile" style="display:block;">
-    <div class="Edit_header">Edit Profile</div>
-    <p class="Edit_sub">This Information is shared with and only visible to scholarships you
-      apply to.</p>
+    <div class="Edit_ProFile" style="display: block">
+        <div class="Edit_header">Edit Profile</div>
+        <p class="Edit_sub">This Information is shared with and only visible to scholarships you apply to.</p>
 
-      <form  [formGroup]="form" (ngSubmit)="onSubmit()">
-
-        <div *ngIf="error">
-          {{error}}
-        </div>
-        <div formGroupName="form">
-        <div class="form-group" >
-          <div class="row">
-            <div class="col-sm-6">
-              <label for="First Name" class="col-sm-12 control-label">First Name:</label>
-              <div class="col-sm-12">
-                <input type="text" class="form-control" id="First Name" placeholder="First Name" formControlName="first_name">
-                <div class="error" *ngIf="errors.has('first_name')">
-                  {{errors.get('first_name')}}
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <label for="Last Name" class="col-sm-12 control-label">Last Name</label>
-              <div class="col-sm-12">
-                <input type="text" class="form-control" id="Last Name" placeholder="Last Name" formControlName="last_name">
-                <div class="error" *ngIf="errors.has('last_name')">
-                  {{errors.get('last_name')}}
-                </div>
-              </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div *ngIf="error">
+                {{ error }}
             </div>
 
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="row">
-            <div class="col-sm-12">
-              <label for="userEmail" class="col-sm-12 control-label">Contact Email:</label>
-              <div class="col-sm-12">
-                <input type="email" class="form-control" id="userEmail" placeholder="Email" formControlName="email">
-                <div class="error" *ngIf="errors.has('email')">
-                  {{errors.get('email')}}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+            <div class="form-group mb-3">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="first_name" class="col-sm-12 fw-bold control-label">First Name:</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="first_name" formControlName="first_name" />
+                        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <div class="col-sm-12">
-              <label for="userPhone" class="col-sm-12 control-label">Contact Phone Number:</label>
-              <div class="col-sm-12">
-                <input type="number" class="form-control" id="userPhone" placeholder="phone number" formControlName="phone_number">
-                <div class="error" *ngIf="errors.has('phone_number')">
-                  {{errors.get('phone_number')}}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                        <div class="error" *ngIf="first_name.invalid && first_name.touched">
+                            <div *ngIf="first_name.errors.required">First Name is required.</div>
+                        </div>
+                    </div>
 
+                    <div class="col-sm-6">
+                        <label for="last_name" class="col-sm-12 fw-bold control-label">Last Name:</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="last_name" formControlName="last_name" />
+                        </div>
 
-        <div class="form-group">
-          <div class="row">
-            <div class="col-sm-6">
-              <label for="userCity" class="col-sm-12 control-label">City:</label>
-              <div class="col-sm-12">
-                <input type="text" class="form-control" id="userCity" placeholder="City" formControlName="city">
-                <div class="error" *ngIf="errors.has('city')">
-                  {{errors.get('city')}}
+                        <div class="error" *ngIf="last_name.invalid && last_name.touched">
+                            <div *ngIf="last_name.errors.required">Last Name is required.</div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <label for="userState" class="col-sm-12 control-label">State:</label>
-              <div class="col-sm-12">
-                <input type="text" class="form-control" id="userState" placeholder="State" formControlName="state">
-                <div class="error" *ngIf="errors.has('state')">
-                  {{errors.get('state')}}
-                </div>
-              </div>
             </div>
 
-            <div class="col-sm-3">
-              <label for="userZipCode" class="col-sm-12 control-label">Zip Code:</label>
-              <div class="col-sm-12">
-                <input type="text" class="form-control" id="userZipCode" placeholder="Code" formControlName="zip">
-                <div class="error" *ngIf="errors.has('zip')">
-                  {{errors.get('zip')}}
+            <div class="form-group mb-3">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="email" class="col-sm-12 fw-bold control-label">Contact Email:</label>
+                        <div class="col-sm-12">
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                                placeholder="example@mail.com"
+                                formControlName="email" />
+
+                            <div class="error" *ngIf="email.invalid && email.touched">
+                                <div *ngIf="email.errors.required">Email is required.</div>
+
+                                <div *ngIf="email.errors.email">
+                                    Please enter a valid email.<br />
+                                    I.e., email@example.com
+                                </div>
+                            </div>
+
+                            <div class="error" *ngIf="email.hasError('err_email_taken') && email.touched">
+                                Email is already taken.
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
 
-
-        <div class="form-group">
-          <div class="row">
-            <div class="col-sm-12">
-              <label for="Student" class="col-sm-12 control-label">Student ID #:</label>
-              <div class="col-sm-12">
-                <input type="text" class="form-control" id="Student" placeholder="Student ID #" formControlName="student_number">
-                <div class="error" *ngIf="errors.has('student_number')">
-                  {{errors.get('student_number')}}
+            <div class="form-group mb-3">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="phone_number" class="col-sm-12 fw-bold control-label">Contact Phone Number:</label>
+                        <div class="col-sm-12">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="phone_number"
+                                placeholder="555-555-5555"
+                                formControlName="phone_number" />
+                            <div class="error" *ngIf="phone_number.invalid && phone_number.touched">
+                                <div *ngIf="phone_number.errors.pattern">
+                                    Please enter a valid phone number.<br />
+                                    I.e., 555-555-5555
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
 
-        </div>
+            <div class="form-group mb-3">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="city" class="col-sm-12 fw-bold control-label">City:</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="city" formControlName="city" />
+                        </div>
+                    </div>
 
-        <div class="form-group">
-          <div class="row">
-            <div class="col-sm-12">
-              <label for="Major" class="col-sm-12 control-label">Major:</label>
-              <div class="col-sm-12">
-                <input type="text" class="form-control" id="Major" placeholder="Your Major" formControlName="major">
-                <div class="error" *ngIf="errors.has('major')">
-                  {{errors.get('major')}}
+                    <div class="col-sm-3">
+                        <label for="state" class="col-sm-12 fw-bold control-label">State:</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="state" formControlName="state" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <label for="zip" class="col-sm-12 fw-bold control-label">Zip Code:</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="zip" formControlName="zip" />
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <a class="login-links-1" routerLink="/dashboard">Go Back</a>
-          <input type="submit" class="update" value="Update"/>
-        </div>
-        </div>
-      </form>
+
+            <div class="form-group mb-3">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="student_number" class="col-sm-12 fw-bold control-label">Student ID:</label>
+                        <div class="col-sm-12">
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="student_number"
+                                placeholder="########"
+                                formControlName="student_number" />
+                            <div class="error" *ngIf="student_number.invalid && student_number.touched">
+                                <div *ngIf="student_number.errors.required">Student ID is required.</div>
+
+                                <div *ngIf="student_number.errors.pattern">
+                                    Please enter a valid student ID.<br />
+                                    I.e., 12345678
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="major" class="col-sm-12 fw-bold control-label">Major:</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="major" formControlName="major" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <a class="login-links-1" routerLink="/dashboard">Go Back</a>
+                <input type="submit" class="update" value="Update" />
+            </div>
+        </form>
+
+        <hr />
+
+        <details>
+            <summary>Danger Zone</summary>
+            <ul id="danger-list">
+                <li><a href="change_password">Change password</a></li>
+                <li>
+                    <a (click)="requestAccountDeletion()" style="cursor: pointer" class="link-danger"
+                        >Delete my account</a
+                    >
+                </li>
+            </ul>
+        </details>
     </div>
 </section>

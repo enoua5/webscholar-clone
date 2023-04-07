@@ -1,0 +1,53 @@
+<section class="container p-3">
+    <h2>Score Applicant</h2>
+    <hr />
+    <ng-container>
+        <div style="display: flex; justify-content: center">
+            <div class="button" (click)="scoreApp(0)">
+                <input type="radio" id="0" name="check-substitution-2" [checked]="currentScore == 0" />
+                <label class="btn btn-default" for="0">0</label>
+            </div>
+            <div class="button" (click)="scoreApp(1)">
+                <input type="radio" id="1" name="check-substitution-2" [checked]="currentScore == 1" />
+                <label class="btn btn-default" for="1">1</label>
+            </div>
+            <div class="button" (click)="scoreApp(2)">
+                <input type="radio" id="2" name="check-substitution-2" [checked]="currentScore == 2" />
+                <label class="btn btn-default" for="2">2</label>
+            </div>
+            <div class="button" (click)="scoreApp(3)">
+                <input type="radio" id="3" name="check-substitution-2" [checked]="currentScore == 3" />
+                <label class="btn btn-default" for="3">3</label>
+            </div>
+            <div class="button" (click)="scoreApp(4)">
+                <input type="radio" id="4" name="check-substitution-2" [checked]="currentScore == 4" />
+                <label class="btn btn-default" for="4">4</label>
+            </div>
+            <div class="button" (click)="scoreApp(5)">
+                <input type="radio" id="5" name="check-substitution-2" [checked]="currentScore == 5" />
+                <label class="btn btn-default" for="5">5</label>
+            </div>
+        </div>
+    </ng-container>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col-7" style="border-right: solid 1px">
+                <h4>Application</h4>
+                <p>This is where any information about the application itself will display</p>
+            </div>
+            <div class="col-5" style="border-left: solid 1px">
+                <h4>Applicant Info</h4>
+                <p>Name: John Doe</p>
+                <p>School ID: W1234567</p>
+                <p>Grade: Freshman</p>
+                <p>GPA: 3.5</p>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <a class="login-links-1" routerLink="/committee/{{ scholarId }}">Go Back</a>
+    </div>
+    <br />
+</section>

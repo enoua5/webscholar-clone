@@ -536,7 +536,7 @@ public class AccountService {
             role = AccountRoles.committeeMember;
         }
         if (request.isApproved()) {
-            account.setUserType(role);
+            account.setRole(role);
         }
 
         /* Regardless of if the request was approved or denied, reset requestedRole

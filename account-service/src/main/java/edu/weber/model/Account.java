@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -61,12 +60,12 @@ public class Account {
     @Column
     @NotNull
     @Enumerated(EnumType.STRING)
-    private AccountRoles userType;
-    public AccountRoles getUserType(){
-        return userType;
+    private AccountRoles role;
+    public AccountRoles getRole(){
+        return role;
     }
-    public void setUserType(AccountRoles userType){
-        this.userType = userType;
+    public void setRole(AccountRoles role){
+        this.role = role;
     }
 
     //Each user can request one role at a time, stored in the below column
@@ -204,7 +203,7 @@ public class Account {
         this.password = "";
         this.schoolId = "";
         this.isLoggedIn = false;
-        this.userType = AccountRoles.student;
+        this.role = AccountRoles.student;
         this.firstName = "";
         this.lastName = "";
     }
@@ -216,17 +215,17 @@ public class Account {
      * @param password The login value set by the user.
      * @param schoolId The students W number given by weber state.
      * @param isLoggedIn
-     * @param userType The role access level for this account.
+     * @param role The role access level for this account.
      * @param firstName The users first name.
      * @param lastName The users last name.
      */
-    public Account(String email, String password, String schoolId, Boolean isLoggedIn, AccountRoles userType, String firstName, String lastName){
+    public Account(String email, String password, String schoolId, Boolean isLoggedIn, AccountRoles role, String firstName, String lastName){
 
         this.email = email;
         this.password = password;
         this.schoolId = schoolId;
         this.isLoggedIn = isLoggedIn;
-        this.userType = userType;
+        this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -245,7 +244,7 @@ public class Account {
                 ", password='" + password + '\'' +
                 ", schoolId='" + schoolId + '\'' +
                 ", active=" + isLoggedIn +
-                ", userType='" + userType + '\'' +
+                ", role='" + role + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", city='" + city + '\'' +

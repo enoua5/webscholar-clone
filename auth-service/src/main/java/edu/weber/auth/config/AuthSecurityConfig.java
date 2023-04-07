@@ -1,6 +1,5 @@
 package edu.weber.auth.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,13 +10,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.approval.ApprovalStore;
-import org.springframework.security.oauth2.provider.approval.TokenApprovalStore;
-import org.springframework.security.oauth2.provider.approval.TokenStoreUserApprovalHandler;
-import org.springframework.security.oauth2.provider.request.DefaultOAuth2RequestFactory;
-import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
 /**
  * This class handles who can handle which API and how they can access it.
@@ -26,12 +18,16 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 @Configuration
 @EnableWebSecurity
 public class AuthSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private ClientDetailsService clientDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService())
+                .passwordEncoder(passwordEncoder());
     }
 
     /**
@@ -52,6 +48,8 @@ public class AuthSecurityConfig extends WebSecurityConfigurerAdapter {
      * - Other settings can be restricted as well. Look at the spring documentation.
      * @param http This is the incoming http object that holds the incoming request information.
      * @throws Exception Throws an error if the http request could not be handled.
+     * TODO: Test to see if this is actually working or just blocking everything
+     * TODO: Add functionality with token
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -66,12 +64,9 @@ public class AuthSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Allows unrestricted access to any endpoint under the "/actuator" path
                 .antMatchers("/actuator/**").permitAll()
 
-                // Todo: Add 'role' access levels
                 // Anyone can access this endpoint
-                // Allows unrestricted access to any POST request to an endpoint under the "/accounts" path
-                .antMatchers(HttpMethod.POST, "/accounts/**").permitAll()
-                // Allows unrestricted access to any POST request to an endpoint under the "/accounts" path
-                .antMatchers(HttpMethod.GET, "/accounts/**").permitAll()
+                // Allows unrestricted access to any POST request to an endpoint under the "/token" path
+                .antMatchers("/auth/token").permitAll()
 
                 // Allows access to the issue-service Testing API
                 // Allows unrestricted access to any POST request to an endpoint under the "/issue" path
@@ -83,7 +78,7 @@ public class AuthSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 // Disables Cross-Site Request Forgery (CSRF) protection
-                // Todo: This is only for testing purposes. Should be removed. CSRF protection is important
+                // TODO: This is only for testing purposes. Should be removed. CSRF protection is important
                 .csrf().disable()
                 // Disables form-based login
                 .formLogin().disable()

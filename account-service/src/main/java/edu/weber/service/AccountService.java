@@ -516,6 +516,31 @@ public class AccountService {
     }
 
     /**
+     * Approve or deny a role request.
+     * @param request The request being processed.
+     */
+    public void processRoleRequest(RoleRequest request) {
+        Account account = accountRepository.findAccountByAccountKey(request.getAccountId());
+        AccountRoles role;
+        if (request.getRole().equals("Committee Chair")) {
+            role = AccountRoles.chair;
+        }
+        else {
+            role = AccountRoles.committeeMember;
+        }
+        if (request.isApproved()) {
+            account.setUserType(role);
+        }
+
+        /* Regardless of if the request was approved or denied, reset requestedRole
+        so the user can request new roles in the future.
+         */
+
+        account.setRequestedRole(null);
+        accountRepository.save(account);
+    }
+
+    /**
      * Returns a list of all role requests..
      */
     public ArrayList<RoleRequest> getAllRoleRequests(){

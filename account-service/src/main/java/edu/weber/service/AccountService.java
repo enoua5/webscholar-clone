@@ -503,7 +503,6 @@ public class AccountService {
         else {
             role = AccountRoles.committeeMember;
         }
-
         if (request.isApproved()) {
             account.setUserType(role);
         }

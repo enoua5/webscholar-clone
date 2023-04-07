@@ -203,7 +203,7 @@ public class AccountController {
      * @param request The request being processed.
      * @return An updated list of all pending role requests.
      */
-    @RequestMapping(path="/process-role-requests", method=RequestMethod.POST,
+    @RequestMapping(path="/process-role-request", method=RequestMethod.POST,
     consumes=MediaType.APPLICATION_JSON_VALUE)
     public ArrayList<RoleRequest> processRoleRequest(@RequestBody RoleRequest request) {
         accountService.processRoleRequest(request);

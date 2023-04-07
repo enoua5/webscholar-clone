@@ -7,9 +7,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { ReactiveFormsModule } from '@angular/forms';
 import { RequestRoleService } from './request-role.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
 
-fdescribe('RequestRoleFormComponent', () => {
+describe('RequestRoleFormComponent', () => {
   let component: RequestRoleFormComponent;
   let fixture: ComponentFixture<RequestRoleFormComponent>;
   let httpMock: HttpTestingController;
@@ -72,19 +71,18 @@ fdescribe('RequestRoleFormComponent', () => {
     expect(component.errorMessage).toEqual('Not found');
   });
 
-  it('blabla', fakeAsync(() => {
+  it('Test displayed errors if request fails', fakeAsync(() => {
     const response = { status: 404, error: { message: 'Not found' } };
-    httpClientSpy.post.and.returnValue(of(response));
+    component['processErrors'](response);
+    fixture.detectChanges();
 
-    const pageForm = component.roleForm;
-    pageForm.setValue({roleControl: "Committee Member"});
-  
-    component.onSubmit();
-    tick(); // wait for HTTP request to complete
+    tick();
 
-    fixture.detectChanges()
-    alert(component.errorMessage)
-    const element = fixture.debugElement.nativeElement;
     expect(component.errorMessage).toEqual('Not found');
-  }));  
+  
+    fixture.whenStable().then(() => {
+      const element = fixture.debugElement.nativeElement;
+      expect(element.querySelector('.callout-danger').textContent).toContain('Not found');
+    });
+  })); 
 });

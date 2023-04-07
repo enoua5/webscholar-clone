@@ -4,7 +4,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
-
+import { RouterModule } from '@angular/router';
 import { ScoringComponent } from './scoring.component';
 
 describe('ScoringComponent', () => {
@@ -13,7 +13,7 @@ describe('ScoringComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule, ReactiveFormsModule ],
+      imports: [ HttpClientTestingModule, ReactiveFormsModule, RouterModule ],
       declarations: [ScoringComponent],
       providers: [
         {

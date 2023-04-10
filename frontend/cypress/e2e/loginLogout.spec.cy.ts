@@ -1,5 +1,6 @@
-describe('login logout correctly', () => {
-  it('should submit form correctly and be logged in', () => {
+describe('login logout end-to-end', () => {
+  it('should log in correctly, then log out correctly', () => {
+    // create mock account with API call
     cy.request('POST', 'http://localhost:6001/account/create', {
       email: "fake.guy@fakeemailserviceprovider.internet",
       password: "ASFDasdfasdf1!",

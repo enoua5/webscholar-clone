@@ -1,94 +1,94 @@
 <!DOCTYPE html>
 <html>
-  <head> </head>
-  <body>
-    <h1 class="border-bottom">Scholarship Status</h1>
-    <h3>Student</h3>
-    <table class="table table-bordered w-100" *ngFor="let student of students">
-      <thead>
-        <th scope="col">Student Name</th>
-        <th scope="col">Scholarship Status</th>
-      </thead>
+    <head> </head>
+    <body>
+        <h1 class="border-bottom">Scholarship Status</h1>
+        <h3>Student</h3>
+        <table class="table table-bordered w-100" *ngFor="let student of students">
+            <thead>
+                <th scope="col">Student Name</th>
+                <th scope="col">Scholarship Status</th>
+            </thead>
 
-      <tbody>
-        <tr>
-          <td>{{ student.studentName }}</td>
-          <td>{{ student.currentstatus }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <h3>Personal Information</h3>
-    <table class="table table-bordered w-100" *ngFor="let student of students">
-      <thead>
-        <th scope="col">Address</th>
-        <th scope="col">Phone</th>
-        <th scope="col">City</th>
-        <th scope="col">Email</th>
-        <th scope="col">State</th>
-        <th scope="col">D.O.B.</th>
-        <th scope="col">Zip Code</th>
-        <th scope="col">Gender</th>
-      </thead>
+            <tbody>
+                <tr>
+                    <td>{{ student.studentName }}</td>
+                    <td>{{ student.currentstatus }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Personal Information</h3>
+        <table class="table table-bordered w-100" *ngFor="let student of students">
+            <thead>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+                <th scope="col">City</th>
+                <th scope="col">Email</th>
+                <th scope="col">State</th>
+                <th scope="col">D.O.B.</th>
+                <th scope="col">Zip Code</th>
+                <th scope="col">Gender</th>
+            </thead>
 
-      <tbody>
-        <tr>
-          <td>{{ student.address }}</td>
-          <td>{{ student.phone }}</td>
-          <td>{{ student.city }}</td>
-          <td>{{ student.email }}</td>
-          <td>{{ student.state }}</td>
-          <td>{{ student.dob }}</td>
-          <td>{{ student.zip }}</td>
-          <td>{{ student.gender }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <h3>Academic Information</h3>
-    <table class="table table-bordered w-100" *ngFor="let student of students">
-      <thead>
-        <th scope="col">W Number</th>
-        <th scope="col">Current Major</th>
-        <th scope="col">Academic Level</th>
-        <th scope="col">GPA</th>
-        <th scope="col">Major GPA</th>
-        <th scope="col">ACT/SAT Score</th>
-        <th scope="col">First Semester</th>
-        <th scope="col">Degree Goal</th>
-        <th scope="col">Past CS Courses</th>
-      </thead>
+            <tbody>
+                <tr>
+                    <td>{{ student.address }}</td>
+                    <td>{{ student.phone }}</td>
+                    <td>{{ student.city }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.state }}</td>
+                    <td>{{ student.dob }}</td>
+                    <td>{{ student.zip }}</td>
+                    <td>{{ student.gender }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Academic Information</h3>
+        <table class="table table-bordered w-100" *ngFor="let student of students">
+            <thead>
+                <th scope="col">W Number</th>
+                <th scope="col">Current Major</th>
+                <th scope="col">Academic Level</th>
+                <th scope="col">GPA</th>
+                <th scope="col">Major GPA</th>
+                <th scope="col">ACT/SAT Score</th>
+                <th scope="col">First Semester</th>
+                <th scope="col">Degree Goal</th>
+                <th scope="col">Past CS Courses</th>
+            </thead>
 
-      <tbody>
-        <tr>
-          <td>{{ student.wNumber }}</td>
-          <td>{{ student.currentMajor }}</td>
-          <td>{{ student.currentAcademicLevel }}</td>
-          <td>{{ student.gpa }}</td>
-          <td>{{ student.majorGpa }}</td>
-          <td>{{ student.actscore }}</td>
-          <td>{{ student.firstSemester }} {{ student.firstYear }}</td>
-          <td>{{ student.ultimatedegreeGoal }}</td>
-          <td>{{ student.pastCScourses }}</td>
-        </tr>
-      </tbody>
-    </table>
+            <tbody>
+                <tr>
+                    <td>{{ student.wNumber }}</td>
+                    <td>{{ student.currentMajor }}</td>
+                    <td>{{ student.currentAcademicLevel }}</td>
+                    <td>{{ student.gpa }}</td>
+                    <td>{{ student.majorGpa }}</td>
+                    <td>{{ student.actscore }}</td>
+                    <td>{{ student.firstSemester }} {{ student.firstYear }}</td>
+                    <td>{{ student.ultimatedegreeGoal }}</td>
+                    <td>{{ student.pastCScourses }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <h2>Other Information</h2>
-    <table class="table table-bordered w-100" *ngFor="let student of students">
-      <thead>
-        <th scope="col">Past Financial Aid</th>
-        <th scope="col">Achievements</th>
-        <th scope="col">Honors and Awards</th>
-        <th scope="col">CS Interests</th>
-      </thead>
+        <h2>Other Information</h2>
+        <table class="table table-bordered w-100" *ngFor="let student of students">
+            <thead>
+                <th scope="col">Past Financial Aid</th>
+                <th scope="col">Achievements</th>
+                <th scope="col">Honors and Awards</th>
+                <th scope="col">CS Interests</th>
+            </thead>
 
-      <tbody>
-        <tr>
-          <td>{{ student.pastFinancialAid }}</td>
-          <td>{{ student.greatestAchievements }}</td>
-          <td>{{ student.honorsAndawards }}</td>
-          <td>{{ student.csinterests }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </body>
+            <tbody>
+                <tr>
+                    <td>{{ student.pastFinancialAid }}</td>
+                    <td>{{ student.greatestAchievements }}</td>
+                    <td>{{ student.honorsAndawards }}</td>
+                    <td>{{ student.csinterests }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
 </html>

@@ -1,39 +1,45 @@
 <section class="section container p-3">
-  <div class = "box">
-    <router-outlet></router-outlet>
-    <h2 *ngIf="type;">Send Chair Registration Invitation</h2>
-    <h2 *ngIf="!type;">Send Committee Member Registration Invitation</h2>
+    <div class="box">
+        <router-outlet></router-outlet>
+        <h2 *ngIf="type">Send Chair Registration Invitation</h2>
+        <h2 *ngIf="!type">Send Committee Member Registration Invitation</h2>
 
-    <form class="mt-0" [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div *ngIf="error">
-        {{error}}
-      </div>
-      <div *ngIf="type;else other_email_field" class="field">
-        <label class="emailLabel mb-2" >Enter email/s (Comma separated if multiple, no spaces)</label>
-        <input type="email" size="100%" placeholder="example@email.com,example2@email.com..." formControlName="emails" class="form-control">
-      </div>
-      <ng-template #other_email_field>
-        <div class="field">
-          <label class="emailLabel mb-2">Enter email/s (Comma separated if multiple, no spaces)</label>
-          <br>
-          <input type="email" size="100%" multiple placeholder="example@email.com,example2@email.com..." formControlName="emails" class="form-control">  
-        </div>
-        </ng-template>
+        <form class="mt-0" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div *ngIf="error">
+                {{ error }}
+            </div>
+            <div *ngIf="type; else other_email_field" class="field">
+                <label class="emailLabel mb-2">Enter email/s (Comma separated if multiple, no spaces)</label>
+                <input
+                    type="email"
+                    size="100%"
+                    placeholder="example@email.com,example2@email.com..."
+                    formControlName="emails"
+                    class="form-control" />
+            </div>
+            <ng-template #other_email_field>
+                <div class="field">
+                    <label class="emailLabel mb-2">Enter email/s (Comma separated if multiple, no spaces)</label>
+                    <br />
+                    <input
+                        type="email"
+                        size="100%"
+                        multiple
+                        placeholder="example@email.com,example2@email.com..."
+                        formControlName="emails"
+                        class="form-control" />
+                </div>
+            </ng-template>
 
-      <div class="error" *ngIf="errors.has('emails')">
-        {{errors.get('emails')}}
-      </div>
+            <div class="error" *ngIf="errors.has('emails')">
+                {{ errors.get('emails') }}
+            </div>
 
-
-      <div class="field mt-2">
-        <div class="register-btn-left">
-          <button type="submit" class="button is-success">
-            Send Invitation(s)
-          </button>
-        </div>
-      </div>
-    </form>
-  </div>
-
-
+            <div class="field mt-2">
+                <div class="register-btn-left">
+                    <button type="submit" class="button is-success">Send Invitation(s)</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </section>

@@ -13,19 +13,19 @@
         </div>
 
         <!-- If no requests are found, display the below callout. -->
-        <div *ngIf="requestList.length === 0" class="callout callout-warning">
+        <div *ngIf="requestList?.length === 0" class="callout callout-warning">
             <h4>No Requests Found</h4>
             There are no pending role requests.
         </div>
         <!-- Otherwise, display our request table. -->
         <input
-            *ngIf="requestList.length !== 0"
+            *ngIf="requestList?.length !== 0"
             id="my-input"
             [(ngModel)]="searchText"
             class="form-control w-50 mb-1"
             placeholder="Search" />
 
-        <form *ngIf="requestList.length !== 0" [formGroup]="requestForm" (ngSubmit)="onSubmit()">
+        <form *ngIf="requestList?.length !== 0" [formGroup]="requestForm" (ngSubmit)="onSubmit()">
             <table class="table table-striped table-hover" id="myTable">
                 <thead>
                     <tr>

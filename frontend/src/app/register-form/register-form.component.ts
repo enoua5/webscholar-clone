@@ -1,11 +1,7 @@
+/* eslint-env browser */
+
 import { Component, OnInit } from '@angular/core';
-import {
-    Form,
-    FormBuilder,
-    FormControl,
-    FormGroup,
-    Validators
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RegisterService } from './register.service';
 import { emailExistsValidator, passwordMatchValidator } from './validators';
@@ -180,6 +176,11 @@ export class RegisterFormComponent implements OnInit {
      */
     get last_name() {
         return this.form.get('last_name');
+    }
+
+    // for test bed, so we can inject a spy service
+    set service_handler(handler: RegisterService) {
+        this.service = handler;
     }
 
     /**

@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import { Injectable } from '@angular/core';
 import {
     HttpClient,

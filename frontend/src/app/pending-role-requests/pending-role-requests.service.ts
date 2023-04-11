@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, map, of } from 'rxjs';
+import { Observable, catchError, lastValueFrom, map, of } from 'rxjs';
 import { forEach } from 'cypress/types/lodash';
 
 // TODO: Replace the below URL with the one created by the backend team for role requests.
 /**
  * URL used to sned an API call
  */
-const INSERT_URL = 'http://localhost:6001/account/create';
+const INSERT_URL = 'http://localhost:6001/account/process-role-request';
 const GET_URL = 'http://localhost:6001/account/get-all-role-requests';
 /**
  * Declare our Request and RequestList types so we don't have to copy them over and over.
@@ -122,16 +122,24 @@ export class PendingRoleRequestsService {
             Accept: 'application/json',
             'Access-Control-Allow-Headers': 'Content-Type'
         });
-        let body = JSON.stringify({ id: request.id, approved: true });
+        let body = JSON.stringify({
+            accountId: request.id,
+            isApproved: true,
+            role: request.role
+        });
 
-        const response = await this.http
-            .post<any>(INSERT_URL, body, {
-                headers: header,
-                observe: 'response',
-                responseType: 'json'
-            })
-            .toPromise();
-        success = this.processResponse(response);
+        const observable = this.http.post<any>(INSERT_URL, body, {
+            headers: header,
+            observe: 'response',
+            responseType: 'json'
+        });
+
+        try {
+            const response = await lastValueFrom(observable);
+            success = this.processResponse(response);
+        } catch (error) {
+            success = false;
+        }
 
         return success;
     }
@@ -177,7 +185,11 @@ export class PendingRoleRequestsService {
             Accept: 'application/json',
             'Access-Control-Allow-Headers': 'Content-Type'
         });
-        let body = JSON.stringify({ id: request.id, approved: false });
+        let body = JSON.stringify({
+            accountId: request.id,
+            isApproved: false,
+            role: request.role
+        });
 
         const response = await this.http
             .post<any>(INSERT_URL, body, {

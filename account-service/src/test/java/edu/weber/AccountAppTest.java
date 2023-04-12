@@ -36,7 +36,7 @@ public class AccountAppTest
 
         account.setEmail("test@test.com");
         account.setPassword("TestPassword");
-        account.setSchoolId("W12345670");
+        account.setSchoolId("12345678");
         account.setIsLoggedIn(true);
         account.setRole(AccountRoles.student);
         account.setFirstName("TestFirstName");
@@ -48,9 +48,9 @@ public class AccountAppTest
         //Tests accounts info
         Assert.assertEquals("Email not equal","test@test.com", account.getEmail());
         Assert.assertEquals("Password not equal","TestPassword", account.getPassword());
-        Assert.assertEquals("School Id not equal","W12345670", account.getSchoolId());
+        Assert.assertEquals("School Id not equal","12345678", account.getSchoolId());
         Assert.assertTrue("Account not active", account.getIsLoggedIn());
-        Assert.assertEquals("Usertype not equal", AccountRoles.student, account.getRole());
+        Assert.assertEquals("Role not equal", AccountRoles.student, account.getRole());
         Assert.assertEquals("First name not equal","TestFirstName", account.getFirstName());
         Assert.assertEquals("Last name not equal","TestLastName", account.getLastName());
         Assert.assertEquals("City not equal","TestCity", account.getCity());
@@ -66,6 +66,7 @@ public class AccountAppTest
     public void testAccountCreate()
     {
         Assert.assertNotNull(account);
+
         //TODO: Figure out how to get this working with the database
         //Tests creating account
         //Assert.assertEquals("Accounts are not equal", account, accountService.create(account));

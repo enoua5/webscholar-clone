@@ -91,8 +91,6 @@ public class AccountAppTest
         when(accountRepository.findAccountByEmail("test@test.com")).thenReturn(account);
         when(accountRepository.save(account)).thenReturn(account);
 
-        Assert.assertNotNull("Account is null", account);
-
         // Create a new account and test
         Account createdAccount = accountService.createNewAccount(account);
 

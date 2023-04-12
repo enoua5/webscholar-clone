@@ -91,10 +91,6 @@ public class AccountAppTest
         when(accountRepository.findAccountByEmail("test@test.com")).thenReturn(account);
         when(accountRepository.save(account)).thenReturn(account);
 
-        // Instantiate account service and set mock repository and encoder
-        accountService.accountRepository = accountRepository;
-        accountService.passwordEncoder = passwordEncoder;
-
         Assert.assertNotNull("Account is null", account);
 
         // Create a new account and test

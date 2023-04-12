@@ -99,7 +99,9 @@ public class AccountAppTest
 
         // Create a new account and test
         Account createdAccount = accountService.createNewAccount(account);
-        Assert.assertNotNull(createdAccount);
+
+        // Make sure an account was created
+        Assert.assertNotNull("Account not created", createdAccount);
     }
 
     /**

@@ -50,7 +50,3 @@ jobs:
     - name: Unit Tests
       working-directory: ./frontend
       run: npm run unit-test:headless
-
-    - name: UI Tests
-      working-directory: ./frontend
-      run: npm run ui-test

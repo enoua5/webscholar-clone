@@ -1,6 +1,7 @@
 // Unit Testing Imports/Declarations
 /// <reference types="jasmine" />
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, convertToParamMap, RouterModule } from '@angular/router';
 import { CommitteeComponent } from './committee.component';
@@ -12,8 +13,8 @@ describe('ScholarshipCommitteeComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ ReactiveFormsModule, FormsModule, RouterModule, RouterTestingModule],
-            declarations: [ CommitteeComponent],
+            imports: [ReactiveFormsModule, FormsModule, RouterModule, RouterTestingModule, HttpClientTestingModule],
+            declarations: [CommitteeComponent],
             providers: [
                 {
                     provide: ActivatedRoute,

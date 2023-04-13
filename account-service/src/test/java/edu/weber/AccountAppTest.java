@@ -2,12 +2,16 @@ package edu.weber;
 
 import edu.weber.model.Account;
 import edu.weber.model.AccountRoles;
+import edu.weber.repository.AccountRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import edu.weber.service.AccountService;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 /**
@@ -20,12 +24,16 @@ public class AccountAppTest
      * instantiated. This is because the '@Autowired' annotation tells
      * spring to inject the instance at run time.
      */
-    @Autowired
+//    @Autowired
     private AccountService accountService;
+    private AccountRepository accountRepository;
+    private BCryptPasswordEncoder passwordEncoder;
+    private JavaMailSender emailSender;
 
     /**Test setup
      * Creates account
      * Canary checks to make sure test environment is ready for action
+     * The @Before annotation means this method will run before every test method.
      */
     private Account account = new Account();
     @Before
@@ -36,7 +44,7 @@ public class AccountAppTest
 
         account.setEmail("test@test.com");
         account.setPassword("TestPassword");
-        account.setSchoolId("W12345670");
+        account.setSchoolId("12345678");
         account.setIsLoggedIn(true);
         account.setRole(AccountRoles.student);
         account.setFirstName("TestFirstName");
@@ -48,27 +56,46 @@ public class AccountAppTest
         //Tests accounts info
         Assert.assertEquals("Email not equal","test@test.com", account.getEmail());
         Assert.assertEquals("Password not equal","TestPassword", account.getPassword());
-        Assert.assertEquals("School Id not equal","W12345670", account.getSchoolId());
+        Assert.assertEquals("School Id not equal","12345678", account.getSchoolId());
         Assert.assertTrue("Account not active", account.getIsLoggedIn());
-        Assert.assertEquals("Usertype not equal", AccountRoles.student, account.getRole());
+        Assert.assertEquals("Role not equal", AccountRoles.student, account.getRole());
         Assert.assertEquals("First name not equal","TestFirstName", account.getFirstName());
         Assert.assertEquals("Last name not equal","TestLastName", account.getLastName());
         Assert.assertEquals("City not equal","TestCity", account.getCity());
         Assert.assertEquals("State not equal","TestState", account.getState());
         Assert.assertEquals("Zip not equal","12345", account.getZipCode());
+
+        // Mock the repository
+        accountRepository = mock(AccountRepository.class);
+
+        // Mock the emailSender
+        emailSender = mock(JavaMailSender.class);
+
+        // Instantiate a password encoder
+        passwordEncoder = new BCryptPasswordEncoder();
+
+        // Assign these mock services to a new accountService
+        accountService = new AccountService();
+        accountService.accountRepository = accountRepository;
+        accountService.passwordEncoder = passwordEncoder;
+        accountService.emailSender = emailSender;
     }
 
     /**
      * This tests account creation
      */
     @Test
-    @PostMapping("/make_test_account")
     public void testAccountCreate()
     {
-        Assert.assertNotNull(account);
-        //TODO: Figure out how to get this working with the database
-        //Tests creating account
-        //Assert.assertEquals("Accounts are not equal", account, accountService.create(account));
+        // mock method calls
+        when(accountRepository.findAccountByEmail("test@test.com")).thenReturn(account);
+        when(accountRepository.save(account)).thenReturn(account);
+
+        // Create a new account and test
+        Account createdAccount = accountService.createNewAccount(account);
+
+        // Make sure an account was created
+        Assert.assertNotNull("Account not created", createdAccount);
     }
 
     /**

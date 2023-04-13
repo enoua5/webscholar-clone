@@ -46,7 +46,7 @@ public class AccountService {
      * This object is used to send emails in the sendInvite() method
      */
     @Autowired
-    private JavaMailSender emailSender;
+    public JavaMailSender emailSender;
 
     /**
      * This is the logger which uses the slf4j logging facade API.
@@ -63,7 +63,6 @@ public class AccountService {
     @Autowired
     public AccountRepository accountRepository;
 
-
     /**
      * This object handles queries to the database for specifically tokens.
      */
@@ -71,7 +70,7 @@ public class AccountService {
     public TokenRepository tokenRepository;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    public BCryptPasswordEncoder passwordEncoder;
 
 //endregion
 

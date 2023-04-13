@@ -85,6 +85,7 @@ export class PendingRoleRequestsComponent implements OnInit {
      * A string used to search and filter the table
      */
     searchText: string = '';
+
     /**
      * A helper function for an animation.
      * @param n a number for a column. Starts with 1, so has to be decremented.
@@ -177,15 +178,17 @@ export class PendingRoleRequestsComponent implements OnInit {
      * our FormGroup with the appropriate number of controls.
      */
     private populateRequestTable(): void {
-        this.requestList = this.service.getRequests();
+        this.service.getRequests().subscribe((requestList) => {
+            this.requestList = requestList;
 
-        // Clears the form each time on load. Prevents duplicate rows.
-        Object.keys(this.requestForm.controls).forEach((control) => {
-            this.requestForm.removeControl(control);
-        });
+            // Clears the form each time on load. Prevents duplicate rows.
+            Object.keys(this.requestForm.controls).forEach((control) => {
+                this.requestForm.removeControl(control);
+            });
 
-        this.requestList.forEach((request) => {
-            this.requestForm.addControl('' + request.id, new FormControl());
+            this.requestList.forEach((request) => {
+                this.requestForm.addControl('' + request.id, new FormControl());
+            });
         });
     }
 

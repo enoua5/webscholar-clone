@@ -122,7 +122,7 @@ export class LoginFormComponent implements OnInit {
                 sessionStorage.setItem('zipCode', `${res.body.zipCode}`);
                 sessionStorage.setItem('schoolId', `${res.body.schoolId}`);
                 sessionStorage.setItem('major', `${res.body.major}`);
-                sessionStorage.setItem('userType', res.body.userType);
+                sessionStorage.setItem('userType', res.body.role);
                 sessionStorage.setItem('accountKey', res.body.accountKey);
 
                 this.router.navigate(['/dashboard']).then(() => {

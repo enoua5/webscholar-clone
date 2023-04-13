@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, lastValueFrom, map, of } from 'rxjs';
+import { forEach } from 'cypress/types/lodash';
 
 // TODO: Replace the below URL with the one created by the backend team for role requests.
 /**
  * URL used to sned an API call
  */
-const INSERT_URL = 'http://localhost:6001/account/create';
-
+const INSERT_URL = 'http://localhost:6001/account/process-role-request';
+const GET_URL = 'http://localhost:6001/account/get-all-role-requests';
 /**
  * Declare our Request and RequestList types so we don't have to copy them over and over.
  */
@@ -46,61 +47,32 @@ export class PendingRoleRequestsService {
      *
      * @returns A list of all of the current role requests.
      */
-    public getRequests(): RequestList {
-        // These requests will likely be returned as JSON strings, so we're going to mock the
-        // receipt and parsing of these JSON strings into arrays.
-        let requestList = [];
-        let mock_json = `{
-                        "requests": 
-                        [
-                          {
-                            "id": "1",
-                            "first_name": "Professor",
-                            "last_name": "Bean",
-                            "email": "professorbean@tarplms.edu",
-                            "role": "Chair"
-                          },
-                          {
-                            "id": "2",
-                            "first_name": "Billy",
-                            "last_name": "Joel",
-                            "email": "billy.joel@gmail.com",
-                            "role": "Member"
-                          },
-                          {
-                            "id": "3",
-                            "first_name": "Anna",
-                            "last_name": "Karenina",
-                            "email": "trainlady123@hotmail.com",
-                            "role": "Chair"
-                          }
-                        ] 
-                      }`;
-
-        // TODO: Get the actual JSON result from the backend API.
-        try {
-            requestList = this.parseRequestJSON(mock_json);
-        } catch (e) {}
-
-        return requestList;
+    public getRequests(): Observable<RequestList> {
+        return this.http
+            .get<any>('http://localhost:6001/account/get-all-role-requests')
+            .pipe(
+                map((response) => this.parseRequests(response)),
+                catchError((error) => {
+                    console.error(error);
+                    return of([]);
+                })
+            );
     }
 
     /**
-     * Parses the given JSON string and adds any request objects found into a list.
+     * Parses the given array and gets in in a format of RequestList
      *
-     * @param roleRequestJSON The raw JSON string returned by our API call.
+     * @param parseRequests The raw array returned by our API call.
      * @returns A list of all of the request objects found.
      */
-    private parseRequestJSON(roleRequestJSON: string): any {
+    private parseRequests(requests: []): any {
         let requestList: RequestList = [];
-        let raw_json = JSON.parse(roleRequestJSON);
-
-        // Iterates over returned JSON and adds its requests into our array.
-        raw_json['requests'].forEach((request) => {
+        //let raw_json = JSON.parse(roleRequestJSON);
+        requests.forEach((request) => {
             requestList.push({
-                id: request['id'],
-                first_name: request['first_name'],
-                last_name: request['last_name'],
+                id: request['accountId'],
+                first_name: request['firstName'],
+                last_name: request['lastName'],
                 email: request['email'],
                 role: request['role']
             });
@@ -150,16 +122,24 @@ export class PendingRoleRequestsService {
             Accept: 'application/json',
             'Access-Control-Allow-Headers': 'Content-Type'
         });
-        let body = JSON.stringify({ id: request.id, approved: true });
+        let body = JSON.stringify({
+            accountId: request.id,
+            isApproved: true,
+            role: request.role
+        });
 
-        const response = await this.http
-            .post<any>(INSERT_URL, body, {
-                headers: header,
-                observe: 'response',
-                responseType: 'json'
-            })
-            .toPromise();
-        success = this.processResponse(response);
+        const observable = this.http.post<any>(INSERT_URL, body, {
+            headers: header,
+            observe: 'response',
+            responseType: 'json'
+        });
+
+        try {
+            const response = await lastValueFrom(observable);
+            success = this.processResponse(response);
+        } catch (error) {
+            success = false;
+        }
 
         return success;
     }
@@ -205,7 +185,11 @@ export class PendingRoleRequestsService {
             Accept: 'application/json',
             'Access-Control-Allow-Headers': 'Content-Type'
         });
-        let body = JSON.stringify({ id: request.id, approved: false });
+        let body = JSON.stringify({
+            accountId: request.id,
+            isApproved: false,
+            role: request.role
+        });
 
         const response = await this.http
             .post<any>(INSERT_URL, body, {

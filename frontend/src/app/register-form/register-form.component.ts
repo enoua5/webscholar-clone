@@ -275,7 +275,7 @@ export class RegisterFormComponent implements OnInit {
                     sessionStorage.setItem('lastName', `${res.body.lastName}`);
                     sessionStorage.setItem('email', `${res.body.email}`);
                     sessionStorage.setItem('schoolId', `${res.body.schoolId}`);
-                    sessionStorage.setItem('userType', res.body.userType);
+                    sessionStorage.setItem('userType', res.body.role);
                     sessionStorage.setItem('accountKey', res.body.accountKey);
 
                     this.router.navigate(['/dashboard']).then(() => {

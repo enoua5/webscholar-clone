@@ -25,7 +25,6 @@ describe('ScholarshipService', () => {
     });
 
     it('should return scholarships', (done) => {
-        // Replace this with the expected hard-coded scholarships
         const expectedScholarships = [
             {
                 scholarshipId: 1,

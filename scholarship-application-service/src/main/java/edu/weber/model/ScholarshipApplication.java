@@ -126,11 +126,11 @@ public class ScholarshipApplication {
     @Override
     public String toString(){
         return "ScholarshipApplication{ " +
-                "scholarshipApplicationID=" + scholarshipApplicationId + '\'' +
-                ", accountKey=" + accountKey + '\'' +
-                ", scholarshipId=" + scholarshipId + '\'' +
-                ", dateSubmitted=" + dateSubmitted + '\'' +
-                ", dateDecided=" + dateDecided + '\'' +
+                "scholarshipApplicationID='" + scholarshipApplicationId + '\'' +
+                ", accountKey='" + accountKey + '\'' +
+                ", scholarshipId='" + scholarshipId + '\'' +
+                ", dateSubmitted='" + dateSubmitted + '\'' +
+                ", dateDecided='" + dateDecided + '\'' +
                 '}';
     }
 }

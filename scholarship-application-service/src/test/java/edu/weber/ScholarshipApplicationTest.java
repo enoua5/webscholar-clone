@@ -22,6 +22,7 @@ public class ScholarshipApplicationTest {
         int test_scholarship_id = 15;
 
         String test_application_status = "test";
+
         LocalDateTime test_date_submitted = LocalDateTime.now();
         LocalDateTime test_date_decided = LocalDateTime.now();
 
@@ -39,6 +40,17 @@ public class ScholarshipApplicationTest {
         Assert.assertEquals(scholarshipApplication.getDateSubmitted(), test_date_submitted);
         Assert.assertEquals(scholarshipApplication.getDateDecided(), test_date_decided);
 
+        int scholarship_application_id = scholarshipApplication.getScholarshipApplicationId();
+
+        String test_to_str = "ScholarshipApplication{ " +
+                "scholarshipApplicationID='" + scholarship_application_id + '\'' +
+                ", accountKey='" + test_account_key + '\'' +
+                ", scholarshipId='" + test_scholarship_id + '\'' +
+                ", dateSubmitted='" + test_date_submitted + '\'' +
+                ", dateDecided='" + test_date_decided + '\'' +
+                '}';
+
+        Assert.assertEquals(scholarshipApplication.toString(), test_to_str);
     }
 
     @Test
@@ -64,6 +76,16 @@ public class ScholarshipApplicationTest {
 
         Assert.assertEquals(scholarshipAppEval.getDateEvaluated(), test_date_evaluated);
 
+        int evaluation_id = scholarshipAppEval.getEvaluationId();
+
+        String test_to_str = "Application Evaluation{ " +
+                "evaluationID='" + evaluation_id + '\'' +
+                ", scholarshipApplicationId='" + test_scholarship_application_id + '\'' +
+                ", evaluationComment='" + test_evaluation_comment + '\'' +
+                ", evaluationRating='" + test_evaluation_rating + '\'' +
+                '}';
+
+        Assert.assertEquals(scholarshipAppEval.toString(), test_to_str);
     }
 
 }

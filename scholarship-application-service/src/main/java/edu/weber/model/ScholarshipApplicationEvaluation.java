@@ -103,10 +103,10 @@ public class ScholarshipApplicationEvaluation {
     @Override
     public String toString(){
         return "Application Evaluation{ " +
-                "evaluationID=" + evaluationId + '\'' +
-                ", scholarshipApplicationId=" + scholarshipApplicationId + '\'' +
-                ", evaluationComment=" + evaluationComment + '\'' +
-                ", evaluationRating=" + evaluationRating + '\'' +
+                "evaluationID='" + evaluationId + '\'' +
+                ", scholarshipApplicationId='" + scholarshipApplicationId + '\'' +
+                ", evaluationComment='" + evaluationComment + '\'' +
+                ", evaluationRating='" + evaluationRating + '\'' +
                 '}';
     }
 }

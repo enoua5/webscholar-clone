@@ -1,16 +1,32 @@
 describe('login logout end-to-end', () => {
   it('should log in correctly, then log out correctly', () => {
-    // create mock account with API call
-    cy.request('POST', 'http://localhost:6001/account/create', {
-      email: "fake.guy@fakeemailserviceprovider.internet",
-      password: "ASFDasdfasdf1!",
-      schoolId: "12345678",
-      active: "true",
-      role: "student",
-      firstName: "Fake",
-      lastName: "Guy",
-      school: "Weber State University"
-    });
+
+    // mock API response from /login
+    // we can assume that a call to /login will return an account object
+    cy.intercept('POST', 'http://localhost:6001/account/login', {
+      statusCode: 200,
+      body: {
+        firstName: "Fake",
+        lastName: "Guy",
+        email: "fake.guy@fakeemailserviceprovider.internet",
+        phoneNumber: "555-555-5555",
+        city: "Ogden",
+        state: "UT",
+        zipCode: "11111",
+        schoolId: "12345678",
+        major: "CS",
+        accountKey: "1",
+        role: "student",
+        school: "Weber State University",
+        active: "true"
+      },
+    })
+    // mock API response from /emailExists
+    // we can assume that a call to /emailExists will return true
+    cy.intercept('GET', 'http://localhost:6001/account/emailExists*', {
+      statusCode: 200,
+      body: true
+    })
 
     // go to page
     cy.visit('');

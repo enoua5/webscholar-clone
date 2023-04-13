@@ -1,40 +1,39 @@
+// Unit Testing Imports/Declarations
+/// <reference types="jasmine" />
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, convertToParamMap, RouterModule } from '@angular/router';
+import { CommitteeComponent } from './committee.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { CommitteeComponent } from './committee.component';
+describe('ScholarshipCommitteeComponent', () => {
+    let component: CommitteeComponent;
+    let fixture: ComponentFixture<CommitteeComponent>;
 
-describe('CommitteeComponent', () => {
-  let component: CommitteeComponent;
-  let fixture: ComponentFixture<CommitteeComponent>;
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [ ReactiveFormsModule, FormsModule, RouterModule, RouterTestingModule],
+            declarations: [ CommitteeComponent],
+            providers: [
+                {
+                    provide: ActivatedRoute,
+                    useValue: {
+                        snapshot: {
+                            paramMap: convertToParamMap({ id: '1' })
+                        }
+                    }
+                }
+            ]
+        }).compileComponents();
+    });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ ReactiveFormsModule, RouterTestingModule ],
-      declarations: [ CommitteeComponent ],
-      providers: [
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            snapshot: {
-              paramMap: convertToParamMap({id: '1'})
-            }
-          }
-        }
-      ]
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CommitteeComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-    })
-      .compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CommitteeComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

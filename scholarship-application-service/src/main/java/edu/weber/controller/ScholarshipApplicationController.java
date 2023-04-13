@@ -32,10 +32,6 @@ public class ScholarshipApplicationController {
     )
     @ResponseStatus(HttpStatus.CREATED)
     public ScholarshipApplication create(@RequestBody ScholarshipApplication scholarshipApplication) {
-//        TODO: Figure this out lmao
-//        log.debug("accountKey:" + String.valueOf(accountKey));
-//        log.debug("scholarshipId:" + String.valueOf(scholarshipId));
-//        ScholarshipApplication scholarshipApplication = new ScholarshipApplication(accountKey, scholarshipId);
         return scholarshipApplicationRepository.saveAndFlush(scholarshipApplication);
     }
 

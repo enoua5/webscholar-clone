@@ -1,5 +1,8 @@
 package edu.weber.service;
 
+import edu.weber.model.AwardType;
+import edu.weber.model.Level;
+import edu.weber.model.Requirement;
 import edu.weber.model.Scholarship;
 import edu.weber.repository.ScholarshipRepository;
 import org.slf4j.Logger;
@@ -86,15 +89,62 @@ public class ScholarshipService {
             // append all those fields together to feed into FuzzySearch function
             String fields = title + " " + org  + " " + desc;
 
-            // TODO: configure this to levels, requirements,and awards.
+            // needed to prevent duplicate values.
+            boolean added = false;
 
-            int ratio = FuzzySearch.tokenSetRatio(fields, query);
-            // will include if it is at least a 80% match.
-            if (ratio >= 80) {
-                results.add(scholarship);
+            // get levels iterate over them and evaluate if it should be added.
+            List<Level> levels = scholarship.getLevels();
+            if (!levels.isEmpty()) {
+                for (Level level : levels) {
+                    String levelStr = level.getLevel().toString();
+                    String levelFields = fields + " " + levelStr;
+                    added = addScholarshipToResults(results, scholarship, levelFields, query);
+                    if (added) break;
+                }
             }
+            // exit specific iteration and continue looping
+            if (added) continue;
+
+            // get requirements iterate over them and evaluate if it should be added.
+            List<Requirement> requirements = scholarship.getRequirements();
+            if (!requirements.isEmpty()) {
+                for (Requirement req : requirements) {
+                    String reqStr = req.getDescription();
+                    String reqFields = fields + " " + reqStr;
+                    added = addScholarshipToResults(results, scholarship, reqFields, query);
+                    if (added) break;
+                }
+            }
+            // exit specific iteration and continue looping
+            if (added) continue;
+
+            List<AwardType> awards = scholarship.getAwards();
+            if (!awards.isEmpty()) {
+                for (AwardType award : awards) {
+                    String awardStr = award.getAwardType().toString();
+                    String awardFields = fields + " " + awardStr;
+                    added = addScholarshipToResults(results, scholarship, awardFields, query);
+                    if (added) break;
+                }
+            }
+            // exit specific iteration and continue looping
+            if (added) continue;
+
+
+            addScholarshipToResults(results, scholarship, fields, query);
         }
         return results;
+    }
+
+    public boolean addScholarshipToResults(List<Scholarship> results, Scholarship scholarship, String fields, String query) {
+        boolean addedToResults = false;
+        int ratio = FuzzySearch.tokenSetRatio(fields, query);
+        if (ratio >= 80) {
+            results.add(scholarship);
+            addedToResults = true;
+        }
+
+        return addedToResults;
     }
 
     public boolean deleteScholarship(int scholarshipId){

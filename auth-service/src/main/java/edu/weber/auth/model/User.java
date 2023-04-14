@@ -1,109 +1,52 @@
 package edu.weber.auth.model;
 
 import javax.persistence.*;
-import java.io.Serial;
 import java.io.Serializable;
-import java.util.Calendar;
-import java.util.Date;
-// TODO
-@Entity
-@Table(name="user")
+
+
 public class User implements Serializable {
 
-	/**
-	 * This is a data model. It helps us put data into the backend and send data
-	 * to the frontend in a standardized format.
-	 */
-	@Serial
-	private static final long serialVersionUID = 1L;
-
-//	private static final long serialVersionUID = 983648238746032841L;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="user_id")
-	private int userId;
-	
-	@Column(name="user_name")
 	private String userName;
-	
-	@Column(name="user_password")
+
 	private String password;
 	
-	@Column(name="user_type")
-	private String userType;
-
-	@ManyToOne
-	private Role role;
-	
-//	@ManyToMany(mappedBy = "consumers", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-//	private Set<Utility> utilitites;
-
+	private String role;
 
 	public User() {
 		super();
 	}
 
-		
-	public User(int userId, String userName, String userType, String password) {
-		this.userId = userId;
+	/**
+	 * Creates a user for LOGIN
+	 *
+	 * @param userName the username
+	 * @param password the user password
+	 *
+	 * @throws IllegalArgumentException if any of the input parameters are null or empty
+	 */
+	public User(String userName, String password) {
+		if (userName == null || userName.trim().isEmpty()) {
+			throw new IllegalArgumentException("userName cannot be empty");
+		}
+		if (password == null || password.trim().isEmpty()) {
+			throw new IllegalArgumentException("password cannot be empty");
+		}
 		this.userName = userName;
-		this.password=password;
-	}
-	
-	public User(String userName, String userType, String password) {
-		
-		this.userName = userName;
-		this.password=password;
+		this.password = password;
 	}
 
-	public User (User user) {
-		super();
-		this.userId = user.getUserId();
-		this.userName = user.getUserName();
-		this.password=user.getPassword();
-		this.userType = user.getUserType();
-		this.role=user.getRoles();
-	}
+	// All the methods below implement CRUD functionality.
 
-	public int getUserId() {
-		return userId;
-	}
-
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 	public String getUserName() {
 		return userName;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-
 	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public Role getRoles() {
-		return role;
-	}
-
-	public void setRole(Role roles) {
-		this.role = roles;
-	}
-	
 }

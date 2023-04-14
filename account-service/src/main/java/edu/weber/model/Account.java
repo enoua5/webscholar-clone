@@ -1,19 +1,15 @@
 package edu.weber.model;
 
-
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 public class Account {
 
-    //********** SQL KEYS **********
-
+//region SQL KEYS *********************
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
@@ -25,10 +21,9 @@ public class Account {
     public int getAccountKey(){
         return accountKey;
     }
+//endregion
 
-
-    //********** LOGIN / USER INFO **********
-
+//region LOGIN / USER INFO **************
     @Column(nullable = false)
     @Email
     private String email;
@@ -64,16 +59,24 @@ public class Account {
 
     @Column
     @NotNull
-    private String userType;
-    public String getUserType(){
-        return userType;
+    @Enumerated(EnumType.STRING)
+    private AccountRoles role;
+    public AccountRoles getRole(){
+        return role;
     }
-    public void setUserType(String userType){
-        this.userType = userType;
+    public void setRole(AccountRoles role){
+        this.role = role;
     }
 
-    //********** SCHOOL INFO **********
+    //Each user can request one role at a time, stored in the below column
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AccountRoles requestedRole;
+    public AccountRoles getRequestedRole() { return requestedRole; }
+    public void setRequestedRole(AccountRoles requestedRole) { this.requestedRole = requestedRole; }
+//endregion
 
+//region SCHOOL INFO ************
     @Column(nullable = false)
     @NotBlank
     private String schoolId;
@@ -88,9 +91,9 @@ public class Account {
     private String major;
     public String getMajor() {return major; }
     public void setMajor(String major) {this.major = major; }
+//endregion
 
-    //********** PERSONAL INFO **********
-
+//region PERSONAL INFO *************
     @Column(nullable = false)
     @NotBlank
     private String firstName;
@@ -185,10 +188,9 @@ public class Account {
     //These tags are categories the user is interested in and should correspond to scholarship tags.
     //  This will probably need to be a separate table with a foreign key to the user. That, or do some janky String stuff with "Math,Science," ect and
     //          getting the string, then separating by , (but that is pretty janky)
+//endregion
 
-
-    //********** CONSTRUCTOR & TOSTRING **********
-
+//region CONSTRUCTOR & TOSTRING **************
     //TODO: Make this constructor protected.
     //This object should only be created with the constructor that requires non-blank values.
     //Making this constructor protected only allows child classes to call it.
@@ -201,7 +203,7 @@ public class Account {
         this.password = "";
         this.schoolId = "";
         this.isLoggedIn = false;
-        this.userType = "student";
+        this.role = AccountRoles.student;
         this.firstName = "";
         this.lastName = "";
     }
@@ -213,17 +215,17 @@ public class Account {
      * @param password The login value set by the user.
      * @param schoolId The students W number given by weber state.
      * @param isLoggedIn
-     * @param userType The role access level for this account.
+     * @param role The role access level for this account.
      * @param firstName The users first name.
      * @param lastName The users last name.
      */
-    public Account(String email, String password, String schoolId, Boolean isLoggedIn, String userType, String firstName, String lastName){
+    public Account(String email, String password, String schoolId, Boolean isLoggedIn, AccountRoles role, String firstName, String lastName){
 
         this.email = email;
         this.password = password;
         this.schoolId = schoolId;
         this.isLoggedIn = isLoggedIn;
-        this.userType = userType;
+        this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -242,7 +244,7 @@ public class Account {
                 ", password='" + password + '\'' +
                 ", schoolId='" + schoolId + '\'' +
                 ", active=" + isLoggedIn +
-                ", userType='" + userType + '\'' +
+                ", role='" + role + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", city='" + city + '\'' +
@@ -251,5 +253,6 @@ public class Account {
                 ", phoneNumber" + phoneNumber + '\'' +
                 '}';
     }
+//endregion
 
 }

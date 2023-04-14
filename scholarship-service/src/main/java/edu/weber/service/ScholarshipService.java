@@ -1,5 +1,8 @@
 package edu.weber.service;
 
+import edu.weber.model.AwardType;
+import edu.weber.model.Level;
+import edu.weber.model.Requirement;
 import edu.weber.model.Scholarship;
 import edu.weber.repository.ScholarshipRepository;
 import org.slf4j.Logger;
@@ -7,6 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import java.util.ArrayList;
+import java.util.List;
 
 import java.sql.Timestamp;
 import java.util.Collection;
@@ -41,16 +47,16 @@ public class ScholarshipService {
      * This method updates the data associated for an existing scholarship.
      *
      * @param scholarshipId The id associated with the scholarship being updated.
-     * @param update The new scholarship data being used for updating.
+     * @param updatedScholarship The new scholarship data being used for updating.
      * @return Returns a success or fail flag depending on if the scholarship can be found.
      */
-    public boolean saveChanges(int scholarshipId, Scholarship update){
+    public boolean updateScholarship(int scholarshipId, Scholarship updatedScholarship){
 
         //Get the current scholarship
         Scholarship scholarship = scholarshipRepository.findScholarshipByScholarshipId(scholarshipId);
 
         if (scholarship == null){
-            log.error("ERROR: Scholarship does not exist -- SOURCE: saveChanges()");
+            log.error("ERROR: Scholarship does not exist -- SOURCE: updateScholarship()");
 
             return false;
         }
@@ -58,16 +64,90 @@ public class ScholarshipService {
         Assert.notNull(scholarship, "can't find account with name " + scholarshipId);
 
         //Update the scholarship's data
-        scholarship.setTitle(update.getTitle());
-        scholarship.setOrganization(update.getOrganization());
-        scholarship.setDescription(update.getDescription());
-        scholarship.setRequirements(update.getRequirements());
-        scholarship.setAmount(update.getAmount());
+        scholarship.setTitle(updatedScholarship.getTitle());
+        scholarship.setOrganization(updatedScholarship.getOrganization());
+        scholarship.setDescription(updatedScholarship.getDescription());
+        scholarship.setRequirements(updatedScholarship.getRequirements());
+        scholarship.setAmount(updatedScholarship.getAmount());
 
         //Save the updated scholarship
         scholarshipRepository.save(scholarship);
 
         return true;
+    }
+
+    // fuzzy search endpoint for scholarships. Simple v1 iteration
+    public List<Scholarship> searchScholarships(String query) {
+        // get all scholarships
+        List<Scholarship> scholarships = scholarshipRepository.findAll();
+        List<Scholarship> results = new ArrayList<>();
+        for (Scholarship scholarship : scholarships) {
+            // check title
+            String title = scholarship.getTitle();
+            // check org
+            String org = scholarship.getOrganization();
+            // check desc
+            // evaluate if we are worried about including description
+            String desc = scholarship.getDescription();
+            // append all those fields together to feed into FuzzySearch function
+            String fields = title + " " + org  + " " + desc;
+
+            // needed to prevent duplicate values.
+            boolean added = false;
+
+            // get levels iterate over them and evaluate if it should be added.
+            List<Level> levels = scholarship.getLevels();
+            if (!levels.isEmpty()) {
+                for (Level level : levels) {
+                    String levelStr = level.getLevel().toString();
+                    String levelFields = fields + " " + levelStr;
+                    added = addScholarshipToResults(results, scholarship, levelFields, query);
+                    if (added) break;
+                }
+            }
+            // exit specific iteration and continue looping
+            if (added) continue;
+
+            // get requirements iterate over them and evaluate if it should be added.
+            List<Requirement> requirements = scholarship.getRequirements();
+            if (!requirements.isEmpty()) {
+                for (Requirement req : requirements) {
+                    String reqStr = req.getDescription();
+                    String reqFields = fields + " " + reqStr;
+                    added = addScholarshipToResults(results, scholarship, reqFields, query);
+                    if (added) break;
+                }
+            }
+            // exit specific iteration and continue looping
+            if (added) continue;
+
+            List<AwardType> awards = scholarship.getAwards();
+            if (!awards.isEmpty()) {
+                for (AwardType award : awards) {
+                    String awardStr = award.getAwardType().toString();
+                    String awardFields = fields + " " + awardStr;
+                    added = addScholarshipToResults(results, scholarship, awardFields, query);
+                    if (added) break;
+                }
+            }
+            // exit specific iteration and continue looping
+            if (added) continue;
+
+
+            addScholarshipToResults(results, scholarship, fields, query);
+        }
+        return results;
+    }
+
+    public boolean addScholarshipToResults(List<Scholarship> results, Scholarship scholarship, String fields, String query) {
+        boolean addedToResults = false;
+        int ratio = FuzzySearch.tokenSetRatio(fields, query);
+        if (ratio >= 80) {
+            results.add(scholarship);
+            addedToResults = true;
+        }
+
+        return addedToResults;
     }
 
     public boolean deleteScholarship(int scholarshipId){
@@ -89,30 +169,29 @@ public class ScholarshipService {
         return true;
     }
 
-    public boolean getScholarshipById(int scholarshipId){
+    public Scholarship getScholarshipById(int scholarshipId){
         Scholarship scholarship = scholarshipRepository.findScholarshipByScholarshipId(scholarshipId);
 
         if(scholarship == null){
             log.error("ERROR: A scholarship with that ID does not exist -- SOURCE: getScholarshipById()");
 
-            //Return failure
-            return false;
+            return null;
         }
 
-        return true;
+        return scholarship;
     }
 
-    public boolean getScholarshipByTitle(String scholarshipTitle) {
+    public Scholarship getScholarshipByTitle(String scholarshipTitle) {
         Scholarship scholarship = scholarshipRepository.findScholarshipByTitle(scholarshipTitle);
 
         if (scholarship == null) {
             log.error("ERROR: A scholarship with that title does not exist -- SOURCE: getScholarshipByTitle()");
 
             //Return failure
-            return false;
+            return null;
         }
 
-        return true;
+        return scholarship;
     }
 
     public Collection<Scholarship> getScholarshipsByLevel(String scholarshipLevel) {
@@ -154,3 +233,4 @@ public class ScholarshipService {
         return scholarships;
     }
 }
+

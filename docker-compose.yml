@@ -4,7 +4,8 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     ports:
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - front-end
       - back-end
@@ -58,7 +59,7 @@ services:
       config-service:
         condition: service_healthy
     ports:
-      - 8080:8080
+      - 4000:4000
     networks:
       - front-end
       - back-end
@@ -157,6 +158,8 @@ services:
   scholarship-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      EUREKA_SERVICE_USERNAME: $EUREKA_SERVICE_USERNAME
+      EUREKA_SERVICE_PASSWORD: $EUREKA_SERVICE_PASSWORD
     build: scholarship-service
     depends_on:
       config-service:
@@ -194,6 +197,8 @@ services:
   account-scholarship-service:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      EUREKA_SERVICE_USERNAME: $EUREKA_SERVICE_USERNAME
+      EUREKA_SERVICE_PASSWORD: $EUREKA_SERVICE_PASSWORD
     build: account-scholarship-service
     depends_on:
       config-service:
@@ -202,6 +207,45 @@ services:
       - 6004:6004
     expose:
       - 6004
+    networks:
+      - front-end
+      - back-end
+
+  #Spring scholarship-application-service microservice container settings
+  scholarship-application-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      EUREKA_SERVICE_USERNAME: $EUREKA_SERVICE_USERNAME
+      EUREKA_SERVICE_PASSWORD: $EUREKA_SERVICE_PASSWORD
+    build: scholarship-application-service
+    depends_on:
+      config-service:
+        condition: service_healthy
+      registry:
+        condition: service_started
+    ports:
+      - 6007:6007
+    expose:
+      - 6007
+    networks:
+      - front-end
+      - back-end
+
+  # DB for the scholarship-application-service
+  scholarship-application-db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: scholarship-application-db
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_TCP_PORT: 6070
+    ports:
+      - "6070:6070"
+    expose:
+      - 6070
+    # Data persistence
+    volumes:
+      - "./.data/db:/var/lib/mysql_scholarship_application_db"
     networks:
       - front-end
       - back-end

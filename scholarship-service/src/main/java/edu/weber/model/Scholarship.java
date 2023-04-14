@@ -1,25 +1,15 @@
 package edu.weber.model;
 
-//import lombok.AccessLevel;
-
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.function.IntFunction;
-
+import java.util.List;
 
 /**
  * This is a data model. It helps us put data into the backend and send data
  * to the frontend in a standardized format. (Yes, I did just copy-pasta a comment XD)
  */
-
-/*
-@Getter //This uses javax validation to generate the getters and setters for all variables
-@Setter //This uses javax validation to generate the getters and setters for all variables
-*/
 @Entity
 public class Scholarship {
 
@@ -50,7 +40,8 @@ public class Scholarship {
     //a list of requirements to have the scholarship
     @Column(nullable = false)
     @NotBlank
-    private String requirements;
+    @OneToMany(mappedBy = "scholarship", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Requirement> requirements;
 
     //amount of money the scholarship offers?
     @Column(nullable = false)
@@ -66,11 +57,13 @@ public class Scholarship {
     // Levels this scholarship allows
     @Column(nullable = false)
     @NotBlank
-    private String levels;
+    @OneToMany(mappedBy = "scholarship", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Level> levels;
 
     @Column(nullable = false)
     @NotBlank
-    private String awardType;
+    @OneToMany(mappedBy = "scholarship", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AwardType> awards;
 
     //TODO: Add variable array that holds keywords
     //These tags are used to help search for the scholarship.
@@ -93,17 +86,16 @@ public class Scholarship {
      * @param applyDeadline Set the application deadline into Date Format "yyyy/MM/dd HH:mm:ss"
      * @param levelsList Set the levels allowed from ArrayList into a string
      */
-    public Scholarship(String title, String organization, String description, String requirements, BigDecimal amount, Timestamp applyDeadline, Level[] levelsList, AwardType[] awardTypes) {
+    public Scholarship(String title, String organization, String description, List<Requirement> requirements, BigDecimal amount, Timestamp applyDeadline, List<Level> levels, List<AwardType> awards) {
 
         this.title = title;
         this.organization = organization;
         this.description = description;
         this.requirements = requirements;
         this.amount = amount;
+        this.levels = levels;
+        this.awards = awards;
         this.applyDeadline = applyDeadline;
-        setLevels(levelsList);
-        setAwardType(awardTypes);
-
     }
 
 
@@ -125,13 +117,6 @@ public class Scholarship {
                 '}';
     }
 
-    public int getScholarshipId() {
-        return scholarshipId;
-    }
-
-    public void setScholarshipId(int scholarshipId) {
-        this.scholarshipId = scholarshipId;
-    }
 
     public String getTitle() {
         return title;
@@ -157,14 +142,6 @@ public class Scholarship {
         this.description = description;
     }
 
-    public String getRequirements() {
-        return requirements;
-    }
-
-    public void setRequirements(String requirements) {
-        this.requirements = requirements;
-    }
-
     public BigDecimal getAmount() {
         return amount;
     }
@@ -181,80 +158,27 @@ public class Scholarship {
         this.applyDeadline = applyDeadline;
     }
 
-    public Level[] getLevels() {
-        // unpack the string and returns it as a Level array
-        // separates the string based on the delimiter -
-        String[] parts = levels.split("-");
-        Level[] returnArray = new Level[parts.length];
-        for (int i = 0; i < parts.length; i++){
-            returnArray[i] = getLevel(parts[i]);
-        }
-        return returnArray;
+    public List<Level> getLevels() {
+        return levels;
     }
 
-    /**
-     * Returns the level if a string is associated with it
-     * Returns Level None if the string does not match any option
-     * @param levelString
-     * @return
-     */
-    private Level getLevel(String levelString){
-        if (levelString.equals(Level.BACHELOR.toString())) { return Level.BACHELOR; }
-        if (levelString.equals(Level.ASSOCIATE.toString())) { return Level.ASSOCIATE; }
-        if (levelString.equals(Level.GRADUATE.toString())) { return Level.GRADUATE; }
-        if (levelString.equals(Level.PROFESSIONAL.toString())) { return Level.PROFESSIONAL; }
-        return Level.NONE;
+    public void setLevels(List<Level> levels) {
+        this.levels = levels;
     }
 
-    public void setLevels(Level[] levelsList) {
-        // packs the level list into a string to store into the database
-        // delimiter is a - mark
-        String tmpLevels = "";
-        for (int i = 0; i < levelsList.length; i++){
-            if (i != (levelsList.length -1)){
-                tmpLevels += levelsList[i].toString() + "-";
-            }
-            else{
-                tmpLevels += levelsList[i].toString();
-            }
-        }
-
-        this.levels = tmpLevels;
+    public List<AwardType> getAwards() {
+        return this.awards;
     }
 
-    public AwardType[] getAwardType(){
-        // unpack the string and returns it as a Level array
-        // separates the string based on the delimiter -
-        String[] parts = awardType.split("-");
-        AwardType[] returnArray = new AwardType[parts.length];
-        for (int i = 0; i < parts.length; i++){
-            returnArray[i] = getAwardTypeFromString(parts[i]);
-        }
-        return returnArray;
+    public void setAwards(List<AwardType> awards) {
+        this.awards = awards;
     }
 
-    public AwardType getAwardTypeFromString(String awardString){
-        if (awardString.equals(AwardType.SCHOLARSHIP.toString())) { return AwardType.SCHOLARSHIP; }
-        if (awardString.equals(AwardType.LOAN.toString())) { return AwardType.LOAN; }
-        if (awardString.equals(AwardType.GRANT.toString())) { return AwardType.GRANT; }
-        if (awardString.equals(AwardType.PRIZE.toString())) { return AwardType.PRIZE; }
-        if (awardString.equals(AwardType.FELLOWSHIP.toString())) { return AwardType.FELLOWSHIP; }
-        return AwardType.SCHOLARSHIP;
+    public List<Requirement> getRequirements() {
+        return this.requirements;
     }
 
-    public void setAwardType(AwardType[] awardList){
-        // packs the level list into a string to store into the database
-        // delimiter is a - mark
-        String tmpAwards = "";
-        for (int i = 0; i < awardList.length; i++){
-            if (i != (awardList.length -1)){
-                tmpAwards += awardList[i].toString() + "-";
-            }
-            else{
-                tmpAwards += awardList[i].toString();
-            }
-        }
-
-       this.awardType = tmpAwards;
+    public void setRequirements(List<Requirement> requirements) {
+        this.requirements = requirements;
     }
 }

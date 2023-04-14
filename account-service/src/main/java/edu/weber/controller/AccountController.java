@@ -1,22 +1,20 @@
 package edu.weber.controller;
 
-import edu.weber.model.Account;
-import edu.weber.model.AccountRoles;
-import edu.weber.model.LoginDto;
+import edu.weber.model.*;
 import edu.weber.service.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import javax.ws.rs.core.Application;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,6 +27,7 @@ import java.util.List;
 @RestController //Path = '/account'
 public class AccountController {
 
+//region (Global) Objects
     /**
      * This is the logger which uses the slf4j logging facade API.
      * The logging framework that slf4j interfaces with is LogBack.
@@ -48,6 +47,7 @@ public class AccountController {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+//endregion
 
 
     /**
@@ -63,12 +63,11 @@ public class AccountController {
 
         //Validate input
         if (result.hasErrors()) {
-
             // Log error
             log.error("ERROR: Invalid Data -- SOURCE: login()");
 
             //Throw http error
-            invalidData();
+            ErrorHandler.invalidData();
         }
 
         //Find the account
@@ -76,12 +75,12 @@ public class AccountController {
 
         //If null, the account does not exist
         if (found == null) {
-
             // Log error
+            // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account does not exist -- SOURCE: login()");
 
             //Throw http error
-            accountNotFound();
+            ErrorHandler.accountNotFound();
         }
 
         /*
@@ -100,9 +99,20 @@ public class AccountController {
         }
         else{
             log.error("ERROR: Account password does not match. Expected: " + found.getPassword() + " Actual: " + passwordEncoder.encode(loginDto.getPassword()));
-            accountNotFound();
+            ErrorHandler.accountNotFound();
             return null;
         }
+    }
+
+    /**
+     * Allows for validation of account credentials for related services
+     * @param email The email for the associated account
+     * @param password The user submitted password
+     * @return Returns the matching account model if validated. Null, otherwise.
+     */
+    @RequestMapping(path = "/validate", method = RequestMethod.GET)
+    public String validateAccount(@RequestParam("email") String email, @RequestParam("password") String password) {
+        return accountService.validateAccount(email, password).getRole().toString();
     }
 
 
@@ -117,19 +127,13 @@ public class AccountController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public Account createNewAccount(@Valid @RequestBody Account account, BindingResult result) {
-
-
-        log.info(account.toString());
-        //Validate account information (input validation)
         if (result.hasErrors()) {
-
             //Log Error
             log.error("ERROR: Invalid Data -- SOURCE: createNewAccount()");
 
             //Throw error
-            invalidData();
+            ErrorHandler.invalidData();
         } else {
-
             //TODO: Send a confirmation email (not necessary for weber state oauth2 login)
             //Presently, outlook blocks api calls if it thinks you're 'spamming' from too many tests
             //We should probably setup something a little more permanent. But services like outlook, gmail require 2FA (IE a phone number) to use a api-key right now.
@@ -147,6 +151,7 @@ public class AccountController {
         return null;
     }
 
+
     /**
      * This method checks to see if the email already exists in the DB to prevent dupe accounts during registration
      *
@@ -158,6 +163,7 @@ public class AccountController {
         log.info("Entering emailExists");
         return accountService.accountRepository.findAccountByEmail(email) != null;
     }
+
 
     /**
      * This method updates the account details of the user by using the specified account key.
@@ -171,26 +177,65 @@ public class AccountController {
 
         //Validate input
         if (result.hasErrors()) {
-
             // Log error
             log.error("ERROR: Invalid Data -- SOURCE: saveChanges()");
 
             //Throw http error
-            invalidData();
+            ErrorHandler.invalidData();
         }
 
         //Overwrite the existing account data with the new account data
         Account updated = accountService.updateProfile(accountKey, updateAccount);
         if (updated == null) {
-
             // Log error
             log.error("ERROR: Account could not be saved -- SOURCE: saveChanges()");
 
             //Throw http error if account could not be saved
-            accountNotFound();
+            ErrorHandler.accountNotFound();
         }
 
         return updated;
+    }
+
+
+    @RequestMapping(path="/request_role/{accountKey}", method=RequestMethod.POST,
+    consumes="text/plain")
+    public void requestRole(@PathVariable int accountKey, @RequestBody String role) {
+        AccountRoles eRole; //Enumerated role
+        //Set eRole based on the string role. If an incorrect string was passed, log an error.
+        if (role.equals("Committee Member")) {
+            eRole = AccountRoles.committeeMember;
+        }
+        else if (role.equals("Committee Chair")) {
+            eRole = AccountRoles.chair;
+        }
+        else {
+            ErrorHandler.invalidRole(role);
+            return;
+        }
+
+        //Save the account with the new role request - if there isn't already one
+        if(!accountService.requestRole(accountKey, eRole)) {
+            ErrorHandler.requestAlreadyExists();
+        }
+    }
+
+    /**
+     * Takes a role request with isApproved() set to false or true, and processes
+     * the request based on that information.
+     * @param request The request being processed.
+     * @return An updated list of all pending role requests.
+     */
+    @RequestMapping(path="/process-role-request", method=RequestMethod.POST,
+    consumes=MediaType.APPLICATION_JSON_VALUE)
+    public ArrayList<RoleRequest> processRoleRequest(@RequestBody RoleRequest request) {
+        accountService.processRoleRequest(request);
+        return accountService.getAllRoleRequests();
+    }
+
+    @RequestMapping(path="/get-all-role-requests", method=RequestMethod.GET)
+    public ArrayList<RoleRequest> getAllRoleRequests() {
+        return accountService.getAllRoleRequests();
     }
 
     @RequestMapping(path = "/forgotPassword", method = RequestMethod.POST)
@@ -199,7 +244,7 @@ public class AccountController {
 
         Account found = accountService.accountRepository.findAccountByEmail(accountEmail);
         if(found == null){
-            accountNotFound();
+            ErrorHandler.accountNotFound();
             log.error("Could not find the account");
             return "Could not find the account via accountKey.";
         }
@@ -211,11 +256,11 @@ public class AccountController {
         return "done";
     }
 
+
     // TODO: Frontend
     //  Get the hashed value from the webURL: account/new_password/<HASH VALUE>.
     //  Then call forgotPassHashExists()
     //  This method could instead return a boolean, if desired.
-
     /**
      * Checks validity of the provided forgotPassHash.
      * Must exist in the database and must have been created within 24 hours.     *
@@ -226,22 +271,23 @@ public class AccountController {
     public String forgotPassHashExists(@RequestParam String forgotPassHash){
         Account account = accountService.accountRepository.findAccountByForgotPassHash(forgotPassHash);
         if (account == null){
-            accountNotFound();
+            ErrorHandler.accountNotFound();
             log.error("No account exists with that forgot password hash.");
             return "No account exists with that forgot password hash.";
         }
+
         if (LocalDateTime.now().isAfter(account.getForgotPassDate().plusHours(24)))
         {
-            accountNotFound();
+            ErrorHandler.accountNotFound();
             log.error("This forgot password hash has expired.");
             return "This hash was issued more than 24 hours ago";
         }
         return "True";
     }
 
+
     // TODO: Frontend
     //  Call setNewPassword once the user has hit submit on the new-password-form
-
     /**
      * Sets a new password for the associated account and saves it to the database.
      * @param forgotPassHash: The forgotPassHash related to this request
@@ -256,11 +302,27 @@ public class AccountController {
         return "Error setting the new password. Password was not saved.";
     }
 
+
+    /**
+     * Changes the password of the logged in user
+     * @param accountKey: The account key of the logged in user
+     * @return: "done" if password was correctly set
+     */
+    @RequestMapping(path = "/change_password/{accountKey}", method = RequestMethod.POST,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
+    public boolean changePassword(@PathVariable int accountKey, @RequestBody ChangePasswordDto changePasswordDto, BindingResult result){
+        String currentPassword = changePasswordDto.getCurrentPassword();
+        String newPassword = changePasswordDto.getNewPassword();
+
+        return accountService.changePassword(accountKey, currentPassword, newPassword);
+    }
+
+
     @RequestMapping(path = "/forgot/account", method = RequestMethod.POST)
     public String forgotAccount(@RequestParam String accountEmail){
         Account found = accountService.accountRepository.findAccountByEmail(accountEmail);
         if(found == null){
-            accountNotFound();
+            ErrorHandler.accountNotFound();
             log.error("Could not find an account associated with that email.");
             return "Could not find the account via accountEmail. Either email is incorrect, or no account with that email is registered";
         }
@@ -271,21 +333,22 @@ public class AccountController {
         return "done";
     }
 
+
     /**
      * This method allows a user to send a registration invitation email.
-     * 
+     *
      * The email is sent by the 'company' email. This is the email used
      * for the final product in deployment.
      *
      * @param accountKey        The account id of the person wanting to send the invite.
      * @param recipientEmail    The email the person is sending the invite to.
-     * 
-     * Incorrectly formatted email addresses entered for recipientEmail 
+     *
+     * Incorrectly formatted email addresses entered for recipientEmail
      * will be met with SMTPAddressFailedException 553 (no email sent).
      *
-     * Correctly formatted email addresses which don't exist will receive 
-     * an "address not found" email reply back to the smtp server that is 
-     * specified in the bootstrap.yml file (email sent, but does not reach 
+     * Correctly formatted email addresses which don't exist will receive
+     * an "address not found" email reply back to the smtp server that is
+     * specified in the bootstrap.yml file (email sent, but does not reach
      * a destination).
      */
     @GetMapping("/send_invite/{accountKey}")
@@ -294,9 +357,8 @@ public class AccountController {
         log.error("Okay going to try to send an invite with " + accountKey + " to " + recipientEmail);
         //Attempt sending the mail
         if(!accountService.sendInvite(accountKey, recipientEmail)) {
-
-            //Throw http error if account could not be found 
-            accountNotFound();
+            //Throw http error if account could not be found
+            ErrorHandler.accountNotFound();
             return "Account not found.";
         }
 
@@ -343,17 +405,16 @@ public class AccountController {
             return "Incorrect format for roleName. Valid options are /'student/', /'committeMember/', or /'chair/'\n";
         }
 
-
         for (String recipientEmail : recipientEmails)
         {
             if (!accountService.sendRegistrationInvite(recipientEmail, accountKey, role))
             {
-                accountNotFound();
+                ErrorHandler.accountNotFound();
             }
-
         }
         return "Email sending successful.";
     }
+
 
     @GetMapping("/is_token_valid/")
     public Boolean tokenValid(@RequestParam String inputToken) {
@@ -379,25 +440,25 @@ public class AccountController {
 
         //If 'error', the account does not exist
         if (emailLink.equals("error")) {
-
             // Log error
             log.error("ERROR: Account does not exist -- SOURCE: login()");
 
             //Throw http error
-            accountNotFound();
+            ErrorHandler.accountNotFound();
         }
 
         //Send out the email using the link
         if(!accountService.sendDeleteEmail(accountKey, emailLink)) {
-
             // Log error
+            // TODO: Change this to use ErrorHandler.accountNotFound();?
             log.error("ERROR: Account does not exist -- SOURCE: login()");
 
             //Throw http error
-            accountNotFound();
+            ErrorHandler.accountNotFound();
         }
 
     }
+
 
     /**
      * This method actually deletes the users account using the generated
@@ -422,31 +483,14 @@ public class AccountController {
 
         //Take the hash and find and delete the associated account
         if(!accountService.deleteAccount(linkHash)){
-
             // Log error
+            // TODO: Change this to use ErrorHandler.accountNotFound();
             log.error("ERROR: Account does not exist -- SOURCE: login()");
 
             //Throw http error
-            accountNotFound();
+            ErrorHandler.accountNotFound();
         }
     }
-
-    /**
-     * Send an http response error if data sent did not follow model restrictions.
-     */
-    public void invalidData() {
-
-        throw new ResponseStatusException(HttpStatus.PARTIAL_CONTENT, "The data sent was incomplete or invalid!");
-    }
-
-    /**
-     * Send an http response error if the specified account could not be found.
-     */
-    public void accountNotFound() {
-
-        throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "The account could not be found!");
-    }
-
 
     /*
     ----------------------------------------------------------------
@@ -455,6 +499,7 @@ public class AccountController {
      */
 
 
+//region ------------------- ARC API testing code -------------------
     /**
      * This method simply tests to see if the API is accessible.
      * Please use ARC (advanced REST client) or postman to test.
@@ -492,7 +537,7 @@ public class AccountController {
         String password = "myPassword";
         String schoolId = "W012345678";
         Boolean isActive = true;
-        String userType = "student";
+        AccountRoles userType = AccountRoles.student;
         String firstName = "Bobby";
         String lastName = "Joe";
 
@@ -550,7 +595,7 @@ public class AccountController {
         password = bCryptPasswordEncoder.encode(password);
 
         //Create the account
-        Account account = new Account(email, password, schoolId, isActive, "student", firstName, lastName);
+        Account account = new Account(email, password, schoolId, isActive, AccountRoles.student, firstName, lastName);
 
         //Save the account to the database
         accountService.accountRepository.save(account);
@@ -569,5 +614,6 @@ public class AccountController {
         //Find all accounts starting after id = 0
         return accountService.accountRepository.findAllByAccountKeyAfter(0);
     }
+//endregion
 
 }

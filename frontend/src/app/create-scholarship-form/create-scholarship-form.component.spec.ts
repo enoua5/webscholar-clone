@@ -7,26 +7,24 @@ import { CreateScholarshipFormComponent } from './create-scholarship-form.compon
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
 describe('CreateScholarshipFormComponent', () => {
-  let component: CreateScholarshipFormComponent;
-  let fixture: ComponentFixture<CreateScholarshipFormComponent>;
+    let component: CreateScholarshipFormComponent;
+    let fixture: ComponentFixture<CreateScholarshipFormComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ HttpClientTestingModule, ReactiveFormsModule ],
-      declarations: [ CreateScholarshipFormComponent ]
-    })
-    .compileComponents();
-  });
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [HttpClientTestingModule, ReactiveFormsModule],
+            declarations: [CreateScholarshipFormComponent]
+        }).compileComponents();
+    });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CreateScholarshipFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(CreateScholarshipFormComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

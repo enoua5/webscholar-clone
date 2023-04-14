@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>edu.weber</groupId>
+        <artifactId>WebScholar</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>scholarship-application-service</artifactId>
+
+    <dependencies>
+<!--  BASIC SPRING DEPENDENCIES  -->
+        <!-- Enabled REST controller -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!-- Enables remote configuration client behavior -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <!-- Enables use of legacy bootstrap.yml option in lieu application.properties -->
+        <!-- See: https://docs.spring.io/spring-cloud-config/docs/3.1.0/reference/html/#config-first-bootstrap -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+<!--  END BASIC SPRING DEPENDENCIES  -->
+<!--  DATABASE DEPENDENCIES  -->
+        <!-- For MySQL connectivity -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!-- For JPA / Hibernate functionality -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+<!--  END DATABASE DEPENDENCIES  -->
+<!--  EUREKA DEPENDENCIES  -->
+        <!-- Required for Eureka Client check-in -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <!-- Required by Eureka for health checking -->
+        <!-- TODO: I believe Netflix-Hystrix may end up replacing this dependency, we'll see -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- Required due to an issue with older versions of Spring Cloud -->
+        <!-- See issue here: https://github.com/spring-cloud/spring-cloud-netflix/issues/3953 -->
+        <!-- Idk why the <version> tag is necessary, but Maven can't find it otherwise lol -->
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-apache-client4</artifactId>
+            <version>1.19.4</version>
+        </dependency>
+<!--  END EUREKA DEPENDENCIES  -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <!-- Tells Spring this is a Maven project, and to manage it as such -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <finalName>scholarship-application-service</finalName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

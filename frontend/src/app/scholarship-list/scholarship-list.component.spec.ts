@@ -1,6 +1,8 @@
 // Unit Testing Imports/Declarations
 /// <reference types="jasmine" />
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+
 
 // Component-Specific Imports
 import { ScholarshipListComponent } from './scholarship-list.component';
@@ -13,7 +15,7 @@ describe('ScholarshipListComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ReactiveFormsModule, RouterTestingModule],
+            imports: [ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule],
             declarations: [ScholarshipListComponent]
         }).compileComponents();
     });

@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ScholarshipService } from './scholarship.service'; // Import the ScholarshipService
 
-
 /**
  * ScholarshipListComponent is a component that displays a list of scholarships.
  * It fetches the scholarship data from the ScholarshipService.
  */
 @Component({
-    selector: 'app-scholarship-list',
-    templateUrl: './scholarship-list.component.html',
-    styleUrls: ['./scholarship-list.component.less']
+  selector: 'app-scholarship-list',
+  templateUrl: './scholarship-list.component.html',
+  styleUrls: ['./scholarship-list.component.less']
 })
 export class ScholarshipListComponent implements OnInit {
-    public scholarships: any[];
-
+  public scholarships: any[];
 
   constructor(private scholarshipService: ScholarshipService) { }
 
@@ -42,5 +40,4 @@ export class ScholarshipListComponent implements OnInit {
   getUserType() {
     return this.scholarshipService.getUserType();
   }
-
 }

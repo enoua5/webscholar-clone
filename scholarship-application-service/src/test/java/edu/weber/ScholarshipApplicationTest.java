@@ -61,6 +61,7 @@ public class ScholarshipApplicationTest {
         int test_evaluation_rating = 5;
 
         // Date evaluated test
+
         LocalDateTime test_date_evaluated = LocalDateTime.now();
 
         scholarshipAppEval = new ScholarshipApplicationEvaluation(test_scholarship_application_id,
@@ -89,3 +90,5 @@ public class ScholarshipApplicationTest {
     }
 
 }
+
+

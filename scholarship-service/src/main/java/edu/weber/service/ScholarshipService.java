@@ -14,6 +14,9 @@ import me.xdrop.fuzzywuzzy.FuzzySearch;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.sql.Timestamp;
+import java.util.Collection;
+
 /**
  * This class extends the functionality of 'ScholarshipRepository'. Instead of using the default
  * search queries, we can define our own here.
@@ -190,4 +193,44 @@ public class ScholarshipService {
 
         return scholarship;
     }
+
+    public Collection<Scholarship> getScholarshipsByLevel(String scholarshipLevel) {
+        Collection<Scholarship> scholarships = scholarshipRepository.findScholarshipByLevels(scholarshipLevel);
+
+        if (scholarships.isEmpty() || scholarships == null) {
+            log.error("ERROR: No scholarships for this level exist -- SOURCE: getScholarshipByLevel()");
+
+            //Return failure
+            return null;
+        }
+
+        return scholarships;
+    }
+
+    public Collection<Scholarship> getScholarshipsByOrganization(String scholarshipOrganization) {
+        Collection<Scholarship> scholarships = scholarshipRepository.findScholarshipByOrganization(scholarshipOrganization);
+
+        if (scholarships.isEmpty() || scholarships == null) {
+            log.error("ERROR: No scholarships for this organization exist -- SOURCE: getScholarshipByOrganization()");
+
+            //Return failure
+            return null;
+        }
+
+        return scholarships;
+    }
+
+    public Collection<Scholarship> getScholarshipsByApplyDeadline(Timestamp scholarshipApplyDeadline) {
+        Collection<Scholarship> scholarships = scholarshipRepository.findScholarshipByApplyDeadline(scholarshipApplyDeadline);
+
+        if (scholarships.isEmpty() || scholarships == null) {
+            log.error("ERROR: No scholarships for this application deadline exist -- SOURCE: getScholarshipByApplyDeadline()");
+
+            //Return failure
+            return null;
+        }
+
+        return scholarships;
+    }
 }
+

@@ -62,7 +62,12 @@
             <artifactId>jersey-apache-client4</artifactId>
             <version>1.19.4</version>
         </dependency>
-<!--  END EUREKA DEPENDENCIES  -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--  END EUREKA DEPENDENCIES  -->
     </dependencies>
 
     <build>

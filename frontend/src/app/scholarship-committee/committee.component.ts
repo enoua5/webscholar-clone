@@ -71,6 +71,14 @@ export class CommitteeComponent implements OnInit {
   * when a button is clicked by the user. This would cut back on API calls, however, would mean another button press
   * for users and would not allow for the added visibility given by updating the visible list of applicants by each
   * separate letter entered. Although, whether that would be a concern is unknown at this time.
+   *
+   * Filtering by name, schoolId, and applicationId is accomplished rather simply. An if statement checks if the
+   * search string is longer than 0 characters. If so, the search string is cast to all lower case. Simple
+   * if-statements will then check if the search string entirely consists of integers and has a length of 6. If so,
+   * we assume the user is entering an applicationId. If not, then an else-if statement will check if the search string
+   * begins with the letter 'w' and if the search string has a length of 8. If so, we assume the user is entering a
+   * schoolId. If not, we assume that the user is simply entering a name. After we determine what the user is searching
+   * for, API calls are made in order to display any matching scholarship applicants.
   *
   * @param filter The filter value to determine the display of applicants.
   */
@@ -84,8 +92,21 @@ export class CommitteeComponent implements OnInit {
     }
     if (this.searchString.length !== 0) {
       console.log(this.searchString);
+      const searchStr = this.searchString.toLowerCase();
+      this.displayedApplicants = this.displayedApplicants.slice().filter(applicant => {
+        if (searchStr.length === 6 && !isNaN(parseInt(searchStr))) {
+          return String(applicant.applicationId).includes(searchStr);
+        }
+        else if (searchStr.charAt(0) === 'w' && searchStr.length === 8) {
+          return applicant.schoolId.toLowerCase().includes(searchStr);
+        }
+        else {
+          return applicant.name.toLowerCase().includes(searchStr);
+        }
+      });
     }
   }
+
 
 
 

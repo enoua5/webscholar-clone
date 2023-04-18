@@ -116,8 +116,12 @@ public class AccountAppTest
     @Test
     public void testSaveChanges()
     {
+        // Mock the service
+        accountService = mock(AccountService.class);
+
         Assert.assertNotNull(account);
 
+        // Account setup
         account.setEmail("test@testUpdate.com");
         account.setPassword("Password");
         account.setSchoolId("W12345678");
@@ -128,23 +132,46 @@ public class AccountAppTest
         account.setState("State");
         account.setZipCode("12346");
 
-        //Tests accounts info
-        Assert.assertEquals("Email not equal","test@testUpdate.com", account.getEmail());
-        Assert.assertEquals("Password not equal","Password", account.getPassword());
-        Assert.assertEquals("School Id not equal","W12345678", account.getSchoolId());
-        Assert.assertTrue("Account not active", account.getIsLoggedIn());
-        Assert.assertEquals("Usertype not equal",AccountRoles.student, account.getRole());
-        Assert.assertEquals("First name not equal","FirstName", account.getFirstName());
-        Assert.assertEquals("Last name not equal","LastName", account.getLastName());
-        Assert.assertEquals("City not equal","City", account.getCity());
-        Assert.assertEquals("State not equal","State", account.getState());
-        Assert.assertEquals("Zip not equal","12346", account.getZipCode());
+        // mock method calls
+        when(accountService.createNewAccount(account)).thenReturn(account);
 
-        //TODO: Figure out how to get this working with the database
-        //Updates account
-        //accountService.saveChanges(12345, account);
-        //Test returning account by new id
-        //Assert.assertEquals("Accounts are not equal", account, accountService.findByKey(12345));
+        // Create a new account and test
+        Account testAccount = accountService.createNewAccount(account);
+        Assert.assertNotNull("Account not created", testAccount);
+
+        //Tests testAccount info
+        Assert.assertEquals("Email not equal","test@testUpdate.com", testAccount.getEmail());
+        Assert.assertEquals("Password not equal","Password", testAccount.getPassword());
+        Assert.assertEquals("School Id not equal","W12345678", testAccount.getSchoolId());
+        Assert.assertTrue("Account not active", testAccount.getIsLoggedIn());
+        Assert.assertEquals("Usertype not equal",AccountRoles.student, testAccount.getRole());
+        Assert.assertEquals("First name not equal","FirstName", testAccount.getFirstName());
+        Assert.assertEquals("Last name not equal","LastName", testAccount.getLastName());
+        Assert.assertEquals("City not equal","City", testAccount.getCity());
+        Assert.assertEquals("State not equal","State", testAccount.getState());
+        Assert.assertEquals("Zip not equal","12346", testAccount.getZipCode());
+
+        //give the account new info
+        account.setEmail("test2@testUpdate.com");
+        account.setCity("FakeCity");
+        account.setState("FakeState");
+        account.setZipCode("1000101");
+
+        //update the account
+        accountService.updateProfile(testAccount.getAccountKey(), account);
+
+        //now check that the account has been properly updated
+        Assert.assertEquals("Email not equal","test2@testUpdate.com", testAccount.getEmail());
+        Assert.assertEquals("Password not equal","Password", testAccount.getPassword());
+        Assert.assertEquals("School Id not equal","W12345678", testAccount.getSchoolId());
+        Assert.assertTrue("Account not active", testAccount.getIsLoggedIn());
+        Assert.assertEquals("Usertype not equal",AccountRoles.student, testAccount.getRole());
+        Assert.assertEquals("First name not equal","FirstName", testAccount.getFirstName());
+        Assert.assertEquals("Last name not equal","LastName", testAccount.getLastName());
+        Assert.assertEquals("City not equal","FakeCity", testAccount.getCity());
+        Assert.assertEquals("State not equal","FakeState", testAccount.getState());
+        Assert.assertEquals("Zip not equal","1000101", testAccount.getZipCode());
+
     }
 }
 

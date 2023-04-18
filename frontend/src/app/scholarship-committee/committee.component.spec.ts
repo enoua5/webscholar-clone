@@ -51,13 +51,16 @@ describe('ScholarshipCommitteeComponent', () => {
       ];
       component.allApplicants = applicants;
 
+      //Searching for the name "doe". 2 result are expected.
       component.searchString = 'doe';
       component.filterApps(0);
       expect(component.displayedApplicants.length).toBe(2);
 
+      //Searching for the name "bob". 1 result is expected.
       component.searchString = 'bob';
       component.filterApps(0);
       expect(component.displayedApplicants.length).toBe(1);
+
     });
 
 
